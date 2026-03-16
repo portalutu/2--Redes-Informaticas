@@ -28,6 +28,10 @@ Esta situación es el resultado de una evolución tecnológica que comenzó vari
 
 Este contexto histórico explica por qué fue necesario crear modelos de referencia. La industria necesitaba una forma estructurada de definir cómo debían comunicarse los sistemas, lo que finalmente llevó al desarrollo del modelo OSI y a la consolidación de la arquitectura TCP/IP.
 
+
+---
+
+
 ## 2. Los problemas de las redes antes del establecimiento de TCP/IP y OSI
 
 Antes de que existieran modelos de referencia claros y conjuntos de protocolos ampliamente aceptados, las redes tenían varios problemas importantes.
