@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo IP — Guía Interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0c10;
+  --bg2: #0f1218;
+  --bg3: #151a22;
+  --bg4: #1b2230;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --text2: #8b9ab5;
+  --text3: #566378;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Space Grotesk', sans-serif;
+
+  --blue: #4da8ff;
+  --blue-dim: #1a3a5c;
+  --blue-bg: rgba(77,168,255,0.08);
+  --teal: #2dd4bf;
+  --teal-dim: #0f3330;
+  --teal-bg: rgba(45,212,191,0.08);
+  --amber: #f59e0b;
+  --amber-dim: #3d2a00;
+  --amber-bg: rgba(245,158,11,0.08);
+  --purple: #a78bfa;
+  --purple-dim: #2d1a5c;
+  --purple-bg: rgba(167,139,250,0.08);
+  --coral: #fb7185;
+  --coral-dim: #3d0e1a;
+  --coral-bg: rgba(251,113,133,0.08);
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── GRID BACKGROUND ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(77,168,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,168,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,12,16,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 56px;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  font-size: 12px;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: all .2s;
+  font-weight: 500;
+}
+.nav-link:hover { color: var(--text); background: var(--bg4); }
+.nav-link.active { color: var(--blue); background: var(--blue-bg); }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--blue);
+  background: var(--blue-bg);
+  border: 1px solid rgba(77,168,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--blue);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+h1 span { color: var(--blue); }
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text2);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ─── LAYOUT ─── */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.card:hover { border-color: var(--border2); }
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg3);
+}
+
+.card-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+.num-blue   { background: var(--blue-bg);   color: var(--blue);   border: 1px solid rgba(77,168,255,0.25); }
+.num-teal   { background: var(--teal-bg);   color: var(--teal);   border: 1px solid rgba(45,212,191,0.25); }
+.num-amber  { background: var(--amber-bg);  color: var(--amber);  border: 1px solid rgba(245,158,11,0.25); }
+.num-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.card-body { padding: 1.5rem; }
+
+p { color: var(--text2); line-height: 1.7; }
+
+/* ─── SECTION 1: IP Examples ─── */
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 1.25rem;
+}
+
+.example-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: all .25s;
+}
+.example-card:hover { border-color: var(--blue-dim); transform: translateY(-2px); }
+
+.ex-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ex-ip {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* ─── BITS ─── */
+.bits-wrapper {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  background: var(--bg3);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.bits-row {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bit {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg4);
+  color: var(--text3);
+  transition: all .15s;
+  user-select: none;
+}
+.bit:hover { transform: scale(1.1); border-color: var(--border2); }
+.bit.on { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 10px rgba(77,168,255,0.3); }
+.bit.net { background: var(--teal); color: #000; border-color: var(--teal); box-shadow: 0 0 8px rgba(45,212,191,0.3); }
+.bit.host { background: var(--amber); color: #000; border-color: var(--amber); }
+
+.oct-sep { width: 1px; height: 30px; background: var(--border2); margin: 0 4px; flex-shrink: 0; }
+
+.ip-display-row {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ip-display {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+.ip-hint {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+
+/* ─── CLASS DETECTOR ─── */
+.class-detector {
+  margin-top: 1rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--mono);
+  border: 1px solid;
+  transition: all .3s;
+}
+
+/* ─── CLASS GRID ─── */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.class-card {
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid;
+  transition: transform .2s;
+}
+.class-card:hover { transform: translateY(-3px); }
+
+.class-A  { background: var(--blue-bg);   border-color: rgba(77,168,255,0.2); }
+.class-B  { background: var(--teal-bg);   border-color: rgba(45,212,191,0.2); }
+.class-C  { background: var(--amber-bg);  border-color: rgba(245,158,11,0.2); }
+.class-D  { background: var(--purple-bg); border-color: rgba(167,139,250,0.2); }
+.class-E  { background: var(--coral-bg);  border-color: rgba(251,113,133,0.2); }
+
+.cls-letter { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.class-A .cls-letter  { color: var(--blue); }
+.class-B .cls-letter  { color: var(--teal); }
+.class-C .cls-letter  { color: var(--amber); }
+.class-D .cls-letter  { color: var(--purple); }
+.class-E .cls-letter  { color: var(--coral); }
+
+.cls-range {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text2);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.cls-desc {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+/* ─── SUBNET ─── */
+.subnet-control {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 1.25rem 0 1rem;
+}
+
+.prefix-label {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--teal);
+  min-width: 44px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  background: var(--bg4);
+  border-radius: 2px;
+  outline: none;
+  border: 1px solid var(--border2);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--teal);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(45,212,191,0.4);
+}
+input[type=range]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--teal);
+  cursor: pointer;
+  border: none;
+}
+
+.mask-bits-wrapper {
+  padding: 1rem;
+  background: var(--bg3);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.mask-legend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; color: var(--text2); }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+.dot-net  { background: var(--teal); }
+.dot-host { background: var(--amber); }
+
+.result-table {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  transition: background .2s;
+}
+.result-row:last-child { border-bottom: none; }
+.result-row:hover { background: var(--bg4); }
+
+.result-key {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.result-val {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.result-val.net-color     { color: var(--teal); }
+.result-val.host-color    { color: var(--amber); }
+.result-val.bc-color      { color: var(--coral); }
+.result-val.count-color   { color: var(--green); }
+
+/* ─── CALC EXAMPLE ─── */
+.calc-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.calc-title {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 14px;
+  font-family: var(--sans);
+}
+
+.calc-line {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+  align-items: flex-start;
+}
+
+.calc-label { color: var(--text3); min-width: 140px; font-size: 12px; }
+.calc-val   { color: var(--text);  flex: 1; }
+.calc-and   { color: var(--text3); }
+.calc-sep   { border-top: 1px solid var(--border2); margin: 8px 0; }
+
+.hl-net  { color: var(--teal); }
+.hl-host { color: var(--amber); }
+.hl-bc   { color: var(--coral); }
+.hl-res  { color: var(--blue); font-weight: 700; }
+
+/* ─── IPv6 ─── */
+.ipv6-display {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem 1.25rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 1.25rem 0;
+}
+
+.ipv6-group {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid;
+}
+.ipv6-group.net  { background: var(--blue-bg);   color: var(--blue);   border-color: rgba(77,168,255,0.25); }
+.ipv6-group.iface{ background: var(--amber-bg);  color: var(--amber);  border-color: rgba(245,158,11,0.25); }
+
+.ipv6-colon { color: var(--text3); font-family: var(--mono); font-size: 13px; }
+
+.type-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.type-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color .2s;
+}
+.type-row:hover { border-color: var(--border2); }
+
+.type-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  margin-top: 2px;
+  font-family: var(--mono);
+}
+.badge-uc { background: var(--blue-bg);   color: var(--blue);   border: 1px solid rgba(77,168,255,0.3); }
+.badge-mc { background: var(--teal-bg);   color: var(--teal);   border: 1px solid rgba(45,212,191,0.3); }
+.badge-ac { background: var(--amber-bg);  color: var(--amber);  border: 1px solid rgba(245,158,11,0.3); }
+
+.type-info h4 { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.type-info p  { font-size: 12px; margin: 0; }
+
+.ipv6-abbr {
+  background: var(--purple-bg);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 1.25rem;
+}
+
+.abbr-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.abbr-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.abbr-step {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.step-arrow { color: var(--purple); font-size: 14px; }
+.step-from  { color: var(--text3); text-decoration: line-through; }
+.step-to    { color: var(--purple); font-weight: 700; }
+
+/* ─── COMPARISON TABLE ─── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1.25rem;
+}
+
+.cmp-cell {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+}
+.cmp-cell:nth-child(3n) { border-right: none; }
+.cmp-cell.header {
+  background: var(--bg3);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.cmp-cell.last-row { border-bottom: none; }
+.cmp-cell.v4 { color: var(--blue); font-family: var(--mono); font-weight: 600; }
+.cmp-cell.v6 { color: var(--purple); font-family: var(--mono); font-weight: 600; }
+
+/* ─── PRIVATE RANGES ─── */
+.private-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.private-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.pvt-class { font-size: 11px; color: var(--text3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.pvt-range { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 3px; }
+.pvt-desc  { font-size: 12px; color: var(--text2); }
+
+/* ─── FOOTER ─── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeUp .5s ease both;
+}
+.card:nth-child(1) { animation-delay: .05s; }
+.card:nth-child(2) { animation-delay: .10s; }
+.card:nth-child(3) { animation-delay: .15s; }
+.card:nth-child(4) { animation-delay: .20s; }
+.card:nth-child(5) { animation-delay: .25s; }
+.card:nth-child(6) { animation-delay: .30s; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border2); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  nav { gap: 1rem; padding: 0 1rem; }
+  .hero { padding: 3rem 1rem 2.5rem; }
+  main { padding: 0 1rem 4rem; }
+  .card-body { padding: 1rem; }
+  h1 { font-size: 2rem; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .cmp-cell { border-right: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">IP://PROTOCOLO</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">¿Qué es IP?</a>
+    <a class="nav-link" href="#s2">IPv4</a>
+    <a class="nav-link" href="#s3">Clases</a>
+    <a class="nav-link" href="#s4">Subnetting</a>
+    <a class="nav-link" href="#s5">IPv6</a>
+    <a class="nav-link" href="#s6">Privadas</a>
+    <a class="nav-link" href="#s7">Comparativa</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Red · Direccionamiento · Subnetting</div>
+  <h1>Protocolo <span>IP</span><br>de la A a la Z</h1>
+  <p class="hero-sub">Guía interactiva para entender cómo funciona el direccionamiento IP, desde los bits hasta las subredes — con ejemplos de cálculo en tiempo real.</p>
+</section>
+
+<main>
+
+<!-- ═══ SECCIÓN 1 ═══ -->
+<div class="card" id="s1">
+  <div class="card-header">
+    <span class="card-num num-blue">01</span>
+    <span class="card-title">¿Qué es una dirección IP?</span>
+  </div>
+  <div class="card-body">
+    <p>Una dirección IP funciona como la <strong style="color:#fff">dirección postal</strong> de cada dispositivo en una red. Así como cada casa tiene una dirección única, cada computadora, teléfono o router tiene una IP que permite identificarlo y enviarle datos a través de internet o una red local.</p>
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="ex-label">// Tu PC en casa</div>
+        <div class="ex-ip">192.168.1.10</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">Red local privada</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">// Google.com</div>
+        <div class="ex-ip">142.250.80.46</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">IP pública global</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">// Tu router</div>
+        <div class="ex-ip">192.168.1.1</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">Gateway de la red</div>
+      </div>
+      <div class="example-card">
+        <div class="ex-label">// Loopback</div>
+        <div class="ex-ip">127.0.0.1</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">Siempre: tú mismo</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 2 ═══ -->
+<div class="card" id="s2">
+  <div class="card-header">
+    <span class="card-num num-blue">02</span>
+    <span class="card-title">Estructura de IPv4 — 32 bits interactivos</span>
+  </div>
+  <div class="card-body">
+    <p>Una dirección IPv4 tiene <strong style="color:#fff">32 bits</strong> divididos en 4 grupos de 8 bits llamados <strong style="color:#fff">octetos</strong>. Cada octeto se representa en decimal (0–255). Hacé clic en cualquier bit para cambiar su valor y ver cómo cambia la dirección.</p>
+    <div class="bits-wrapper">
+      <div class="bits-row" id="bits-container"></div>
+      <div class="ip-display-row">
+        <span id="ip-display" class="ip-display">–</span>
+        <span class="ip-hint">← resultado en decimal</span>
+      </div>
+    </div>
+
+    <div id="class-detector" class="class-detector" style="background:var(--blue-bg);border-color:rgba(77,168,255,0.25);color:var(--blue);">
+      → Cambiá los bits para detectar automáticamente la clase de la IP
+    </div>
+
+    <!-- Cálculo binario visual -->
+    <div class="calc-box" style="margin-top:1.25rem;">
+      <div class="calc-title">Cómo leer el primer octeto (ejemplo: 192)</div>
+      <div class="calc-line">
+        <span class="calc-label">Bits:</span>
+        <span class="calc-val"><span class="hl-net">1·128</span> + <span class="hl-net">1·64</span> + 0·32 + 0·16 + 0·8 + 0·4 + 0·2 + 0·1</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">Cálculo:</span>
+        <span class="calc-val">128 + 64 = <span class="hl-res">192</span></span>
+      </div>
+      <div class="calc-line" style="margin-top:4px;">
+        <span class="calc-label" style="color:var(--text3);font-size:11px;">Posiciones:</span>
+        <span class="calc-val" style="color:var(--text3);font-size:11px;">2⁷=128 · 2⁶=64 · 2⁵=32 · 2⁴=16 · 2³=8 · 2²=4 · 2¹=2 · 2⁰=1</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 3 ═══ -->
+<div class="card" id="s3">
+  <div class="card-header">
+    <span class="card-num num-blue">03</span>
+    <span class="card-title">Clases de direcciones IPv4</span>
+  </div>
+  <div class="card-body">
+    <p>El valor del <strong style="color:#fff">primer octeto</strong> determina la clase de la dirección. Cada clase define cuántas redes y cuántos dispositivos por red son posibles.</p>
+    <div class="class-grid">
+      <div class="class-card class-A">
+        <div class="cls-letter">A</div>
+        <div class="cls-range">1.0.0.0<br>→ 126.255.255.255</div>
+        <div class="cls-desc">Red: 1er octeto<br>Hosts: 3 octetos<br>~16M hosts/red<br>Grandes corp.</div>
+      </div>
+      <div class="class-card class-B">
+        <div class="cls-letter">B</div>
+        <div class="cls-range">128.0.0.0<br>→ 191.255.255.255</div>
+        <div class="cls-desc">Red: 2 octetos<br>Hosts: 2 octetos<br>~65K hosts/red<br>Universidades</div>
+      </div>
+      <div class="class-card class-C">
+        <div class="cls-letter">C</div>
+        <div class="cls-range">192.0.0.0<br>→ 223.255.255.255</div>
+        <div class="cls-desc">Red: 3 octetos<br>Hosts: 1 octeto<br>254 hosts/red<br>Más común</div>
+      </div>
+      <div class="class-card class-D">
+        <div class="cls-letter">D</div>
+        <div class="cls-range">224.0.0.0<br>→ 239.255.255.255</div>
+        <div class="cls-desc">Multicast<br>No asignable<br>Grupos de<br>difusión</div>
+      </div>
+      <div class="class-card class-E">
+        <div class="cls-letter">E</div>
+        <div class="cls-range">240.0.0.0<br>→ 255.255.255.255</div>
+        <div class="cls-desc">Reservada<br>Investigación<br>Uso futuro<br>No en uso</div>
+      </div>
+    </div>
+
+    <div class="calc-box" style="margin-top:1.25rem;">
+      <div class="calc-title">Cómo identificar la clase — regla del primer octeto</div>
+      <div class="calc-line"><span class="calc-label hl-net">Clase A:</span><span class="calc-val">primer bit = 0 → 0XXXXXXX → rango 0–127</span></div>
+      <div class="calc-line"><span class="calc-label hl-host">Clase B:</span><span class="calc-val">primeros 2 bits = 10 → 10XXXXXX → rango 128–191</span></div>
+      <div class="calc-line"><span class="calc-label" style="color:var(--amber)">Clase C:</span><span class="calc-val">primeros 3 bits = 110 → 110XXXXX → rango 192–223</span></div>
+      <div class="calc-line"><span class="calc-label" style="color:var(--purple)">Clase D:</span><span class="calc-val">primeros 4 bits = 1110 → rango 224–239</span></div>
+      <div class="calc-line"><span class="calc-label" style="color:var(--coral)">Clase E:</span><span class="calc-val">primeros 4 bits = 1111 → rango 240–255</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 4 ═══ -->
+<div class="card" id="s4">
+  <div class="card-header">
+    <span class="card-num num-teal">04</span>
+    <span class="card-title">Máscara de red y Subnetting</span>
+  </div>
+  <div class="card-body">
+    <p>La <strong style="color:#fff">máscara de subred</strong> divide la dirección IP en dos partes: los bits de <strong style="color:var(--teal)">red</strong> (identifican la subred) y los bits de <strong style="color:var(--amber)">host</strong> (identifican el dispositivo). Mové el slider para cambiar el prefijo.</p>
+
+    <div class="subnet-control">
+      <span style="font-size:13px;color:var(--text2);font-family:var(--mono)">Prefijo:</span>
+      <span class="prefix-label">/<span id="prefix-val">24</span></span>
+      <input type="range" min="8" max="30" value="24" id="prefix-slider" oninput="updateSubnet(this.value)">
+    </div>
+
+    <div class="mask-bits-wrapper">
+      <div class="mask-legend">
+        <div class="legend-item"><div class="legend-dot dot-net"></div>Bits de red</div>
+        <div class="legend-item"><div class="legend-dot dot-host"></div>Bits de host</div>
+      </div>
+      <div class="bits-row" id="mask-bits"></div>
+    </div>
+
+    <div class="result-table">
+      <div class="result-row">
+        <span class="result-key">Dirección de red</span>
+        <span class="result-val net-color" id="r-network">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Máscara de subred</span>
+        <span class="result-val" id="r-mask">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Notación CIDR</span>
+        <span class="result-val" id="r-cidr">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Primer host válido</span>
+        <span class="result-val host-color" id="r-first">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Último host válido</span>
+        <span class="result-val host-color" id="r-last">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Dirección de broadcast</span>
+        <span class="result-val bc-color" id="r-broadcast">–</span>
+      </div>
+      <div class="result-row">
+        <span class="result-key">Hosts utilizables</span>
+        <span class="result-val count-color" id="r-hosts">–</span>
+      </div>
+    </div>
+
+    <!-- Ejemplo de cálculo AND -->
+    <div class="calc-box">
+      <div class="calc-title">Ejemplo de cálculo — AND bit a bit para obtener la red</div>
+      <div class="calc-line">
+        <span class="calc-label">IP:</span>
+        <span class="calc-val mono" style="color:var(--text);">192.168.10.55</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">= binario:</span>
+        <span class="calc-val"><span class="hl-net">11000000.10101000.00001010</span>.<span class="hl-host">00110111</span></span>
+      </div>
+      <div class="calc-line" style="margin-top:6px;">
+        <span class="calc-label">Máscara /24:</span>
+        <span class="calc-val mono" style="color:var(--text);">255.255.255.0</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">= binario:</span>
+        <span class="calc-val"><span class="hl-net">11111111.11111111.11111111</span>.<span class="hl-host">00000000</span></span>
+      </div>
+      <div class="calc-sep"></div>
+      <div class="calc-line">
+        <span class="calc-label">AND bit a bit:</span>
+        <span class="calc-val"><span class="hl-net">11000000.10101000.00001010</span>.<span class="hl-host">00000000</span></span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">Red resultante:</span>
+        <span class="calc-val hl-res">192.168.10.0/24</span>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);font-family:var(--sans)">
+        Fórmula de hosts: 2<sup>bits de host</sup> − 2 = 2<sup>8</sup> − 2 = <span style="color:var(--green)">254 hosts</span> (se restan la red y el broadcast)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 5 ═══ -->
+<div class="card" id="s5">
+  <div class="card-header">
+    <span class="card-num num-purple">05</span>
+    <span class="card-title">IPv6 — El futuro del direccionamiento</span>
+  </div>
+  <div class="card-body">
+    <p>IPv4 permite ~4.300 millones de direcciones. Con el crecimiento exponencial de dispositivos conectados, se agotaron. <strong style="color:#fff">IPv6 usa 128 bits</strong> y ofrece 3,4 × 10³⁸ direcciones — suficientes para cada átomo de la Tierra.</p>
+
+    <div style="margin-top:1.25rem;">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Estructura de dirección IPv6</div>
+      <div class="ipv6-display">
+        <div class="ipv6-group net">2001</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group net">0db8</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group net">85a3</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group net">0000</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group iface">0000</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group iface">8a2e</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group iface">0370</div><div class="ipv6-colon">:</div>
+        <div class="ipv6-group iface">7334</div>
+      </div>
+      <div style="display:flex;gap:16px;font-size:12px;color:var(--text2);flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:10px;height:10px;background:var(--blue-bg);border:1px solid rgba(77,168,255,0.3);border-radius:2px;"></span>Prefijo de red (64 bits = 4 grupos)</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:10px;height:10px;background:var(--amber-bg);border:1px solid rgba(245,158,11,0.3);border-radius:2px;"></span>Identificador de interfaz (64 bits = 4 grupos)</span>
+      </div>
+    </div>
+
+    <div class="type-grid">
+      <div class="type-row">
+        <span class="type-badge badge-uc">Unicast</span>
+        <div class="type-info">
+          <h4>Un dispositivo específico</h4>
+          <p>Global unicast: <span style="font-family:var(--mono);color:var(--blue);font-size:12px;">2000::/3</span> · Link-local: <span style="font-family:var(--mono);color:var(--blue);font-size:12px;">fe80::/10</span> · Loopback: <span style="font-family:var(--mono);color:var(--blue);font-size:12px;">::1</span></p>
+        </div>
+      </div>
+      <div class="type-row">
+        <span class="type-badge badge-mc">Multicast</span>
+        <div class="type-info">
+          <h4>Grupo de dispositivos</h4>
+          <p>Prefijo: <span style="font-family:var(--mono);color:var(--teal);font-size:12px;">ff00::/8</span> · Reemplaza el broadcast de IPv4. El paquete llega a todos los del grupo.</p>
+        </div>
+      </div>
+      <div class="type-row">
+        <span class="type-badge badge-ac">Anycast</span>
+        <div class="type-info">
+          <h4>El más cercano del grupo</h4>
+          <p>Misma dirección asignada a múltiples routers. El paquete va automáticamente al más próximo en la red.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ipv6-abbr">
+      <div class="abbr-title">Reglas de abreviación IPv6</div>
+      <div class="abbr-steps">
+        <div class="abbr-step">
+          <span class="step-arrow">①</span>
+          <span style="color:var(--text2);">Original:</span>
+          <span style="color:var(--purple);font-weight:700;">2001:0db8:0000:0000:0000:0000:0000:0001</span>
+        </div>
+        <div class="abbr-step">
+          <span class="step-arrow">②</span>
+          <span style="color:var(--text2);">Sin ceros iniciales:</span>
+          <span style="color:var(--purple);font-weight:700;">2001:db8:0:0:0:0:0:1</span>
+        </div>
+        <div class="abbr-step">
+          <span class="step-arrow">③</span>
+          <span style="color:var(--text2);">Grupos cero consecutivos → <span style="color:#fff">::</span></span>
+          <span style="color:var(--purple);font-weight:700;">2001:db8::1</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px;">El :: solo puede aparecer una vez en la dirección.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 6 ═══ -->
+<div class="card" id="s6">
+  <div class="card-header">
+    <span class="card-num num-amber">06</span>
+    <span class="card-title">Direcciones IP privadas</span>
+  </div>
+  <div class="card-body">
+    <p>Existen rangos reservados para redes privadas que <strong style="color:#fff">no son ruteables en internet</strong>. Los routers domésticos y empresariales usan NAT (Network Address Translation) para conectar estos dispositivos al mundo exterior.</p>
+    <div class="private-grid">
+      <div class="private-card">
+        <div class="pvt-class">Clase A privada</div>
+        <div class="pvt-range">10.0.0.0/8</div>
+        <div class="pvt-desc">10.0.0.0 – 10.255.255.255<br>~16 millones de hosts</div>
+      </div>
+      <div class="private-card">
+        <div class="pvt-class">Clase B privada</div>
+        <div class="pvt-range">172.16.0.0/12</div>
+        <div class="pvt-desc">172.16.0.0 – 172.31.255.255<br>~1 millón de hosts</div>
+      </div>
+      <div class="private-card">
+        <div class="pvt-class">Clase C privada</div>
+        <div class="pvt-range">192.168.0.0/16</div>
+        <div class="pvt-desc">192.168.0.0 – 192.168.255.255<br>65.536 hosts (el más común)</div>
+      </div>
+      <div class="private-card">
+        <div class="pvt-class">Loopback</div>
+        <div class="pvt-range">127.0.0.1</div>
+        <div class="pvt-desc">Siempre apunta al mismo dispositivo. Usado para pruebas locales.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECCIÓN 7 ═══ -->
+<div class="card" id="s7">
+  <div class="card-header">
+    <span class="card-num num-purple">07</span>
+    <span class="card-title">IPv4 vs IPv6 — Comparativa</span>
+  </div>
+  <div class="card-body">
+    <p>Ambas versiones coexisten hoy en la red global. La transición a IPv6 es progresiva pero necesaria.</p>
+    <div class="compare-grid">
+      <div class="cmp-cell header">Característica</div>
+      <div class="cmp-cell header">IPv4</div>
+      <div class="cmp-cell header">IPv6</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">Longitud</div>
+      <div class="cmp-cell v4">32 bits</div>
+      <div class="cmp-cell v6">128 bits</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">Direcciones</div>
+      <div class="cmp-cell v4">~4.300 M</div>
+      <div class="cmp-cell v6">3.4 × 10³⁸</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">Notación</div>
+      <div class="cmp-cell v4">Decimal (puntos)</div>
+      <div class="cmp-cell v6">Hexadecimal (:)</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">Broadcast</div>
+      <div class="cmp-cell v4">Sí</div>
+      <div class="cmp-cell v6">No (usa multicast)</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">Configuración</div>
+      <div class="cmp-cell v4">Manual / DHCP</div>
+      <div class="cmp-cell v6">Auto (SLAAC) / DHCPv6</div>
+
+      <div class="cmp-cell" style="color:var(--text2);">NAT</div>
+      <div class="cmp-cell v4">Necesario</div>
+      <div class="cmp-cell v6">No necesario</div>
+
+      <div class="cmp-cell last-row" style="color:var(--text2);">Seguridad</div>
+      <div class="cmp-cell v4 last-row">IPSec opcional</div>
+      <div class="cmp-cell v6 last-row">IPSec integrado</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <span style="color:var(--blue)">IP://</span>PROTOCOLO · Guía interactiva · Redes y Comunicaciones
+</footer>
+
+<script>
+// ─── ESTADO GLOBAL ───
+const bits = Array(32).fill(0);
+
+// IP inicial: 192.168.1.10
+const initIP = [192, 168, 1, 10];
+initIP.forEach((oct, o) => {
+  for (let i = 0; i < 8; i++) {
+    bits[o * 8 + i] = (oct >> (7 - i)) & 1;
+  }
+});
+
+// ─── BITS → DECIMAL ───
+function bitsToOctet(offset) {
+  let v = 0;
+  for (let i = 0; i < 8; i++) v += bits[offset + i] * (1 << (7 - i));
+  return v;
+}
+
+function getIP() {
+  return [0, 1, 2, 3].map(o => bitsToOctet(o * 8)).join('.');
+}
+
+// ─── DETECTOR DE CLASE ───
+function detectClass(ip) {
+  const f = parseInt(ip.split('.')[0]);
+  if (f === 127) return { label: 'Loopback (127.x.x.x)', color: '#8b9ab5', bg: 'rgba(139,154,181,0.1)', border: 'rgba(139,154,181,0.25)' };
+  if (f >= 1   && f <= 126) return { label: 'Clase A — grandes redes', color: '#4da8ff', bg: 'rgba(77,168,255,0.08)', border: 'rgba(77,168,255,0.25)' };
+  if (f >= 128 && f <= 191) return { label: 'Clase B — redes medianas', color: '#2dd4bf', bg: 'rgba(45,212,191,0.08)', border: 'rgba(45,212,191,0.25)' };
+  if (f >= 192 && f <= 223) return { label: 'Clase C — redes pequeñas', color: '#f59e0b', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.25)' };
+  if (f >= 224 && f <= 239) return { label: 'Clase D — Multicast', color: '#a78bfa', bg: 'rgba(167,139,250,0.08)', border: 'rgba(167,139,250,0.25)' };
+  return { label: 'Clase E — Reservada', color: '#fb7185', bg: 'rgba(251,113,133,0.08)', border: 'rgba(251,113,133,0.25)' };
+}
+
+// ─── RENDERIZAR BITS IP ───
+function renderBits() {
+  const container = document.getElementById('bits-container');
+  container.innerHTML = '';
+
+  for (let oct = 0; oct < 4; oct++) {
+    for (let i = 0; i < 8; i++) {
+      const idx = oct * 8 + i;
+      const div = document.createElement('div');
+      div.className = 'bit ' + (bits[idx] ? 'on' : 'off');
+      div.textContent = bits[idx];
+      div.title = `Bit ${idx + 1} · posición 2^${7 - i} = ${1 << (7 - i)}`;
+      div.onclick = () => {
+        bits[idx] ^= 1;
+        renderBits();
+        updateSubnet(document.getElementById('prefix-slider').value);
+      };
+      container.appendChild(div);
+    }
+    if (oct < 3) {
+      const sep = document.createElement('div');
+      sep.className = 'oct-sep';
+      container.appendChild(sep);
+    }
+  }
+
+  const ip = getIP();
+  document.getElementById('ip-display').textContent = ip;
+
+  const info = detectClass(ip);
+  const det = document.getElementById('class-detector');
+  det.style.background = info.bg;
+  det.style.borderColor = info.border;
+  det.style.color = info.color;
+  det.textContent = '→ ' + info.label + ' (primer octeto: ' + ip.split('.')[0] + ')';
+}
+
+// ─── IP → NUMBER ───
+function ipToNum(ip) {
+  return ip.split('.').reduce((acc, oct) => (acc << 8) + parseInt(oct), 0) >>> 0;
+}
+function numToIp(n) {
+  return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.');
+}
+
+// ─── SUBNETTING ───
+function updateSubnet(prefix) {
+  prefix = parseInt(prefix);
+  document.getElementById('prefix-val').textContent = prefix;
+
+  const maskContainer = document.getElementById('mask-bits');
+  maskContainer.innerHTML = '';
+
+  for (let oct = 0; oct < 4; oct++) {
+    for (let i = 0; i < 8; i++) {
+      const idx = oct * 8 + i;
+      const div = document.createElement('div');
+      div.className = 'bit ' + (idx < prefix ? 'net' : 'host');
+      div.textContent = idx < prefix ? '1' : '0';
+      maskContainer.appendChild(div);
+    }
+    if (oct < 3) {
+      const sep = document.createElement('div');
+      sep.className = 'oct-sep';
+      maskContainer.appendChild(sep);
+    }
+  }
+
+  const ip = getIP();
+  const ipNum = ipToNum(ip);
+  const maskNum = prefix === 0 ? 0 : (0xFFFFFFFF << (32 - prefix)) >>> 0;
+  const netNum  = (ipNum & maskNum) >>> 0;
+  const bcNum   = (netNum | (~maskNum >>> 0)) >>> 0;
+  const hosts   = Math.max(0, Math.pow(2, 32 - prefix) - 2);
+
+  document.getElementById('r-network').textContent   = numToIp(netNum);
+  document.getElementById('r-mask').textContent      = numToIp(maskNum);
+  document.getElementById('r-cidr').textContent      = numToIp(netNum) + '/' + prefix;
+  document.getElementById('r-first').textContent     = numToIp(netNum + 1);
+  document.getElementById('r-last').textContent      = numToIp(bcNum - 1);
+  document.getElementById('r-broadcast').textContent = numToIp(bcNum);
+  document.getElementById('r-hosts').textContent     = hosts.toLocaleString('es');
+}
+
+// ─── NAV ACTIVO ───
+function updateActiveNav() {
+  const sections = document.querySelectorAll('[id^="s"]');
+  const links = document.querySelectorAll('.nav-link');
+  let active = null;
+  sections.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= 80) active = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + active);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+// ─── INIT ───
+renderBits();
+updateSubnet(24);
+updateActiveNav();
+</script>
+</body>
+</html>
