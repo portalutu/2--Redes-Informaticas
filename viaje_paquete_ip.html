@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viaje de un Paquete IP</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0a0e1a;
+  --surface:   #111827;
+  --surface2:  #1a2235;
+  --border:    #1e2d45;
+  --accent:    #00d4ff;
+  --accent2:   #00ff9d;
+  --accent3:   #ff6b35;
+  --muted:     #4a6080;
+  --text:      #e2eaf8;
+  --text2:     #8ba3c4;
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Header */
+header { text-align: center; margin-bottom: 3rem; }
+
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 3px 10px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: .6rem;
+  background: linear-gradient(135deg, var(--text) 40%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--text2);
+  font-size: .95rem;
+  font-weight: 300;
+}
+
+/* Packet header display */
+#packet-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+}
+
+.pkt-label {
+  color: var(--muted);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+
+.pkt-fields {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.pkt-field {
+  flex: 1;
+  min-width: 100px;
+  padding: .5rem .75rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.pkt-field:last-child { border-right: none; }
+
+.pkt-field-name {
+  font-size: .6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .3rem;
+}
+
+.pkt-field-val {
+  color: var(--accent);
+  font-size: .85rem;
+  font-weight: 500;
+  transition: color .3s;
+}
+
+.pkt-field-val.changed { color: var(--accent2); }
+.pkt-field-val.danger  { color: var(--accent3); }
+
+/* Network diagram */
+#diagram {
+  position: relative;
+  height: 200px;
+  margin-bottom: 2rem;
+}
+
+.net-line {
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  right: 60px;
+  height: 2px;
+  background: var(--border);
+  transform: translateY(-50%);
+}
+
+.net-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .6s ease;
+}
+
+.net-line.active::after { transform: scaleX(1); }
+
+.nodes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+  transition: transform .2s;
+  position: relative;
+  z-index: 2;
+}
+
+.node-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .3s, box-shadow .3s, background .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.node-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--node-glow, transparent);
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.node.active .node-icon {
+  border-color: var(--node-color, var(--accent));
+  box-shadow: 0 0 0 1px var(--node-color, var(--accent)),
+              0 0 20px -4px var(--node-color, var(--accent));
+  background: var(--surface2);
+}
+
+.node.active .node-icon::before { opacity: 1; }
+.node.done .node-icon { border-color: var(--accent2); }
+
+.node-icon svg { width: 28px; height: 28px; }
+
+.node-info { text-align: center; }
+.node-name {
+  font-weight: 500;
+  font-size: .8rem;
+  color: var(--text);
+  transition: color .3s;
+}
+.node.active .node-name { color: var(--node-color, var(--accent)); }
+
+.node-ip {
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Animated packet dot */
+#pkt-dot {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: .58rem;
+  font-weight: 700;
+  color: #000;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: left .8s cubic-bezier(.4,0,.2,1), background .3s, opacity .3s;
+  z-index: 10;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Steps panel */
+#steps {
+  display: grid;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: border-color .3s, background .3s;
+  cursor: default;
+}
+
+.step-card.active {
+  border-color: var(--step-color, var(--accent));
+  background: var(--surface2);
+}
+.step-card.done { border-color: var(--accent2); opacity: .65; }
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.step-card.active .step-num {
+  background: var(--step-color, var(--accent));
+  color: #000;
+  border-color: transparent;
+  font-weight: 700;
+}
+.step-card.done .step-num {
+  background: var(--accent2);
+  color: #000;
+  border-color: transparent;
+}
+
+.step-body { flex: 1; }
+.step-title {
+  font-size: .9rem;
+  font-weight: 500;
+  margin-bottom: .3rem;
+  color: var(--text);
+  transition: color .3s;
+}
+.step-card.active .step-title { color: var(--step-color, var(--accent)); }
+
+.step-desc { font-size: .82rem; color: var(--text2); line-height: 1.55; }
+
+.step-detail {
+  margin-top: .6rem;
+  padding: .6rem .75rem;
+  background: var(--bg);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--accent);
+  display: none;
+  line-height: 1.7;
+}
+.step-card.active .step-detail { display: block; }
+
+/* Controls */
+#controls {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+button {
+  font-family: var(--sans);
+  font-size: .85rem;
+  font-weight: 500;
+  padding: .6rem 1.25rem;
+  border-radius: 7px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+#btn-play {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+#btn-play:hover:not(:disabled) { filter: brightness(1.15); }
+#btn-play:disabled { opacity: .4; cursor: not-allowed; }
+
+#btn-step {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text2);
+}
+#btn-step:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+#btn-step:disabled { opacity: .4; cursor: not-allowed; }
+
+#btn-reset {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text2);
+}
+#btn-reset:hover { border-color: var(--muted); color: var(--text); }
+
+.speed-wrap {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+  font-size: .8rem;
+  color: var(--text2);
+}
+
+input[type=range] {
+  accent-color: var(--accent);
+  width: 80px;
+}
+
+/* Info bar */
+#info-bar {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--text2);
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.info-item { display: flex; gap: .4rem; align-items: center; }
+.info-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* Tooltip on nodes */
+.node-icon:hover { transform: scale(1.06); }
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-size: .75rem;
+  color: var(--text2);
+}
+.legend-item { display: flex; align-items: center; gap: .4rem; }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .node-ip { display: none; }
+  .node-icon { width: 50px; height: 50px; }
+  .pkt-fields { gap: 0; }
+  .pkt-field { min-width: 80px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="tag">Protocolo IP · Bachillerato</div>
+    <h1>Viaje de un Paquete IP</h1>
+    <p class="subtitle">Seguí el recorrido completo de un paquete desde el origen hasta el destino</p>
+  </header>
+
+  <!-- Packet header live display -->
+  <div id="packet-header">
+    <div class="pkt-label">Cabecera del paquete IP</div>
+    <div class="pkt-fields">
+      <div class="pkt-field">
+        <div class="pkt-field-name">IP Origen</div>
+        <div class="pkt-field-val" id="f-src">—</div>
+      </div>
+      <div class="pkt-field">
+        <div class="pkt-field-name">IP Destino</div>
+        <div class="pkt-field-val" id="f-dst">—</div>
+      </div>
+      <div class="pkt-field">
+        <div class="pkt-field-name">TTL</div>
+        <div class="pkt-field-val" id="f-ttl">—</div>
+      </div>
+      <div class="pkt-field">
+        <div class="pkt-field-name">Protocolo</div>
+        <div class="pkt-field-val" id="f-proto">—</div>
+      </div>
+      <div class="pkt-field">
+        <div class="pkt-field-name">Tamaño</div>
+        <div class="pkt-field-val" id="f-size">—</div>
+      </div>
+      <div class="pkt-field">
+        <div class="pkt-field-name">Estado</div>
+        <div class="pkt-field-val" id="f-status">Esperando</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Network diagram -->
+  <div id="diagram">
+    <div class="net-line" id="net-line"></div>
+    <div class="nodes" id="nodes-row">
+
+      <div class="node" id="n-pc" style="--node-color:#00d4ff; --node-glow:rgba(0,212,255,.08)">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div class="node-info">
+          <div class="node-name">PC Origen</div>
+          <div class="node-ip">192.168.1.10</div>
+        </div>
+      </div>
+
+      <div class="node" id="n-ra" style="--node-color:#00d4ff; --node-glow:rgba(0,212,255,.08)">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+            <path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
+          </svg>
+        </div>
+        <div class="node-info">
+          <div class="node-name">Router A</div>
+          <div class="node-ip">192.168.1.1</div>
+        </div>
+      </div>
+
+      <div class="node" id="n-inet" style="--node-color:#8ba3c4; --node-glow:rgba(139,163,196,.08)">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="node-info">
+          <div class="node-name">Internet</div>
+          <div class="node-ip">múltiples saltos</div>
+        </div>
+      </div>
+
+      <div class="node" id="n-rb" style="--node-color:#00d4ff; --node-glow:rgba(0,212,255,.08)">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+            <path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
+          </svg>
+        </div>
+        <div class="node-info">
+          <div class="node-name">Router B</div>
+          <div class="node-ip">203.0.113.1</div>
+        </div>
+      </div>
+
+      <div class="node" id="n-srv" style="--node-color:#ff6b35; --node-glow:rgba(255,107,53,.08)">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="2" y="2" width="20" height="8" rx="2"/>
+            <rect x="2" y="14" width="20" height="8" rx="2"/>
+            <circle cx="7" cy="6" r="1" fill="currentColor"/>
+            <circle cx="7" cy="18" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="node-info">
+          <div class="node-name">Servidor</div>
+          <div class="node-ip">203.0.113.10</div>
+        </div>
+      </div>
+
+    </div>
+    <div id="pkt-dot">PKT</div>
+  </div>
+
+  <!-- Controls -->
+  <div id="controls">
+    <button id="btn-play" onclick="playAll()">Reproducir todo</button>
+    <button id="btn-step" onclick="nextStep()">Siguiente paso →</button>
+    <button id="btn-reset" onclick="resetAll()">Reiniciar</button>
+    <div class="speed-wrap">
+      <span>Velocidad</span>
+      <input type="range" id="speed" min="0.5" max="3" step="0.5" value="1">
+      <span id="speed-label">1×</span>
+    </div>
+  </div>
+
+  <!-- Step cards -->
+  <div id="steps">
+    <div class="step-card" id="s0" style="--step-color:#00d4ff">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">PC arma el paquete</div>
+        <div class="step-desc">La aplicación genera datos, TCP/UDP arma el segmento y la capa IP construye la cabecera con las IPs y el TTL inicial.</div>
+        <div class="step-detail">SRC: 192.168.1.10<br>DST: 203.0.113.10<br>TTL: 64  PROTO: TCP(6)<br>SIZE: 1500 bytes<br>→ Enviando al gateway 192.168.1.1</div>
+      </div>
+    </div>
+    <div class="step-card" id="s1" style="--step-color:#00d4ff">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Router A: tabla de ruteo</div>
+        <div class="step-desc">El router recibe el paquete, decrementa el TTL y busca 203.0.113.0/24 en su tabla. No está en la red local → lo reenvía al siguiente salto hacia internet.</div>
+        <div class="step-detail">TTL: 64 → 63  (−1 por salto)<br>LOOKUP: 203.0.113.0/24<br>RESULT: via 0.0.0.0 → default route<br>→ Reenviando hacia ISP</div>
+      </div>
+    </div>
+    <div class="step-card" id="s2" style="--step-color:#8ba3c4">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Tránsito por internet</div>
+        <div class="step-desc">Múltiples routers intermedios (ISPs, IXPs) leen solo la IP destino y encaminan el paquete. Cada salto reduce el TTL en 1.</div>
+        <div class="step-detail">Salto 1: TTL 63→62<br>Salto 2: TTL 62→61<br>Salto 3: TTL 61→60<br>...  (aprox. 10–15 saltos)<br>TTL actual: ~50</div>
+      </div>
+    </div>
+    <div class="step-card" id="s3" style="--step-color:#00d4ff">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Router B: red destino</div>
+        <div class="step-desc">Router B reconoce que 203.0.113.10 pertenece a su red local (203.0.113.0/24). Usa ARP para obtener la MAC del servidor y entrega el paquete.</div>
+        <div class="step-detail">TTL: ~50 → ~49<br>LOOKUP: 203.0.113.10<br>RESULT: local → red 203.0.113.0/24<br>ARP: ¿quién tiene 203.0.113.10?<br>→ Entregando localmente</div>
+      </div>
+    </div>
+    <div class="step-card" id="s4" style="--step-color:#ff6b35">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Servidor recibe el paquete</div>
+        <div class="step-desc">El servidor verifica que la IP destino coincide con la suya, acepta el paquete, extrae los datos y los pasa a la aplicación (ej. servidor web).</div>
+        <div class="step-detail">DST 203.0.113.10 == yo → ACEPTADO<br>PROTO: TCP(6) → puerto 80<br>TTL final: ~49<br>Datos entregados a la app.<br>HANDSHAKE: enviando ACK...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info bar -->
+  <div id="info-bar">
+    <div class="info-item">
+      <div class="info-dot" style="background:var(--accent)"></div>
+      <span>Red local A: 192.168.1.0/24</span>
+    </div>
+    <div class="info-item">
+      <div class="info-dot" style="background:var(--accent3)"></div>
+      <span>Red local B: 203.0.113.0/24</span>
+    </div>
+    <div class="info-item" style="margin-left:auto">
+      <span id="status-text" style="color:var(--muted)">Paso 0 de 5</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div><span>Nodo activo</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div><span>Nodo completado</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div><span>Destino final</span></div>
+  </div>
+
+</div>
+
+<script>
+document.getElementById('speed').addEventListener('input', function() {
+  document.getElementById('speed-label').textContent = this.value + '×';
+});
+
+const nodeIds = ['n-pc','n-ra','n-inet','n-rb','n-srv'];
+const nodePositions = [0,1,2,3,4];
+
+const steps = [
+  {
+    from: 0, to: 1,
+    src:'192.168.1.10', dst:'203.0.113.10', ttl:'64', proto:'TCP (6)', size:'1500 B', status:'En tránsito',
+    pktColor: '#00d4ff', pktLabel: 'PKT'
+  },
+  {
+    from: 1, to: 2,
+    src:'192.168.1.10', dst:'203.0.113.10', ttl:'63', proto:'TCP (6)', size:'1500 B', status:'Ruteo →ISP',
+    pktColor: '#00d4ff', pktLabel: 'PKT'
+  },
+  {
+    from: 2, to: 2,
+    src:'192.168.1.10', dst:'203.0.113.10', ttl:'~50', proto:'TCP (6)', size:'1500 B', status:'Tránsito web',
+    pktColor: '#8ba3c4', pktLabel: 'PKT'
+  },
+  {
+    from: 2, to: 3,
+    src:'192.168.1.10', dst:'203.0.113.10', ttl:'~49', proto:'TCP (6)', size:'1500 B', status:'Red local B',
+    pktColor: '#00d4ff', pktLabel: 'PKT'
+  },
+  {
+    from: 3, to: 4,
+    src:'192.168.1.10', dst:'203.0.113.10', ttl:'~48', proto:'TCP (6)', size:'1500 B', status:'ENTREGADO',
+    pktColor: '#ff6b35', pktLabel: 'PKT'
+  }
+];
+
+let currentStep = -1;
+let playing = false;
+let playTimer = null;
+
+function getSpeed() {
+  return parseFloat(document.getElementById('speed').value);
+}
+
+function getNodeX(nodeIndex) {
+  const nodesRow = document.getElementById('nodes-row');
+  const nodes = nodesRow.querySelectorAll('.node');
+  const diagRect = document.getElementById('diagram').getBoundingClientRect();
+  const nodeRect = nodes[nodeIndex].getBoundingClientRect();
+  return nodeRect.left - diagRect.left + nodeRect.width / 2;
+}
+
+function setPacketField(id, val, cls) {
+  const el = document.getElementById(id);
+  el.className = 'pkt-field-val' + (cls ? ' ' + cls : '');
+  el.textContent = val;
+}
+
+function activateStep(idx) {
+  const s = steps[idx];
+
+  for (let i = 0; i < idx; i++) {
+    document.getElementById('n-' + ['pc','ra','inet','rb','srv'][i]).classList.add('done');
+    document.getElementById('n-' + ['pc','ra','inet','rb','srv'][i]).classList.remove('active');
+    document.getElementById('s' + i).classList.remove('active');
+    document.getElementById('s' + i).classList.add('done');
+  }
+
+  const nodeNames = ['pc','ra','inet','rb','srv'];
+  for (let i = idx; i < 5; i++) {
+    document.getElementById('n-' + nodeNames[i]).classList.remove('active','done');
+    document.getElementById('s' + i).classList.remove('active','done');
+  }
+
+  document.getElementById('n-' + nodeNames[s.from]).classList.add('active');
+  document.getElementById('s' + idx).classList.add('active');
+
+  setPacketField('f-src', s.src);
+  setPacketField('f-dst', s.dst);
+  setPacketField('f-ttl', s.ttl, parseInt(s.ttl) < 10 ? 'danger' : 'changed');
+  setPacketField('f-proto', s.proto);
+  setPacketField('f-size', s.size);
+  setPacketField('f-status', s.status, idx === 4 ? 'changed' : '');
+
+  document.getElementById('status-text').textContent = 'Paso ' + (idx + 1) + ' de 5';
+
+  animatePacket(s.from, s.to, s.pktColor, s.pktLabel, idx);
+}
+
+function animatePacket(fromIdx, toIdx, color, label, stepIdx) {
+  const dot = document.getElementById('pkt-dot');
+  const fromX = getNodeX(fromIdx);
+  const toX   = getNodeX(toIdx);
+
+  dot.style.transition = 'none';
+  dot.style.left = (fromX - 20) + 'px';
+  dot.style.background = color;
+  dot.style.color = color === '#8ba3c4' ? '#000' : '#000';
+  dot.textContent = label;
+  dot.style.opacity = '1';
+
+  const speed = getSpeed();
+  const duration = fromIdx === toIdx ? 600 : Math.max(400, 800 / speed);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      dot.style.transition = `left ${duration}ms cubic-bezier(.4,0,.2,1)`;
+      if (fromIdx === toIdx) {
+        dot.style.left = (fromX + 15) + 'px';
+        setTimeout(() => { dot.style.left = (fromX - 20) + 'px'; }, duration / 2);
+      } else {
+        dot.style.left = (toX - 20) + 'px';
+      }
+    });
+  });
+
+  if (stepIdx === 4) {
+    setTimeout(() => {
+      dot.style.transition = 'opacity .5s';
+      dot.style.opacity = '0';
+      document.getElementById('n-srv').classList.add('active');
+      document.getElementById('n-srv').classList.remove('done');
+    }, duration + 100);
+  }
+}
+
+function nextStep() {
+  if (currentStep >= 4) return;
+  currentStep++;
+  activateStep(currentStep);
+  if (currentStep >= 4) {
+    document.getElementById('btn-step').disabled = true;
+    document.getElementById('btn-play').disabled = true;
+  }
+}
+
+function playAll() {
+  if (playing) return;
+  playing = true;
+  document.getElementById('btn-play').disabled = true;
+  document.getElementById('btn-step').disabled = true;
+
+  function tick() {
+    if (currentStep >= 4) { playing = false; return; }
+    nextStep();
+    const speed = getSpeed();
+    const delay = Math.max(600, 1400 / speed);
+    playTimer = setTimeout(tick, delay);
+  }
+  tick();
+}
+
+function resetAll() {
+  if (playTimer) clearTimeout(playTimer);
+  playing = false;
+  currentStep = -1;
+
+  const nodeNames = ['pc','ra','inet','rb','srv'];
+  nodeNames.forEach(n => {
+    document.getElementById('n-' + n).classList.remove('active','done');
+  });
+  for (let i = 0; i < 5; i++) {
+    document.getElementById('s' + i).classList.remove('active','done');
+  }
+
+  const dot = document.getElementById('pkt-dot');
+  dot.style.transition = 'none';
+  dot.style.opacity = '0';
+
+  setPacketField('f-src', '—');
+  setPacketField('f-dst', '—');
+  setPacketField('f-ttl', '—');
+  setPacketField('f-proto', '—');
+  setPacketField('f-size', '—');
+  setPacketField('f-status', 'Esperando');
+
+  document.getElementById('status-text').textContent = 'Paso 0 de 5';
+  document.getElementById('btn-play').disabled = false;
+  document.getElementById('btn-step').disabled = false;
+}
+</script>
+</body>
+</html>
