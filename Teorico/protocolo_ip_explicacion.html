@@ -1,0 +1,396 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+
+.section { border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); margin-bottom: 1.5rem; overflow: hidden; }
+.section-header { padding: 1rem 1.25rem 0.75rem; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; gap: 10px; }
+.section-body { padding: 1rem 1.25rem; }
+
+.badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+.badge-blue { background: #E6F1FB; color: #185FA5; }
+.badge-teal { background: #E1F5EE; color: #0F6E56; }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.badge-purple { background: #EEEDFE; color: #534AB7; }
+.badge-coral { background: #FAECE7; color: #993C1D; }
+
+h2 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
+.label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.mono { font-family: var(--font-mono); font-size: 13px; }
+
+.bit-grid { display: flex; gap: 3px; flex-wrap: wrap; margin: 8px 0; }
+.bit { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 13px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--color-border-secondary); transition: all .15s; user-select: none; }
+.bit.on { background: #185FA5; color: #fff; border-color: #185FA5; }
+.bit.off { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+.bit:hover { transform: scale(1.08); }
+.bit.net { background: #0F6E56; color: #fff; border-color: #0F6E56; }
+.bit.host { background: #854F0B; color: #fff; border-color: #854F0B; }
+
+.octet-sep { width: 1px; background: var(--color-border-secondary); margin: 0 4px; }
+
+.class-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 12px 0; }
+.class-card { border-radius: var(--border-radius-md); padding: 10px 12px; border: 0.5px solid; }
+.class-A { background: #E6F1FB; border-color: #B5D4F4; }
+.class-B { background: #E1F5EE; border-color: #9FE1CB; }
+.class-C { background: #FAEEDA; border-color: #FAC775; }
+.class-D { background: #EEEDFE; border-color: #CECBF6; }
+.class-E { background: #FAECE7; border-color: #F5C4B3; }
+.class-card .cls-name { font-size: 18px; font-weight: 500; }
+.class-A .cls-name { color: #0C447C; }
+.class-B .cls-name { color: #085041; }
+.class-C .cls-name { color: #633806; }
+.class-D .cls-name { color: #3C3489; }
+.class-E .cls-name { color: #712B13; }
+.class-card .cls-range { font-size: 11px; font-family: var(--font-mono); margin: 4px 0; }
+.class-A .cls-range { color: #185FA5; }
+.class-B .cls-range { color: #0F6E56; }
+.class-C .cls-range { color: #854F0B; }
+.class-D .cls-range { color: #534AB7; }
+.class-E .cls-range { color: #993C1D; }
+.class-card .cls-desc { font-size: 11px; color: var(--color-text-secondary); }
+
+.subnet-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+.ip-block { font-family: var(--font-mono); font-size: 13px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 6px 10px; }
+.ip-block.net-part { background: #E1F5EE; border-color: #5DCAA5; color: #085041; }
+.ip-block.host-part { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+
+.slider-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+.result-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; margin: 8px 0; border: 0.5px solid var(--color-border-tertiary); }
+.result-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 13px; }
+.result-row:not(:last-child) { border-bottom: 0.5px solid var(--color-border-tertiary); }
+.result-key { color: var(--color-text-secondary); }
+.result-val { font-family: var(--font-mono); font-weight: 500; color: var(--color-text-primary); }
+
+.tab-row { display: flex; gap: 4px; margin-bottom: 12px; }
+.tab { padding: 5px 12px; border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); transition: all .15s; }
+.tab.active { background: var(--color-background-info); color: var(--color-text-info); border-color: transparent; font-weight: 500; }
+
+.ipv6-block { display: flex; gap: 4px; flex-wrap: wrap; margin: 8px 0; }
+.ipv6-group { font-family: var(--font-mono); font-size: 12px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 4px; padding: 5px 7px; text-align: center; color: var(--color-text-primary); }
+.ipv6-group.net { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+.ipv6-group.iface { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+.colon { color: var(--color-text-tertiary); font-family: var(--font-mono); display: flex; align-items: center; }
+
+.highlight { background: #FAEEDA; border-radius: 3px; padding: 0 3px; font-family: var(--font-mono); font-size: 13px; color: #633806; }
+</style>
+
+<h2 style="sr-only">Protocolo IP: guía interactiva para bachillerato</h2>
+
+<!-- SECCIÓN 1: Qué es una dirección IP -->
+<div class="section">
+  <div class="section-header">
+    <span class="badge badge-blue">1</span>
+    <h2>¿Qué es una dirección IP?</h2>
+  </div>
+  <div class="section-body">
+    <p>Una dirección IP es como la <strong style="font-weight:500;color:var(--color-text-primary)">dirección postal</strong> de cada dispositivo en una red. Así como cada casa tiene una dirección única, cada computadora, teléfono o router tiene una dirección IP que permite identificarla y enviarle datos.</p>
+    <div style="margin: 14px 0; display:flex; gap:12px; flex-wrap:wrap;">
+      <div style="flex:1;min-width:160px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;border:0.5px solid var(--color-border-tertiary);">
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Tu PC en casa</div>
+        <div class="mono" style="color:var(--color-text-primary);">192.168.1.10</div>
+      </div>
+      <div style="flex:1;min-width:160px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;border:0.5px solid var(--color-border-tertiary);">
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Google.com</div>
+        <div class="mono" style="color:var(--color-text-primary);">142.250.80.46</div>
+      </div>
+      <div style="flex:1;min-width:160px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;border:0.5px solid var(--color-border-tertiary);">
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Tu router</div>
+        <div class="mono" style="color:var(--color-text-primary);">192.168.1.1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 2: Estructura IPv4 interactiva -->
+<div class="section">
+  <div class="section-header">
+    <span class="badge badge-blue">2</span>
+    <h2>Estructura de IPv4 — 32 bits interactivos</h2>
+  </div>
+  <div class="section-body">
+    <p>Una dirección IPv4 tiene <strong style="font-weight:500;color:var(--color-text-primary)">32 bits</strong> divididos en 4 grupos de 8 bits (octetos). Cada octeto se escribe en decimal. Hacé clic en los bits para cambiarlos.</p>
+    <div style="margin-top:14px;">
+      <div class="label">Bit a bit → decimal (hacé clic para cambiar)</div>
+      <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:6px;">
+        <div id="bits-container" style="display:flex;gap:4px;align-items:center;"></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span class="label" style="margin:0">Dirección:</span>
+        <span id="ip-display" class="mono" style="font-size:16px;color:var(--color-text-primary);font-weight:500;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 3: Clases IPv4 -->
+<div class="section">
+  <div class="section-header">
+    <span class="badge badge-teal">3</span>
+    <h2>Clases de direcciones IPv4</h2>
+  </div>
+  <div class="section-body">
+    <p>El primer octeto (o primeros bits) determina la <strong style="font-weight:500;color:var(--color-text-primary)">clase</strong> de la dirección, que define cuántas redes y cuántos hosts por red son posibles.</p>
+    <div class="class-grid" style="margin-top:12px;">
+      <div class="class-card class-A">
+        <div class="cls-name">Clase A</div>
+        <div class="cls-range">1.0.0.0 – 126.255.255.255</div>
+        <div class="cls-desc">1 octeto = red<br>3 octetos = hosts<br>~16 millones hosts/red<br>126 redes</div>
+      </div>
+      <div class="class-card class-B">
+        <div class="cls-name">Clase B</div>
+        <div class="cls-range">128.0.0.0 – 191.255.255.255</div>
+        <div class="cls-desc">2 octetos = red<br>2 octetos = hosts<br>~65.000 hosts/red<br>16.384 redes</div>
+      </div>
+      <div class="class-card class-C">
+        <div class="cls-name">Clase C</div>
+        <div class="cls-range">192.0.0.0 – 223.255.255.255</div>
+        <div class="cls-desc">3 octetos = red<br>1 octeto = hosts<br>254 hosts/red<br>2 millones de redes</div>
+      </div>
+      <div class="class-card class-D">
+        <div class="cls-name">Clase D</div>
+        <div class="cls-range">224.0.0.0 – 239.255.255.255</div>
+        <div class="cls-desc">Multicast<br>No asignable a hosts<br>Grupos de difusión</div>
+      </div>
+      <div class="class-card class-E">
+        <div class="cls-name">Clase E</div>
+        <div class="cls-range">240.0.0.0 – 255.255.255.255</div>
+        <div class="cls-desc">Reservada<br>Investigación y uso futuro<br>No en uso público</div>
+      </div>
+    </div>
+    <div id="class-detector" style="margin-top:10px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);font-size:13px;">
+      → Cambiá los bits de arriba para ver a qué clase pertenece la dirección
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 4: Máscara de red y subnetting -->
+<div class="section">
+  <div class="section-header">
+    <span class="badge badge-amber">4</span>
+    <h2>Máscara de red y subnetting</h2>
+  </div>
+  <div class="section-body">
+    <p>La <strong style="font-weight:500;color:var(--color-text-primary)">máscara de subred</strong> indica qué parte de la IP identifica la red y qué parte identifica al host. Los bits en <span style="display:inline-block;width:12px;height:12px;background:#0F6E56;border-radius:2px;vertical-align:middle;"></span> <strong style="font-weight:500;color:#0F6E56">verde</strong> = red, en <span style="display:inline-block;width:12px;height:12px;background:#854F0B;border-radius:2px;vertical-align:middle;"></span> <strong style="font-weight:500;color:#854F0B">amarillo</strong> = host.</p>
+    
+    <div style="margin-top:14px;">
+      <div class="slider-row">
+        <span class="label" style="margin:0;white-space:nowrap">Prefijo: /<span id="prefix-val">24</span></span>
+        <input type="range" min="8" max="30" value="24" id="prefix-slider" style="flex:1;" oninput="updateSubnet(this.value)">
+      </div>
+      
+      <div class="label" style="margin-top:8px;">Bits de la máscara</div>
+      <div id="mask-bits" style="display:flex;gap:3px;flex-wrap:wrap;margin:6px 0 12px;"></div>
+      
+      <div class="result-box">
+        <div class="result-row">
+          <span class="result-key">Dirección de red</span>
+          <span class="result-val" id="r-network">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Máscara</span>
+          <span class="result-val" id="r-mask">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Notación CIDR</span>
+          <span class="result-val" id="r-cidr">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Primer host válido</span>
+          <span class="result-val" id="r-first">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Último host válido</span>
+          <span class="result-val" id="r-last">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Broadcast</span>
+          <span class="result-val" id="r-broadcast">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Hosts utilizables</span>
+          <span class="result-val" id="r-hosts">–</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 5: IPv6 -->
+<div class="section">
+  <div class="section-header">
+    <span class="badge badge-purple">5</span>
+    <h2>IPv6 — El futuro del direccionamiento</h2>
+  </div>
+  <div class="section-body">
+    <p>IPv4 permite ~4.300 millones de direcciones. Con el crecimiento de internet, se agotaron. IPv6 usa <strong style="font-weight:500;color:var(--color-text-primary)">128 bits</strong> y permite 340 sextillones de direcciones (3,4 × 10³⁸).</p>
+    
+    <div style="margin:14px 0 8px;">
+      <div class="label">Estructura de una dirección IPv6</div>
+      <div class="ipv6-block">
+        <div class="ipv6-group net">2001</div><div class="colon">:</div>
+        <div class="ipv6-group net">0db8</div><div class="colon">:</div>
+        <div class="ipv6-group net">85a3</div><div class="colon">:</div>
+        <div class="ipv6-group net">0000</div><div class="colon">:</div>
+        <div class="ipv6-group iface">0000</div><div class="colon">:</div>
+        <div class="ipv6-group iface">8a2e</div><div class="colon">:</div>
+        <div class="ipv6-group iface">0370</div><div class="colon">:</div>
+        <div class="ipv6-group iface">7334</div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:12px;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:12px;height:12px;background:#E6F1FB;border:0.5px solid #85B7EB;border-radius:2px;"></span><span style="color:#0C447C">Prefijo de red (64 bits)</span></span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:12px;height:12px;background:#FAEEDA;border:0.5px solid #EF9F27;border-radius:2px;"></span><span style="color:#633806">Identificador de interfaz (64 bits)</span></span>
+      </div>
+    </div>
+    
+    <div style="margin-top:14px;">
+      <div class="label">Tipos de direcciones IPv6</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);">
+          <span class="badge badge-blue" style="white-space:nowrap;margin-top:1px;">Unicast</span>
+          <div>
+            <div style="font-size:13px;color:var(--color-text-primary);font-weight:500;">Un dispositivo específico</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);">Global: <span class="highlight">2000::/3</span> · Link-local: <span class="highlight">fe80::/10</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);">
+          <span class="badge badge-teal" style="white-space:nowrap;margin-top:1px;">Multicast</span>
+          <div>
+            <div style="font-size:13px;color:var(--color-text-primary);font-weight:500;">Grupo de dispositivos</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);">Prefijo: <span class="highlight">ff00::/8</span> · Reemplaza el broadcast</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);">
+          <span class="badge badge-amber" style="white-space:nowrap;margin-top:1px;">Anycast</span>
+          <div>
+            <div style="font-size:13px;color:var(--color-text-primary);font-weight:500;">El más cercano del grupo</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);">Misma dirección en varios routers → va al más próximo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin-top:14px;padding:10px 14px;background:#EEEDFE;border-radius:var(--border-radius-md);border:0.5px solid #CECBF6;">
+      <div style="font-size:13px;font-weight:500;color:#3C3489;margin-bottom:4px;">Abreviación de IPv6</div>
+      <div style="font-size:12px;color:#534AB7;line-height:1.7;">
+        <span class="mono">2001:0db8:0000:0000:0000:0000:0000:0001</span><br>
+        → Quitar ceros iniciales en cada grupo: <span class="mono">2001:db8:0:0:0:0:0:1</span><br>
+        → Reemplazar grupos de ceros consecutivos con <span class="mono">::</span>: <span class="mono">2001:db8::1</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const bits = Array(32).fill(0);
+bits[7]=1; bits[15]=1; bits[19]=1; bits[23]=1;
+bits[0]=1; bits[1]=1; bits[2]=0; bits[3]=0; bits[8]=1; bits[16]=1;
+
+function bitsToDecimal(b) {
+  let v = 0;
+  for(let i=0;i<8;i++) v += b[i] * (1<<(7-i));
+  return v;
+}
+
+function getIP() {
+  return [0,1,2,3].map(o => bitsToDecimal(bits.slice(o*8,(o+1)*8))).join('.');
+}
+
+function detectClass(ip) {
+  const first = parseInt(ip.split('.')[0]);
+  if (first >= 1 && first <= 126) return {cls:'A', color:'#185FA5', bg:'#E6F1FB', border:'#B5D4F4'};
+  if (first === 127) return {cls:'Loopback (127.x.x.x)', color:'#5F5E5A', bg:'#F1EFE8', border:'#D3D1C7'};
+  if (first >= 128 && first <= 191) return {cls:'B', color:'#0F6E56', bg:'#E1F5EE', border:'#9FE1CB'};
+  if (first >= 192 && first <= 223) return {cls:'C', color:'#854F0B', bg:'#FAEEDA', border:'#FAC775'};
+  if (first >= 224 && first <= 239) return {cls:'D (Multicast)', color:'#534AB7', bg:'#EEEDFE', border:'#CECBF6'};
+  return {cls:'E (Reservada)', color:'#993C1D', bg:'#FAECE7', border:'#F5C4B3'};
+}
+
+function renderBits() {
+  const container = document.getElementById('bits-container');
+  container.innerHTML = '';
+  for(let oct=0;oct<4;oct++){
+    for(let i=0;i<8;i++){
+      const idx = oct*8+i;
+      const div = document.createElement('div');
+      div.className = 'bit ' + (bits[idx] ? 'on' : 'off');
+      div.textContent = bits[idx];
+      div.title = 'Bit '+(idx+1)+': posición '+(1<<(7-i));
+      div.onclick = () => { bits[idx] = bits[idx]?0:1; renderBits(); updateSubnet(document.getElementById('prefix-slider').value); };
+      container.appendChild(div);
+    }
+    if(oct<3){
+      const sep = document.createElement('div');
+      sep.className='octet-sep'; sep.style.height='28px';
+      container.appendChild(sep);
+    }
+  }
+  const ip = getIP();
+  document.getElementById('ip-display').textContent = ip;
+  const info = detectClass(ip);
+  const det = document.getElementById('class-detector');
+  det.style.background = info.bg;
+  det.style.borderColor = info.border;
+  det.style.color = info.color;
+  det.textContent = '→ Clase ' + info.cls + ' (primer octeto: ' + ip.split('.')[0] + ')';
+}
+
+function ipToNum(ip) {
+  return ip.split('.').reduce((acc,oct) => (acc<<8)+parseInt(oct), 0) >>> 0;
+}
+
+function numToIp(n) {
+  return [(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.');
+}
+
+function updateSubnet(prefix) {
+  prefix = parseInt(prefix);
+  document.getElementById('prefix-val').textContent = prefix;
+  
+  const maskBits = document.getElementById('mask-bits');
+  maskBits.innerHTML = '';
+  for(let oct=0;oct<4;oct++){
+    for(let i=0;i<8;i++){
+      const idx=oct*8+i;
+      const div = document.createElement('div');
+      div.className = 'bit ' + (idx < prefix ? 'net' : 'host');
+      div.textContent = idx < prefix ? '1' : '0';
+      maskBits.appendChild(div);
+    }
+    if(oct<3){
+      const sep=document.createElement('div');
+      sep.className='octet-sep'; sep.style.height='28px';
+      maskBits.appendChild(sep);
+    }
+  }
+  
+  const ip = getIP();
+  const ipNum = ipToNum(ip);
+  const maskNum = prefix===0 ? 0 : (0xFFFFFFFF << (32-prefix)) >>> 0;
+  const netNum = (ipNum & maskNum) >>> 0;
+  const bcNum  = (netNum | (~maskNum >>> 0)) >>> 0;
+  const hosts  = Math.pow(2, 32-prefix) - 2;
+  
+  document.getElementById('r-network').textContent   = numToIp(netNum);
+  document.getElementById('r-mask').textContent      = numToIp(maskNum);
+  document.getElementById('r-cidr').textContent      = numToIp(netNum) + '/' + prefix;
+  document.getElementById('r-first').textContent     = numToIp(netNum+1);
+  document.getElementById('r-last').textContent      = numToIp(bcNum-1);
+  document.getElementById('r-broadcast').textContent = numToIp(bcNum);
+  document.getElementById('r-hosts').textContent     = hosts > 0 ? hosts.toLocaleString() : '0';
+}
+
+// Inicializar
+bits.fill(0);
+bits[7]=1;  // 1st oct = 192: 11000000
+bits[6]=1;
+bits[9]=1;  // 2nd oct = 168: 10101000
+bits[11]=1;
+bits[13]=1;
+bits[16]=1; // 3rd oct = 1: 00000001
+bits[25]=1; // 4th oct = 10: 00001010
+bits[27]=1;
+
+renderBits();
+updateSubnet(24);
+</script>
