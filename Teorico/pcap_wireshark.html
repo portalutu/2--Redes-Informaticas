@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCAP y Wireshark — Capturas de Red</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0c10;
+  --bg2: #0f1218;
+  --bg3: #151a22;
+  --bg4: #1b2230;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --text2: #8b9ab5;
+  --text3: #566378;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Space Grotesk', sans-serif;
+
+  --blue: #4da8ff;
+  --blue-bg: rgba(77,168,255,0.08);
+  --teal: #2dd4bf;
+  --teal-bg: rgba(45,212,191,0.08);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.08);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167,139,250,0.08);
+  --coral: #fb7185;
+  --coral-bg: rgba(251,113,133,0.08);
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(77,168,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,168,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,12,16,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 56px;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  font-size: 12px;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: all .2s;
+  font-weight: 500;
+}
+.nav-link:hover { color: var(--text); background: var(--bg4); }
+.nav-link.active { color: var(--teal); background: var(--teal-bg); }
+
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem 4rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  background: var(--teal-bg);
+  border: 1px solid rgba(45,212,191,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+h1 span { color: var(--teal); }
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text2);
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .3s;
+  animation: fadeUp .5s ease both;
+}
+.card:hover { border-color: var(--border2); }
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg3);
+}
+
+.card-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+.num-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(77,168,255,0.25); }
+.num-teal { background: var(--teal-bg); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+.num-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+.num-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+
+.card-title { font-size: 15px; font-weight: 600; color: #fff; }
+.card-body { padding: 1.5rem; }
+p { color: var(--text2); line-height: 1.7; }
+strong { color: #fff; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 1.25rem;
+}
+
+.mini-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: all .25s;
+}
+.mini-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.mini-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.mini-title { font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 4px; }
+.mini-text { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+.cmd {
+  margin-top: 1rem;
+  background: #07090d;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.cmd .prompt { color: var(--teal); }
+.cmd .comment { color: var(--text3); }
+
+.layer-stack {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+.layer {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  padding: 12px;
+  min-height: 112px;
+}
+.layer:nth-child(1) { border-color: rgba(77,168,255,0.25); background: var(--blue-bg); }
+.layer:nth-child(2) { border-color: rgba(45,212,191,0.25); background: var(--teal-bg); }
+.layer:nth-child(3) { border-color: rgba(245,158,11,0.25); background: var(--amber-bg); }
+.layer:nth-child(4) { border-color: rgba(167,139,250,0.25); background: var(--purple-bg); }
+
+.layer-k {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.layer-v {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.layer-d { color: var(--text2); font-size: 12px; line-height: 1.5; }
+
+.capture-toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1.25rem 0 1rem;
+}
+
+.filter-input {
+  flex: 1;
+  min-width: 240px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  outline: none;
+}
+.filter-input:focus { border-color: rgba(45,212,191,0.4); box-shadow: 0 0 0 3px rgba(45,212,191,0.08); }
+
+.chip {
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.chip:hover, .chip.active { background: var(--teal-bg); color: var(--teal); border-color: rgba(45,212,191,0.35); }
+
+.wireshark-shell {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b0e13;
+}
+
+.ws-titlebar {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.ws-title {
+  font-family: var(--mono);
+  color: var(--text2);
+  font-size: 12px;
+}
+
+.ws-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.packet-table-wrap {
+  max-height: 560px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  min-width: 880px;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background: #121720;
+  z-index: 2;
+}
+
+th {
+  text-align: left;
+  color: var(--text3);
+  font-weight: 700;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.035);
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+tbody tr {
+  cursor: pointer;
+  transition: background .12s, outline .12s;
+}
+tbody tr:hover { background: rgba(255,255,255,0.035); }
+tbody tr.selected { background: rgba(45,212,191,0.12); outline: 1px solid rgba(45,212,191,0.28); }
+
+.proto {
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+.p-arp { color: var(--amber); background: var(--amber-bg); border-color: rgba(245,158,11,0.25); }
+.p-dns { color: var(--purple); background: var(--purple-bg); border-color: rgba(167,139,250,0.25); }
+.p-tcp { color: var(--blue); background: var(--blue-bg); border-color: rgba(77,168,255,0.25); }
+.p-http { color: var(--green); background: var(--green-bg); border-color: rgba(74,222,128,0.25); }
+.p-tls { color: var(--teal); background: var(--teal-bg); border-color: rgba(45,212,191,0.25); }
+.p-icmp { color: var(--coral); background: var(--coral-bg); border-color: rgba(251,113,133,0.25); }
+.p-dhcp { color: #facc15; background: rgba(250,204,21,0.08); border-color: rgba(250,204,21,0.25); }
+.p-udp { color: #c084fc; background: rgba(192,132,252,0.08); border-color: rgba(192,132,252,0.25); }
+.p-ntp { color: #38bdf8; background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.25); }
+
+.analysis-panel {
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg3);
+  overflow: hidden;
+}
+
+.analysis-head {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.analysis-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.analysis-body {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.detail-box {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.detail-k {
+  color: var(--text3);
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 5px;
+}
+
+.detail-v {
+  color: var(--text2);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.packet-explain {
+  grid-column: 1 / -1;
+  background: rgba(45,212,191,0.06);
+  border-color: rgba(45,212,191,0.18);
+}
+
+.timeline {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 10px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.step-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--blue-bg);
+  border: 1px solid rgba(77,168,255,0.25);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 12px;
+}
+.step-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.step-card h4 { color: #fff; font-size: 14px; margin-bottom: 4px; }
+.step-card p { font-size: 13px; margin: 0; }
+
+.appendix-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+.practice {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+}
+.practice-num {
+  font-family: var(--mono);
+  color: var(--amber);
+  background: var(--amber-bg);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 8px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.practice h4 { color: #fff; font-size: 14px; margin-bottom: 4px; }
+.practice p { font-size: 13px; }
+
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card:nth-child(1) { animation-delay: .05s; }
+.card:nth-child(2) { animation-delay: .10s; }
+.card:nth-child(3) { animation-delay: .15s; }
+.card:nth-child(4) { animation-delay: .20s; }
+.card:nth-child(5) { animation-delay: .25s; }
+.card:nth-child(6) { animation-delay: .30s; }
+.card:nth-child(7) { animation-delay: .35s; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border2); }
+
+@media (max-width: 760px) {
+  nav { gap: 1rem; padding: 0 1rem; }
+  .hero { padding: 3rem 1rem 2.5rem; }
+  main { padding: 0 1rem 4rem; }
+  .card-body { padding: 1rem; }
+  h1 { font-size: 2rem; }
+  .layer-stack { grid-template-columns: 1fr; }
+  .analysis-body { grid-template-columns: 1fr; }
+  .capture-toolbar { align-items: stretch; }
+  .chip { flex: 1; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">PCAP://WIRESHARK</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">Captura</a>
+    <a class="nav-link" href="#s2">PCAP</a>
+    <a class="nav-link" href="#s3">Wireshark</a>
+    <a class="nav-link" href="#s4">Capas</a>
+    <a class="nav-link" href="#s5">Simulador</a>
+    <a class="nav-link" href="#s6">Flujo</a>
+    <a class="nav-link" href="#s7">Prácticas</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Red · Captura · PCAP · Wireshark · Capas</div>
+  <h1>Capturas de red<br>con <span>PCAP y Wireshark</span></h1>
+  <p class="hero-sub">Guía interactiva para entender qué se captura, cómo se interpreta una traza y cómo cada línea revela capas de Ethernet, IP, transporte y aplicación.</p>
+</section>
+
+<main>
+
+<div class="card" id="s1">
+  <div class="card-header">
+    <span class="card-num num-teal">01</span>
+    <span class="card-title">¿Qué es una captura de red?</span>
+  </div>
+  <div class="card-body">
+    <p>Una <strong>captura de red</strong> es un registro de paquetes que entran, salen o pasan por una interfaz de red. Cada paquete contiene información organizada en capas: enlace, red, transporte y aplicación. Analizar una captura permite ver qué dispositivos hablan, qué protocolos usan y qué problemas pueden aparecer.</p>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-label">// Capturar</div>
+        <div class="mini-title">Observar tráfico real</div>
+        <div class="mini-text">La tarjeta de red recibe tramas. El capturador copia sus encabezados y, si corresponde, parte o todo el contenido.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Interpretar</div>
+        <div class="mini-title">Convertir bytes en significado</div>
+        <div class="mini-text">Wireshark decodifica esos bytes como Ethernet, ARP, IPv4, TCP, UDP, DNS, HTTP, TLS y otros protocolos.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Diagnosticar</div>
+        <div class="mini-title">Encontrar pistas</div>
+        <div class="mini-text">Una traza permite detectar pérdida, retransmisiones, errores DNS, puertos cerrados, latencia o tráfico inesperado.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Aprender</div>
+        <div class="mini-title">Ver las capas en acción</div>
+        <div class="mini-text">Cada paquete muestra cómo una aplicación se apoya en transporte, red y enlace para comunicarse.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s2">
+  <div class="card-header">
+    <span class="card-num num-blue">02</span>
+    <span class="card-title">PCAP: el archivo de una captura</span>
+  </div>
+  <div class="card-body">
+    <p><strong>PCAP</strong> es un formato usado para guardar paquetes capturados. Un archivo `.pcap` o `.pcapng` puede abrirse luego con Wireshark para estudiar el tráfico sin necesidad de repetir la captura.</p>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-label">// .pcap</div>
+        <div class="mini-title">Formato clásico</div>
+        <div class="mini-text">Guarda paquetes con marca de tiempo, longitud y bytes capturados. Es simple y muy compatible.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// .pcapng</div>
+        <div class="mini-title">Formato moderno</div>
+        <div class="mini-text">Puede guardar más metadatos: interfaces, comentarios, estadísticas y datos adicionales de captura.</div>
+      </div>
+    </div>
+    <div class="cmd"><span class="comment"># Capturar con tcpdump en un archivo PCAP</span><br>
+<span class="prompt">$</span> sudo tcpdump -i enp0s3 -w practica.pcap<br><br>
+<span class="comment"># Leer una captura desde terminal</span><br>
+<span class="prompt">$</span> tcpdump -r practica.pcap<br><br>
+<span class="comment"># Capturar solo DNS</span><br>
+<span class="prompt">$</span> sudo tcpdump -i enp0s3 port 53 -w dns.pcap</div>
+  </div>
+</div>
+
+<div class="card" id="s3">
+  <div class="card-header">
+    <span class="card-num num-purple">03</span>
+    <span class="card-title">Wireshark: mirar la red con lupa</span>
+  </div>
+  <div class="card-body">
+    <p><strong>Wireshark</strong> es una herramienta gráfica para capturar y analizar tráfico. Muestra una lista de paquetes, un árbol de protocolos y los bytes originales. Su valor está en que permite pasar de una línea resumida a una explicación detallada de cada campo.</p>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-label">// Lista de paquetes</div>
+        <div class="mini-title">Resumen por línea</div>
+        <div class="mini-text">Número, tiempo, origen, destino, protocolo, longitud e información principal.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Detalle</div>
+        <div class="mini-title">Campos por capas</div>
+        <div class="mini-text">Ethernet, IP, TCP/UDP y aplicación se despliegan como un árbol jerárquico.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Bytes</div>
+        <div class="mini-title">Contenido real</div>
+        <div class="mini-text">Muestra los bytes originales en hexadecimal y ASCII.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">// Filtros</div>
+        <div class="mini-title">Buscar lo importante</div>
+        <div class="mini-text">Permiten concentrarse en un protocolo, IP, puerto, conversación o error.</div>
+      </div>
+    </div>
+    <div class="cmd"><span class="comment"># Filtros de visualización comunes en Wireshark</span><br>
+dns<br>
+arp<br>
+icmp<br>
+tcp.port == 80<br>
+ip.addr == 192.168.1.10<br>
+http.request<br>
+tcp.analysis.retransmission</div>
+  </div>
+</div>
+
+<div class="card" id="s4">
+  <div class="card-header">
+    <span class="card-num num-amber">04</span>
+    <span class="card-title">Capas OSI y TCP/IP dentro de una captura</span>
+  </div>
+  <div class="card-body">
+    <p>Una línea de Wireshark resume un paquete, pero por debajo contiene varias capas. El modelo OSI ayuda a separar responsabilidades; TCP/IP muestra cómo se implementa esa comunicación en redes reales.</p>
+    <div class="layer-stack">
+      <div class="layer">
+        <div class="layer-k">OSI 2 / TCP-IP Enlace</div>
+        <div class="layer-v">Ethernet / ARP</div>
+        <div class="layer-d">MAC origen, MAC destino, tipo de trama. En LAN responde: ¿a qué tarjeta de red se entrega?</div>
+      </div>
+      <div class="layer">
+        <div class="layer-k">OSI 3 / TCP-IP Internet</div>
+        <div class="layer-v">IPv4 / ICMP</div>
+        <div class="layer-d">IP origen, IP destino, TTL, fragmentación. Responde: ¿entre qué hosts viaja?</div>
+      </div>
+      <div class="layer">
+        <div class="layer-k">OSI 4 / TCP-IP Transporte</div>
+        <div class="layer-v">TCP / UDP</div>
+        <div class="layer-d">Puertos, sesiones, flags, control de flujo. Responde: ¿qué proceso se comunica?</div>
+      </div>
+      <div class="layer">
+        <div class="layer-k">OSI 5-7 / TCP-IP Aplicación</div>
+        <div class="layer-v">DNS / HTTP / TLS</div>
+        <div class="layer-d">Consultas, respuestas, métodos, nombres, cifrado. Responde: ¿qué servicio se está usando?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s5">
+  <div class="card-header">
+    <span class="card-num num-teal">05</span>
+    <span class="card-title">Captura ficticia interactiva: 200 líneas estilo Wireshark</span>
+  </div>
+  <div class="card-body">
+    <p>Esta captura simulada representa tráfico típico de una red local: ARP, DHCP, DNS, ICMP, TCP, HTTP, TLS, NTP y UDP. Hacé clic sobre cualquier línea para ver qué significa y cómo se relaciona con las capas de red.</p>
+
+    <div class="capture-toolbar">
+      <input class="filter-input" id="filterInput" type="text" placeholder="Filtrar: dns, tcp, 192.168.1.10, SYN, HTTP, ARP..." oninput="applyFilter()">
+      <button class="chip active" onclick="setQuickFilter('', this)">Todo</button>
+      <button class="chip" onclick="setQuickFilter('dns', this)">DNS</button>
+      <button class="chip" onclick="setQuickFilter('tcp', this)">TCP</button>
+      <button class="chip" onclick="setQuickFilter('http', this)">HTTP</button>
+      <button class="chip" onclick="setQuickFilter('tls', this)">TLS</button>
+      <button class="chip" onclick="setQuickFilter('arp', this)">ARP</button>
+    </div>
+
+    <div class="wireshark-shell">
+      <div class="ws-titlebar">
+        <div class="ws-title">captura_laboratorio_ficticia.pcapng · interfaz enp0s3 · 200 paquetes simulados</div>
+        <div class="ws-count" id="visibleCount">200 visibles</div>
+      </div>
+      <div class="packet-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Time</th>
+              <th>Source</th>
+              <th>Destination</th>
+              <th>Protocol</th>
+              <th>Length</th>
+              <th>Info</th>
+            </tr>
+          </thead>
+          <tbody id="packetBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="analysis-panel" id="analysisPanel">
+      <div class="analysis-head">
+        <div class="analysis-title" id="analysisTitle">Seleccioná una línea de la captura</div>
+        <span class="ws-count" id="analysisMeta">sin paquete seleccionado</span>
+      </div>
+      <div class="analysis-body">
+        <div class="detail-box packet-explain">
+          <div class="detail-k">Descripción</div>
+          <div class="detail-v" id="analysisDesc">Al hacer clic sobre una línea, verás una explicación del paquete, sus capas y qué pista aporta para el análisis.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa de enlace</div>
+          <div class="detail-v" id="l2">Ethernet: MAC origen y MAC destino.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa de red</div>
+          <div class="detail-v" id="l3">IPv4 o ARP: direccionamiento lógico o resolución de MAC.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa de transporte</div>
+          <div class="detail-v" id="l4">TCP o UDP: puertos, flags y conversación.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa de aplicación</div>
+          <div class="detail-v" id="l7">DNS, HTTP, TLS u otro protocolo visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s6">
+  <div class="card-header">
+    <span class="card-num num-blue">06</span>
+    <span class="card-title">Cómo leer una captura: del paquete al diagnóstico</span>
+  </div>
+  <div class="card-body">
+    <p>Una captura no se analiza línea por línea al azar. Se buscan conversaciones, patrones y cambios de estado. La pregunta central es: ¿qué intentaba hacer el equipo y en qué punto falló?</p>
+    <div class="timeline">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-card">
+          <h4>Ubicar a los participantes</h4>
+          <p>Identificar IP origen, IP destino, MACs locales y gateway. En una LAN, ARP suele aparecer antes de una comunicación IP.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-card">
+          <h4>Separar protocolos</h4>
+          <p>Filtrar por `dns`, `tcp`, `icmp`, `http` o una IP específica. Esto reduce ruido y permite seguir una conversación.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-card">
+          <h4>Mirar el orden</h4>
+          <p>En TCP debería verse SYN, SYN/ACK, ACK antes de los datos. En DNS debería verse consulta y respuesta.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-card">
+          <h4>Buscar síntomas</h4>
+          <p>Retransmisiones, resets, destinos inalcanzables, consultas DNS sin respuesta, puertos cerrados o latencia elevada.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-card">
+          <h4>Relacionar con capas</h4>
+          <p>Si falla ARP, el problema está en capa 2. Si responde DNS pero no TCP, mirar capa 4. Si TCP conecta pero HTTP falla, mirar aplicación.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s7">
+  <div class="card-header">
+    <span class="card-num num-amber">07</span>
+    <span class="card-title">Apéndice: 10 propuestas prácticas de captura</span>
+  </div>
+  <div class="card-body">
+    <p>Estas prácticas sirven para generar tráfico real, capturarlo y analizarlo en Wireshark. Realizarlas en una red de laboratorio o con autorización.</p>
+    <div class="appendix-list">
+      <div class="practice"><div class="practice-num">01</div><div><h4>ARP en red local</h4><p>Vaciar caché ARP, hacer ping al gateway y capturar `arp`. Analizar quién pregunta y quién responde.</p></div></div>
+      <div class="practice"><div class="practice-num">02</div><div><h4>DHCP al obtener IP</h4><p>Capturar el proceso Discover, Offer, Request, ACK al renovar dirección IP.</p></div></div>
+      <div class="practice"><div class="practice-num">03</div><div><h4>DNS de un sitio web</h4><p>Abrir un dominio nuevo y filtrar `dns`. Identificar consulta, respuesta, tipo A/AAAA y servidor DNS.</p></div></div>
+      <div class="practice"><div class="practice-num">04</div><div><h4>Ping e ICMP</h4><p>Ejecutar `ping` al gateway y a una IP externa. Comparar Echo Request, Echo Reply, TTL y tiempos.</p></div></div>
+      <div class="practice"><div class="practice-num">05</div><div><h4>Handshake TCP</h4><p>Conectarse a un servidor web y filtrar `tcp.flags.syn == 1`. Identificar SYN, SYN/ACK y ACK.</p></div></div>
+      <div class="practice"><div class="practice-num">06</div><div><h4>HTTP sin cifrar</h4><p>Acceder a un sitio HTTP de prueba y filtrar `http`. Ver método GET, host y código de respuesta.</p></div></div>
+      <div class="practice"><div class="practice-num">07</div><div><h4>TLS/HTTPS</h4><p>Abrir un sitio HTTPS y filtrar `tls`. Identificar Client Hello, Server Hello y datos cifrados.</p></div></div>
+      <div class="practice"><div class="practice-num">08</div><div><h4>Puertos abiertos y cerrados</h4><p>Probar conexión a un puerto abierto y otro cerrado. Comparar SYN/ACK contra RST.</p></div></div>
+      <div class="practice"><div class="practice-num">09</div><div><h4>Traceroute por saltos</h4><p>Ejecutar `traceroute` o `tracepath` y observar ICMP Time Exceeded o UDP/ICMP según la herramienta.</p></div></div>
+      <div class="practice"><div class="practice-num">10</div><div><h4>Docker y puertos publicados</h4><p>Levantar un contenedor web, acceder al puerto publicado y analizar la conexión desde cliente a servidor.</p></div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <span style="color:var(--teal)">PCAP://</span>WIRESHARK · Capturas, capas y análisis de red
+  <br><span style="margin-top:6px;display:inline-block;color:var(--text3);">Redes Informáticas · Guía interactiva</span>
+</footer>
+
+<script>
+const basePackets = [
+  {
+    protocol: "ARP",
+    source: "IntelCor_7a:22:10",
+    destination: "Broadcast",
+    length: 42,
+    info: "Who has 192.168.1.1? Tell 192.168.1.10",
+    desc: "Un equipo necesita conocer la dirección MAC del gateway. ARP trabaja en la red local: pregunta por broadcast quién tiene una IP.",
+    l2: "Ethernet usa destino ff:ff:ff:ff:ff:ff porque todavía no conoce la MAC del router.",
+    l3: "ARP vincula una IP local con una MAC. No atraviesa routers.",
+    l4: "No usa TCP ni UDP.",
+    l7: "No hay aplicación: es tráfico de resolución local."
+  },
+  {
+    protocol: "ARP",
+    source: "TP-Link_aa:01:01",
+    destination: "IntelCor_7a:22:10",
+    length: 42,
+    info: "192.168.1.1 is at 74:da:88:aa:01:01",
+    desc: "El router responde indicando su MAC. A partir de este punto, el host puede enviar tramas Ethernet al gateway.",
+    l2: "Ethernet ya tiene destino unicast: la MAC del equipo que preguntó.",
+    l3: "ARP completa la asociación IP-MAC del gateway.",
+    l4: "No usa capa de transporte.",
+    l7: "No hay datos de aplicación."
+  },
+  {
+    protocol: "DHCP",
+    source: "0.0.0.0",
+    destination: "255.255.255.255",
+    length: 342,
+    info: "DHCP Discover - Transaction ID 0x4a12c9",
+    desc: "Un cliente sin IP busca un servidor DHCP. Usa broadcast porque todavía no sabe en qué red está configurado.",
+    l2: "Ethernet broadcast para llegar a cualquier servidor DHCP disponible.",
+    l3: "IPv4 origen 0.0.0.0 y destino 255.255.255.255.",
+    l4: "UDP origen 68 hacia destino 67.",
+    l7: "DHCP Discover inicia el proceso para obtener IP, máscara, gateway y DNS."
+  },
+  {
+    protocol: "DHCP",
+    source: "192.168.1.1",
+    destination: "255.255.255.255",
+    length: 360,
+    info: "DHCP Offer - Your IP 192.168.1.50",
+    desc: "El servidor DHCP ofrece una dirección IP al cliente. Todavía se usa broadcast para asegurar que el cliente reciba la oferta.",
+    l2: "Trama de respuesta hacia broadcast o hacia la MAC del cliente según el caso.",
+    l3: "El servidor ya tiene IP; el cliente aún está completando configuración.",
+    l4: "UDP 67 hacia UDP 68.",
+    l7: "DHCP Offer propone parámetros de red."
+  },
+  {
+    protocol: "DNS",
+    source: "192.168.1.10",
+    destination: "1.1.1.1",
+    length: 74,
+    info: "Standard query A ubuntu.com",
+    desc: "El cliente pregunta al servidor DNS cuál es la dirección IPv4 de ubuntu.com.",
+    l2: "Ethernet se entrega al gateway si 1.1.1.1 está fuera de la LAN.",
+    l3: "IPv4 origen local hacia servidor DNS público.",
+    l4: "UDP puerto origen efímero hacia puerto 53.",
+    l7: "DNS consulta registro A de un nombre de dominio."
+  },
+  {
+    protocol: "DNS",
+    source: "1.1.1.1",
+    destination: "192.168.1.10",
+    length: 106,
+    info: "Standard query response A ubuntu.com A 185.125.190.20",
+    desc: "El servidor DNS responde con una IP asociada al nombre consultado.",
+    l2: "En la LAN, la trama final llega desde el gateway al host.",
+    l3: "IPv4 respuesta desde DNS hacia el cliente.",
+    l4: "UDP puerto 53 hacia el puerto efímero del cliente.",
+    l7: "DNS contiene la respuesta que la aplicación usará para conectarse."
+  },
+  {
+    protocol: "TCP",
+    source: "192.168.1.10",
+    destination: "185.125.190.20",
+    length: 66,
+    info: "54322 -> 443 [SYN] Seq=0 Win=64240 MSS=1460",
+    desc: "Primer paso del handshake TCP. El cliente solicita abrir una conexión hacia HTTPS.",
+    l2: "Ethernet entrega la trama al gateway.",
+    l3: "IPv4 indica host origen y servidor destino.",
+    l4: "TCP SYN abre la conexión. Puerto destino 443.",
+    l7: "Aún no hay HTTPS; primero debe establecerse TCP."
+  },
+  {
+    protocol: "TCP",
+    source: "185.125.190.20",
+    destination: "192.168.1.10",
+    length: 66,
+    info: "443 -> 54322 [SYN, ACK] Seq=0 Ack=1 Win=65160",
+    desc: "Segundo paso del handshake. El servidor acepta iniciar la conexión y confirma el SYN del cliente.",
+    l2: "La trama llega desde el gateway al equipo local.",
+    l3: "IPv4 respuesta del servidor al cliente.",
+    l4: "TCP SYN/ACK confirma la apertura.",
+    l7: "Todavía no hay datos de aplicación."
+  },
+  {
+    protocol: "TCP",
+    source: "192.168.1.10",
+    destination: "185.125.190.20",
+    length: 54,
+    info: "54322 -> 443 [ACK] Seq=1 Ack=1 Win=64240",
+    desc: "Tercer paso del handshake. La conexión TCP queda establecida.",
+    l2: "Ethernet encapsula el paquete hacia el gateway.",
+    l3: "IPv4 mantiene el par origen-destino.",
+    l4: "TCP ACK completa el handshake.",
+    l7: "Ahora puede comenzar TLS o HTTP."
+  },
+  {
+    protocol: "TLS",
+    source: "192.168.1.10",
+    destination: "185.125.190.20",
+    length: 517,
+    info: "Client Hello - SNI ubuntu.com",
+    desc: "El cliente inicia negociación TLS para una conexión HTTPS. Indica capacidades criptográficas y el nombre del servidor.",
+    l2: "Ethernet transporta el tráfico hacia el router local.",
+    l3: "IPv4 hacia el servidor remoto.",
+    l4: "TCP ya establecido sobre puerto 443.",
+    l7: "TLS Client Hello inicia cifrado; SNI indica el sitio solicitado."
+  },
+  {
+    protocol: "TLS",
+    source: "185.125.190.20",
+    destination: "192.168.1.10",
+    length: 1414,
+    info: "Server Hello, Certificate, Finished",
+    desc: "El servidor responde con parámetros TLS y certificado. Luego la comunicación queda cifrada.",
+    l2: "Ethernet entrega el segmento recibido.",
+    l3: "IPv4 desde servidor remoto a cliente local.",
+    l4: "TCP transporta datos de sesión TLS.",
+    l7: "TLS establece claves y protege la aplicación."
+  },
+  {
+    protocol: "HTTP",
+    source: "192.168.1.10",
+    destination: "192.168.1.80",
+    length: 268,
+    info: "GET /index.html HTTP/1.1",
+    desc: "Solicitud HTTP sin cifrar a un servidor local. Wireshark puede mostrar método, ruta y cabeceras.",
+    l2: "Si el servidor está en la misma LAN, Ethernet usa la MAC directa del servidor.",
+    l3: "IPv4 local hacia servidor local.",
+    l4: "TCP puerto destino 80.",
+    l7: "HTTP GET solicita un recurso web."
+  },
+  {
+    protocol: "HTTP",
+    source: "192.168.1.80",
+    destination: "192.168.1.10",
+    length: 512,
+    info: "HTTP/1.1 200 OK (text/html)",
+    desc: "Respuesta del servidor web. Código 200 indica que el recurso fue encontrado y enviado.",
+    l2: "Ethernet vuelve al cliente dentro de la LAN.",
+    l3: "IPv4 servidor local a cliente.",
+    l4: "TCP mantiene la sesión web.",
+    l7: "HTTP 200 OK transporta contenido HTML visible en claro."
+  },
+  {
+    protocol: "ICMP",
+    source: "192.168.1.10",
+    destination: "192.168.1.1",
+    length: 98,
+    info: "Echo (ping) request id=0x1142 seq=1 ttl=64",
+    desc: "El cliente envía un ping al gateway para probar conectividad de red.",
+    l2: "Ethernet destino: MAC del gateway.",
+    l3: "ICMP se encapsula directamente en IPv4.",
+    l4: "No usa TCP ni UDP.",
+    l7: "Ping es una herramienta de diagnóstico, no una aplicación de usuario compleja."
+  },
+  {
+    protocol: "ICMP",
+    source: "192.168.1.1",
+    destination: "192.168.1.10",
+    length: 98,
+    info: "Echo (ping) reply id=0x1142 seq=1 ttl=64",
+    desc: "El gateway responde al ping. Confirma conectividad básica con el router.",
+    l2: "Ethernet origen: MAC del gateway.",
+    l3: "ICMP Echo Reply vuelve al host.",
+    l4: "No hay transporte TCP/UDP.",
+    l7: "La herramienta ping mide respuesta y tiempo."
+  },
+  {
+    protocol: "NTP",
+    source: "192.168.1.10",
+    destination: "162.159.200.123",
+    length: 90,
+    info: "Client request",
+    desc: "El equipo consulta un servidor NTP para sincronizar su reloj.",
+    l2: "Ethernet hacia el gateway.",
+    l3: "IPv4 hacia servidor de tiempo externo.",
+    l4: "UDP hacia puerto 123.",
+    l7: "NTP permite mantener fecha y hora correctas."
+  },
+  {
+    protocol: "UDP",
+    source: "192.168.1.25",
+    destination: "239.255.255.250",
+    length: 216,
+    info: "SSDP M-SEARCH * HTTP/1.1",
+    desc: "Tráfico multicast de descubrimiento de dispositivos. Busca servicios disponibles en la red local.",
+    l2: "Ethernet multicast.",
+    l3: "IPv4 multicast 239.255.255.250.",
+    l4: "UDP, normalmente puerto 1900.",
+    l7: "SSDP descubre dispositivos UPnP."
+  }
+];
+
+const protoClass = {
+  ARP: "p-arp",
+  DNS: "p-dns",
+  TCP: "p-tcp",
+  HTTP: "p-http",
+  TLS: "p-tls",
+  ICMP: "p-icmp",
+  DHCP: "p-dhcp",
+  UDP: "p-udp",
+  NTP: "p-ntp"
+};
+
+const packets = Array.from({ length: 200 }, (_, i) => {
+  const base = basePackets[i % basePackets.length];
+  const cycle = Math.floor(i / basePackets.length);
+  const time = (0.000123 + i * 0.037 + cycle * 0.011).toFixed(6);
+  const clone = { ...base };
+  clone.no = i + 1;
+  clone.time = time;
+  clone.length = base.length + ((i * 7) % 23);
+  if (clone.protocol === "ICMP") clone.info = clone.info.replace(/seq=\d+/, `seq=${cycle + 1}`);
+  if (clone.protocol === "DNS" && i % 34 === 0) clone.info = clone.info.replace("ubuntu.com", "example.org");
+  if (clone.protocol === "TCP" && i % 51 === 0) clone.info = clone.info + " [TCP segment of a reassembled PDU]";
+  if (clone.protocol === "TLS" && i % 68 === 0) clone.info = clone.info.replace("ubuntu.com", "repositorio.local");
+  return clone;
+});
+
+let selectedNo = null;
+let currentFilter = "";
+
+function renderPackets() {
+  const tbody = document.getElementById("packetBody");
+  tbody.innerHTML = "";
+  const filter = currentFilter.trim().toLowerCase();
+  let visible = 0;
+
+  packets.forEach(packet => {
+    const haystack = `${packet.no} ${packet.time} ${packet.source} ${packet.destination} ${packet.protocol} ${packet.length} ${packet.info}`.toLowerCase();
+    if (filter && !haystack.includes(filter)) return;
+    visible++;
+    const tr = document.createElement("tr");
+    tr.className = selectedNo === packet.no ? "selected" : "";
+    tr.onclick = () => selectPacket(packet.no);
+    tr.innerHTML = `
+      <td>${packet.no}</td>
+      <td>${packet.time}</td>
+      <td>${packet.source}</td>
+      <td>${packet.destination}</td>
+      <td><span class="proto ${protoClass[packet.protocol] || ""}">${packet.protocol}</span></td>
+      <td>${packet.length}</td>
+      <td>${packet.info}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("visibleCount").textContent = `${visible} visibles`;
+}
+
+function selectPacket(no) {
+  const packet = packets.find(p => p.no === no);
+  if (!packet) return;
+  selectedNo = no;
+  document.getElementById("analysisTitle").textContent = `Paquete ${packet.no} · ${packet.protocol}`;
+  document.getElementById("analysisMeta").textContent = `${packet.time}s · ${packet.source} → ${packet.destination} · ${packet.length} bytes`;
+  document.getElementById("analysisDesc").textContent = packet.desc;
+  document.getElementById("l2").textContent = packet.l2;
+  document.getElementById("l3").textContent = packet.l3;
+  document.getElementById("l4").textContent = packet.l4;
+  document.getElementById("l7").textContent = packet.l7;
+  renderPackets();
+}
+
+function applyFilter() {
+  currentFilter = document.getElementById("filterInput").value;
+  document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
+  renderPackets();
+}
+
+function setQuickFilter(value, button) {
+  currentFilter = value;
+  document.getElementById("filterInput").value = value;
+  document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
+  if (button) button.classList.add("active");
+  renderPackets();
+}
+
+function updateActiveNav() {
+  const sections = document.querySelectorAll('[id^="s"]');
+  const links = document.querySelectorAll('.nav-link');
+  let active = null;
+  sections.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= 80) active = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + active);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+renderPackets();
+selectPacket(1);
+updateActiveNav();
+</script>
+</body>
+</html>
