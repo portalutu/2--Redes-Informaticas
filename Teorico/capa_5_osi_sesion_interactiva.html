@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capa 5 OSI — Sesión Interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(45,212,191,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(45,212,191,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;left:-20vw;bottom:-30vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,212,191,.09),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--teal);background:var(--teal-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--teal);background:var(--teal-bg);border:1px solid rgba(45,212,191,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--teal)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--teal);background:var(--teal-bg);border-color:rgba(45,212,191,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s;cursor:pointer}.info-card:hover{border-color:rgba(45,212,191,.45);transform:translateY(-2px)}.info-card.active{border-color:rgba(45,212,191,.45);background:var(--teal-bg)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.osi-layout{display:grid;grid-template-columns:minmax(230px,320px) 1fr;gap:16px;margin-top:1.25rem}.osi-stack{display:flex;flex-direction:column;gap:7px}.osi-layer{display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--border);background:var(--bg3);border-radius:10px;cursor:pointer;transition:.2s}.osi-layer:hover{transform:translateX(4px);border-color:var(--border2)}.osi-layer.active{background:var(--teal-bg);border-color:rgba(45,212,191,.45)}.layer-num{font-family:var(--mono);font-size:13px;color:var(--text3);font-weight:700}.osi-layer.active .layer-num{color:var(--teal)}.layer-name{font-size:13px;color:var(--text2)}.osi-layer.active .layer-name{color:#fff;font-weight:700}.osi-panel{min-height:238px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px}.osi-panel h3{color:#fff;font-size:18px;margin-bottom:8px}.osi-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.tag{font-family:var(--mono);font-size:10px;color:var(--teal);background:var(--teal-bg);border:1px solid rgba(45,212,191,.2);border-radius:18px;padding:3px 8px}
+.svg-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:1.25rem;overflow:hidden}svg{display:block;width:100%;height:auto}.svg-buttons,.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tab-btn{font-family:var(--sans);font-size:12px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:20px;padding:5px 12px;cursor:pointer;transition:.2s}.tab-btn:hover,.tab-btn.active{color:var(--teal);background:var(--teal-bg);border-color:rgba(45,212,191,.35)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.4fr 2fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.proto-table{margin-top:1.25rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}.proto-row{display:grid;grid-template-columns:110px 110px 1fr;border-bottom:1px solid var(--border);cursor:pointer;transition:.2s}.proto-row:last-child{border-bottom:none}.proto-row:hover{background:var(--bg4)}.proto-row>*{padding:10px 12px}.proto-port{font-family:var(--mono);color:var(--teal);font-weight:700}.proto-name{font-family:var(--mono);font-size:12px;color:var(--amber);border-left:1px solid var(--border)}.proto-desc{font-size:13px;color:var(--text2);border-left:1px solid var(--border)}
+.header-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:12px}.header-field{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:.2s}.header-field:hover,.header-field.highlight{border-color:rgba(45,212,191,.45);background:var(--teal-bg)}.field-name{font-size:12px;color:#fff;font-weight:600}.field-size{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.log{background:#080a0d;border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:12px;font-family:var(--mono);font-size:12px;min-height:110px}.log-line{border-bottom:1px solid rgba(255,255,255,.05);padding:5px 0}.log-ok{color:var(--green)}.log-warn{color:var(--amber)}.log-err{color:var(--coral)}.log-info{color:var(--text2)}
+.code-card{background:#07090c;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:12px}.code-head{display:flex;justify-content:space-between;align-items:center;background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 12px}.code-title{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase}.copy-btn{font-family:var(--mono);font-size:10px;color:var(--text2);background:var(--bg4);border:1px solid var(--border2);border-radius:6px;padding:3px 8px;cursor:pointer}.copy-btn:hover{color:#fff}pre{padding:14px;overflow-x:auto;color:#dbeafe;font-family:var(--mono);font-size:12px;line-height:1.6}
+.filter-pill{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--teal);background:var(--teal-bg);border:1px solid rgba(45,212,191,.2);border-radius:20px;padding:3px 8px;margin:2px 3px 2px 0}
+.capture-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:1.25rem}.capture-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px}.capture-card h4{font-size:14px;color:#fff;margin-bottom:6px}.capture-card p{font-size:12px;color:var(--text2);margin-bottom:8px}
+.practice-step-title{display:flex;align-items:center;gap:10px;font-size:17px;color:#fff;font-weight:700;margin:1.4rem 0 .8rem}.practice-badge{font-family:var(--mono);font-size:11px;color:var(--teal);background:var(--teal-bg);border:1px solid rgba(45,212,191,.25);border-radius:20px;padding:3px 9px;white-space:nowrap}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}.metric{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px}.metric-k{font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase}.metric-v{font-family:var(--mono);font-size:18px;font-weight:700;color:#fff;margin-top:4px}.metric-v.teal{color:var(--teal)}.metric-v.purple{color:var(--purple)}.metric-v.amber{color:var(--amber)}.metric-v.green{color:var(--green)}
+.range-line{display:flex;align-items:center;gap:14px;margin:1rem 0}.range-label{font-family:var(--mono);font-size:13px;color:var(--text2)}input[type=range]{appearance:none;flex:1;height:4px;background:var(--bg4);border-radius:2px;outline:none;border:1px solid var(--border2)}input[type=range]::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 10px rgba(45,212,191,.4)}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.osi-layout{grid-template-columns:1fr}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.proto-row{grid-template-columns:1fr}.proto-row>*{border-left:none!important}.card-body{padding:1rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">OSI://CAPA_5</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">Función</a>
+    <a class="nav-link" href="#s2">OSI</a>
+    <a class="nav-link" href="#s3">Ciclo de sesión</a>
+    <a class="nav-link" href="#s4">Diálogo</a>
+    <a class="nav-link" href="#s5">Sincronización</a>
+    <a class="nav-link" href="#s6">Protocolos</a>
+    <a class="nav-link" href="#s7">Sesiones modernas</a>
+    <a class="nav-link" href="#s8">SIP y VoIP</a>
+    <a class="nav-link" href="#s9">Seguridad</a>
+    <a class="nav-link" href="#s10">Práctica</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Modelo OSI · Capa 5 · Sesión</div>
+  <h1>Capa 5 del modelo <span>OSI</span><br>Sesión, sincronización y diálogo</h1>
+  <p class="hero-sub">Presentación interactiva para comprender cómo la capa de sesión establece, mantiene y cierra conversaciones entre aplicaciones, qué protocolos la implementan y cómo analizarla en capturas de red.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="#s1">Comenzar explicación</a>
+    <a class="btn" href="#s10">Ir a práctica Wireshark</a>
+  </div>
+</section>
+
+<main>
+
+<!-- ──────────────────────────────── S1 ──────────────────────────────── -->
+<div class="card" id="s1">
+  <div class="card-header"><span class="card-num num-teal">01</span><span class="card-title">¿Qué hace la capa 5?</span></div>
+  <div class="card-body">
+    <p>La <strong>capa de sesión</strong> gestiona el ciclo de vida de una conversación entre dos aplicaciones. Mientras la capa 4 se ocupa de que los datos lleguen correctamente, la capa 5 se ocupa de que la conversación tenga un <strong>principio, un desarrollo ordenado y un cierre controlado</strong>.</p>
+    <div class="grid grid-4">
+      <div class="info-card"><div class="info-label">Apertura</div><div class="info-title">Establecimiento</div><div class="info-desc">Negocia parámetros e identidades antes de intercambiar datos.</div></div>
+      <div class="info-card"><div class="info-label">Continuidad</div><div class="info-title">Mantenimiento</div><div class="info-desc">Mantiene el canal activo y gestiona tokens de acceso.</div></div>
+      <div class="info-card"><div class="info-label">Recuperación</div><div class="info-title">Sincronización</div><div class="info-desc">Inserta puntos de control para reanudar sin perder progreso.</div></div>
+      <div class="info-card"><div class="info-label">Cierre</div><div class="info-title">Terminación</div><div class="info-desc">Finaliza la sesión de forma ordenada y libera los recursos.</div></div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Idea clave</div>
+      <div class="note-line">La capa 4 garantiza que los segmentos lleguen. La capa 5 garantiza que la <strong>conversación completa</strong> tenga contexto: quién habla, cuándo, con qué identidad y desde qué punto se puede continuar si se interrumpe.</div>
+    </div>
+    <div class="grid grid-3" style="margin-top:1.25rem">
+      <div class="info-card"><div class="info-label">Ejemplo cotidiano</div><div class="info-title">Llamada telefónica</div><div class="info-desc">El "ring → hola → conversación → chau" es una sesión. Sin esta capa, cada frase llegaría sin saber a qué conversación pertenece.</div></div>
+      <div class="info-card"><div class="info-label">Ejemplo de red</div><div class="info-title">Sesión SSH</div><div class="info-desc">SSH establece una sesión autenticada sobre TCP. Todo el intercambio de comandos ocurre dentro de esa sesión, no como paquetes aislados.</div></div>
+      <div class="info-card"><div class="info-label">Ejemplo de red</div><div class="info-title">Sesión SMB</div><div class="info-desc">Cuando Windows accede a una carpeta compartida, negocia una sesión SMB: autenticación, permisos y contexto de la conexión antes de transferir archivos.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S2 ──────────────────────────────── -->
+<div class="card" id="s2">
+  <div class="card-header"><span class="card-num num-blue">02</span><span class="card-title">Ubicación dentro del modelo OSI</span></div>
+  <div class="card-body">
+    <p>Selecciona una capa para ver su función. La capa 5 se ubica entre el transporte (capa 4) y la presentación (capa 6), actuando como coordinadora de la conversación.</p>
+    <div class="osi-layout">
+      <div class="osi-stack" id="osi-stack"></div>
+      <div class="osi-panel" id="osi-panel"></div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Capas adyacentes</div>
+      <div class="note-line"><strong>Capa 4 (Transporte):</strong> entrega bytes confiablemente entre extremos. La capa 5 usa ese canal para construir una sesión con contexto. <br><strong>Capa 6 (Presentación):</strong> cifra, comprime o transforma el formato de los datos. La sesión que administra la capa 5 es el contenedor de ese intercambio.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S3 ──────────────────────────────── -->
+<div class="card" id="s3">
+  <div class="card-header"><span class="card-num num-teal">03</span><span class="card-title">Ciclo de vida de una sesión</span></div>
+  <div class="card-body">
+    <p>Toda sesión recorre tres fases: <strong>establecimiento</strong> (negociación e identidad), <strong>intercambio de datos</strong> (la sesión está activa) y <strong>terminación</strong> (cierre ordenado y liberación de recursos).</p>
+    <div class="svg-box"><svg id="session-svg" viewBox="0 0 860 320"></svg></div>
+    <div class="svg-buttons">
+      <button class="tab-btn active" onclick="setSessionStep(0)">0 · Inicio</button>
+      <button class="tab-btn" onclick="setSessionStep(1)">1 · Establecimiento</button>
+      <button class="tab-btn" onclick="setSessionStep(2)">2 · Intercambio</button>
+      <button class="tab-btn" onclick="setSessionStep(3)">3 · Terminación</button>
+      <button class="tab-btn" onclick="playSession()">Animar</button>
+    </div>
+    <div class="note-box"><div class="note-title">Descripción</div><div class="note-line" id="session-info">Presiona un paso para ver la fase correspondiente.</div></div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S4 ──────────────────────────────── -->
+<div class="card" id="s4">
+  <div class="card-header"><span class="card-num num-amber">04</span><span class="card-title">Control de diálogo</span></div>
+  <div class="card-body">
+    <p>La capa 5 define <strong>quién habla y cuándo</strong>. Hay tres modos de comunicación según la dirección y simultaneidad del intercambio de datos.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setDialogMode('simplex',this)">Simplex</button>
+      <button class="tab-btn" onclick="setDialogMode('halfduplex',this)">Half-duplex</button>
+      <button class="tab-btn" onclick="setDialogMode('fullduplex',this)">Full-duplex</button>
+    </div>
+    <div class="svg-box"><svg id="dialog-svg" viewBox="0 0 860 220"></svg></div>
+    <div class="compare-table" id="dialog-table"></div>
+    <div class="grid grid-3" style="margin-top:1.25rem">
+      <div class="info-card"><div class="info-label">Simplex</div><div class="info-title">TV, radio, sensores</div><div class="info-desc">Un sensor IoT que solo envía temperatura hacia el servidor. El servidor no responde datos al sensor.</div></div>
+      <div class="info-card"><div class="info-label">Half-duplex</div><div class="info-title">Walkie-talkie, HTTP/1.0</div><div class="info-desc">HTTP/1.0: el cliente envía una petición, espera la respuesta completa y solo entonces envía otra. No hay intercambio simultáneo.</div></div>
+      <div class="info-card"><div class="info-label">Full-duplex</div><div class="info-title">Teléfono, WebSocket, SSH</div><div class="info-desc">En una sesión SSH ambas partes pueden enviar datos al mismo tiempo: el cliente escribe y el servidor responde sin esperar.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S5 ──────────────────────────────── -->
+<div class="card" id="s5">
+  <div class="card-header"><span class="card-num num-purple">05</span><span class="card-title">Sincronización y puntos de control</span></div>
+  <div class="card-body">
+    <p>En transferencias largas (archivos grandes, backups, sesiones FTP), la capa 5 puede insertar <strong>puntos de control</strong>. Si la conexión se interrumpe, la sesión se reanuda desde el último punto sin reiniciar desde el principio.</p>
+    <div class="range-line">
+      <span class="range-label">Progreso de transferencia:</span>
+      <input id="cp-slider" type="range" min="0" max="100" step="5" value="0" oninput="updateCheckpoint()">
+      <span class="range-label"><span id="cp-pct">0</span>%</span>
+    </div>
+    <div class="svg-box"><svg id="checkpoint-svg" viewBox="0 0 860 180"></svg></div>
+    <div class="svg-buttons">
+      <button class="tab-btn" onclick="simulateDisconnect()">Simular corte de sesión</button>
+      <button class="tab-btn" onclick="simulateRecover()">Reanudar desde punto de control</button>
+      <button class="tab-btn active" onclick="resetCheckpoint()">Reiniciar</button>
+    </div>
+    <div class="log" id="cp-log"><div class="log-line log-info">Mueve el deslizador para simular una transferencia con puntos de control.</div></div>
+    <div class="metric-grid">
+      <div class="metric"><div class="metric-k">Progreso</div><div class="metric-v teal" id="m-prog">0%</div></div>
+      <div class="metric"><div class="metric-k">Último checkpoint</div><div class="metric-v purple" id="m-cp">—</div></div>
+      <div class="metric"><div class="metric-k">Datos a reenviar</div><div class="metric-v amber" id="m-resend">—</div></div>
+      <div class="metric"><div class="metric-k">Ahorro vs. reinicio</div><div class="metric-v green" id="m-save">—</div></div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Tipos de puntos de control</div>
+      <div class="note-line"><strong>Mayor (major):</strong> reinicio completo de la sesión desde ese punto. <strong>Menor (minor):</strong> reanuda desde ese punto pero mantiene el contexto de sesión. Los protocolos modernos como SFTP y las descargas resumibles implementan este concepto.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S6 ──────────────────────────────── -->
+<div class="card" id="s6">
+  <div class="card-header"><span class="card-num num-teal">06</span><span class="card-title">Protocolos principales de la capa 5</span></div>
+  <div class="card-body">
+    <p>Varios protocolos implementan funciones de sesión. Algunos son puramente de capa 5; otros combinan capas. Selecciona un protocolo para ver su descripción detallada.</p>
+    <div class="proto-table" id="proto-table"></div>
+    <div class="note-box" id="proto-detail">
+      <div class="note-title">Selecciona un protocolo</div>
+      <div class="note-line">Al hacer clic en una fila se muestra una descripción, función y relación con la capa 5.</div>
+    </div>
+    <div class="note-box" style="margin-top:.75rem">
+      <div class="note-title">Nota sobre capas en la práctica</div>
+      <div class="note-line">En el modelo TCP/IP real, la capa 5 no tiene una capa separada explícita. Sus funciones las implementan directamente los protocolos de aplicación (SSH, TLS, SMB, SIP). El modelo OSI sirve para analizar conceptualmente cada responsabilidad, no para mapear 1:1 con el software.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S7 ──────────────────────────────── -->
+<div class="card" id="s7">
+  <div class="card-header"><span class="card-num num-blue">07</span><span class="card-title">Sesiones en protocolos modernos</span></div>
+  <div class="card-body">
+    <p>Las aplicaciones modernas implementan gestión de sesión de distintas formas. Selecciona un protocolo para ver cómo maneja el ciclo de sesión.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setProtoDemo('tls',this)">TLS / HTTPS</button>
+      <button class="tab-btn" onclick="setProtoDemo('ssh',this)">SSH</button>
+      <button class="tab-btn" onclick="setProtoDemo('ws',this)">WebSocket</button>
+      <button class="tab-btn" onclick="setProtoDemo('smb',this)">SMB2</button>
+    </div>
+    <div class="svg-box"><svg id="proto-svg" viewBox="0 0 860 280"></svg></div>
+    <div class="compare-table" id="proto-compare"></div>
+    <div class="code-card">
+      <div class="code-head"><span class="code-title" id="proto-code-title">Filtros Wireshark</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+      <pre id="proto-code-pre"></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S8 ──────────────────────────────── -->
+<div class="card" id="s8">
+  <div class="card-header"><span class="card-num num-coral">08</span><span class="card-title">SIP y gestión de sesiones VoIP</span></div>
+  <div class="card-body">
+    <p>SIP (Session Initiation Protocol) es el protocolo de capa 5 más claro del modelo OSI: su única función es <strong>establecer, modificar y terminar sesiones multimedia</strong> (llamadas de voz, videoconferencias, mensajería). SIP no transporta audio ni video: eso lo hace RTP en capa 4.</p>
+    <div class="svg-box"><svg id="sip-svg" viewBox="0 0 860 340"></svg></div>
+    <div class="svg-buttons">
+      <button class="tab-btn active" onclick="setSipStep(0)">0 · Inactivo</button>
+      <button class="tab-btn" onclick="setSipStep(1)">1 · INVITE</button>
+      <button class="tab-btn" onclick="setSipStep(2)">2 · 180 Ringing</button>
+      <button class="tab-btn" onclick="setSipStep(3)">3 · 200 OK</button>
+      <button class="tab-btn" onclick="setSipStep(4)">4 · ACK + Sesión activa</button>
+      <button class="tab-btn" onclick="setSipStep(5)">5 · BYE + Fin</button>
+      <button class="tab-btn" onclick="playSip()">Animar</button>
+    </div>
+    <div class="note-box"><div class="note-title">Mensaje SIP activo</div><div class="note-line" id="sip-info">Presiona un paso para ver el mensaje SIP correspondiente.</div></div>
+    <div class="grid grid-2" style="margin-top:1.25rem">
+      <div class="info-card"><div class="info-label">Señalización · SIP</div><div class="info-title">Gestiona la sesión</div><div class="info-desc">SIP usa mensajes de texto similares a HTTP: INVITE, ACK, BYE, CANCEL, OPTIONS. Puerto 5060 (UDP/TCP) y 5061 (TLS).</div></div>
+      <div class="info-card"><div class="info-label">Datos · RTP</div><div class="info-title">Transporta audio/video</div><div class="info-desc">Una vez que SIP establece la sesión, RTP (capa 4) transporta los streams de audio y video en tiempo real por puertos UDP negociados.</div></div>
+    </div>
+    <div class="code-card">
+      <div class="code-head"><span class="code-title">Filtros Wireshark para SIP y RTP</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+      <pre>sip                          # todos los mensajes SIP
+sip.Method == "INVITE"       # solicitudes de llamada
+sip.Status-Code == 200       # llamadas aceptadas
+rtp                          # flujos de audio/video
+sip or rtp                   # sesión completa</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S9 ──────────────────────────────── -->
+<div class="card" id="s9">
+  <div class="card-header"><span class="card-num num-amber">09</span><span class="card-title">Seguridad en la capa de sesión</span></div>
+  <div class="card-body">
+    <p>Las sesiones son un objetivo frecuente de ataques porque <strong>representan identidad autenticada</strong>. Comprometer una sesión es equivalente a robar las credenciales del usuario durante su uso.</p>
+    <div class="grid grid-3">
+      <div class="info-card" onclick="showAttack('hijack')"><div class="info-label">Ataque</div><div class="info-title">Session Hijacking</div><div class="info-desc">El atacante roba el identificador de sesión (cookie, token) y lo usa para suplantar al usuario.</div></div>
+      <div class="info-card" onclick="showAttack('fixation')"><div class="info-label">Ataque</div><div class="info-title">Session Fixation</div><div class="info-desc">El atacante fuerza al usuario a usar un ID de sesión conocido previamente por él.</div></div>
+      <div class="info-card" onclick="showAttack('replay')"><div class="info-label">Ataque</div><div class="info-title">Replay Attack</div><div class="info-desc">El atacante captura y reenvía mensajes de establecimiento de sesión para autenticarse.</div></div>
+    </div>
+    <div class="note-box" id="attack-detail">
+      <div class="note-title">Selecciona un ataque</div>
+      <div class="note-line">Haz clic en una tarjeta para ver cómo funciona el ataque y cómo se previene.</div>
+    </div>
+    <div class="compare-table" style="margin-top:1.25rem">
+      <div class="compare-row"><div class="compare-k">Uso de HTTPS/TLS</div><div class="compare-v">Cifra los identificadores de sesión en tránsito. Sin TLS, las cookies viajan en texto plano.</div></div>
+      <div class="compare-row"><div class="compare-k">Regenerar ID tras login</div><div class="compare-v">Previene session fixation: se emite un nuevo ID después de autenticar.</div></div>
+      <div class="compare-row"><div class="compare-k">Timeout de sesión</div><div class="compare-v">Las sesiones inactivas expiran, limitando la ventana de uso de un token robado.</div></div>
+      <div class="compare-row"><div class="compare-k">Flags HttpOnly y Secure</div><div class="compare-v">HttpOnly evita que JavaScript lea la cookie. Secure la envía solo por HTTPS.</div></div>
+      <div class="compare-row"><div class="compare-k">Nonces y timestamps</div><div class="compare-v">Previenen replay attacks: cada mensaje lleva un valor único que no puede reutilizarse.</div></div>
+    </div>
+    <div class="note-box" style="margin-top:1rem">
+      <div class="note-title">Relación con TLS</div>
+      <div class="note-line">TLS implementa conceptos de capa 5 y 6 simultáneamente: <strong>gestión de sesión</strong> (session tickets, session ID, reanudación) en capa 5 y <strong>cifrado y formato</strong> en capa 6. Por eso a veces se dice que TLS "abarca" capas 5 y 6 del modelo OSI.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────── S10 ──────────────────────────────── -->
+<div class="card" id="s10">
+  <div class="card-header"><span class="card-num num-green">10</span><span class="card-title">Práctica: analizar sesiones con tcpdump y Wireshark</span></div>
+  <div class="card-body">
+    <p>Esta práctica permite identificar el ciclo de vida de sesiones reales en capturas de red. Se analiza cómo distintos protocolos establecen, mantienen y cierran sesiones, y qué campos de la captura son relevantes en cada caso.</p>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 1</span>Capturar sesiones SMB (compartición de archivos Windows)</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w smb_session.pcap tcp port 445
+
+Filtros Wireshark:
+smb2
+smb2.cmd == 0           # Negotiate
+smb2.cmd == 1           # Session Setup
+smb2.sesid != 0         # sesiones activas</pre></div>
+    <div class="note-box"><div class="note-title">Qué observar</div><div class="note-line">Busca la secuencia: TCP handshake → SMB2 Negotiate (cliente propone versiones) → Session Setup (autenticación NTLM o Kerberos) → Tree Connect (acceso al recurso compartido). Cada parte identifica el establecimiento de la sesión en capa 5.</div></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 2</span>Capturar sesiones SSH</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w ssh_session.pcap tcp port 22
+ssh usuario@servidor_en_la_red
+
+Filtros Wireshark:
+tcp.port == 22
+ssh
+tcp.flags.fin == 1      # cierre de sesión</pre></div>
+    <div class="note-box"><div class="note-title">Qué observar</div><div class="note-line">El intercambio de banners (SSH-2.0-OpenSSH_x.x) es parte del establecimiento de sesión en capa 5. Luego verás Key Exchange (capa 6) y después tráfico cifrado. El cierre se observa con el flag FIN de TCP.</div></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 3</span>Capturar sesiones SIP (VoIP)</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w sip_session.pcap "port 5060 or port 5061"
+
+Filtros Wireshark:
+sip
+sip.Method == "INVITE"       # inicio de sesión (llamada)
+sip.Method == "BYE"          # fin de sesión (colgar)
+sip or rtp                   # sesión completa con audio</pre></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 4</span>Identificar reanudación de sesión TLS</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w tls_resumption.pcap tcp port 443
+curl https://example.com   # primera conexión
+curl https://example.com   # segunda conexión (puede reusar sesión)
+
+Filtros Wireshark:
+tls
+tls.handshake.type == 1     # Client Hello
+tls.handshake.type == 2     # Server Hello
+tls.handshake.session_id    # buscar session ID reutilizado</pre></div>
+    <div class="note-box"><div class="note-title">Qué observar</div><div class="note-line">Si la segunda conexión envía un Client Hello con el mismo Session ID o un Session Ticket, el servidor puede reanudar la sesión TLS sin hacer el handshake completo, ahorrando latencia. Este es un mecanismo de sesión en capa 5.</div></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 5</span>Identificar NetBIOS Session Service</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w netbios.pcap "port 139 or port 137 or port 138"
+
+Filtros Wireshark:
+nbss              # NetBIOS Session Service (TCP 139)
+nbns              # NetBIOS Name Service (UDP 137)
+nbdgm             # NetBIOS Datagram Service (UDP 138)</pre></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Banco</span>Ejemplos de capturas para analizar</div>
+    <div class="capture-grid" id="capture-bank"></div>
+  </div>
+</div>
+
+</main>
+<footer><span style="color:var(--teal)">OSI://</span>CAPA_5 · Sesión · Establecimiento · Sincronización · Diálogo · UTU 2026 · Diego Vera</footer>
+
+<script>
+/* ── OSI Stack ──────────────────────────────────────────────────────── */
+const layers=[['7','Aplicación','Servicios que usan directamente las aplicaciones del usuario: HTTP, DNS, SMTP, FTP, SSH.','HTTP','DNS','SMTP','FTP'],['6','Presentación','Formato, codificación, compresión y cifrado de los datos. Traduce entre formatos de red y de aplicación.','TLS','UTF-8','JPEG','ASCII'],['5','Sesión','Establece, administra y cierra sesiones entre aplicaciones. Sincronización y control de diálogo.','RPC','NetBIOS','SIP','SMB'],['4','Transporte','Comunicación extremo a extremo con puertos, segmentación y control de flujo (TCP/UDP).','TCP','UDP','Puertos','Segmentos'],['3','Red','Direccionamiento lógico y enrutamiento entre redes distintas.','IP','ICMP','Routers','BGP'],['2','Enlace','Entrega local dentro del mismo segmento de red usando MACs.','Ethernet','MAC','Switch','ARP'],['1','Física','Transmisión de bits por el medio físico: cable, fibra óptica o radio.','UTP','Fibra','Wi-Fi','RS-232']];
+
+function renderOsi(active=5){
+  const s=document.getElementById('osi-stack');s.innerHTML='';
+  layers.forEach(l=>{const d=document.createElement('div');d.className='osi-layer '+(l[0]==active?'active':'');d.onclick=()=>renderOsi(l[0]);d.innerHTML=`<div class="layer-num">${l[0]}</div><div class="layer-name">${l[1]}</div>`;s.appendChild(d)});
+  const l=layers.find(x=>x[0]==active);
+  document.getElementById('osi-panel').innerHTML=`<h3>Capa ${l[0]} · ${l[1]}</h3><p style="color:var(--text2);font-size:14px;line-height:1.6">${l[2]}</p><div class="osi-tags">${l.slice(3).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`
+}
+
+/* ── SVG helpers ────────────────────────────────────────────────────── */
+function svgEl(t,a){const e=document.createElementNS('http://www.w3.org/2000/svg',t);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e}
+function svgText(x,y,text,fill,size='12px',weight='500',anchor='middle'){const t=svgEl('text',{x,y,fill,'font-size':size,'font-weight':weight,'text-anchor':anchor,'font-family':'Space Grotesk, sans-serif'});t.textContent=text;return t}
+function clearSvg(id){const s=document.getElementById(id);s.innerHTML='';return s}
+function node(s,x,y,w,h,stroke,fill,title,sub){s.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:8,fill,stroke,'stroke-width':1.5}));s.appendChild(svgText(x+w/2,y+h/2-5,title,'#fff','13px','700'));if(sub)s.appendChild(svgText(x+w/2,y+h/2+12,sub,stroke,'10px','400'))}
+function arrow(s,x1,y1,x2,y2,color,label,dashed){
+  const id='m'+Math.random().toString(36).slice(2);
+  let defs=s.querySelector('defs');if(!defs){defs=svgEl('defs',{});s.appendChild(defs)}
+  const m=svgEl('marker',{id,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:6,markerHeight:6,orient:'auto'});
+  m.appendChild(svgEl('path',{d:'M2 1L8 5L2 9',fill:'none',stroke:color,'stroke-width':1.5}));defs.appendChild(m);
+  const ln=svgEl('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.5,'marker-end':`url(#${id})`});
+  if(dashed)ln.setAttribute('stroke-dasharray','6 4');
+  s.appendChild(ln);
+  if(label)s.appendChild(svgText((x1+x2)/2,(y1+y2)/2-9,label,color,'11px','600'))
+}
+function pill(s,x,y,w,h,color,fill,text){s.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:h/2,fill,stroke:color,'stroke-width':1}));s.appendChild(svgText(x+w/2,y+h/2+4,text,color,'11px','600'))}
+
+/* ── Sesión lifecycle SVG ───────────────────────────────────────────── */
+let sessionStep=0;
+const sessionInfo=['Aún no hay sesión activa entre el cliente y el servidor.',
+  'Fase 1 — Establecimiento: el cliente envía una petición de sesión, el servidor acepta y negocia parámetros (autenticación, versión de protocolo, identificador de sesión).',
+  'Fase 2 — Intercambio de datos: la sesión está activa. Ambas partes envían y reciben datos. La sesión mantiene el contexto (quién eres, qué autorizaciones tienes).',
+  'Fase 3 — Terminación: una de las partes solicita cerrar la sesión. La otra confirma. Los recursos (memoria, tokens, conexiones) se liberan de forma ordenada.'];
+
+function drawSession(){
+  const s=clearSvg('session-svg');
+  const colors=['var(--teal)','rgba(45,212,191,.12)'];
+  const sc=['var(--blue)','rgba(77,168,255,.12)'];
+  node(s,60,30,140,54,colors[0],colors[1],'Cliente','app local');
+  node(s,660,30,140,54,sc[0],sc[1],'Servidor','app remota');
+  s.appendChild(svgEl('line',{x1:130,y1:84,x2:130,y2:290,stroke:'rgba(45,212,191,.2)','stroke-width':2,'stroke-dasharray':'6 5'}));
+  s.appendChild(svgEl('line',{x1:730,y1:84,x2:730,y2:290,stroke:'rgba(77,168,255,.2)','stroke-width':2,'stroke-dasharray':'6 5'}));
+
+  if(sessionStep===0){
+    s.appendChild(svgText(430,175,'Sin sesión activa','var(--text3)','14px','500'));
+  }
+  if(sessionStep>=1){
+    arrow(s,130,120,730,120,'var(--teal)','SESSION REQUEST');
+    arrow(s,730,160,130,160,'var(--blue)','SESSION ACCEPT + ID');
+  }
+  if(sessionStep>=2){
+    arrow(s,130,210,730,210,'var(--teal)','Datos →');
+    arrow(s,730,245,130,245,'var(--blue)','← Respuesta');
+    pill(s,335,260,190,26,'var(--green)','rgba(74,222,128,.08)','Sesión activa');
+  }
+  if(sessionStep>=3){
+    arrow(s,130,295,730,295,'var(--coral)','SESSION CLOSE / BYE');
+    s.appendChild(svgText(430,315,'Recursos liberados','var(--coral)','11px','500'));
+  }
+  document.getElementById('session-info').textContent=sessionInfo[sessionStep];
+}
+function setSessionStep(n){sessionStep=n;document.querySelectorAll('#s3 .tab-btn').forEach((b,i)=>{if(i<4)b.classList.toggle('active',i===n)});drawSession()}
+function playSession(){let i=0;setSessionStep(0);const t=setInterval(()=>{i++;setSessionStep(i);if(i>=3)clearInterval(t)},1100)}
+
+/* ── Control de diálogo SVG ─────────────────────────────────────────── */
+const dialogData={
+  simplex:{
+    title:'Simplex',sub:'Un solo sentido',ex:'Radio AM/FM, televisión, sensores IoT',
+    compare:[['Dirección','Un solo sentido: emisor → receptor.'],['Simultaneidad','No. El receptor no puede responder.'],['Ejemplos de red','Streams de datos unidireccionales, sensores, telemetría.'],['Ventaja','Simplicidad. No requiere canal de retorno.'],['Limitación','Sin feedback: el emisor no sabe si llegó el mensaje.']]},
+  halfduplex:{
+    title:'Half-duplex',sub:'Alternado (uno a la vez)',ex:'Walkie-talkie, HTTP/1.0, HDLC',
+    compare:[['Dirección','Bidireccional pero no simultáneo.'],['Simultaneidad','No. Se alterna: uno envía mientras el otro espera.'],['Ejemplos de red','HTTP/1.0, redes 802.11 en modo básico, HDLC.'],['Ventaja','Más sencillo de implementar que full-duplex.'],['Limitación','La latencia es mayor; hay tiempo de espera por turno.']]},
+  fullduplex:{
+    title:'Full-duplex',sub:'Simultáneo (ambos lados)',ex:'Teléfono, SSH, WebSocket, HTTP/2',
+    compare:[['Dirección','Bidireccional y simultáneo.'],['Simultaneidad','Sí. Ambas partes envían y reciben al mismo tiempo.'],['Ejemplos de red','SSH, WebSocket, HTTP/2, llamadas VoIP.'],['Ventaja','Máxima eficiencia y velocidad de intercambio.'],['Limitación','Más complejo de implementar y gestionar.']]},
+};
+let dialogMode='simplex';
+function setDialogMode(m,btn){
+  dialogMode=m;
+  document.querySelectorAll('#s4 .tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  drawDialog();
+  const d=dialogData[m];
+  document.getElementById('dialog-table').innerHTML=d.compare.map(r=>`<div class="compare-row"><div class="compare-k">${r[0]}</div><div class="compare-v">${r[1]}</div></div>`).join('');
+}
+function drawDialog(){
+  const s=clearSvg('dialog-svg');
+  const d=dialogData[dialogMode];
+  node(s,60,80,140,54,'var(--teal)','rgba(45,212,191,.12)',d.title==='Half-duplex'?'Host A':'Emisor','');
+  node(s,660,80,140,54,'var(--blue)','rgba(77,168,255,.12)',d.title==='Half-duplex'?'Host B':'Receptor','');
+  s.appendChild(svgText(430,25,d.title+' — '+d.sub,'var(--text2)','13px','500'));
+  s.appendChild(svgText(430,205,d.ex,'var(--text3)','11px','400'));
+  if(dialogMode==='simplex'){
+    arrow(s,200,107,660,107,'var(--teal)','datos →');
+    s.appendChild(svgText(430,175,'Sin canal de retorno','var(--text3)','11px','400'));
+  }else if(dialogMode==='halfduplex'){
+    arrow(s,200,95,660,95,'var(--teal)','→ Host A habla (turno 1)');
+    arrow(s,660,125,200,125,'var(--amber)','← Host B habla (turno 2)',false);
+    s.appendChild(svgText(430,175,'Se alternan, nunca simultáneamente','var(--text3)','11px','400'));
+  }else{
+    arrow(s,200,95,660,95,'var(--teal)','→ datos simultáneos');
+    arrow(s,660,125,200,125,'var(--blue)','datos simultáneos ←');
+    pill(s,335,155,190,26,'var(--green)','rgba(74,222,128,.07)','Envío simultáneo activo');
+  }
+}
+
+/* ── Checkpoint simulation ─────────────────────────────────────────── */
+let cpVal=0,cpDisconnected=false,cpLastCP=0;
+const CPS=[25,50,75];
+function updateCheckpoint(){
+  cpVal=+document.getElementById('cp-slider').value;
+  cpDisconnected=false;
+  cpLastCP=CPS.filter(c=>c<=cpVal).pop()||0;
+  document.getElementById('cp-pct').textContent=cpVal;
+  document.getElementById('m-prog').textContent=cpVal+'%';
+  document.getElementById('m-cp').textContent=cpLastCP?cpLastCP+'%':'—';
+  document.getElementById('m-resend').textContent=cpLastCP?(cpVal-cpLastCP)+'% de datos':'—';
+  document.getElementById('m-save').textContent=cpLastCP?cpLastCP+'% ahorrado':'—';
+  drawCP(cpVal,cpLastCP,false,false);
+  addCPLog('[Transferencia] Progreso: '+cpVal+'%'+(cpLastCP?' | Último checkpoint: '+cpLastCP+'%':' | Sin checkpoints aún'),'log-info');
+}
+function drawCP(pct,lastCP,disc,recover){
+  const s=clearSvg('checkpoint-svg');
+  const W=780,H=80,ox=40;
+  s.appendChild(svgEl('rect',{x:ox,y:70,width:W,height:20,rx:10,fill:'var(--bg4)',stroke:'var(--border)'}));
+  const prog=Math.min(pct,100);
+  s.appendChild(svgEl('rect',{x:ox,y:70,width:W*(prog/100),height:20,rx:10,fill:disc?'var(--coral)':recover?'var(--green)':'var(--teal)'}));
+  CPS.forEach(c=>{
+    const cx=ox+W*(c/100),reached=pct>=c;
+    s.appendChild(svgEl('circle',{cx,cy:80,r:12,fill:reached?'var(--purple)':'var(--bg3)',stroke:reached?'var(--purple)':'var(--border2)','stroke-width':2}));
+    s.appendChild(svgText(cx,84,'CP','#fff','9px','700'));
+    s.appendChild(svgText(cx,58,c+'%','var(--text3)','10px','500'));
+  });
+  if(disc){
+    const dx=ox+W*(pct/100);
+    s.appendChild(svgText(dx,45,'✕','var(--coral)','20px','700'));
+    s.appendChild(svgText(dx,25,'Corte de sesión','var(--coral)','11px','500'));
+  }
+  if(recover&&lastCP){
+    const rx=ox+W*(lastCP/100);
+    s.appendChild(svgEl('line',{x1:rx,y1:40,x2:rx,y2:70,stroke:'var(--green)','stroke-width':2,'stroke-dasharray':'4 3'}));
+    s.appendChild(svgText(rx,35,'Reanuda aquí','var(--green)','10px','600'));
+  }
+  s.appendChild(svgText(ox,55,'0%','var(--text3)','10px','400'));
+  s.appendChild(svgText(ox+W+10,88,'100%','var(--text3)','10px','400'));
+}
+function simulateDisconnect(){
+  cpDisconnected=true;drawCP(cpVal,cpLastCP,true,false);
+  addCPLog('[ERROR] Sesión interrumpida al '+cpVal+'%. Último checkpoint guardado: '+(cpLastCP||0)+'%.','log-err');
+  addCPLog('[INFO] Sin puntos de control: se debería reiniciar desde 0%.','log-warn');
+  addCPLog('[INFO] Con punto de control en '+cpLastCP+'%: se reenvían solo '+(cpVal-cpLastCP)+'% de datos.','log-warn');
+}
+function simulateRecover(){
+  if(!cpLastCP){addCPLog('[WARN] No hay checkpoint disponible. Reinicio desde 0%.','log-warn');return}
+  drawCP(cpLastCP,cpLastCP,false,true);
+  addCPLog('[OK] Sesión reanudada desde checkpoint en '+cpLastCP+'%. Solo se reenvían '+(cpVal-cpLastCP)+'% de datos.','log-ok');
+  document.getElementById('cp-slider').value=cpLastCP;cpVal=cpLastCP;
+  document.getElementById('cp-pct').textContent=cpLastCP;
+}
+function resetCheckpoint(){cpVal=0;cpLastCP=0;cpDisconnected=false;document.getElementById('cp-slider').value=0;document.getElementById('cp-pct').textContent='0';document.getElementById('m-prog').textContent='0%';document.getElementById('m-cp').textContent='—';document.getElementById('m-resend').textContent='—';document.getElementById('m-save').textContent='—';drawCP(0,0,false,false);document.getElementById('cp-log').innerHTML='<div class="log-line log-info">Mueve el deslizador para simular una transferencia con puntos de control.</div>'}
+function addCPLog(msg,cls){const l=document.getElementById('cp-log');const d=document.createElement('div');d.className='log-line '+cls;d.textContent=msg;l.prepend(d)}
+
+/* ── Protocolos capa 5 ─────────────────────────────────────────────── */
+const protos=[
+  ['137–139','NetBIOS','Resolución de nombres y gestión de sesiones en redes Windows. Puerto 137 UDP (nombres), 138 UDP (datagramas), 139 TCP (sesiones). Protocolo antiguo pero aún presente en entornos Windows.'],
+  ['445','SMB/CIFS','Server Message Block: compartición de archivos e impresoras Windows. Incluye negociación de sesión, autenticación NTLM/Kerberos y control de contexto de acceso. SMB2 y SMB3 son versiones modernas.'],
+  ['5060/5061','SIP','Session Initiation Protocol: establece, modifica y termina sesiones multimedia (VoIP, videoconferencia). Es el ejemplo más puro de capa 5. Puerto 5060 sin cifrar, 5061 con TLS.'],
+  ['Varios','RPC','Remote Procedure Call: permite a una aplicación llamar funciones en otra máquina como si fueran locales. NFS, DCOM y Active Directory dependen de RPC. El portmapper usa TCP/UDP 111.'],
+  ['443+TLS','TLS Session','Transport Layer Security implementa reanudación de sesión (session ticket, session ID) para evitar repetir el handshake completo en conexiones subsiguientes. Funcionalidad de capa 5 sobre TLS.'],
+  ['1723','PPTP','Point-to-Point Tunneling Protocol: establece y gestiona túneles VPN. Crea una sesión de control en TCP/1723 y un canal de datos GRE. Considerado inseguro hoy; reemplazado por L2TP/IPsec y WireGuard.'],
+  ['N/A','NFS','Network File System: sistema de archivos en red de Linux/Unix. Usa RPC sobre UDP/TCP 2049. La sesión se gestiona mediante el montaje del sistema de archivos remoto.'],
+];
+function initProtos(){
+  const t=document.getElementById('proto-table');
+  protos.forEach((p,i)=>{const r=document.createElement('div');r.className='proto-row';r.onclick=()=>showProto(i);r.innerHTML=`<div class="proto-port">${p[0]}</div><div class="proto-name">${p[1]}</div><div class="proto-desc">${p[2].slice(0,60)}…</div>`;t.appendChild(r)})
+}
+function showProto(i){const p=protos[i];document.getElementById('proto-detail').innerHTML=`<div class="note-title">${p[1]} · ${p[0]}</div><div class="note-line">${p[2]}</div>`}
+
+/* ── Protocolos modernos SVG ─────────────────────────────────────────── */
+const protoDemos={
+  tls:{
+    title:'TLS / HTTPS — Sesión sobre capa 4',
+    steps:[
+      ['Cliente','Servidor','TCP SYN','var(--teal)',100],
+      ['Servidor','Cliente','TCP SYN-ACK','var(--blue)',135],
+      ['Cliente','Servidor','TCP ACK + TLS Client Hello','var(--teal)',170],
+      ['Servidor','Cliente','TLS Server Hello + Certificate','var(--blue)',205],
+      ['Cliente','Servidor','TLS Finished (sesión establecida)','var(--green)',240],
+      ['Cliente','Servidor','HTTP GET / (datos cifrados)','var(--amber)',275],
+    ],
+    compare:[['Establecimiento de sesión','TLS Session ID o Session Ticket negociado en el handshake.'],['Reanudación','Si el cliente tiene el ticket, el handshake completo se omite en la siguiente conexión.'],['Capa 5 en TLS','Session ID/Ticket + AlertProtocol (cierre controlado) son funciones de sesión.'],['Filtro Wireshark','tls.handshake · tls.record.content_type == 21 (alert/close)']],
+    code:`# Captura TLS completa
+sudo tcpdump -i eth0 -nn -s 0 -w tls.pcap tcp port 443
+
+# Filtros Wireshark
+tls
+tls.handshake.type == 1    # Client Hello
+tls.handshake.type == 2    # Server Hello
+tls.handshake.session_id   # ID de sesión
+tls.record.content_type == 21  # Alert (cierre)`},
+  ssh:{
+    title:'SSH — Sesión autenticada cifrada',
+    steps:[
+      ['Cliente','Servidor','TCP SYN','var(--teal)',100],
+      ['Servidor','Cliente','SSH Banner (versión)','var(--blue)',135],
+      ['Cliente','Servidor','SSH Banner (versión)','var(--teal)',170],
+      ['Ambos','','Key Exchange (capa 6: cifrado)','var(--purple)',205],
+      ['Cliente','Servidor','User Auth Request','var(--amber)',240],
+      ['Servidor','Cliente','Auth Success + Canal abierto','var(--green)',275],
+    ],
+    compare:[['Establecimiento','Banner exchange → Key Exchange → Autenticación.'],['Canal SSH','Dentro de una sesión SSH pueden existir múltiples canales (shell, port-forward, SFTP).'],['Capa 5 en SSH','El SSH_MSG_CHANNEL_OPEN y el proceso de autenticación son gestión de sesión.'],['Filtro Wireshark','tcp.port == 22 · ssh']],
+    code:`# Captura SSH
+sudo tcpdump -i eth0 -nn -s 0 -w ssh.pcap tcp port 22
+
+# Filtros Wireshark
+ssh
+tcp.port == 22
+tcp.flags.fin == 1         # cierre de sesión`},
+  ws:{
+    title:'WebSocket — Sesión persistente sobre HTTP',
+    steps:[
+      ['Cliente','Servidor','TCP + HTTP GET Upgrade: websocket','var(--teal)',100],
+      ['Servidor','Cliente','101 Switching Protocols','var(--blue)',135],
+      ['Cliente','Servidor','WS Frame: datos →','var(--teal)',185],
+      ['Servidor','Cliente','← WS Frame: datos','var(--blue)',220],
+      ['Cliente','Servidor','WS Frame: datos →','var(--teal)',255],
+      ['Cliente','Servidor','WS Close Frame','var(--coral)',295],
+    ],
+    compare:[['Inicio de sesión','HTTP Upgrade Handshake: petición HTTP que se convierte en WebSocket.'],['Sesión activa','Canal full-duplex persistente; los mensajes no requieren nuevas conexiones HTTP.'],['Cierre','Close Frame con código de motivo (1000 = normal, 1001 = going away…).'],['Filtro Wireshark','websocket · http.upgrade · tcp.port == 80 or tcp.port == 443']],
+    code:`# Captura WebSocket
+sudo tcpdump -i eth0 -nn -s 0 -w ws.pcap "tcp port 80 or tcp port 443"
+
+# Filtros Wireshark
+websocket
+http.upgrade           # petición de upgrade
+websocket.payload      # datos del frame`},
+  smb:{
+    title:'SMB2 — Sesión de sistema de archivos Windows',
+    steps:[
+      ['Cliente','Servidor','TCP SYN','var(--teal)',100],
+      ['Cliente','Servidor','SMB2 Negotiate Request','var(--teal)',140],
+      ['Servidor','Cliente','SMB2 Negotiate Response','var(--blue)',175],
+      ['Cliente','Servidor','Session Setup (NTLM Auth)','var(--amber)',210],
+      ['Servidor','Cliente','Session Setup OK + SessionID','var(--green)',245],
+      ['Cliente','Servidor','Tree Connect (acceso a recurso)','var(--teal)',280],
+    ],
+    compare:[['Establecimiento','Negotiate (versión) → Session Setup (autenticación) → Tree Connect (recurso).'],['Session ID','SMB2 asigna un Session ID único que identifica la sesión autenticada.'],['Firma','SMB3 firma y cifra los mensajes dentro de la sesión.'],['Filtro Wireshark','smb2 · smb2.cmd == 1 (Session Setup) · smb2.sesid']],
+    code:`# Captura SMB2
+sudo tcpdump -i eth0 -nn -s 0 -w smb2.pcap tcp port 445
+
+# Filtros Wireshark
+smb2
+smb2.cmd == 0         # Negotiate
+smb2.cmd == 1         # Session Setup
+smb2.sesid != 0       # sesiones activas`},
+};
+let protoMode='tls';
+function setProtoDemo(m,btn){protoMode=m;document.querySelectorAll('#s7 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');drawProtoSvg();renderProtoCompare();renderProtoCode()}
+function drawProtoSvg(){
+  const s=clearSvg('proto-svg'),d=protoDemos[protoMode];
+  node(s,60,30,140,52,'var(--teal)','rgba(45,212,191,.12)','Cliente','host local');
+  node(s,660,30,140,52,'var(--blue)','rgba(77,168,255,.12)','Servidor','host remoto');
+  s.appendChild(svgEl('line',{x1:130,y1:82,x2:130,y2:310,stroke:'rgba(45,212,191,.18)','stroke-width':2,'stroke-dasharray':'6 5'}));
+  s.appendChild(svgEl('line',{x1:730,y1:82,x2:730,y2:310,stroke:'rgba(77,168,255,.18)','stroke-width':2,'stroke-dasharray':'6 5'}));
+  s.appendChild(svgText(430,20,d.title,'var(--text2)','12px','500'));
+  d.steps.forEach(([from,to,lbl,color,y])=>{
+    if(from==='Ambos'){s.appendChild(svgText(430,y,lbl,color,'11px','600'));return}
+    const x1=from==='Cliente'?130:730,x2=to==='Cliente'?130:730;
+    arrow(s,x1,y,x2,y,color,lbl);
+  });
+}
+function renderProtoCompare(){const d=protoDemos[protoMode];document.getElementById('proto-compare').innerHTML=d.compare.map(r=>`<div class="compare-row"><div class="compare-k">${r[0]}</div><div class="compare-v">${r[1]}</div></div>`).join('')}
+function renderProtoCode(){const d=protoDemos[protoMode];document.getElementById('proto-code-title').textContent='Filtros para '+d.title.split('—')[0].trim();document.getElementById('proto-code-pre').textContent=d.code}
+
+/* ── SIP VoIP SVG ───────────────────────────────────────────────────── */
+let sipStep=0;
+const sipInfo=[
+  'Sin sesión SIP activa. El agente de usuario está en reposo.',
+  'INVITE: el cliente A inicia la sesión (hace la llamada). El mensaje contiene el destino SIP, capacidades de medios (SDP) y parámetros de codificación.',
+  '180 Ringing: el servidor proxy (o el cliente B) informa que el destino está siendo alertado. Equivale al tono de llamada.',
+  '200 OK: el cliente B acepta la sesión. Incluye su SDP con los parámetros de medios elegidos para la llamada.',
+  'ACK: el cliente A confirma la recepción del 200 OK. La sesión SIP queda establecida. RTP comienza a transportar audio/video en paralelo.',
+  'BYE + 200 OK: uno de los clientes termina la sesión. El otro confirma. RTP se detiene y se liberan los recursos.',
+];
+function drawSip(){
+  const s=clearSvg('sip-svg');
+  node(s,55,25,130,50,'var(--teal)','rgba(45,212,191,.12)','Cliente A','usuario 1001');
+  node(s,365,25,130,50,'var(--purple)','rgba(167,139,250,.12)','Proxy SIP','servidor');
+  node(s,675,25,130,50,'var(--blue)','rgba(77,168,255,.12)','Cliente B','usuario 1002');
+  [[120,75,430,75],[430,75,740,75],[120,310,430,310],[430,310,740,310]].forEach(([x1,y1,x2,y2])=>{
+    s.appendChild(svgEl('line',{x1,y1,x2,y2,stroke:'rgba(255,255,255,.1)','stroke-width':1.5,'stroke-dasharray':'5 5'}));
+  });
+  if(sipStep>=1){arrow(s,120,120,430,120,'var(--teal)','INVITE sip:1002@domain');arrow(s,430,150,740,150,'var(--purple)','INVITE →')}
+  if(sipStep>=2){arrow(s,740,190,430,190,'var(--blue)','← 180 Ringing');arrow(s,430,220,120,220,'var(--purple)','180 Ringing')}
+  if(sipStep>=3){arrow(s,740,260,430,260,'var(--blue)','← 200 OK + SDP');arrow(s,430,290,120,290,'var(--purple)','200 OK')}
+  if(sipStep>=4){arrow(s,120,310,740,310,'var(--green)','ACK (sesión establecida)');pill(s,320,324,220,24,'var(--green)','rgba(74,222,128,.07)','RTP: audio/video activo')}
+  if(sipStep>=5){arrow(s,120,340,430,340,'var(--coral)','BYE');arrow(s,430,355,120,355,'var(--purple)','200 OK')}
+  document.getElementById('sip-info').textContent=sipInfo[sipStep];
+}
+function setSipStep(n){sipStep=n;document.querySelectorAll('#s8 .tab-btn').forEach((b,i)=>{if(i<6)b.classList.toggle('active',i===n)});drawSip()}
+function playSip(){let i=0;setSipStep(0);const t=setInterval(()=>{i++;setSipStep(i);if(i>=5)clearInterval(t)},1000)}
+
+/* ── Seguridad: ataques de sesión ──────────────────────────────────── */
+const attacks={
+  hijack:{title:'Session Hijacking',body:'El atacante intercepta o predice el token/cookie de sesión de un usuario autenticado y lo usa para suplantar su identidad, sin necesitar contraseñas. <strong>Prevención:</strong> HTTPS obligatorio (cifra el token en tránsito), tokens aleatorios de alta entropía, regenerar el token tras operaciones sensibles, timeout corto.'},
+  fixation:{title:'Session Fixation',body:'El atacante introduce al usuario un Session ID conocido antes de que se autentique. Una vez que el usuario inicia sesión con ese ID, el atacante ya tiene acceso. <strong>Prevención:</strong> siempre generar un nuevo Session ID después del login, invalidar IDs previos a la autenticación.'},
+  replay:{title:'Replay Attack',body:'El atacante captura un mensaje de establecimiento de sesión (ej: una respuesta de autenticación) y lo reenvía más tarde para obtener acceso. <strong>Prevención:</strong> uso de nonces (valores únicos por petición), timestamps con ventana de validez, tokens HMAC con expiración.'},
+};
+function showAttack(k){const a=attacks[k];document.getElementById('attack-detail').innerHTML=`<div class="note-title">${a.title}</div><div class="note-line">${a.body}</div>`}
+
+/* ── Capturas de práctica ──────────────────────────────────────────── */
+const captures=[
+  ['SMB2 TCP/445','sudo tcpdump -i eth0 -nn -s 0 -w smb2_session.pcap tcp port 445','Acceder a una carpeta compartida desde Windows o Samba',['smb2','smb2.cmd == 1','smb2.sesid != 0'],'Observar Negotiate, Session Setup y el Session ID asignado.'],
+  ['SIP UDP/5060','sudo tcpdump -i eth0 -nn -s 0 -w sip.pcap port 5060 or port 5061','Realizar una llamada VoIP con un softphone (Linphone, Zoiper)',['sip','sip.Method == "INVITE"','sip.Method == "BYE"'],'Observar el ciclo INVITE→180→200→ACK→BYE y cuándo comienza RTP.'],
+  ['TLS Session Ticket','sudo tcpdump -i eth0 -nn -s 0 -w tls_ticket.pcap tcp port 443','curl https://example.com (dos veces consecutivas)',['tls.handshake','tls.handshake.session_ticket','tls.record.content_type == 20'],'Observar si la segunda conexión reutiliza el session ticket o hace handshake completo.'],
+  ['NetBIOS Sesión','sudo tcpdump -i eth0 -nn -s 0 -w netbios.pcap port 139 or port 137','Conectarse a un recurso compartido antiguo de Windows (\\\\host\\recurso)',['nbss','nbns','smb'],'Observar NBT Session Request y Session Granted en TCP/139 antes del tráfico SMB.'],
+  ['SSH canal SSH','sudo tcpdump -i eth0 -nn -s 0 -w ssh_canal.pcap tcp port 22','ssh -v usuario@servidor (flag -v muestra el handshake)',['ssh','tcp.port == 22','tcp.flags.fin == 1'],'Identificar los pasos: banner exchange → Key Exchange → autenticación → canal SSH abierto.'],
+  ['RPC portmapper','sudo tcpdump -i eth0 -nn -s 0 -w rpc.pcap tcp port 111 or udp port 111','rpcinfo -p servidor-nfs',['rpc','rpc.programm','portmap'],'Observar cómo el portmapper registra servicios RPC y qué puertos usa NFS.'],
+];
+function renderCaptures(){
+  const b=document.getElementById('capture-bank');
+  captures.forEach(c=>{
+    const d=document.createElement('div');d.className='capture-card';
+    d.innerHTML=`<h4>${c[0]}</h4><p><strong>Comando tcpdump:</strong></p><div class="code-card"><pre>${c[1]}</pre></div><p><strong>Generar tráfico:</strong></p><div class="code-card"><pre>${c[2]}</pre></div><p><strong>Filtros Wireshark:</strong><br>${c[3].map(f=>`<span class="filter-pill">${f}</span>`).join('')}</p><p><strong>Observar:</strong> ${c[4]}</p>`;
+    b.appendChild(d)
+  })
+}
+
+/* ── Copy code ──────────────────────────────────────────────────────── */
+function copyCode(btn){const p=btn.closest('.code-card').querySelector('pre').innerText;navigator.clipboard?.writeText(p);btn.textContent='copiado';setTimeout(()=>btn.textContent='copiar',1200)}
+
+/* ── Nav activa ─────────────────────────────────────────────────────── */
+function updateActiveNav(){
+  const sections=document.querySelectorAll('[id^="s"]'),links=document.querySelectorAll('.nav-link');
+  let a=null;sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a))
+}
+window.addEventListener('scroll',updateActiveNav,{passive:true});
+
+/* ── Init ───────────────────────────────────────────────────────────── */
+renderOsi(5);
+drawSession();
+setDialogMode('simplex');
+drawCP(0,0,false,false);
+initProtos();
+setProtoDemo('tls');
+drawSip();
+renderCaptures();
+updateActiveNav();
+</script>
+</body>
+</html>
