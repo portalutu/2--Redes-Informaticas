@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capa 7 OSI — Aplicación Interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(74,222,128,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(74,222,128,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;right:-18vw;top:-20vh;width:58vw;height:58vw;background:radial-gradient(circle,rgba(74,222,128,.08),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--green);background:var(--green-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--green)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:720px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--green);background:var(--green-bg);border-color:rgba(74,222,128,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s;cursor:pointer}.info-card:hover{border-color:rgba(74,222,128,.45);transform:translateY(-2px)}.info-card.active{border-color:rgba(74,222,128,.45);background:var(--green-bg)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.osi-layout{display:grid;grid-template-columns:minmax(230px,320px) 1fr;gap:16px;margin-top:1.25rem}.osi-stack{display:flex;flex-direction:column;gap:7px}.osi-layer{display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--border);background:var(--bg3);border-radius:10px;cursor:pointer;transition:.2s}.osi-layer:hover{transform:translateX(4px);border-color:var(--border2)}.osi-layer.active{background:var(--green-bg);border-color:rgba(74,222,128,.45)}.layer-num{font-family:var(--mono);font-size:13px;color:var(--text3);font-weight:700}.osi-layer.active .layer-num{color:var(--green)}.layer-name{font-size:13px;color:var(--text2)}.osi-layer.active .layer-name{color:#fff;font-weight:700}.osi-panel{min-height:238px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px}.osi-panel h3{color:#fff;font-size:18px;margin-bottom:8px}.osi-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.tag{font-family:var(--mono);font-size:10px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.2);border-radius:18px;padding:3px 8px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tab-btn{font-family:var(--sans);font-size:12px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:20px;padding:5px 12px;cursor:pointer;transition:.2s}.tab-btn:hover,.tab-btn.active{color:var(--green);background:var(--green-bg);border-color:rgba(74,222,128,.35)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.4fr 2fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.protocol-layout{display:grid;grid-template-columns:minmax(250px,320px) 1fr;gap:16px;margin-top:1.25rem}.protocol-list{display:flex;flex-direction:column;gap:10px}.protocol-item{padding:12px 14px;border:1px solid var(--border);background:var(--bg3);border-radius:12px;cursor:pointer;transition:.2s}.protocol-item:hover{transform:translateX(4px);border-color:var(--border2)}.protocol-item.active{background:var(--green-bg);border-color:rgba(74,222,128,.45)}.protocol-item h4{font-size:15px;color:#fff}.protocol-item p{font-size:12px;margin-top:4px}.protocol-panel{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:280px}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}.kv{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:10px}.kv-k{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase}.kv-v{font-family:var(--mono);font-size:13px;color:#fff;margin-top:5px}
+.svg-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:1.25rem;overflow:hidden}svg{display:block;width:100%;height:auto}
+.code-card{background:#07090c;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:12px}.code-head{display:flex;justify-content:space-between;align-items:center;background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 12px}.code-title{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase}.copy-btn{font-family:var(--mono);font-size:10px;color:var(--text2);background:var(--bg4);border:1px solid var(--border2);border-radius:6px;padding:3px 8px;cursor:pointer}.copy-btn:hover{color:#fff}pre{padding:14px;overflow-x:auto;color:#dbeafe;font-family:var(--mono);font-size:12px;line-height:1.6}
+.url-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:13px;outline:none;margin-top:.75rem}.url-input:focus{border-color:rgba(74,222,128,.4);box-shadow:0 0 0 3px rgba(74,222,128,.08)}
+.dns-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:1rem}.dns-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px}.dns-box h4{font-size:14px;color:#fff;margin-bottom:6px}.dns-box p{font-size:12px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}.metric{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px}.metric-k{font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase}.metric-v{font-family:var(--mono);font-size:18px;font-weight:700;color:#fff;margin-top:4px}.metric-v.am{color:var(--amber)}.metric-v.teal{color:var(--teal)}.metric-v.green{color:var(--green)}.metric-v.coral{color:var(--coral)}
+.mailsim-layout{display:grid;grid-template-columns:minmax(250px,290px) 1fr;gap:16px;margin-top:1.25rem}.mailsim-steps{display:flex;flex-direction:column;gap:10px}.mailsim-step{padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--bg3);cursor:pointer;transition:.2s}.mailsim-step:hover{transform:translateX(4px);border-color:var(--border2)}.mailsim-step.active{background:var(--green-bg);border-color:rgba(74,222,128,.45)}.mailsim-step h4{font-size:15px;color:#fff}.mailsim-step p{font-size:12px;margin-top:4px}.mailsim-panel{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px}.mailsim-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.mailsim-log{margin-top:12px;background:#07090c;border:1px solid var(--border);border-radius:12px;padding:12px;font-family:var(--mono);font-size:12px;color:#dbeafe;min-height:180px;white-space:pre-wrap}.mailsim-mail{background:var(--bg4);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:12px}.mailsim-mail h4{font-size:15px;color:#fff}.mailsim-mail p{font-size:12px;margin-top:6px}.mailsim-compose{display:grid;gap:10px;margin-top:12px}.mailsim-field{background:var(--bg4);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:8px 10px;font-family:var(--mono);font-size:12px}.mailsim-field[readonly]{opacity:.85}.mailsim-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.mailsim-status{margin-top:12px;font-size:13px;color:var(--text2)}
+.wa-layout{display:grid;grid-template-columns:minmax(250px,290px) 1fr;gap:16px;margin-top:1.25rem}.wa-steps{display:flex;flex-direction:column;gap:10px}.wa-step{padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--bg3);cursor:pointer;transition:.2s}.wa-step:hover{transform:translateX(4px);border-color:var(--border2)}.wa-step.active{background:var(--green-bg);border-color:rgba(74,222,128,.45)}.wa-step h4{font-size:15px;color:#fff}.wa-step p{font-size:12px;margin-top:4px}.wa-panel{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px}.wa-chat{margin-top:12px;background:linear-gradient(180deg,#0b1117,#101721);border:1px solid var(--border);border-radius:16px;padding:14px;display:grid;gap:10px}.wa-bubble{max-width:78%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.5;border:1px solid}.wa-left{justify-self:start;background:rgba(77,168,255,.09);border-color:rgba(77,168,255,.25);color:#dbeafe}.wa-right{justify-self:end;background:rgba(74,222,128,.09);border-color:rgba(74,222,128,.25);color:#eafff2}.wa-meta{display:block;font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:5px}.wa-media{display:block;margin-top:6px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);font-family:var(--mono);font-size:11px}.wa-log{margin-top:12px;background:#07090c;border:1px solid var(--border);border-radius:12px;padding:12px;font-family:var(--mono);font-size:12px;color:#dbeafe;min-height:170px;white-space:pre-wrap}.wa-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.practice-step-title{display:flex;align-items:center;gap:10px;font-size:17px;color:#fff;font-weight:700;margin:1.4rem 0 .8rem}.practice-badge{font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.25);border-radius:20px;padding:3px 9px;white-space:nowrap}.filter-pill{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.2);border-radius:20px;padding:3px 8px;margin:2px 3px 2px 0}.capture-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:1.25rem}.capture-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px}.capture-card h4{font-size:14px;color:#fff;margin-bottom:6px}.capture-card p{font-size:12px;color:var(--text2);margin-bottom:8px}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.osi-layout,.protocol-layout,.mailsim-layout,.wa-layout{grid-template-columns:1fr}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.card-body{padding:1rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">OSI://CAPA_7</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">Función</a>
+    <a class="nav-link" href="#s2">OSI</a>
+    <a class="nav-link" href="#s3">Protocolos</a>
+    <a class="nav-link" href="#s4">DNS</a>
+    <a class="nav-link" href="#s5">HTTP</a>
+    <a class="nav-link" href="#s6">URL</a>
+    <a class="nav-link" href="#s7">Servicios</a>
+    <a class="nav-link" href="#s8">Correo</a>
+    <a class="nav-link" href="#s9">Mailserver</a>
+    <a class="nav-link" href="#s10">Cliente/Servidor</a>
+    <a class="nav-link" href="#s11">WhatsApp</a>
+    <a class="nav-link" href="#s12">Práctica</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Modelo OSI · Capa 7 · Aplicación</div>
+  <h1>Capa 7 del modelo <span>OSI</span><br>Servicios, protocolos y uso real de la red</h1>
+  <p class="hero-sub">Presentación interactiva para comprender cómo la capa de aplicación conecta al usuario con la red mediante protocolos como DNS, HTTP, SMTP, FTP y SSH. Está pensada para que el estudiante vea dónde aparece esta capa en situaciones cotidianas: abrir una web, enviar un correo, usar una app o consultar una API.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="#s1">Comenzar explicación</a>
+    <a class="btn" href="#s12">Ir a práctica</a>
+  </div>
+</section>
+
+<main>
+
+<div class="card" id="s1">
+  <div class="card-header"><span class="card-num num-green">01</span><span class="card-title">¿Qué hace la capa 7?</span></div>
+  <div class="card-body">
+    <p>La <strong>capa de aplicación</strong> es la parte del modelo OSI más cercana al usuario. No significa "la app entera", sino el conjunto de <strong>protocolos y servicios</strong> que permiten que un navegador, un cliente de correo, una terminal SSH o una app móvil usen la red con reglas conocidas.</p>
+    <div class="grid grid-4">
+      <div class="info-card"><div class="info-label">Web</div><div class="info-title">HTTP / HTTPS</div><div class="info-desc">Carga páginas, APIs, imágenes, formularios y respuestas del servidor.</div></div>
+      <div class="info-card"><div class="info-label">Nombres</div><div class="info-title">DNS</div><div class="info-desc">Traduce nombres como <code>utu.edu.uy</code> a direcciones IP comprensibles por la red.</div></div>
+      <div class="info-card"><div class="info-label">Mensajería</div><div class="info-title">SMTP / IMAP / POP3</div><div class="info-desc">Permite enviar correos, recibirlos y sincronizar buzones.</div></div>
+      <div class="info-card"><div class="info-label">Acceso</div><div class="info-title">SSH / FTP</div><div class="info-desc">Sirve para entrar a otro equipo, administrar servicios o transferir archivos.</div></div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Idea clave</div>
+      <div class="note-line">La capa 7 define <strong>qué servicio se quiere usar</strong> y <strong>qué reglas sigue la conversación</strong>. Las capas inferiores se ocupan de transportar los datos; la capa 7 da sentido a esos datos para el usuario y para la aplicación.</div>
+    </div>
+    <div class="grid grid-3" style="margin-top:1.25rem">
+      <div class="info-card"><div class="info-label">Ejemplo 1</div><div class="info-title">Abrir un sitio web</div><div class="info-desc">El navegador usa DNS para encontrar la IP y HTTP/HTTPS para pedir el contenido.</div></div>
+      <div class="info-card"><div class="info-label">Ejemplo 2</div><div class="info-title">Entrar por SSH</div><div class="info-desc">La terminal pide autenticación y abre una sesión remota con comandos interactivos.</div></div>
+      <div class="info-card"><div class="info-label">Ejemplo 3</div><div class="info-title">Usar WhatsApp Web o una API</div><div class="info-desc">La app intercambia mensajes y datos con un servicio remoto usando protocolos de aplicación.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s2">
+  <div class="card-header"><span class="card-num num-blue">02</span><span class="card-title">Ubicación dentro del modelo OSI</span></div>
+  <div class="card-body">
+    <p>Selecciona una capa para ver su función. La capa 7 es la cara visible de la red para el usuario: ahí viven los servicios que usamos todos los días.</p>
+    <div class="osi-layout">
+      <div class="osi-stack" id="osi-stack"></div>
+      <div class="osi-panel" id="osi-panel"></div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Relación con las capas inferiores</div>
+      <div class="note-line">HTTP no puede funcionar sin TCP o QUIC, y DNS no sirve sin IP y sin enlace de datos. La capa 7 depende de todas las demás, pero es la que decide si el mensaje es una página web, un correo, una consulta DNS o un comando remoto.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s3">
+  <div class="card-header"><span class="card-num num-teal">03</span><span class="card-title">Explorador de protocolos de aplicación</span></div>
+  <div class="card-body">
+    <p>Haz clic en un protocolo para ver su función, ejemplos de uso, puerto típico y qué tipo de servicio ofrece.</p>
+    <div class="protocol-layout">
+      <div class="protocol-list" id="protocol-list"></div>
+      <div class="protocol-panel" id="protocol-panel"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s4">
+  <div class="card-header"><span class="card-num num-amber">04</span><span class="card-title">DNS: cómo un nombre se convierte en IP</span></div>
+  <div class="card-body">
+    <p>DNS es uno de los mejores ejemplos de la capa 7: el usuario piensa en nombres, pero la red necesita direcciones IP. Selecciona un tipo de consulta para ver qué devuelve un servidor DNS.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setDnsView('a',this)">Registro A</button>
+      <button class="tab-btn" onclick="setDnsView('aaaa',this)">Registro AAAA</button>
+      <button class="tab-btn" onclick="setDnsView('mx',this)">Registro MX</button>
+      <button class="tab-btn" onclick="setDnsView('cname',this)">Registro CNAME</button>
+    </div>
+    <div class="svg-box"><svg id="dns-svg" viewBox="0 0 860 260"></svg></div>
+    <div class="dns-grid" id="dns-grid"></div>
+    <div class="note-box">
+      <div class="note-title">Secuencia real</div>
+      <div class="note-line">Cuando escribes una URL, el equipo consulta primero al resolvedor DNS configurado. Si este no conoce la respuesta, pregunta a otros servidores hasta obtener la IP. Recién después el navegador puede iniciar HTTP o HTTPS contra esa dirección.</div>
+    </div>
+    <div class="code-card">
+      <div class="code-head"><span class="code-title">Consulta práctica</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+      <pre>nslookup utu.edu.uy
+dig utu.edu.uy
+dig utu.edu.uy MX
+dig www.google.com AAAA</pre>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s5">
+  <div class="card-header"><span class="card-num num-coral">05</span><span class="card-title">HTTP: pedir y recibir recursos</span></div>
+  <div class="card-body">
+    <p>HTTP define cómo un cliente solicita un recurso y cómo un servidor responde. Cambia el método para ver cómo cambia la intención del mensaje.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setHttpMode('get',this)">GET</button>
+      <button class="tab-btn" onclick="setHttpMode('post',this)">POST</button>
+      <button class="tab-btn" onclick="setHttpMode('put',this)">PUT</button>
+      <button class="tab-btn" onclick="setHttpMode('delete',this)">DELETE</button>
+    </div>
+    <div class="code-card">
+      <div class="code-head"><span class="code-title" id="http-title">HTTP GET</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+      <pre id="http-pre"></pre>
+    </div>
+    <div class="metric-grid" id="http-metrics"></div>
+    <div class="note-box" id="http-note"></div>
+    <div class="compare-table">
+      <div class="compare-row"><div class="compare-k">Método</div><div class="compare-v">Define la intención: leer, crear, actualizar o borrar recursos.</div></div>
+      <div class="compare-row"><div class="compare-k">URI</div><div class="compare-v">Identifica el recurso pedido: <code>/alumnos/42</code>, <code>/api/notas</code>, <code>/index.html</code>.</div></div>
+      <div class="compare-row"><div class="compare-k">Cabeceras</div><div class="compare-v">Aportan contexto: tipo de contenido, autenticación, longitud, compresión, idioma.</div></div>
+      <div class="compare-row"><div class="compare-k">Cuerpo</div><div class="compare-v">Envia datos cuando hace falta: formularios, JSON, archivos, credenciales.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s6">
+  <div class="card-header"><span class="card-num num-purple">06</span><span class="card-title">Desarmar una URL</span></div>
+  <div class="card-body">
+    <p>Una URL contiene mucha información útil para la capa 7: protocolo, servidor, puerto, ruta, parámetros y fragmentos. Modifica la URL y observa cómo se separa cada parte.</p>
+    <input class="url-input" id="url-input" type="text" value="https://campus.utu.edu.uy:443/cursos/redes?grupo=3&tema=osi#capa7" oninput="parseUrl()">
+    <div class="kv-grid" id="url-grid"></div>
+    <div class="note-box">
+      <div class="note-title">Observación</div>
+      <div class="note-line">El <strong>esquema</strong> suele indicar el protocolo de aplicación (<code>http</code>, <code>https</code>, <code>ftp</code>), mientras que el <strong>host</strong> indica a qué servicio queremos llegar. Los parámetros se usan mucho en búsquedas, filtros y APIs.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s7">
+  <div class="card-header"><span class="card-num num-blue">07</span><span class="card-title">Servicios reales de la capa 7</span></div>
+  <div class="card-body">
+    <p>La capa 7 no es solo la web. Cambia el escenario para ver cómo se comportan distintos servicios del mundo real.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setServiceView('web',this)">Sitio web</button>
+      <button class="tab-btn" onclick="setServiceView('api',this)">API REST</button>
+      <button class="tab-btn" onclick="setServiceView('ssh',this)">SSH</button>
+      <button class="tab-btn" onclick="setServiceView('ftp',this)">FTP</button>
+    </div>
+    <div class="svg-box"><svg id="service-svg" viewBox="0 0 860 280"></svg></div>
+    <div class="note-box"><div class="note-title">Descripción</div><div class="note-line" id="service-info"></div></div>
+  </div>
+</div>
+
+<div class="card" id="s8">
+  <div class="card-header"><span class="card-num num-amber">08</span><span class="card-title">Correo electrónico: SMTP, IMAP y POP3</span></div>
+  <div class="card-body">
+    <p>Enviar y leer correos involucra varios protocolos de aplicación diferentes. Selecciona uno para ver en qué momento entra en juego.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setMailMode('smtp',this)">SMTP</button>
+      <button class="tab-btn" onclick="setMailMode('imap',this)">IMAP</button>
+      <button class="tab-btn" onclick="setMailMode('pop3',this)">POP3</button>
+    </div>
+    <div class="svg-box"><svg id="mail-svg" viewBox="0 0 860 300"></svg></div>
+    <div class="grid grid-3" style="margin-top:1rem">
+      <div class="info-card"><div class="info-label">SMTP</div><div class="info-title">Enviar</div><div class="info-desc">Cliente a servidor y servidor a servidor. Usa comandos como HELO, MAIL FROM, RCPT TO y DATA.</div></div>
+      <div class="info-card"><div class="info-label">IMAP</div><div class="info-title">Sincronizar</div><div class="info-desc">Los correos quedan en el servidor y se ven igual desde el celular, la PC o la web.</div></div>
+      <div class="info-card"><div class="info-label">POP3</div><div class="info-title">Descargar</div><div class="info-desc">Se orienta a bajar los mensajes al cliente; hoy se usa menos que IMAP.</div></div>
+    </div>
+    <div class="note-box"><div class="note-title">Idea práctica</div><div class="note-line" id="mail-info"></div></div>
+  </div>
+</div>
+
+<div class="card" id="s9">
+  <div class="card-header"><span class="card-num num-green">09</span><span class="card-title">Simulación interactiva: funcionamiento de un mailserver</span></div>
+  <div class="card-body">
+    <p>Esta simulación muestra una secuencia realista de uso de correo electrónico: el usuario inicia sesión, consulta la bandeja con <strong>IMAP</strong>, abre un mensaje y luego responde mediante <strong>SMTP</strong>. Cada paso explica qué está ocurriendo en la capa 7.</p>
+    <div class="mailsim-layout">
+      <div class="mailsim-steps" id="mailsim-steps"></div>
+      <div class="mailsim-panel">
+        <h3 style="font-size:20px;color:#fff" id="mailsim-title">Paso 1</h3>
+        <p id="mailsim-explain" style="margin-top:8px"></p>
+        <div class="mailsim-toolbar" id="mailsim-toolbar"></div>
+        <div id="mailsim-dynamic"></div>
+        <div class="mailsim-log" id="mailsim-log"></div>
+        <div class="mailsim-status" id="mailsim-status"></div>
+      </div>
+    </div>
+    <div class="note-box">
+      <div class="note-title">Mirada didáctica</div>
+      <div class="note-line">Un mismo servicio para el usuario puede apoyarse en distintos protocolos de aplicación. Aquí veremos que <strong>IMAP</strong> no envía correos: solo accede y sincroniza el buzón. Cuando el usuario responde, entra en acción <strong>SMTP</strong>, que es el protocolo encargado de entregar el mensaje saliente.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s10">
+  <div class="card-header"><span class="card-num num-green">10</span><span class="card-title">Diálogo cliente-servidor</span></div>
+  <div class="card-body">
+    <p>En la capa 7 siempre hay un intercambio de significados. Cambia el escenario y mira cómo varía la conversación entre cliente y servidor.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setDialogueMode('login',this)">Inicio de sesión</button>
+      <button class="tab-btn" onclick="setDialogueMode('search',this)">Búsqueda web</button>
+      <button class="tab-btn" onclick="setDialogueMode('chat',this)">Chat</button>
+    </div>
+    <div class="code-card">
+      <div class="code-head"><span class="code-title" id="dialogue-title">Cliente ↔ Servidor</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+      <pre id="dialogue-pre"></pre>
+    </div>
+    <div class="note-box"><div class="note-title">Qué aprender</div><div class="note-line" id="dialogue-note"></div></div>
+  </div>
+</div>
+
+<div class="card" id="s11">
+  <div class="card-header"><span class="card-num num-blue">11</span><span class="card-title">Simulación interactiva: cómo funciona WhatsApp en un diálogo real</span></div>
+  <div class="card-body">
+    <p>En esta simulación dos usuarios conversan por WhatsApp. Verás cómo la aplicación intercambia <strong>mensajes de texto</strong>, luego una <strong>foto</strong> y finalmente un <strong>audio</strong>. La idea es mostrar que, para la capa 7, cada tipo de contenido sigue reglas distintas aunque todos formen parte del mismo chat.</p>
+    <div class="svg-box"><svg id="wa-traffic-svg" viewBox="0 0 860 330"></svg></div>
+    <div class="wa-layout">
+      <div class="wa-steps" id="wa-steps"></div>
+      <div class="wa-panel">
+        <h3 style="font-size:20px;color:#fff" id="wa-title">Paso 1</h3>
+        <p id="wa-explain" style="margin-top:8px"></p>
+        <div class="wa-kpis" id="wa-kpis"></div>
+        <div class="wa-chat" id="wa-chat"></div>
+        <div class="wa-log" id="wa-log"></div>
+        <div class="note-box">
+          <div class="note-title">Qué está pasando en capa 7</div>
+          <div class="note-line" id="wa-note"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="s12">
+  <div class="card-header"><span class="card-num num-green">12</span><span class="card-title">Práctica: observar la capa 7 en tráfico real</span></div>
+  <div class="card-body">
+    <p>Estas actividades permiten ver protocolos de aplicación reales en acción con herramientas conocidas por estudiantes: <code>curl</code>, <code>dig</code>, <code>openssl</code> y Wireshark.</p>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 1</span>Analizar DNS</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w dns_query.pcap udp port 53
+dig utu.edu.uy
+dig utu.edu.uy MX
+
+# Filtros Wireshark:
+dns
+dns.qry.name == "utu.edu.uy"
+dns.resp.type == 1</pre></div>
+    <div class="note-box"><div class="note-title">Qué observar</div><div class="note-line">Identificar el nombre consultado, el tipo de registro pedido y la respuesta del servidor. Aquí la capa 7 está resolviendo nombres para que otras aplicaciones puedan seguir trabajando.</div></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 2</span>Inspeccionar HTTP</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>sudo tcpdump -i eth0 -nn -s 0 -w http_web.pcap tcp port 80
+curl http://example.com
+
+# Filtros Wireshark:
+http
+http.request.method == "GET"
+http.response.code == 200</pre></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 3</span>Comparar HTTP con HTTPS</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre># HTTP visible
+sudo tcpdump -i eth0 -nn -s 0 -w http_plain.pcap tcp port 80
+curl http://example.com
+
+# HTTPS protegido
+sudo tcpdump -i eth0 -nn -s 0 -w https_tls.pcap tcp port 443
+curl https://example.com
+
+# Filtros Wireshark:
+http
+tls
+tcp.port == 80
+tcp.port == 443</pre></div>
+    <div class="note-box"><div class="note-title">Qué observar</div><div class="note-line">En HTTP se ven claramente el método, la ruta y las cabeceras. En HTTPS se sigue usando HTTP como protocolo de aplicación, pero el contenido queda encapsulado y protegido por TLS.</div></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 4</span>Probar una API</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">terminal</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre>curl -s https://api.github.com/users/octocat
+curl -i https://api.github.com/users/octocat
+
+# Observar:
+# - método GET
+# - Content-Type: application/json
+# - código de estado
+# - cabeceras de rate limit</pre></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Paso 5</span>Ver un servicio de correo o web con openssl</div>
+    <div class="code-card"><div class="code-head"><span class="code-title">openssl / nc</span><button class="copy-btn" onclick="copyCode(this)">copiar</button></div>
+    <pre># Ver detalles de un sitio HTTPS
+openssl s_client -connect utu.edu.uy:443
+
+# Probar HTTP "a mano"
+nc example.com 80
+GET / HTTP/1.1
+Host: example.com
+
+# Probar SMTP si tienes un servidor de prueba
+nc mail.servidor.local 25
+HELO aula.local</pre></div>
+
+    <div class="practice-step-title"><span class="practice-badge">Banco</span>Capturas sugeridas</div>
+    <div class="capture-grid" id="capture-bank"></div>
+  </div>
+</div>
+
+</main>
+<footer><span style="color:var(--green)">OSI://</span>CAPA_7 · Aplicación · DNS · HTTP · SMTP · SSH · APIs · UTU 2026 · Diego Vera</footer>
+
+<script>
+const layers=[['7','Aplicación','Protocolos y servicios visibles para el usuario: web, correo, nombres, acceso remoto, APIs.','HTTP','DNS','SMTP','SSH','FTP'],['6','Presentación','Formato, codificación, compresión y cifrado de los datos.','UTF-8','gzip','TLS','JSON'],['5','Sesión','Gestiona el diálogo entre aplicaciones y mantiene sesiones activas.','RPC','NetBIOS','SIP'],['4','Transporte','Entrega extremo a extremo usando puertos y control de errores.','TCP','UDP'],['3','Red','Direccionamiento lógico y enrutamiento entre redes.','IP','ICMP'],['2','Enlace','Entrega local dentro del mismo segmento.','Ethernet','MAC'],['1','Física','Transmite bits por el medio físico.','UTP','Fibra','Wi-Fi']];
+function renderOsi(active=7){
+  const s=document.getElementById('osi-stack');s.innerHTML='';
+  layers.forEach(l=>{const d=document.createElement('div');d.className='osi-layer '+(Number(l[0])===Number(active)?'active':'');d.onclick=()=>renderOsi(l[0]);d.innerHTML=`<div class="layer-num">${l[0]}</div><div class="layer-name">${l[1]}</div>`;s.appendChild(d)});
+  const l=layers.find(x=>Number(x[0])===Number(active));
+  document.getElementById('osi-panel').innerHTML=`<h3>Capa ${l[0]} · ${l[1]}</h3><p style="color:var(--text2);font-size:14px;line-height:1.6">${l[2]}</p><div class="osi-tags">${l.slice(3).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+}
+
+const protocols=[
+  {id:'http',name:'HTTP / HTTPS',desc:'Navegación web, APIs, formularios y descargas.',port:'80 / 443',flow:'Cliente solicita recursos y servidor responde con estados, cabeceras y contenido.',example:'Abrir el sitio de UTU o consultar una API JSON.',tags:['Web','REST','HTML','JSON'],focus:'Si este protocolo desapareciera, seguiría habiendo conectividad IP, pero no podríamos navegar ni consumir APIs web como las conocemos.'},
+  {id:'dns',name:'DNS',desc:'Resuelve nombres a IP y otros datos de servicio.',port:'53',flow:'Cliente consulta un nombre y recibe registros como A, AAAA, MX o CNAME.',example:'Convertir utu.edu.uy en una dirección IP.',tags:['Nombres','A','MX','AAAA'],focus:'Sin DNS tendríamos que recordar direcciones IP manualmente, algo poco práctico para estudiantes, usuarios y administradores.'},
+  {id:'smtp',name:'SMTP',desc:'Envía correos desde un cliente al servidor y entre servidores.',port:'25 / 587',flow:'Usa comandos como HELO, MAIL FROM, RCPT TO y DATA.',example:'Enviar un correo desde Gmail o desde el servidor institucional.',tags:['Correo','Entrega','Mail Server'],focus:'SMTP no sirve para leer correos: su especialidad es entregarlos y reenviarlos entre servidores.'},
+  {id:'ssh',name:'SSH',desc:'Acceso remoto seguro a otro equipo.',port:'22',flow:'El usuario se autentica y obtiene una sesión de comandos o copia archivos con scp/sftp.',example:'Administrar un servidor Linux desde la terminal.',tags:['Terminal','Admin','Claves'],focus:'SSH es clave en administración porque permite operar equipos remotos como si estuviéramos frente a ellos, pero de forma cifrada.'},
+  {id:'ftp',name:'FTP',desc:'Transferencia de archivos entre cliente y servidor.',port:'21',flow:'Separa canal de control y canal de datos.',example:'Subir archivos a un hosting clásico o a un servidor heredado.',tags:['Archivos','Upload','Download'],focus:'FTP es útil para estudiar protocolos de aplicación porque muestra muy bien que un servicio puede usar más de una conexión lógica.'},
+  {id:'dhcp',name:'DHCP',desc:'Entrega parámetros de red de forma automática.',port:'67 / 68',flow:'Asigna IP, puerta de enlace, DNS y tiempo de concesión.',example:'Conectarse al Wi-Fi y recibir configuración sin escribir nada.',tags:['Configuración','IP dinámica','Red local'],focus:'Aunque muchas veces se estudia junto a la red local, DHCP sigue siendo una lógica de servicio: entregar configuración utilizable al cliente.'},
+  {id:'imap',name:'IMAP',desc:'Sincroniza buzones de correo entre cliente y servidor.',port:'143 / 993',flow:'Permite listar carpetas, leer mensajes, marcar vistos y mantener el correo centralizado en el servidor.',example:'Leer el mismo correo desde el celular y desde la notebook sin perder sincronización.',tags:['Correo','Sincronización','Mailbox'],focus:'IMAP es ideal para explicar que la capa 7 puede definir estados complejos, como leído, no leído, movido o archivado.'},
+  {id:'pop3',name:'POP3',desc:'Descarga correos desde el servidor al cliente.',port:'110 / 995',flow:'El cliente se conecta, autentica y recupera mensajes, normalmente con menos sincronización que IMAP.',example:'Bajar correos a un cliente local en un laboratorio o entorno heredado.',tags:['Correo','Descarga','Legacy'],focus:'Comparar POP3 con IMAP ayuda a ver cómo dos protocolos distintos pueden resolver el mismo problema con filosofías diferentes.'},
+  {id:'snmp',name:'SNMP',desc:'Monitorea y administra dispositivos de red.',port:'161 / 162',flow:'Permite consultar variables de routers, switches, impresoras o UPS, y recibir alertas automáticas.',example:'Ver el tráfico de un switch o el estado de una impresora en una red escolar.',tags:['Monitoreo','Red','MIB'],focus:'SNMP muestra que la capa 7 no solo sirve para usuarios finales: también sostiene la administración de infraestructura.'},
+  {id:'ntp',name:'NTP',desc:'Sincroniza la hora entre equipos de la red.',port:'123',flow:'El cliente consulta servidores de tiempo y corrige su reloj con gran precisión.',example:'Mantener la misma hora en PCs, servidores, cámaras y sistemas de asistencia.',tags:['Tiempo','Sincronización','Infraestructura'],focus:'Puede parecer simple, pero sin hora correcta fallan registros, certificados, auditorías y muchos servicios dependientes del tiempo.'},
+  {id:'ldap',name:'LDAP',desc:'Consulta y organiza información de usuarios, grupos y directorios.',port:'389 / 636',flow:'Los clientes buscan objetos en un directorio centralizado, como cuentas, grupos, permisos o contactos.',example:'Autenticar usuarios de una institución contra un directorio común.',tags:['Directorio','Usuarios','Autenticación'],focus:'LDAP es muy importante en entornos educativos y empresariales porque centraliza identidad y organización.'},
+  {id:'smb',name:'SMB / CIFS',desc:'Comparte archivos e impresoras en redes locales, especialmente en entornos Windows.',port:'445',flow:'Permite abrir carpetas compartidas, mover archivos y usar recursos remotos con permisos.',example:'Acceder a una carpeta compartida del servidor del laboratorio.',tags:['Archivos','Windows','Compartidos'],focus:'SMB ayuda a entender que abrir un archivo de red también es un servicio de aplicación, no solo algo del sistema operativo.'},
+  {id:'rdp',name:'RDP',desc:'Controla remotamente el escritorio de otro equipo.',port:'3389',flow:'Transmite pantalla, teclado, mouse y a veces audio o portapapeles entre cliente y servidor.',example:'Entrar a una PC Windows remota para soporte técnico o mantenimiento.',tags:['Escritorio remoto','Soporte','Windows'],focus:'RDP muestra que la capa 7 puede transportar una experiencia completa de uso, no solo texto o archivos.'},
+  {id:'mqtt',name:'MQTT',desc:'Mensajería liviana para IoT y dispositivos con pocos recursos.',port:'1883 / 8883',flow:'Los dispositivos publican mensajes en temas y otros clientes se suscriben para recibirlos.',example:'Sensores que envían temperatura a un servidor central o a un panel de monitoreo.',tags:['IoT','Pub/Sub','Sensores'],focus:'MQTT es excelente para mostrar modelos distintos al cliente-servidor clásico, como publicación y suscripción.'},
+  {id:'sip',name:'SIP',desc:'Establece, modifica y finaliza llamadas de voz o video sobre IP.',port:'5060 / 5061',flow:'Negocia quién llama, a quién se llama y cómo se establece la comunicación multimedia.',example:'Telefonía IP en oficinas, call centers o sistemas de videollamada.',tags:['VoIP','Llamadas','Señalización'],focus:'SIP no lleva la voz en sí, sino la señalización de la llamada; eso permite discutir bien la diferencia entre control y contenido.'},
+  {id:'websocket',name:'WebSocket',desc:'Comunicación bidireccional persistente entre navegador y servidor.',port:'80 / 443',flow:'Tras un handshake inicial, ambos extremos pueden enviarse mensajes en tiempo real sin abrir una nueva petición cada vez.',example:'Chats, pizarras colaborativas, juegos online o paneles en vivo.',tags:['Tiempo real','Bidireccional','Web'],focus:'WebSocket permite explicar por qué algunas aplicaciones modernas necesitan mantener un canal abierto y no solo usar peticiones aisladas.'}
+];
+function renderProtocols(active='http'){
+  const list=document.getElementById('protocol-list');
+  list.innerHTML=protocols.map(p=>`<div class="protocol-item ${p.id===active?'active':''}" onclick="renderProtocols('${p.id}')"><h4>${p.name}</h4><p>${p.desc}</p></div>`).join('');
+  const p=protocols.find(x=>x.id===active);
+  document.getElementById('protocol-panel').innerHTML=`
+    <h3 style="font-size:20px;color:#fff">${p.name}</h3>
+    <p style="margin-top:8px">${p.flow}</p>
+    <div class="kv-grid">
+      <div class="kv"><div class="kv-k">Puerto típico</div><div class="kv-v">${p.port}</div></div>
+      <div class="kv"><div class="kv-k">Uso real</div><div class="kv-v">${p.example}</div></div>
+      <div class="kv"><div class="kv-k">Capa 7 porque...</div><div class="kv-v">Define reglas del servicio</div></div>
+    </div>
+    <div class="osi-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    <div class="note-box">
+      <div class="note-title">Pensarlo en clase</div>
+      <div class="note-line">${p.focus}</div>
+    </div>`;
+}
+
+function svgEl(t,a){const e=document.createElementNS('http://www.w3.org/2000/svg',t);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e}
+function svgText(x,y,t,fill,size='12px',weight='500',anchor='middle'){const el=svgEl('text',{x,y,fill,'font-size':size,'font-weight':weight,'text-anchor':anchor,'font-family':'Space Grotesk, sans-serif'});el.textContent=t;return el}
+function clearSvg(id){const s=document.getElementById(id);s.innerHTML='';return s}
+function node(s,x,y,w,h,stroke,fill,t,sub){s.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:8,fill,stroke,'stroke-width':1.5}));s.appendChild(svgText(x+w/2,y+h/2-5,t,'#fff','13px','700'));if(sub)s.appendChild(svgText(x+w/2,y+h/2+12,sub,stroke,'10px','400'))}
+function arrow(s,x1,y1,x2,y2,color,label,dashed){
+  const id='m'+Math.random().toString(36).slice(2);
+  let defs=s.querySelector('defs');if(!defs){defs=svgEl('defs',{});s.appendChild(defs)}
+  const m=svgEl('marker',{id,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:6,markerHeight:6,orient:'auto'});
+  m.appendChild(svgEl('path',{d:'M2 1L8 5L2 9',fill:'none',stroke:color,'stroke-width':1.5}));defs.appendChild(m);
+  const ln=svgEl('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.5,'marker-end':`url(#${id})`});
+  if(dashed)ln.setAttribute('stroke-dasharray','6 4');s.appendChild(ln);
+  if(label)s.appendChild(svgText((x1+x2)/2,(y1+y2)/2-9,label,color,'11px','600'));
+}
+function pill(s,x,y,w,h,color,fill,text){s.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:h/2,fill,stroke:color,'stroke-width':1}));s.appendChild(svgText(x+w/2,y+h/2+4,text,color,'11px','600'))}
+
+const dnsData={
+  a:{title:'Registro A',q:'utu.edu.uy',result:'200.40.120.12',explain:'Devuelve una dirección IPv4 para el nombre consultado.'},
+  aaaa:{title:'Registro AAAA',q:'www.google.com',result:'2800:3f0:4001:80f::2004',explain:'Devuelve una dirección IPv6.'},
+  mx:{title:'Registro MX',q:'gmail.com',result:'gmail-smtp-in.l.google.com',explain:'Indica qué servidor recibe el correo de ese dominio.'},
+  cname:{title:'Registro CNAME',q:'www.microsoft.com',result:'www.microsoft.com-c-3.edgekey.net',explain:'Indica que un nombre es alias de otro nombre canónico.'}
+};
+let dnsView='a';
+function setDnsView(v,btn){dnsView=v;document.querySelectorAll('#s4 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');drawDns()}
+function drawDns(){
+  const d=dnsData[dnsView];
+  const s=clearSvg('dns-svg');
+  node(s,50,95,130,52,'var(--green)','rgba(74,222,128,.12)','Estudiante','escribe un nombre');
+  node(s,355,35,150,52,'var(--blue)','rgba(77,168,255,.12)','Resolver DNS','equipo / router');
+  node(s,355,170,150,52,'var(--teal)','rgba(45,212,191,.12)','Servidor DNS','autoridad / caché');
+  node(s,680,95,130,52,'var(--amber)','rgba(245,158,11,.12)','Aplicación','abre el servicio');
+  arrow(s,180,121,355,61,'var(--green)',`1. Consulta: ${d.q}`);
+  arrow(s,430,87,430,170,'var(--blue)','2. Pregunta externa',true);
+  arrow(s,505,196,680,121,'var(--teal)',`3. Respuesta: ${d.result}`);
+  pill(s,275,235,310,24,'var(--green)','rgba(74,222,128,.07)',d.explain);
+  document.getElementById('dns-grid').innerHTML=`
+    <div class="dns-box"><h4>Tipo seleccionado</h4><p><strong>${d.title}</strong></p></div>
+    <div class="dns-box"><h4>Nombre consultado</h4><p><code>${d.q}</code></p></div>
+    <div class="dns-box"><h4>Respuesta típica</h4><p><code>${d.result}</code></p></div>
+    <div class="dns-box"><h4>Para qué sirve</h4><p>${d.explain}</p></div>`;
+}
+
+const httpData={
+  get:{title:'HTTP GET',code:`GET /api/alumnos/42 HTTP/1.1
+Host: campus.utu.edu.uy
+Accept: application/json
+User-Agent: navegador/aula
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 84
+
+{"id":42,"nombre":"Lucía","grupo":"3B","curso":"Redes"}`,body:'No suele enviar cuerpo; se usa para leer información.',safe:'Sí',cache:'Alta',example:'Consultar un recurso existente.'},
+  post:{title:'HTTP POST',code:`POST /api/tareas HTTP/1.1
+Host: campus.utu.edu.uy
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{"titulo":"Mapa OSI","entrega":"2026-06-10"}
+
+HTTP/1.1 201 Created
+Location: /api/tareas/98`,body:'Envía datos al servidor para crear un recurso.',safe:'No',cache:'Baja',example:'Publicar un formulario o crear un registro.'},
+  put:{title:'HTTP PUT',code:`PUT /api/alumnos/42 HTTP/1.1
+Host: campus.utu.edu.uy
+Content-Type: application/json
+
+{"grupo":"4A","curso":"Infraestructura"}
+
+HTTP/1.1 200 OK`,body:'Reemplaza o actualiza un recurso conocido.',safe:'No',cache:'Baja',example:'Actualizar datos completos de un alumno.'},
+  delete:{title:'HTTP DELETE',code:`DELETE /api/tareas/98 HTTP/1.1
+Host: campus.utu.edu.uy
+Authorization: Bearer <token>
+
+HTTP/1.1 204 No Content`,body:'Solicita borrar un recurso.',safe:'No',cache:'Muy baja',example:'Eliminar una tarea o un archivo.'}
+};
+let httpMode='get';
+function setHttpMode(m,btn){httpMode=m;document.querySelectorAll('#s5 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderHttp()}
+function renderHttp(){
+  const d=httpData[httpMode];
+  document.getElementById('http-title').textContent=d.title;
+  document.getElementById('http-pre').textContent=d.code;
+  document.getElementById('http-metrics').innerHTML=`
+    <div class="metric"><div class="metric-k">Body</div><div class="metric-v am">${d.body.split(' ').slice(0,2).join(' ')}</div></div>
+    <div class="metric"><div class="metric-k">Safe</div><div class="metric-v ${d.safe==='Sí'?'green':'coral'}">${d.safe}</div></div>
+    <div class="metric"><div class="metric-k">Cache</div><div class="metric-v teal">${d.cache}</div></div>
+    <div class="metric"><div class="metric-k">Caso típico</div><div class="metric-v" style="font-size:12px">${d.example}</div></div>`;
+  document.getElementById('http-note').innerHTML=`<div class="note-title">${d.title}</div><div class="note-line">En este caso, la capa 7 define <strong>la intención del mensaje</strong>. Aunque TCP transporte los bytes y TLS los proteja, quien decide si estamos consultando, creando o borrando algo es HTTP.</div>`;
+}
+
+function parseUrl(){
+  const raw=document.getElementById('url-input').value.trim();
+  let u;
+  try{u=new URL(raw)}catch(e){document.getElementById('url-grid').innerHTML='<div class="kv"><div class="kv-k">Error</div><div class="kv-v">URL inválida</div></div>';return}
+  const params=[...u.searchParams.entries()].map(([k,v])=>`${k}=${v}`).join(' | ')||'sin parámetros';
+  document.getElementById('url-grid').innerHTML=`
+    <div class="kv"><div class="kv-k">Esquema</div><div class="kv-v">${u.protocol.replace(':','')}</div></div>
+    <div class="kv"><div class="kv-k">Host</div><div class="kv-v">${u.hostname}</div></div>
+    <div class="kv"><div class="kv-k">Puerto</div><div class="kv-v">${u.port||'(por defecto)'}</div></div>
+    <div class="kv"><div class="kv-k">Ruta</div><div class="kv-v">${u.pathname}</div></div>
+    <div class="kv"><div class="kv-k">Parámetros</div><div class="kv-v">${params}</div></div>
+    <div class="kv"><div class="kv-k">Fragmento</div><div class="kv-v">${u.hash||'(sin fragmento)'}</div></div>`;
+}
+
+const serviceInfo={
+  web:'Un sitio web combina varios servicios de capa 7: DNS encuentra la IP, HTTP solicita documentos y el navegador interpreta las respuestas para mostrar texto, imágenes, hojas de estilo y scripts.',
+  api:'Una API REST también suele usar HTTP, pero en lugar de devolver páginas para personas devuelve datos estructurados para otras aplicaciones, por ejemplo JSON con alumnos, calificaciones o inventario.',
+  ssh:'SSH ofrece una sesión remota segura. A diferencia de la web, aquí la capa 7 no entrega documentos sino comandos, autenticación y respuestas de consola en tiempo real.',
+  ftp:'FTP está pensado para transferir archivos y usa un canal para control y otro para datos. Hoy se ve menos en Internet pública, pero sigue siendo muy útil para entender cómo un protocolo define reglas concretas de servicio.'
+};
+let serviceView='web';
+function setServiceView(v,btn){serviceView=v;document.querySelectorAll('#s7 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');drawService();document.getElementById('service-info').textContent=serviceInfo[v]}
+function drawService(){
+  const s=clearSvg('service-svg');
+  if(serviceView==='web'){
+    node(s,60,50,150,52,'var(--green)','rgba(74,222,128,.12)','Navegador','usuario humano');
+    node(s,355,50,150,52,'var(--blue)','rgba(77,168,255,.12)','Servidor web','Apache / Nginx');
+    node(s,650,50,150,52,'var(--teal)','rgba(45,212,191,.12)','Base de datos','datos del sitio');
+    arrow(s,210,76,355,76,'var(--green)','GET /index.html');
+    arrow(s,505,76,650,76,'var(--blue)','consulta SQL / datos');
+    arrow(s,650,120,505,120,'var(--teal)','resultados');
+    arrow(s,355,120,210,120,'var(--green)','200 OK + HTML/CSS/JS');
+    pill(s,285,220,300,24,'var(--green)','rgba(74,222,128,.07)','La capa 7 entrega contenido útil para el usuario');
+  }else if(serviceView==='api'){
+    node(s,60,50,150,52,'var(--green)','rgba(74,222,128,.12)','App cliente','móvil / web');
+    node(s,355,50,150,52,'var(--amber)','rgba(245,158,11,.12)','API REST','/api/*');
+    node(s,650,50,150,52,'var(--purple)','rgba(167,139,250,.12)','Servicio interno','lógica de negocio');
+    arrow(s,210,76,355,76,'var(--green)','GET /api/notas/42');
+    arrow(s,505,76,650,76,'var(--amber)','validación + consulta');
+    arrow(s,650,120,505,120,'var(--purple)','respuesta');
+    arrow(s,355,120,210,120,'var(--green)','200 OK + JSON');
+    pill(s,270,220,320,24,'var(--green)','rgba(74,222,128,.07)','La app no necesita HTML: necesita datos');
+  }else if(serviceView==='ssh'){
+    node(s,90,80,150,52,'var(--green)','rgba(74,222,128,.12)','Terminal','usuario técnico');
+    node(s,610,80,150,52,'var(--purple)','rgba(167,139,250,.12)','Servidor Linux','shell remota');
+    arrow(s,240,106,610,106,'var(--green)','login + comandos');
+    arrow(s,610,150,240,150,'var(--purple)','salida de comandos');
+    pill(s,250,225,350,24,'var(--green)','rgba(74,222,128,.07)','La capa 7 define autenticación, shell y semántica de comandos');
+  }else{
+    node(s,70,50,150,52,'var(--green)','rgba(74,222,128,.12)','Cliente FTP','subir / bajar');
+    node(s,355,35,150,52,'var(--blue)','rgba(77,168,255,.12)','Canal de control','USER, PASS, LIST');
+    node(s,355,160,150,52,'var(--teal)','rgba(45,212,191,.12)','Canal de datos','archivo real');
+    node(s,640,95,150,52,'var(--amber)','rgba(245,158,11,.12)','Servidor FTP','almacenamiento');
+    arrow(s,220,76,355,61,'var(--green)','órdenes');
+    arrow(s,505,61,640,121,'var(--blue)','control');
+    arrow(s,220,176,355,186,'var(--green)','archivo');
+    arrow(s,505,186,640,121,'var(--teal)','datos');
+    pill(s,240,240,380,24,'var(--green)','rgba(74,222,128,.07)','Un protocolo puede definir varios canales para una misma tarea');
+  }
+}
+
+const mailInfo={
+  smtp:'SMTP se usa para enviar. El cliente entrega el mensaje a un servidor, y ese servidor puede reenviarlo a otros servidores hasta llegar al destino.',
+  imap:'IMAP está pensado para trabajar con el buzón en el servidor. Leer, marcar o mover correos desde el celular se refleja también en la PC.',
+  pop3:'POP3 nació con una lógica más simple: descargar mensajes desde el servidor hacia el cliente. Puede dejar menos sincronizados los distintos dispositivos.'
+};
+let mailMode='smtp';
+function setMailMode(v,btn){mailMode=v;document.querySelectorAll('#s8 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');drawMail();document.getElementById('mail-info').textContent=mailInfo[v]}
+function drawMail(){
+  const s=clearSvg('mail-svg');
+  if(mailMode==='smtp'){
+    node(s,50,90,140,52,'var(--green)','rgba(74,222,128,.12)','Cliente','Thunderbird');
+    node(s,360,40,140,52,'var(--amber)','rgba(245,158,11,.12)','Servidor saliente','SMTP');
+    node(s,360,190,140,52,'var(--blue)','rgba(77,168,255,.12)','Servidor destino','SMTP');
+    node(s,670,90,140,52,'var(--teal)','rgba(45,212,191,.12)','Buzón receptor','mailbox');
+    arrow(s,190,116,360,66,'var(--green)','MAIL FROM / RCPT TO / DATA');
+    arrow(s,500,66,670,116,'var(--amber)','reenvío entre servidores');
+    arrow(s,670,140,500,216,'var(--teal)','almacenamiento del mensaje');
+  }else if(mailMode==='imap'){
+    node(s,80,100,150,52,'var(--green)','rgba(74,222,128,.12)','Celular / PC','cliente IMAP');
+    node(s,620,100,160,52,'var(--purple)','rgba(167,139,250,.12)','Servidor de correo','buzón central');
+    arrow(s,230,126,620,126,'var(--green)','listar, leer, marcar, mover');
+    arrow(s,620,160,230,160,'var(--purple)','respuestas sincronizadas');
+    pill(s,255,225,350,24,'var(--green)','rgba(74,222,128,.07)','El mensaje permanece en el servidor');
+  }else{
+    node(s,80,100,150,52,'var(--green)','rgba(74,222,128,.12)','Cliente POP3','descarga');
+    node(s,620,100,160,52,'var(--coral)','rgba(251,113,133,.12)','Servidor POP3','buzón');
+    arrow(s,230,126,620,126,'var(--green)','USER / PASS / RETR');
+    arrow(s,620,160,230,160,'var(--coral)','mensajes descargados');
+    pill(s,240,225,380,24,'var(--green)','rgba(74,222,128,.07)','Modelo clásico: bajar correos al dispositivo');
+  }
+}
+
+const mailSimSteps=[
+  {id:'login',title:'1. Iniciar sesión',desc:'El cliente se identifica ante el servidor de correo.'},
+  {id:'imap',title:'2. Leer bandeja por IMAP',desc:'El cliente consulta la lista de mensajes disponibles.'},
+  {id:'open',title:'3. Abrir un correo',desc:'El usuario selecciona un mensaje y lee su contenido.'},
+  {id:'smtp',title:'4. Responder por SMTP',desc:'La respuesta se arma y se entrega al servidor saliente.'}
+];
+const mailSimState={
+  step:'login',
+  loggedIn:false,
+  inboxLoaded:false,
+  selectedMail:null,
+  replySent:false
+};
+const mailSimInbox=[
+  {id:1,from:'profesor.redes@utu.edu.uy',subject:'Consulta sobre práctica de Wireshark',snippet:'¿Podrías confirmar si el grupo 3 ya capturó tráfico DNS?',body:'Hola.\n\n¿Podrías confirmar si el grupo 3 ya capturó tráfico DNS y HTTP para la práctica del viernes?\n\nSaludos,\nProfesor de Redes'},
+  {id:2,from:'bedelia@utu.edu.uy',subject:'Cambio de salón',snippet:'La clase de hoy pasa al laboratorio 2.',body:'Estimados estudiantes:\n\nLa clase de Redes de hoy se realizará en el laboratorio 2 a partir de las 19:00.\n\nBedelía'}
+];
+function renderMailSim(active=mailSimState.step){
+  mailSimState.step=active;
+  const steps=document.getElementById('mailsim-steps');
+  steps.innerHTML=mailSimSteps.map(s=>`<div class="mailsim-step ${s.id===active?'active':''}" onclick="renderMailSim('${s.id}')"><h4>${s.title}</h4><p>${s.desc}</p></div>`).join('');
+  const title=document.getElementById('mailsim-title');
+  const explain=document.getElementById('mailsim-explain');
+  const toolbar=document.getElementById('mailsim-toolbar');
+  const dynamic=document.getElementById('mailsim-dynamic');
+  const log=document.getElementById('mailsim-log');
+  const status=document.getElementById('mailsim-status');
+  if(active==='login'){
+    title.textContent='Paso 1 · Inicio de sesión';
+    explain.textContent='Antes de consultar o enviar correos, el usuario debe autenticarse. En esta fase la aplicación demuestra quién es el usuario y el servidor decide si le permite acceder al buzón.';
+    toolbar.innerHTML=`<button class="btn primary" onclick="mailSimLogin()">Iniciar sesión</button><button class="btn" onclick="mailSimReset()">Reiniciar simulación</button>`;
+    dynamic.innerHTML=`<div class="mailsim-compose"><input class="mailsim-field" value="alumno.redes@utu.edu.uy" readonly><input class="mailsim-field" value="********" readonly></div>`;
+    log.textContent=`Cliente de correo:\n- Conecta con mail.utu.edu.uy\n- Solicita autenticación del usuario\n\nServidor:\n- Espera credenciales válidas`;
+    status.textContent=mailSimState.loggedIn?'Estado: autenticación correcta. Ya se puede pasar a IMAP.':'Estado: todavía no hay sesión activa.';
+  }else if(active==='imap'){
+    title.textContent='Paso 2 · Consulta de bandeja por IMAP';
+    explain.textContent='IMAP permite consultar y sincronizar el buzón sin sacar los mensajes del servidor. El cliente pide la lista de correos y el servidor responde con la bandeja disponible.';
+    toolbar.innerHTML=`<button class="btn primary" onclick="mailSimFetchInbox()">Consultar bandeja IMAP</button><button class="btn" onclick="renderMailSim('login')">Volver al login</button>`;
+    dynamic.innerHTML=mailSimState.inboxLoaded?`<div class="grid grid-2">${mailSimInbox.map(m=>`<div class="mailsim-mail"><h4>${m.subject}</h4><p><strong>De:</strong> ${m.from}</p><p>${m.snippet}</p><div class="mailsim-actions"><button class="btn primary" onclick="mailSimOpen(${m.id})">Abrir correo</button></div></div>`).join('')}</div>`:`<div class="mailsim-mail"><h4>Bandeja no cargada</h4><p>Presiona el botón para que el cliente use IMAP y pida la lista de mensajes al servidor.</p></div>`;
+    log.textContent=mailSimState.inboxLoaded?`IMAP:\nA001 LOGIN alumno.redes@utu.edu.uy ********\nA002 SELECT INBOX\nA003 FETCH 1:* (FLAGS BODY[HEADER.FIELDS (FROM SUBJECT)])\n\nServidor:\n* 2 EXISTS\n* Devuelve remitente y asunto de cada mensaje\nA003 OK FETCH completed`:`IMAP:\n- Todavía no se pidió la bandeja\n\nIdea:\nIMAP se usa para ver y sincronizar correos, no para enviarlos.`;
+    status.textContent=mailSimState.inboxLoaded?'Estado: la bandeja fue sincronizada con IMAP.':'Estado: inicia sesión y luego consulta la bandeja.';
+  }else if(active==='open'){
+    title.textContent='Paso 3 · Abrir un mensaje';
+    explain.textContent='Cuando el usuario hace clic en un correo, el cliente pide al servidor el contenido del mensaje. IMAP puede traer encabezados, cuerpo o adjuntos según lo que necesite la aplicación.';
+    toolbar.innerHTML=`<button class="btn primary" onclick="renderMailSim('imap')">Volver a la bandeja</button>`;
+    if(mailSimState.selectedMail){
+      const m=mailSimInbox.find(x=>x.id===mailSimState.selectedMail);
+      dynamic.innerHTML=`<div class="mailsim-mail"><h4>${m.subject}</h4><p><strong>De:</strong> ${m.from}</p><p style="white-space:pre-wrap">${m.body}</p><div class="mailsim-actions"><button class="btn primary" onclick="renderMailSim('smtp')">Responder este correo</button></div></div>`;
+      log.textContent=`IMAP:\nA004 FETCH ${m.id} BODY[TEXT]\n\nServidor:\n- Busca el mensaje en el buzón\n- Devuelve el contenido solicitado al cliente\nA004 OK FETCH completed`;
+      status.textContent='Estado: el mensaje ya fue abierto desde el buzón del servidor.';
+    }else{
+      dynamic.innerHTML=`<div class="mailsim-mail"><h4>Ningún correo seleccionado</h4><p>Primero debes consultar la bandeja y abrir uno de los mensajes.</p></div>`;
+      log.textContent='IMAP:\n- No hay mensaje seleccionado todavía.';
+      status.textContent='Estado: faltan pasos previos.';
+    }
+  }else{
+    title.textContent='Paso 4 · Responder el mensaje por SMTP';
+    explain.textContent='Ahora cambia el protocolo. Ya no se está leyendo el buzón: el cliente arma un mensaje nuevo y lo entrega al servidor saliente usando SMTP para que sea enviado al destinatario.';
+    const current=mailSimInbox.find(x=>x.id===mailSimState.selectedMail) || mailSimInbox[0];
+    toolbar.innerHTML=`<button class="btn primary" onclick="mailSimSendReply()">Enviar respuesta SMTP</button><button class="btn" onclick="renderMailSim('open')">Volver al correo</button>`;
+    dynamic.innerHTML=`<div class="mailsim-compose"><input class="mailsim-field" id="reply-to" value="${current.from}" readonly><input class="mailsim-field" id="reply-subject" value="Re: ${current.subject}" readonly><textarea class="mailsim-field" id="reply-body" rows="6">Hola profesor.\n\nSí, el grupo 3 ya capturó tráfico DNS y HTTP. En la próxima clase llevamos la evidencia.\n\nSaludos.</textarea></div>`;
+    log.textContent=mailSimState.replySent?`SMTP:\nEHLO aula.utu.local\nMAIL FROM:<alumno.redes@utu.edu.uy>\nRCPT TO:<${current.from}>\nDATA\n...\n.\nQUIT\n\nServidor:\n250 Message accepted for delivery`:`SMTP:\n- Espera que el cliente construya un nuevo mensaje\n- Recibirá remitente, destinatario, asunto y cuerpo`;
+    status.textContent=mailSimState.replySent?'Estado: la respuesta fue aceptada por el servidor SMTP.':'Estado: el mensaje está listo para enviarse.';
+  }
+}
+function mailSimLogin(){
+  mailSimState.loggedIn=true;
+  renderMailSim('imap');
+}
+function mailSimFetchInbox(){
+  if(!mailSimState.loggedIn){renderMailSim('login');return}
+  mailSimState.inboxLoaded=true;
+  renderMailSim('imap');
+}
+function mailSimOpen(id){
+  if(!mailSimState.inboxLoaded){renderMailSim('imap');return}
+  mailSimState.selectedMail=id;
+  renderMailSim('open');
+}
+function mailSimSendReply(){
+  if(!mailSimState.selectedMail){renderMailSim('open');return}
+  mailSimState.replySent=true;
+  renderMailSim('smtp');
+}
+function mailSimReset(){
+  mailSimState.step='login';
+  mailSimState.loggedIn=false;
+  mailSimState.inboxLoaded=false;
+  mailSimState.selectedMail=null;
+  mailSimState.replySent=false;
+  renderMailSim('login');
+}
+
+const dialogues={
+  login:{title:'Inicio de sesión web',text:`Cliente: POST /login con usuario y contraseña
+Servidor: verifica credenciales
+Servidor: responde 200 OK + token o cookie de sesión
+Cliente: usa ese token en pedidos futuros
+
+Aprendizaje:
+La capa 7 define autenticación, cookies, tokens y estados HTTP.` ,note:'Aunque el transporte sea TCP y la seguridad la aporte TLS, la semántica de "iniciar sesión" pertenece por completo a la capa 7.'},
+  search:{title:'Búsqueda en un navegador',text:`Cliente: GET /buscar?q=modelo+osi
+Servidor: procesa el parámetro q
+Servidor: devuelve HTML con resultados
+Cliente: renderiza la página y permite hacer clic
+
+Aprendizaje:
+Los parámetros de consulta son parte de la lógica del servicio.` ,note:'La capa 7 convierte una intención humana en una consulta concreta y en una respuesta interpretable.'},
+  chat:{title:'Mensajería instantánea',text:`Cliente: envía mensaje "¿Hay clase hoy?"
+Servidor: recibe, valida y reenvía
+Servidor: notifica al destinatario
+Cliente receptor: muestra el mensaje en pantalla
+
+Aprendizaje:
+El servicio define usuarios, mensajes, estados de entrega y lectura.` ,note:'En un chat moderno puede haber WebSocket, HTTP o protocolos propios, pero la lógica del mensaje sigue siendo un asunto de capa 7.'}
+};
+let dialogueMode='login';
+function setDialogueMode(v,btn){dialogueMode=v;document.querySelectorAll('#s10 .tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderDialogue()}
+function renderDialogue(){
+  const d=dialogues[dialogueMode];
+  document.getElementById('dialogue-title').textContent=d.title;
+  document.getElementById('dialogue-pre').textContent=d.text;
+  document.getElementById('dialogue-note').textContent=d.note;
+}
+
+const waSteps=[
+  {id:'text1',title:'1. Primeros mensajes de texto',desc:'Los usuarios envían texto corto y reciben confirmación.'},
+  {id:'text2',title:'2. Continúa la conversación',desc:'Se agregan más mensajes y cambia el estado de lectura.'},
+  {id:'photo',title:'3. Envío de una foto',desc:'Uno de los usuarios adjunta una imagen al chat.'},
+  {id:'audio',title:'4. Respuesta con audio',desc:'El otro usuario responde con una nota de voz.'}
+];
+const waScenario={
+  text1:{
+    title:'Paso 1 · Intercambio inicial de texto',
+    explain:'El texto es el tipo de mensaje más simple. La app arma el contenido, lo identifica como mensaje de chat, lo envía al servidor y este lo entrega al destinatario junto con metadatos como hora, remitente y estado.',
+    kpis:[['Tipo de contenido','Texto'],['Servidor','Entrega + sincroniza'],['Estado visible','Enviado / recibido']],
+    traffic:{mode:'text1',summary:'Texto corto con confirmación de entrega'},
+    chat:[
+      {side:'left',text:'Hola, ¿ya terminaste el esquema de la capa 7?',meta:'Lucía · 18:42'},
+      {side:'right',text:'Sí, me falta solo revisar la parte de protocolos.',meta:'Mateo · 18:43'}
+    ],
+    log:`Cliente A:\n- Empaqueta el texto como mensaje de chat\n- Lo envía al servidor de WhatsApp\n\nServidor:\n- Guarda el mensaje temporalmente\n- Lo reenvía al destinatario\n- Actualiza estados de entrega`,
+    note:'En capa 7, la aplicación define que esto es un mensaje de texto, quién lo envía, a qué conversación pertenece y cómo mostrarlo al usuario.'
+  },
+  text2:{
+    title:'Paso 2 · La conversación sigue',
+    explain:'A medida que se agregan mensajes, la aplicación mantiene el hilo de conversación. No se trata de paquetes sueltos: la capa 7 organiza todo como un chat con contexto, orden temporal y confirmaciones.',
+    kpis:[['Tipo de contenido','Texto'],['Función','Mantener contexto'],['Estado visible','Entregado / leído']],
+    traffic:{mode:'text2',summary:'Mensajes de texto en ambos sentidos'},
+    chat:[
+      {side:'left',text:'Hola, ¿ya terminaste el esquema de la capa 7?',meta:'Lucía · 18:42'},
+      {side:'right',text:'Sí, me falta solo revisar la parte de protocolos.',meta:'Mateo · 18:43'},
+      {side:'left',text:'Perfecto. ¿Me lo mandas cuando puedas?',meta:'Lucía · 18:44'},
+      {side:'right',text:'Sí, te lo envío ahora.',meta:'Mateo · 18:44'}
+    ],
+    log:`Cliente B:\n- Envía nuevo mensaje al mismo chat\n\nServidor:\n- Asocia el mensaje a la conversación existente\n- Conserva orden y marcas de tiempo\n- Notifica "entregado" y luego "leído"`,
+    note:'La capa 7 no solo transporta texto: también conserva contexto, historial, hora y estados del mensaje dentro de la misma conversación.'
+  },
+  photo:{
+    title:'Paso 3 · Un usuario envía una foto',
+    explain:'Enviar una imagen implica más que enviar texto. La app debe etiquetar el contenido como multimedia, subir el archivo, asociarlo al chat y mostrar una vista previa al otro usuario.',
+    kpis:[['Tipo de contenido','Imagen'],['Acción extra','Subida de archivo'],['Vista de usuario','Miniatura + mensaje']],
+    traffic:{mode:'photo',summary:'Subida de imagen y reenvío al destinatario'},
+    chat:[
+      {side:'left',text:'Hola, ¿ya terminaste el esquema de la capa 7?',meta:'Lucía · 18:42'},
+      {side:'right',text:'Sí, me falta solo revisar la parte de protocolos.',meta:'Mateo · 18:43'},
+      {side:'left',text:'Perfecto. ¿Me lo mandas cuando puedas?',meta:'Lucía · 18:44'},
+      {side:'right',text:'Sí, te lo envío ahora.',meta:'Mateo · 18:44'},
+      {side:'right',text:'Te paso una foto del pizarrón.',meta:'Mateo · 18:45',media:'[foto] esquema_capa7.jpg · miniatura generada'}
+    ],
+    log:`Cliente B:\n- Selecciona una foto del dispositivo\n- La app comprime / prepara la imagen\n- Sube el archivo y envía referencia al chat\n\nServidor:\n- Guarda el archivo multimedia\n- Entrega al destinatario el mensaje + enlace/identificador`,
+    note:'Para la capa 7, ya no es solo un mensaje de texto: ahora hay un objeto multimedia con metadatos, miniatura, tamaño y relación con la conversación.'
+  },
+  audio:{
+    title:'Paso 4 · El otro usuario responde con un audio',
+    explain:'La nota de voz agrega otra capa de significado. La aplicación registra audio, lo codifica en un formato apropiado, lo sube al servicio y lo presenta como mensaje reproducible en el chat.',
+    kpis:[['Tipo de contenido','Audio'],['Proceso','Grabación + codificación'],['Interfaz','Botón reproducir']],
+    traffic:{mode:'audio',summary:'Grabación, subida y entrega de audio'},
+    chat:[
+      {side:'left',text:'Hola, ¿ya terminaste el esquema de la capa 7?',meta:'Lucía · 18:42'},
+      {side:'right',text:'Sí, me falta solo revisar la parte de protocolos.',meta:'Mateo · 18:43'},
+      {side:'left',text:'Perfecto. ¿Me lo mandas cuando puedas?',meta:'Lucía · 18:44'},
+      {side:'right',text:'Sí, te lo envío ahora.',meta:'Mateo · 18:44'},
+      {side:'right',text:'Te paso una foto del pizarrón.',meta:'Mateo · 18:45',media:'[foto] esquema_capa7.jpg · miniatura generada'},
+      {side:'left',text:'Dale, ahí lo vi. Te respondo con audio.',meta:'Lucía · 18:46',media:'[audio] nota_de_voz.ogg · 0:12 · reproducir'}
+    ],
+    log:`Cliente A:\n- Graba la voz del usuario\n- Codifica el audio y lo empaqueta como nota de voz\n- Lo envía al servidor para entrega\n\nServidor:\n- Almacena el audio\n- Lo distribuye al otro usuario\n- Mantiene estado de escucha / descarga según la app`,
+    note:'Aunque texto, foto y audio usan la misma app, la capa 7 los trata como tipos de contenido distintos, cada uno con reglas de presentación y uso propias.'
+  }
+};
+let waStep='text1';
+function waMarker(s,color){
+  const id='wa'+Math.random().toString(36).slice(2);
+  let defs=s.querySelector('defs');if(!defs){defs=svgEl('defs',{});s.appendChild(defs)}
+  const m=svgEl('marker',{id,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:6,markerHeight:6,orient:'auto'});
+  m.appendChild(svgEl('path',{d:'M2 1L8 5L2 9',fill:'none',stroke:color,'stroke-width':1.5}));
+  defs.appendChild(m);
+  return id;
+}
+function waLine(s,x1,y1,x2,y2,color,label,lx,ly){
+  const marker=waMarker(s,color);
+  s.appendChild(svgEl('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.8,'marker-end':`url(#${marker})`}));
+  if(label)s.appendChild(svgText(lx??((x1+x2)/2),ly??(y1-10),label,color,'11px','600'));
+}
+function waPolyline(s,points,color,label,lx,ly){
+  const marker=waMarker(s,color);
+  const p=points.map(([x,y])=>`${x},${y}`).join(' ');
+  s.appendChild(svgEl('polyline',{points:p,fill:'none',stroke:color,'stroke-width':1.8,'marker-end':`url(#${marker})`}));
+  if(label)s.appendChild(svgText(lx,ly,label,color,'11px','600'));
+}
+function drawWaTraffic(step){
+  const d=waScenario[step].traffic;
+  const s=clearSvg('wa-traffic-svg');
+  s.appendChild(svgText(430,20,'Diagrama de tráfico de WhatsApp durante la conversación','var(--text2)','13px','600'));
+  s.appendChild(svgText(430,38,'Cliente emisor -> servidor -> cliente receptor, con confirmaciones y manejo de multimedia','var(--text3)','10px','400'));
+  node(s,60,92,150,58,'var(--blue)','rgba(77,168,255,.12)','Lucía','cliente / app');
+  node(s,355,92,150,58,'var(--green)','rgba(74,222,128,.12)','Servidor','ruteo y estados');
+  node(s,650,92,150,58,'var(--teal)','rgba(45,212,191,.12)','Mateo','cliente / app');
+  node(s,355,215,150,46,'var(--amber)','rgba(245,158,11,.12)','Media Store','fotos / audios');
+  s.appendChild(svgEl('line',{x1:135,y1:150,x2:135,y2:286,stroke:'rgba(77,168,255,.12)','stroke-width':1.5,'stroke-dasharray':'5 5'}));
+  s.appendChild(svgEl('line',{x1:430,y1:150,x2:430,y2:286,stroke:'rgba(74,222,128,.12)','stroke-width':1.5,'stroke-dasharray':'5 5'}));
+  s.appendChild(svgEl('line',{x1:725,y1:150,x2:725,y2:286,stroke:'rgba(45,212,191,.12)','stroke-width':1.5,'stroke-dasharray':'5 5'}));
+  s.appendChild(svgText(135,300,'Cliente A','var(--text3)','10px','500'));
+  s.appendChild(svgText(430,300,'Backend','var(--text3)','10px','500'));
+  s.appendChild(svgText(725,300,'Cliente B','var(--text3)','10px','500'));
+  if(d.mode==='text1'){
+    waLine(s,210,112,355,112,'var(--blue)','Mensaje de texto',282,102);
+    waLine(s,505,112,650,112,'var(--green)','Entrega al chat',578,102);
+    waLine(s,650,130,505,130,'var(--teal)','Recibido / ACK',578,146);
+    waLine(s,355,130,210,130,'var(--green)','Estado enviado',282,146);
+  }else if(d.mode==='text2'){
+    waLine(s,210,106,355,106,'var(--blue)','Texto de Lucía',282,96);
+    waLine(s,505,106,650,106,'var(--green)','Entrega a Mateo',578,96);
+    waLine(s,650,126,505,126,'var(--teal)','Respuesta de Mateo',578,142);
+    waLine(s,355,126,210,126,'var(--green)','Leído / sincronizado',282,142);
+    waLine(s,505,146,650,146,'var(--green)','Confirmación al emisor',578,162);
+  }else if(d.mode==='photo'){
+    waLine(s,650,106,505,106,'var(--teal)','Texto: "te paso una foto"',578,96);
+    waPolyline(s,[[725,150],[725,190],[505,190],[505,228]],'var(--amber)','Subida del archivo',610,180);
+    waLine(s,430,215,430,150,'var(--amber)','Procesa miniatura',515,184);
+    waLine(s,355,126,210,126,'var(--green)','Mensaje + preview',282,142);
+    waLine(s,505,238,650,238,'var(--amber)','Archivo disponible',578,228);
+  }else{
+    waPolyline(s,[[135,150],[135,190],[355,190],[355,228]],'var(--amber)','Subida de audio grabado',245,180);
+    waLine(s,430,215,430,150,'var(--amber)','Indexa y almacena',520,184);
+    waLine(s,505,126,650,126,'var(--green)','Notificación al chat',578,142);
+    waLine(s,505,238,650,238,'var(--amber)','Descarga del audio',578,228);
+    waLine(s,650,146,505,146,'var(--teal)','Reproducido / entregado',578,162);
+  }
+  pill(s,250,316,360,20,'var(--green)','rgba(74,222,128,.06)',d.summary);
+  pill(s,56,316,150,18,'var(--blue)','rgba(77,168,255,.08)','Texto / control');
+  pill(s,654,316,150,18,'var(--amber)','rgba(245,158,11,.08)','Multimedia');
+}
+function setWaStep(step){
+  waStep=step;
+  const d=waScenario[step];
+  document.getElementById('wa-steps').innerHTML=waSteps.map(s=>`<div class="wa-step ${s.id===step?'active':''}" onclick="setWaStep('${s.id}')"><h4>${s.title}</h4><p>${s.desc}</p></div>`).join('');
+  document.getElementById('wa-title').textContent=d.title;
+  document.getElementById('wa-explain').textContent=d.explain;
+  document.getElementById('wa-kpis').innerHTML=d.kpis.map(([k,v])=>`<div class="kv"><div class="kv-k">${k}</div><div class="kv-v">${v}</div></div>`).join('');
+  drawWaTraffic(step);
+  document.getElementById('wa-chat').innerHTML=d.chat.map(m=>`<div class="wa-bubble ${m.side==='left'?'wa-left':'wa-right'}">${m.text}${m.media?`<span class="wa-media">${m.media}</span>`:''}<span class="wa-meta">${m.meta}</span></div>`).join('');
+  document.getElementById('wa-log').textContent=d.log;
+  document.getElementById('wa-note').textContent=d.note;
+}
+
+const captures=[
+  ['Consulta DNS simple','sudo tcpdump -i eth0 -nn -s 0 -w dns_aula.pcap udp port 53\ndig utu.edu.uy',['dns','dns.qry.name','dns.a'],'Ver nombre consultado, tipo de registro y respuesta IP.'],
+  ['Página web HTTP','sudo tcpdump -i eth0 -nn -s 0 -w web_http.pcap tcp port 80\ncurl http://example.com',['http','http.request.method == "GET"','http.response.code == 200'],'Detectar método, cabeceras y contenido visible al no estar cifrado.'],
+  ['API JSON','sudo tcpdump -i eth0 -nn -s 0 -w api_json.pcap tcp port 443\ncurl -i https://api.github.com/users/octocat',['tls','http2','json'],'Relacionar una app con un servicio de datos y observar cabeceras típicas de una API.'],
+  ['Correo SMTP de laboratorio','nc mail.servidor.local 25\nHELO aula.local',['smtp','tcp.port == 25'],'Si existe un entorno de pruebas, identificar comandos SMTP básicos.'],
+  ['Sesión SSH','sudo tcpdump -i eth0 -nn -s 0 -w ssh_lab.pcap tcp port 22\nssh usuario@servidor',['ssh','tcp.port == 22'],'Reconocer que existe un servicio de capa 7 aunque el contenido esté protegido.'],
+  ['Comparar IMAP y POP3','sudo tcpdump -i eth0 -nn -s 0 -w mail_sync.pcap tcp port 143 or tcp port 110',['imap','pop'],'Distinguir sincronización de buzón frente a descarga de mensajes.']
+];
+function renderCaptures(){
+  const b=document.getElementById('capture-bank');
+  captures.forEach(c=>{
+    const d=document.createElement('div');d.className='capture-card';
+    d.innerHTML=`<h4>${c[0]}</h4><p><strong>Comando:</strong></p><div class="code-card"><pre>${c[1]}</pre></div><p><strong>Filtros Wireshark:</strong><br>${c[2].map(f=>`<span class="filter-pill">${f}</span>`).join('')}</p><p><strong>Observar:</strong> ${c[3]}</p>`;
+    b.appendChild(d);
+  });
+}
+
+function copyCode(btn){const p=btn.closest('.code-card').querySelector('pre').innerText;navigator.clipboard?.writeText(p);btn.textContent='copiado';setTimeout(()=>btn.textContent='copiar',1200)}
+function updateActiveNav(){
+  const sections=document.querySelectorAll('[id^="s"]'),links=document.querySelectorAll('.nav-link');
+  let a=null;sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a));
+}
+window.addEventListener('scroll',updateActiveNav,{passive:true});
+
+renderOsi(7);
+renderProtocols('http');
+setDnsView('a');
+setHttpMode('get');
+parseUrl();
+setServiceView('web');
+setMailMode('smtp');
+renderMailSim('login');
+setDialogueMode('login');
+setWaStep('text1');
+renderCaptures();
+updateActiveNav();
+</script>
+</body>
+</html>
