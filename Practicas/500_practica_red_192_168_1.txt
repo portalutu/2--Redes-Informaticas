@@ -1,0 +1,548 @@
+====================================================================================================
+  CAPTURA DE RED — 500_practica_red_192_168_1.pcap
+  Fecha/hora de inicio : 2026-06-04 03:33:16
+  Total de paquetes    : 500
+  Red analizada        : 192.168.1.0/255.255.255.0
+====================================================================================================
+
+  No.    Tiempo (s)  Origen                  Destino                 Proto     Long.  Información
+----------------------------------------------------------------------------------------------------
+    1      0.000000  00:50:56:aa:01:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.113?  Tell 192.168.1.101
+    2      0.067584  52:54:00:ee:02:03       00:50:56:aa:01:01       ARP          42  192.168.1.113 is at 52:54:00:ee:02:03
+    3      0.133070  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.1?  Tell 192.168.1.113
+    4      0.145785  c0:a8:01:01:00:01       52:54:00:ee:02:03       ARP          42  192.168.1.1 is at c0:a8:01:01:00:01
+    5      0.245646  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.115?  Tell 192.168.1.113
+    6      0.252621  de:ad:be:ef:02:05       52:54:00:ee:02:03       ARP          42  192.168.1.115 is at de:ad:be:ef:02:05
+    7      0.366287  de:ad:be:ef:02:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.104?  Tell 192.168.1.115
+    8      0.381458  08:00:27:bb:01:04       de:ad:be:ef:02:05       ARP          42  192.168.1.104 is at 08:00:27:bb:01:04
+    9      0.402291  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.111?  Tell 192.168.1.113
+   10      0.485331  00:0c:29:dd:02:01       52:54:00:ee:02:03       ARP          42  192.168.1.111 is at 00:0c:29:dd:02:01
+   11      0.507100  08:00:27:bb:01:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.105?  Tell 192.168.1.103
+   12      0.611719  b8:ac:6f:cc:01:05       08:00:27:bb:01:03       ARP          42  192.168.1.105 is at b8:ac:6f:cc:01:05
+   13      0.701711  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.113
+   14      0.757844  00:0c:29:dd:02:02       52:54:00:ee:02:03       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   15      0.836816  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.101?  Tell 192.168.1.113
+   16      0.845942  00:50:56:aa:01:01       52:54:00:ee:02:03       ARP          42  192.168.1.101 is at 00:50:56:aa:01:01
+   17      0.897174  52:54:00:ee:02:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.1?  Tell 192.168.1.114
+   18      0.947993  c0:a8:01:01:00:01       52:54:00:ee:02:04       ARP          42  192.168.1.1 is at c0:a8:01:01:00:01
+   19      1.026897  de:ad:be:ef:02:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.2?  Tell 192.168.1.115
+   20      1.089045  c0:a8:01:02:00:02       de:ad:be:ef:02:05       ARP          42  192.168.1.2 is at c0:a8:01:02:00:02
+   21      1.159197  08:00:27:bb:01:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.115?  Tell 192.168.1.104
+   22      1.192950  de:ad:be:ef:02:05       08:00:27:bb:01:04       ARP          42  192.168.1.115 is at de:ad:be:ef:02:05
+   23      1.266262  00:0c:29:dd:02:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.105?  Tell 192.168.1.112
+   24      1.379886  b8:ac:6f:cc:01:05       00:0c:29:dd:02:02       ARP          42  192.168.1.105 is at b8:ac:6f:cc:01:05
+   25      1.382190  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.102?  Tell 192.168.1.113
+   26      1.472156  00:50:56:aa:01:02       52:54:00:ee:02:03       ARP          42  192.168.1.102 is at 00:50:56:aa:01:02
+   27      1.567422  08:00:27:bb:01:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.103
+   28      1.583236  00:0c:29:dd:02:02       08:00:27:bb:01:03       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   29      1.673389  00:50:56:aa:01:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.103?  Tell 192.168.1.102
+   30      1.790159  08:00:27:bb:01:03       00:50:56:aa:01:02       ARP          42  192.168.1.103 is at 08:00:27:bb:01:03
+   31      1.861340  00:0c:29:dd:02:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.10?  Tell 192.168.1.111
+   32      1.960559  c0:a8:01:0a:00:0a       00:0c:29:dd:02:01       ARP          42  192.168.1.10 is at c0:a8:01:0a:00:0a
+   33      1.996332  00:0c:29:dd:02:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.114?  Tell 192.168.1.112
+   34      2.097873  52:54:00:ee:02:04       00:0c:29:dd:02:02       ARP          42  192.168.1.114 is at 52:54:00:ee:02:04
+   35      2.182685  52:54:00:ee:02:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.2?  Tell 192.168.1.114
+   36      2.228072  c0:a8:01:02:00:02       52:54:00:ee:02:04       ARP          42  192.168.1.2 is at c0:a8:01:02:00:02
+   37      2.243493  b8:ac:6f:cc:01:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.101?  Tell 192.168.1.105
+   38      2.282762  00:50:56:aa:01:01       b8:ac:6f:cc:01:05       ARP          42  192.168.1.101 is at 00:50:56:aa:01:01
+   39      2.340547  00:0c:29:dd:02:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.111
+   40      2.362077  00:0c:29:dd:02:02       00:0c:29:dd:02:01       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   41      2.457523  192.168.1.101           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x84273ca3
+   42      2.552652  192.168.1.1             192.168.1.101           DHCP        310  DHCP Offer  Transaction ID 0x84273ca3
+   43      2.619064  192.168.1.101           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x84273ca3
+   44      2.643280  192.168.1.1             192.168.1.101           DHCP        310  DHCP Offer  Transaction ID 0x84273ca3
+   45      2.658027  192.168.1.102           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x91f76d1c
+   46      2.740786  192.168.1.1             192.168.1.102           DHCP        310  DHCP Offer  Transaction ID 0x91f76d1c
+   47      2.851905  192.168.1.102           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x91f76d1c
+   48      2.919245  192.168.1.1             192.168.1.102           DHCP        310  DHCP Offer  Transaction ID 0x91f76d1c
+   49      2.940077  192.168.1.103           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xabe578c7
+   50      3.040820  192.168.1.1             192.168.1.103           DHCP        310  DHCP Offer  Transaction ID 0xabe578c7
+   51      3.112317  192.168.1.103           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xabe578c7
+   52      3.215173  192.168.1.1             192.168.1.103           DHCP        310  DHCP Offer  Transaction ID 0xabe578c7
+   53      3.216047  192.168.1.104           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xfc24a3c5
+   54      3.259334  192.168.1.1             192.168.1.104           DHCP        310  DHCP Offer  Transaction ID 0xfc24a3c5
+   55      3.262686  192.168.1.104           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xfc24a3c5
+   56      3.311062  192.168.1.1             192.168.1.104           DHCP        310  DHCP Offer  Transaction ID 0xfc24a3c5
+   57      3.420870  192.168.1.105           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xf0f3eab0
+   58      3.461976  192.168.1.1             192.168.1.105           DHCP        310  DHCP Offer  Transaction ID 0xf0f3eab0
+   59      3.470368  192.168.1.105           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xf0f3eab0
+   60      3.586250  192.168.1.1             192.168.1.105           DHCP        310  DHCP Offer  Transaction ID 0xf0f3eab0
+   61      3.597372  192.168.1.111           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xa13e4de2
+   62      3.694104  192.168.1.1             192.168.1.111           DHCP        310  DHCP Offer  Transaction ID 0xa13e4de2
+   63      3.801861  192.168.1.111           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xa13e4de2
+   64      3.902354  192.168.1.1             192.168.1.111           DHCP        310  DHCP Offer  Transaction ID 0xa13e4de2
+   65      3.965450  192.168.1.114           192.168.1.2             DNS          73  Standard query 0x2032  A gateway.local
+   66      4.000991  192.168.1.2             192.168.1.114           DNS          73  Standard query response 0x2032  No such name  gateway.local
+   67      4.029551  192.168.1.114           192.168.1.2             DNS          73  Standard query 0x9b4a  A gateway.local
+   68      4.126024  192.168.1.2             192.168.1.114           DNS          73  Standard query response 0x9b4a  No such name  gateway.local
+   69      4.214863  192.168.1.104           192.168.1.2             DNS          72  Standard query 0x4fcd  A nas-01.local
+   70      4.274840  192.168.1.2             192.168.1.104           DNS         100  Standard query response 0x4fcd  A (respuesta)  nas-01.local
+   71      4.278397  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x3986  A google.com
+   72      4.280139  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x3986  A (respuesta)  google.com
+   73      4.289773  192.168.1.102           192.168.1.2             DNS          72  Standard query 0xa190  A nas-01.local
+   74      4.333882  192.168.1.2             192.168.1.102           DNS          72  Standard query response 0xa190  No such name  nas-01.local
+   75      4.398306  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x3cee  A ubuntu.com
+   76      4.514761  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x3cee  A (respuesta)  ubuntu.com
+   77      4.577554  192.168.1.115           192.168.1.2             DNS          70  Standard query 0x7901  A ubuntu.com
+   78      4.590717  192.168.1.2             192.168.1.115           DNS          70  Standard query response 0x7901  No such name  ubuntu.com
+   79      4.645400  192.168.1.102           192.168.1.2             DNS          72  Standard query 0x6e5a  A nas-01.local
+   80      4.731849  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0x6e5a  A (respuesta)  nas-01.local
+   81      4.845590  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x6713  A utu.edu.uy
+   82      4.905190  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x6713  A (respuesta)  utu.edu.uy
+   83      4.938732  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x2efa  A github.com
+   84      4.997614  192.168.1.2             192.168.1.103           DNS          70  Standard query response 0x2efa  No such name  github.com
+   85      5.010638  192.168.1.114           192.168.1.2             DNS          70  Standard query 0x0cf4  A utu.edu.uy
+   86      5.042420  192.168.1.2             192.168.1.114           DNS          70  Standard query response 0x0cf4  No such name  utu.edu.uy
+   87      5.156551  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x7c53  A github.com
+   88      5.157633  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x7c53  A (respuesta)  github.com
+   89      5.213877  192.168.1.112           192.168.1.2             DNS          73  Standard query 0xed31  A microsoft.com
+   90      5.301429  192.168.1.2             192.168.1.112           DNS         102  Standard query response 0xed31  A (respuesta)  microsoft.com
+   91      5.309894  192.168.1.113           192.168.1.2             DNS          70  Standard query 0x309e  A google.com
+   92      5.351798  192.168.1.2             192.168.1.113           DNS          96  Standard query response 0x309e  A (respuesta)  google.com
+   93      5.464365  192.168.1.101           192.168.1.2             DNS          70  Standard query 0x958d  A utu.edu.uy
+   94      5.475665  192.168.1.2             192.168.1.101           DNS          96  Standard query response 0x958d  A (respuesta)  utu.edu.uy
+   95      5.589425  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x9855  A utu.edu.uy
+   96      5.664893  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x9855  A (respuesta)  utu.edu.uy
+   97      5.676438  192.168.1.104           192.168.1.2             DNS          70  Standard query 0x9833  A ubuntu.com
+   98      5.718705  192.168.1.2             192.168.1.104           DNS          96  Standard query response 0x9833  A (respuesta)  ubuntu.com
+   99      5.754319  192.168.1.105           192.168.1.2             DNS          70  Standard query 0xab74  A google.com
+  100      5.815048  192.168.1.2             192.168.1.105           DNS          96  Standard query response 0xab74  A (respuesta)  google.com
+  101      5.875916  192.168.1.111           192.168.1.2             DNS          73  Standard query 0xef8d  A gateway.local
+  102      5.947184  192.168.1.2             192.168.1.111           DNS         102  Standard query response 0xef8d  A (respuesta)  gateway.local
+  103      5.993729  192.168.1.104           192.168.1.2             DNS          70  Standard query 0x43e5  A ubuntu.com
+  104      6.026547  192.168.1.2             192.168.1.104           DNS          70  Standard query response 0x43e5  No such name  ubuntu.com
+  105      6.098547  192.168.1.111           192.168.1.2             DNS          73  Standard query 0x2863  A microsoft.com
+  106      6.205135  192.168.1.2             192.168.1.111           DNS         102  Standard query response 0x2863  A (respuesta)  microsoft.com
+  107      6.292886  192.168.1.114           192.168.1.2             DNS          70  Standard query 0xaafa  A utu.edu.uy
+  108      6.308815  192.168.1.2             192.168.1.114           DNS          96  Standard query response 0xaafa  A (respuesta)  utu.edu.uy
+  109      6.346545  192.168.1.102           192.168.1.2             DNS          72  Standard query 0x8da1  A nas-01.local
+  110      6.437456  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0x8da1  A (respuesta)  nas-01.local
+  111      6.557290  192.168.1.105           192.168.1.2             DNS          70  Standard query 0x7d11  A ubuntu.com
+  112      6.641226  192.168.1.2             192.168.1.105           DNS          70  Standard query response 0x7d11  No such name  ubuntu.com
+  113      6.685745  192.168.1.112           192.168.1.2             DNS          73  Standard query 0x46d5  A gateway.local
+  114      6.707723  192.168.1.2             192.168.1.112           DNS         102  Standard query response 0x46d5  A (respuesta)  gateway.local
+  115      6.709790  192.168.1.113           192.168.1.2             DNS          70  Standard query 0xb4a7  A ubuntu.com
+  116      6.829069  192.168.1.2             192.168.1.113           DNS          96  Standard query response 0xb4a7  A (respuesta)  ubuntu.com
+  117      6.902289  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x093a  A ubuntu.com
+  118      6.950884  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x093a  A (respuesta)  ubuntu.com
+  119      6.965157  192.168.1.101           192.168.1.2             DNS          73  Standard query 0x35c8  A microsoft.com
+  120      7.019221  192.168.1.2             192.168.1.101           DNS         102  Standard query response 0x35c8  A (respuesta)  microsoft.com
+  121      7.041320  192.168.1.115           192.168.1.2             DNS          72  Standard query 0x2791  A nas-01.local
+  122      7.065326  192.168.1.2             192.168.1.115           DNS          72  Standard query response 0x2791  No such name  nas-01.local
+  123      7.120090  192.168.1.112           192.168.1.2             DNS          70  Standard query 0x2deb  A utu.edu.uy
+  124      7.217235  192.168.1.2             192.168.1.112           DNS          70  Standard query response 0x2deb  No such name  utu.edu.uy
+  125      7.332351  192.168.1.104           192.168.1.2             DNS          73  Standard query 0x28c2  A microsoft.com
+  126      7.440182  192.168.1.2             192.168.1.104           DNS         102  Standard query response 0x28c2  A (respuesta)  microsoft.com
+  127      7.444083  192.168.1.113           192.168.1.2             DNS          73  Standard query 0x4e21  A microsoft.com
+  128      7.558175  192.168.1.2             192.168.1.113           DNS         102  Standard query response 0x4e21  A (respuesta)  microsoft.com
+  129      7.625743  192.168.1.102           192.168.1.2             DNS          73  Standard query 0x4775  A gateway.local
+  130      7.669947  192.168.1.2             192.168.1.102           DNS         102  Standard query response 0x4775  A (respuesta)  gateway.local
+  131      7.746846  192.168.1.101           192.168.1.2             DNS          70  Standard query 0xe086  A utu.edu.uy
+  132      7.752660  192.168.1.2             192.168.1.101           DNS          70  Standard query response 0xe086  No such name  utu.edu.uy
+  133      7.856538  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x6f40  A ubuntu.com
+  134      7.872495  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x6f40  A (respuesta)  ubuntu.com
+  135      7.966196  192.168.1.112           192.168.1.2             DNS          70  Standard query 0x30aa  A ubuntu.com
+  136      8.037571  192.168.1.2             192.168.1.112           DNS          96  Standard query response 0x30aa  A (respuesta)  ubuntu.com
+  137      8.125433  192.168.1.104           192.168.1.2             DNS          73  Standard query 0x6e6a  A microsoft.com
+  138      8.167378  192.168.1.2             192.168.1.104           DNS          73  Standard query response 0x6e6a  No such name  microsoft.com
+  139      8.208716  192.168.1.102           192.168.1.2             DNS          72  Standard query 0xe66a  A nas-01.local
+  140      8.248268  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0xe66a  A (respuesta)  nas-01.local
+  141      8.298763  192.168.1.114           192.168.1.2             DNS          70  Standard query 0x311d  A google.com
+  142      8.374156  192.168.1.2             192.168.1.114           DNS          96  Standard query response 0x311d  A (respuesta)  google.com
+  143      8.412562  192.168.1.105           192.168.1.2             DNS          70  Standard query 0x8c46  A github.com
+  144      8.499175  192.168.1.2             192.168.1.105           DNS          96  Standard query response 0x8c46  A (respuesta)  github.com
+  145      8.527985  192.168.1.111           192.168.1.105           ICMP         70  Echo (ping) request  id=0x7119, seq=8, ttl=64
+  146      8.590806  192.168.1.105           192.168.1.111           ICMP         70  Echo (ping) reply    id=0x7119, seq=8, ttl=64
+  147      8.678618  192.168.1.103           192.168.1.113           ICMP         70  Echo (ping) request  id=0x15b6, seq=5, ttl=64
+  148      8.760585  192.168.1.113           192.168.1.103           ICMP         70  Echo (ping) reply    id=0x15b6, seq=5, ttl=64
+  149      8.802072  192.168.1.111           192.168.1.2             ICMP         70  Echo (ping) request  id=0xd185, seq=4, ttl=64
+  150      8.908589  192.168.1.2             192.168.1.111           ICMP         70  Echo (ping) reply    id=0xd185, seq=4, ttl=64
+  151      8.971666  192.168.1.104           192.168.1.10            ICMP         70  Echo (ping) request  id=0x0641, seq=1, ttl=64
+  152      9.083842  192.168.1.10            192.168.1.104           ICMP         70  Echo (ping) reply    id=0x0641, seq=1, ttl=64
+  153      9.178797  192.168.1.102           192.168.1.105           ICMP         70  Echo (ping) request  id=0x6a19, seq=10, ttl=64
+  154      9.229925  192.168.1.105           192.168.1.102           ICMP         70  Echo (ping) reply    id=0x6a19, seq=10, ttl=64
+  155      9.320853  192.168.1.113           192.168.1.104           ICMP         70  Echo (ping) request  id=0x3e76, seq=3, ttl=64
+  156      9.438655  192.168.1.104           192.168.1.113           ICMP         70  Echo (ping) reply    id=0x3e76, seq=3, ttl=64
+  157      9.544851  192.168.1.102           192.168.1.115           ICMP         70  Echo (ping) request  id=0x6cd7, seq=4, ttl=64
+  158      9.636865  192.168.1.115           192.168.1.102           ICMP         70  Echo (ping) reply    id=0x6cd7, seq=4, ttl=64
+  159      9.748858  192.168.1.114           192.168.1.105           ICMP         70  Echo (ping) request  id=0x0cdc, seq=9, ttl=64
+  160      9.809487  192.168.1.105           192.168.1.114           ICMP         70  Echo (ping) reply    id=0x0cdc, seq=9, ttl=64
+  161      9.883546  192.168.1.103           192.168.1.115           ICMP         70  Echo (ping) request  id=0x76f3, seq=9, ttl=64
+  162      9.925934  192.168.1.115           192.168.1.103           ICMP         70  Echo (ping) reply    id=0x76f3, seq=9, ttl=64
+  163     10.035598  192.168.1.113           192.168.1.112           ICMP         70  Echo (ping) request  id=0xd0a5, seq=9, ttl=64
+  164     10.108208  192.168.1.112           192.168.1.113           ICMP         70  Echo (ping) reply    id=0xd0a5, seq=9, ttl=64
+  165     10.142980  192.168.1.113           192.168.1.10            ICMP         70  Echo (ping) request  id=0xbe61, seq=8, ttl=64
+  166     10.176186  192.168.1.10            192.168.1.113           ICMP         70  Echo (ping) reply    id=0xbe61, seq=8, ttl=64
+  167     10.259135  192.168.1.105           192.168.1.115           ICMP         70  Echo (ping) request  id=0xc716, seq=9, ttl=64
+  168     10.295927  192.168.1.115           192.168.1.105           ICMP         70  Echo (ping) reply    id=0xc716, seq=9, ttl=64
+  169     10.332341  192.168.1.113           192.168.1.2             ICMP         70  Echo (ping) request  id=0xb6ab, seq=5, ttl=64
+  170     10.375045  192.168.1.2             192.168.1.113           ICMP         70  Echo (ping) reply    id=0xb6ab, seq=5, ttl=64
+  171     10.426050  192.168.1.114           192.168.1.2             ICMP         70  Echo (ping) request  id=0x236d, seq=3, ttl=64
+  172     10.446878  192.168.1.2             192.168.1.114           ICMP         70  Echo (ping) reply    id=0x236d, seq=3, ttl=64
+  173     10.518799  192.168.1.104           192.168.1.2             ICMP         70  Echo (ping) request  id=0x6a35, seq=7, ttl=64
+  174     10.574095  192.168.1.2             192.168.1.104           ICMP         70  Echo (ping) reply    id=0x6a35, seq=7, ttl=64
+  175     10.666058  192.168.1.112           192.168.1.104           ICMP         70  Echo (ping) request  id=0xe7a4, seq=10, ttl=64
+  176     10.779151  192.168.1.104           192.168.1.112           ICMP         70  Echo (ping) reply    id=0xe7a4, seq=10, ttl=64
+  177     10.826056  192.168.1.115           192.168.1.104           ICMP         70  Echo (ping) request  id=0x7a1c, seq=1, ttl=64
+  178     10.925615  192.168.1.104           192.168.1.115           ICMP         70  Echo (ping) reply    id=0x7a1c, seq=1, ttl=64
+  179     11.005484  192.168.1.112           192.168.1.104           ICMP         70  Echo (ping) request  id=0x89c9, seq=9, ttl=64
+  180     11.035190  192.168.1.104           192.168.1.112           ICMP         70  Echo (ping) reply    id=0x89c9, seq=9, ttl=64
+  181     11.039794  192.168.1.113           192.168.1.101           ICMP         70  Echo (ping) request  id=0x45e0, seq=7, ttl=64
+  182     11.084651  192.168.1.101           192.168.1.113           ICMP         70  Echo (ping) reply    id=0x45e0, seq=7, ttl=64
+  183     11.102179  192.168.1.112           192.168.1.114           ICMP         70  Echo (ping) request  id=0x2a41, seq=8, ttl=64
+  184     11.184539  192.168.1.114           192.168.1.112           ICMP         70  Echo (ping) reply    id=0x2a41, seq=8, ttl=64
+  185     11.298958  192.168.1.114           192.168.1.1             TCP          54  51902 → 80  [SYN]  Seq=6391774  Ack=0  Len=0
+  186     11.323577  192.168.1.1             192.168.1.114           TCP          54  80 → 51902  [SYN, ACK]  Seq=4595464  Ack=6391775  Len=0
+  187     11.358476  192.168.1.114           192.168.1.1             TCP          54  51902 → 80  [ACK]  Seq=6391775  Ack=4595465  Len=0
+  188     11.402182  192.168.1.114           192.168.1.1             HTTP        228  GET / HTTP/1.1
+  189     11.447218  192.168.1.1             192.168.1.114           HTTP        166  HTTP/1.1 200 OK
+  190     11.450558  192.168.1.112           192.168.1.1             TCP          54  57418 → 80  [SYN]  Seq=8003740  Ack=0  Len=0
+  191     11.522060  192.168.1.1             192.168.1.112           TCP          54  80 → 57418  [SYN, ACK]  Seq=1687079  Ack=8003741  Len=0
+  192     11.568730  192.168.1.112           192.168.1.1             TCP          54  57418 → 80  [ACK]  Seq=8003741  Ack=1687080  Len=0
+  193     11.654745  192.168.1.112           192.168.1.1             HTTP        238  GET /robots.txt HTTP/1.1
+  194     11.740971  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  195     11.758315  192.168.1.101           192.168.1.1             TCP          54  49819 → 80  [SYN]  Seq=6212141  Ack=0  Len=0
+  196     11.846862  192.168.1.1             192.168.1.101           TCP          54  80 → 49819  [SYN, ACK]  Seq=2278275  Ack=6212142  Len=0
+  197     11.921582  192.168.1.101           192.168.1.1             TCP          54  49819 → 80  [ACK]  Seq=6212142  Ack=2278276  Len=0
+  198     11.950951  192.168.1.101           192.168.1.1             HTTP        251  GET /api/v1/status HTTP/1.1
+  199     12.052269  192.168.1.1             192.168.1.101           HTTP        166  HTTP/1.1 200 OK
+  200     12.056434  192.168.1.111           192.168.1.1             TCP          54  54518 → 80  [SYN]  Seq=3609183  Ack=0  Len=0
+  201     12.098122  192.168.1.1             192.168.1.111           TCP          54  80 → 54518  [SYN, ACK]  Seq=1906798  Ack=3609184  Len=0
+  202     12.187703  192.168.1.111           192.168.1.1             TCP          54  54518 → 80  [ACK]  Seq=3609184  Ack=1906799  Len=0
+  203     12.237695  192.168.1.111           192.168.1.1             HTTP        238  GET /index.html HTTP/1.1
+  204     12.264490  192.168.1.1             192.168.1.111           HTTP        166  HTTP/1.1 200 OK
+  205     12.270673  192.168.1.102           192.168.1.1             TCP          54  53118 → 80  [SYN]  Seq=7679237  Ack=0  Len=0
+  206     12.341300  192.168.1.1             192.168.1.102           TCP          54  80 → 53118  [SYN, ACK]  Seq=5747386  Ack=7679238  Len=0
+  207     12.428806  192.168.1.102           192.168.1.1             TCP          54  53118 → 80  [ACK]  Seq=7679238  Ack=5747387  Len=0
+  208     12.438644  192.168.1.102           192.168.1.1             HTTP        251  GET /static/app.js HTTP/1.1
+  209     12.441102  192.168.1.1             192.168.1.102           HTTP        166  HTTP/1.1 200 OK
+  210     12.502160  192.168.1.112           192.168.1.1             TCP          54  61020 → 80  [SYN]  Seq=6331674  Ack=0  Len=0
+  211     12.523012  192.168.1.1             192.168.1.112           TCP          54  80 → 61020  [SYN, ACK]  Seq=8479073  Ack=6331675  Len=0
+  212     12.546898  192.168.1.112           192.168.1.1             TCP          54  61020 → 80  [ACK]  Seq=6331675  Ack=8479074  Len=0
+  213     12.616084  192.168.1.112           192.168.1.1             HTTP        235  GET /robots.txt HTTP/1.1
+  214     12.697612  192.168.1.1             192.168.1.112           HTTP        184  HTTP/1.1 404 Not Found
+  215     12.807297  192.168.1.114           192.168.1.1             TCP          54  57946 → 80  [SYN]  Seq=3703686  Ack=0  Len=0
+  216     12.819456  192.168.1.1             192.168.1.114           TCP          54  80 → 57946  [SYN, ACK]  Seq=8144687  Ack=3703687  Len=0
+  217     12.935813  192.168.1.114           192.168.1.1             TCP          54  57946 → 80  [ACK]  Seq=3703687  Ack=8144688  Len=0
+  218     12.968576  192.168.1.114           192.168.1.1             HTTP        235  GET /robots.txt HTTP/1.1
+  219     13.049373  192.168.1.1             192.168.1.114           HTTP        166  HTTP/1.1 200 OK
+  220     13.096680  192.168.1.112           192.168.1.1             TCP          54  59802 → 80  [SYN]  Seq=2525383  Ack=0  Len=0
+  221     13.131342  192.168.1.1             192.168.1.112           TCP          54  80 → 59802  [SYN, ACK]  Seq=5089865  Ack=2525384  Len=0
+  222     13.168797  192.168.1.112           192.168.1.1             TCP          54  59802 → 80  [ACK]  Seq=2525384  Ack=5089866  Len=0
+  223     13.247736  192.168.1.112           192.168.1.1             HTTP        240  GET /images/logo.png HTTP/1.1
+  224     13.321384  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  225     13.353683  192.168.1.101           192.168.1.1             TCP          54  62469 → 80  [SYN]  Seq=5098488  Ack=0  Len=0
+  226     13.416885  192.168.1.1             192.168.1.101           TCP          54  80 → 62469  [SYN, ACK]  Seq=5657155  Ack=5098489  Len=0
+  227     13.510987  192.168.1.101           192.168.1.1             TCP          54  62469 → 80  [ACK]  Seq=5098489  Ack=5657156  Len=0
+  228     13.570530  192.168.1.101           192.168.1.1             HTTP        251  GET /api/v1/status HTTP/1.1
+  229     13.609896  192.168.1.1             192.168.1.101           HTTP        166  HTTP/1.1 200 OK
+  230     13.672727  192.168.1.104           192.168.1.1             TCP          54  59185 → 80  [SYN]  Seq=6569700  Ack=0  Len=0
+  231     13.743115  192.168.1.1             192.168.1.104           TCP          54  80 → 59185  [SYN, ACK]  Seq=5878441  Ack=6569701  Len=0
+  232     13.799686  192.168.1.104           192.168.1.1             TCP          54  59185 → 80  [ACK]  Seq=6569701  Ack=5878442  Len=0
+  233     13.898257  192.168.1.104           192.168.1.1             HTTP        242  GET /api/v1/status HTTP/1.1
+  234     13.991181  192.168.1.1             192.168.1.104           HTTP        166  HTTP/1.1 200 OK
+  235     14.033340  192.168.1.113           192.168.1.1             TCP          54  56706 → 80  [SYN]  Seq=2012134  Ack=0  Len=0
+  236     14.131510  192.168.1.1             192.168.1.113           TCP          54  80 → 56706  [SYN, ACK]  Seq=7050571  Ack=2012135  Len=0
+  237     14.232211  192.168.1.113           192.168.1.1             TCP          54  56706 → 80  [ACK]  Seq=2012135  Ack=7050572  Len=0
+  238     14.257278  192.168.1.113           192.168.1.1             HTTP        241  GET /static/app.js HTTP/1.1
+  239     14.321542  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  240     14.361960  192.168.1.105           192.168.1.1             TCP          54  58859 → 80  [SYN]  Seq=2908267  Ack=0  Len=0
+  241     14.455561  192.168.1.1             192.168.1.105           TCP          54  80 → 58859  [SYN, ACK]  Seq=4027289  Ack=2908268  Len=0
+  242     14.472952  192.168.1.105           192.168.1.1             TCP          54  58859 → 80  [ACK]  Seq=2908268  Ack=4027290  Len=0
+  243     14.479717  192.168.1.105           192.168.1.1             HTTP        240  GET /api/v1/status HTTP/1.1
+  244     14.518807  192.168.1.1             192.168.1.105           HTTP        184  HTTP/1.1 404 Not Found
+  245     14.564264  192.168.1.103           192.168.1.1             TCP          54  58469 → 80  [SYN]  Seq=4937586  Ack=0  Len=0
+  246     14.571798  192.168.1.1             192.168.1.103           TCP          54  80 → 58469  [SYN, ACK]  Seq=5015745  Ack=4937587  Len=0
+  247     14.685545  192.168.1.103           192.168.1.1             TCP          54  58469 → 80  [ACK]  Seq=4937587  Ack=5015746  Len=0
+  248     14.701298  192.168.1.103           192.168.1.1             HTTP        227  GET / HTTP/1.1
+  249     14.766552  192.168.1.1             192.168.1.103           HTTP        166  HTTP/1.1 200 OK
+  250     14.840499  192.168.1.102           192.168.1.1             TCP          54  59108 → 80  [SYN]  Seq=1714549  Ack=0  Len=0
+  251     14.895847  192.168.1.1             192.168.1.102           TCP          54  80 → 59108  [SYN, ACK]  Seq=3081976  Ack=1714550  Len=0
+  252     14.974782  192.168.1.102           192.168.1.1             TCP          54  59108 → 80  [ACK]  Seq=1714550  Ack=3081977  Len=0
+  253     15.056639  192.168.1.102           192.168.1.1             HTTP        243  GET /login HTTP/1.1
+  254     15.107295  192.168.1.1             192.168.1.102           HTTP        166  HTTP/1.1 200 OK
+  255     15.188000  192.168.1.113           192.168.1.1             TCP          54  59158 → 80  [SYN]  Seq=5770009  Ack=0  Len=0
+  256     15.285804  192.168.1.1             192.168.1.113           TCP          54  80 → 59158  [SYN, ACK]  Seq=6209554  Ack=5770010  Len=0
+  257     15.386577  192.168.1.113           192.168.1.1             TCP          54  59158 → 80  [ACK]  Seq=5770010  Ack=6209555  Len=0
+  258     15.469364  192.168.1.113           192.168.1.1             HTTP        238  GET /robots.txt HTTP/1.1
+  259     15.480805  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  260     15.571962  192.168.1.103           192.168.1.1             TCP          54  54281 → 80  [SYN]  Seq=1022445  Ack=0  Len=0
+  261     15.634354  192.168.1.1             192.168.1.103           TCP          54  80 → 54281  [SYN, ACK]  Seq=4426893  Ack=1022446  Len=0
+  262     15.639432  192.168.1.103           192.168.1.1             TCP          54  54281 → 80  [ACK]  Seq=1022446  Ack=4426894  Len=0
+  263     15.677994  192.168.1.103           192.168.1.1             HTTP        248  GET /index.html HTTP/1.1
+  264     15.791464  192.168.1.1             192.168.1.103           HTTP        166  HTTP/1.1 200 OK
+  265     15.869568  192.168.1.113           192.168.1.1             TCP          54  57820 → 80  [SYN]  Seq=7608780  Ack=0  Len=0
+  266     15.975737  192.168.1.1             192.168.1.113           TCP          54  80 → 57820  [SYN, ACK]  Seq=7637467  Ack=7608781  Len=0
+  267     16.002465  192.168.1.113           192.168.1.1             TCP          54  57820 → 80  [ACK]  Seq=7608781  Ack=7637468  Len=0
+  268     16.018308  192.168.1.113           192.168.1.1             HTTP        243  GET /api/v1/status HTTP/1.1
+  269     16.038636  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  270     16.137603  192.168.1.105           192.168.1.1             TCP          54  54588 → 80  [SYN]  Seq=7649050  Ack=0  Len=0
+  271     16.213010  192.168.1.1             192.168.1.105           TCP          54  80 → 54588  [SYN, ACK]  Seq=3580434  Ack=7649051  Len=0
+  272     16.251638  192.168.1.105           192.168.1.1             TCP          54  54588 → 80  [ACK]  Seq=7649051  Ack=3580435  Len=0
+  273     16.268737  192.168.1.105           192.168.1.1             HTTP        238  GET / HTTP/1.1
+  274     16.361252  192.168.1.1             192.168.1.105           HTTP        166  HTTP/1.1 200 OK
+  275     16.478630  192.168.1.112           192.168.1.1             TCP          54  63496 → 80  [SYN]  Seq=1674795  Ack=0  Len=0
+  276     16.575706  192.168.1.1             192.168.1.112           TCP          54  80 → 63496  [SYN, ACK]  Seq=6016695  Ack=1674796  Len=0
+  277     16.655635  192.168.1.112           192.168.1.1             TCP          54  63496 → 80  [ACK]  Seq=1674796  Ack=6016696  Len=0
+  278     16.659825  192.168.1.112           192.168.1.1             HTTP        240  GET /images/logo.png HTTP/1.1
+  279     16.749006  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  280     16.811475  192.168.1.115           192.168.1.1             TCP          54  50470 → 80  [SYN]  Seq=7401422  Ack=0  Len=0
+  281     16.897669  192.168.1.1             192.168.1.115           TCP          54  80 → 50470  [SYN, ACK]  Seq=7344042  Ack=7401423  Len=0
+  282     16.934927  192.168.1.115           192.168.1.1             TCP          54  50470 → 80  [ACK]  Seq=7401423  Ack=7344043  Len=0
+  283     17.012447  192.168.1.115           192.168.1.1             HTTP        244  GET /static/app.js HTTP/1.1
+  284     17.077698  192.168.1.1             192.168.1.115           HTTP        166  HTTP/1.1 200 OK
+  285     17.120579  192.168.1.101           192.168.1.10            SMB2         54  64553 → 445  [SYN]  Seq=3918908  Ack=0
+  286     17.135089  192.168.1.10            192.168.1.101           SMB2         54  445 → 64553  [SYN, ACK]  Seq=4425472  Ack=3918909
+  287     17.156968  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  288     17.211723  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  289     17.319158  192.168.1.104           192.168.1.10            SMB2         54  58596 → 445  [SYN]  Seq=6558153  Ack=0
+  290     17.392060  192.168.1.10            192.168.1.104           SMB2         54  445 → 58596  [SYN, ACK]  Seq=8928858  Ack=6558154
+  291     17.452474  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  292     17.494498  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  293     17.608663  192.168.1.103           192.168.1.10            SMB2         54  59745 → 445  [SYN]  Seq=1972420  Ack=0
+  294     17.717587  192.168.1.10            192.168.1.103           SMB2         54  445 → 59745  [SYN, ACK]  Seq=7480601  Ack=1972421
+  295     17.718537  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  296     17.833286  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  297     17.902038  192.168.1.105           192.168.1.10            SMB2         54  64290 → 445  [SYN]  Seq=4466571  Ack=0
+  298     17.984447  192.168.1.10            192.168.1.105           SMB2         54  445 → 64290  [SYN, ACK]  Seq=1454696  Ack=4466572
+  299     18.050585  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  300     18.109324  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  301     18.147876  192.168.1.101           192.168.1.10            SMB2         54  55822 → 445  [SYN]  Seq=3240230  Ack=0
+  302     18.264130  192.168.1.10            192.168.1.101           SMB2         54  445 → 55822  [SYN, ACK]  Seq=5607188  Ack=3240231
+  303     18.328462  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  304     18.333045  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  305     18.406044  192.168.1.105           192.168.1.10            SMB2         54  56993 → 445  [SYN]  Seq=6954089  Ack=0
+  306     18.479228  192.168.1.10            192.168.1.105           SMB2         54  445 → 56993  [SYN, ACK]  Seq=2328572  Ack=6954090
+  307     18.492245  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  308     18.603329  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  309     18.713199  192.168.1.101           192.168.1.10            SMB2         54  64272 → 445  [SYN]  Seq=8944521  Ack=0
+  310     18.779322  192.168.1.10            192.168.1.101           SMB2         54  445 → 64272  [SYN, ACK]  Seq=1985377  Ack=8944522
+  311     18.874048  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  312     18.941546  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  313     19.004240  192.168.1.103           192.168.1.10            SMB2         54  62766 → 445  [SYN]  Seq=8002171  Ack=0
+  314     19.064911  192.168.1.10            192.168.1.103           SMB2         54  445 → 62766  [SYN, ACK]  Seq=5047499  Ack=8002172
+  315     19.084669  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  316     19.110452  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  317     19.212528  192.168.1.105           192.168.1.10            SMB2         54  53625 → 445  [SYN]  Seq=8247983  Ack=0
+  318     19.325317  192.168.1.10            192.168.1.105           SMB2         54  445 → 53625  [SYN, ACK]  Seq=1585609  Ack=8247984
+  319     19.370665  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  320     19.474712  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  321     19.570676  192.168.1.105           192.168.1.10            SMB2         54  57906 → 445  [SYN]  Seq=7883267  Ack=0
+  322     19.681245  192.168.1.10            192.168.1.105           SMB2         54  445 → 57906  [SYN, ACK]  Seq=1021518  Ack=7883268
+  323     19.758056  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  324     19.845355  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  325     19.891391  192.168.1.104           192.168.1.10            SMB2         54  54021 → 445  [SYN]  Seq=4745911  Ack=0
+  326     19.964531  192.168.1.10            192.168.1.104           SMB2         54  445 → 54021  [SYN, ACK]  Seq=5517941  Ack=4745912
+  327     20.036559  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  328     20.097041  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  329     20.148037  192.168.1.103           192.168.1.10            SMB2         54  55333 → 445  [SYN]  Seq=6851040  Ack=0
+  330     20.261036  192.168.1.10            192.168.1.103           SMB2         54  445 → 55333  [SYN, ACK]  Seq=3003246  Ack=6851041
+  331     20.315677  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  332     20.358181  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  333     20.466558  192.168.1.104           192.168.1.10            SMB2         54  61644 → 445  [SYN]  Seq=4238663  Ack=0
+  334     20.487294  192.168.1.10            192.168.1.104           SMB2         54  445 → 61644  [SYN, ACK]  Seq=6567425  Ack=4238664
+  335     20.492946  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  336     20.559582  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  337     20.671143  192.168.1.105           192.168.1.10            SMB2         54  60030 → 445  [SYN]  Seq=8295575  Ack=0
+  338     20.685012  192.168.1.10            192.168.1.105           SMB2         54  445 → 60030  [SYN, ACK]  Seq=1841919  Ack=8295576
+  339     20.745702  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  340     20.841194  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  341     20.862226  192.168.1.102           192.168.1.10            SMB2         54  62586 → 445  [SYN]  Seq=8305915  Ack=0
+  342     20.924563  192.168.1.10            192.168.1.102           SMB2         54  445 → 62586  [SYN, ACK]  Seq=6492703  Ack=8305916
+  343     20.960100  192.168.1.102           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  344     21.042591  192.168.1.10            192.168.1.102           SMB2        120  SMB2 Negotiate Response
+  345     21.086456  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  346     21.128761  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  347     21.138529  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  348     21.229034  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  349     21.241680  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  350     21.255383  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  351     21.295434  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  352     21.338750  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  353     21.396000  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  354     21.466421  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  355     21.490167  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  356     21.605109  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  357     21.682344  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  358     21.743587  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  359     21.745618  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  360     21.784118  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  361     21.830211  192.168.1.115           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  362     21.886626  192.168.1.10            192.168.1.115           NFS          62  RPC Reply  NFS NULL procedure
+  363     21.937848  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  364     21.969739  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  365     22.009319  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  366     22.118913  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  367     22.233099  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  368     22.313381  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  369     22.418889  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  370     22.524799  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  371     22.558449  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  372     22.571984  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  373     22.648749  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  374     22.666773  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  375     22.765546  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  376     22.792664  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  377     22.859235  192.168.1.112           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  378     22.881602  192.168.1.10            192.168.1.112           NFS          62  RPC Reply  NFS NULL procedure
+  379     22.988110  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  380     23.102994  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  381     23.113663  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  382     23.144034  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  383     23.248470  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  384     23.283933  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  385     23.372858  192.168.1.115           192.168.1.1             SSH          54  64054 → 22  [SYN]  Seq=4091920  Ack=0
+  386     23.450277  192.168.1.1             192.168.1.115           SSH          54  22 → 64054  [SYN, ACK]  Seq=6644093  Ack=4091921
+  387     23.558872  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  388     23.608361  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  389     23.682745  192.168.1.111           192.168.1.1             SSH          54  64601 → 22  [SYN]  Seq=1209921  Ack=0
+  390     23.763509  192.168.1.1             192.168.1.111           SSH          54  22 → 64601  [SYN, ACK]  Seq=6197135  Ack=1209922
+  391     23.849198  192.168.1.1             192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  392     23.933281  192.168.1.111           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  393     23.938958  192.168.1.114           192.168.1.10            SSH          54  62531 → 22  [SYN]  Seq=1978748  Ack=0
+  394     24.004327  192.168.1.10            192.168.1.114           SSH          54  22 → 62531  [SYN, ACK]  Seq=2172534  Ack=1978749
+  395     24.017866  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  396     24.134960  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  397     24.233164  192.168.1.115           192.168.1.1             SSH          54  61887 → 22  [SYN]  Seq=4805439  Ack=0
+  398     24.304768  192.168.1.1             192.168.1.115           SSH          54  22 → 61887  [SYN, ACK]  Seq=4112270  Ack=4805440
+  399     24.382551  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  400     24.478587  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  401     24.532879  192.168.1.112           192.168.1.10            SSH          54  52396 → 22  [SYN]  Seq=7993524  Ack=0
+  402     24.570345  192.168.1.10            192.168.1.112           SSH          54  22 → 52396  [SYN, ACK]  Seq=5104940  Ack=7993525
+  403     24.661621  192.168.1.10            192.168.1.112           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  404     24.690898  192.168.1.112           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  405     24.781571  192.168.1.114           192.168.1.10            SSH          54  56888 → 22  [SYN]  Seq=8176036  Ack=0
+  406     24.853735  192.168.1.10            192.168.1.114           SSH          54  22 → 56888  [SYN, ACK]  Seq=4042431  Ack=8176037
+  407     24.939053  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  408     24.947789  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  409     25.056617  192.168.1.114           192.168.1.10            SSH          54  55371 → 22  [SYN]  Seq=2024749  Ack=0
+  410     25.069432  192.168.1.10            192.168.1.114           SSH          54  22 → 55371  [SYN, ACK]  Seq=8960879  Ack=2024750
+  411     25.098033  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  412     25.182652  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  413     25.199957  192.168.1.115           192.168.1.1             SSH          54  50809 → 22  [SYN]  Seq=7600111  Ack=0
+  414     25.274757  192.168.1.1             192.168.1.115           SSH          54  22 → 50809  [SYN, ACK]  Seq=3797677  Ack=7600112
+  415     25.284549  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  416     25.385639  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  417     25.429503  192.168.1.115           192.168.1.1             SSH          54  56228 → 22  [SYN]  Seq=7820382  Ack=0
+  418     25.449643  192.168.1.1             192.168.1.115           SSH          54  22 → 56228  [SYN, ACK]  Seq=8295534  Ack=7820383
+  419     25.568477  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  420     25.569648  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  421     25.593319  192.168.1.113           192.168.1.1             SSH          54  53411 → 22  [SYN]  Seq=5531655  Ack=0
+  422     25.680765  192.168.1.1             192.168.1.113           SSH          54  22 → 53411  [SYN, ACK]  Seq=3102639  Ack=5531656
+  423     25.684944  192.168.1.1             192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  424     25.687691  192.168.1.113           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  425     25.695359  192.168.1.113           192.168.1.1             SSH          54  59761 → 22  [SYN]  Seq=1132381  Ack=0
+  426     25.793377  192.168.1.1             192.168.1.113           SSH          54  22 → 59761  [SYN, ACK]  Seq=2461683  Ack=1132382
+  427     25.863132  192.168.1.1             192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  428     25.961667  192.168.1.113           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  429     26.040279  192.168.1.111           192.168.1.10            SSH          54  63841 → 22  [SYN]  Seq=7526479  Ack=0
+  430     26.100324  192.168.1.10            192.168.1.111           SSH          54  22 → 63841  [SYN, ACK]  Seq=4037003  Ack=7526480
+  431     26.130162  192.168.1.10            192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  432     26.211585  192.168.1.111           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  433     26.275166  192.168.1.111           192.168.1.10            SSH          54  64161 → 22  [SYN]  Seq=6396732  Ack=0
+  434     26.328606  192.168.1.10            192.168.1.111           SSH          54  22 → 64161  [SYN, ACK]  Seq=1261310  Ack=6396733
+  435     26.419334  192.168.1.10            192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  436     26.484394  192.168.1.111           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  437     26.493803  192.168.1.114           192.168.1.1             SSH          54  51799 → 22  [SYN]  Seq=3702069  Ack=0
+  438     26.530649  192.168.1.1             192.168.1.114           SSH          54  22 → 51799  [SYN, ACK]  Seq=6102768  Ack=3702070
+  439     26.614427  192.168.1.1             192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  440     26.687101  192.168.1.114           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  441     26.744288  192.168.1.113           192.168.1.10            SSH          54  58815 → 22  [SYN]  Seq=4806040  Ack=0
+  442     26.849040  192.168.1.10            192.168.1.113           SSH          54  22 → 58815  [SYN, ACK]  Seq=5240869  Ack=4806041
+  443     26.864836  192.168.1.10            192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  444     26.951450  192.168.1.113           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  445     27.008620  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  446     27.117871  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  447     27.131134  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  448     27.165342  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  449     27.228305  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  450     27.241324  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  451     27.290967  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  452     27.365375  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  453     27.420020  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  454     27.476255  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  455     27.523145  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  456     27.544225  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  457     27.590915  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  458     27.628227  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  459     27.739803  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  460     27.824842  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  461     27.911865  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  462     28.004769  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  463     28.029346  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  464     28.039266  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  465     28.044084  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  466     28.094192  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  467     28.143495  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  468     28.218690  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  469     28.239882  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  470     28.251375  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  471     28.315831  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  472     28.344886  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  473     28.360220  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  474     28.424803  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  475     28.466028  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  476     28.518635  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  477     28.520442  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  478     28.548928  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  479     28.583219  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  480     28.599745  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  481     28.698457  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  482     28.716189  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  483     28.809220  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  484     28.883253  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  485     28.936097  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  486     28.939353  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  487     28.950358  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  488     29.007425  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  489     29.101220  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  490     29.117116  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  491     29.160484  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  492     29.242302  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  493     29.333490  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  494     29.391530  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  495     29.449434  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  496     29.518910  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  497     29.633811  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  498     29.679111  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  499     29.782031  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  500     29.849741  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+
+====================================================================================================
+  REFERENCIA DE HOSTS
+====================================================================================================
+  IP                 MAC                  Nombre         Sistema operativo
+  ----------------------------------------------------------------------
+  192.168.1.1        c0:a8:01:01:00:01    gateway        Infraestructura (router)
+  192.168.1.2        c0:a8:01:02:00:02    dns-srv        Infraestructura (DNS)
+  192.168.1.10       c0:a8:01:0a:00:0a    nas-01         Infraestructura (NAS)
+  ----------------------------------------------------------------------
+  192.168.1.101      00:50:56:aa:01:01    WIN-PC01       Windows
+  192.168.1.102      00:50:56:aa:01:02    WIN-PC02       Windows
+  192.168.1.103      08:00:27:bb:01:03    WIN-PC03       Windows
+  192.168.1.104      08:00:27:bb:01:04    WIN-PC04       Windows
+  192.168.1.105      b8:ac:6f:cc:01:05    WIN-PC05       Windows
+  ----------------------------------------------------------------------
+  192.168.1.111      00:0c:29:dd:02:01    linux-ws01     Linux
+  192.168.1.112      00:0c:29:dd:02:02    linux-ws02     Linux
+  192.168.1.113      52:54:00:ee:02:03    linux-ws03     Linux
+  192.168.1.114      52:54:00:ee:02:04    linux-ws04     Linux
+  192.168.1.115      de:ad:be:ef:02:05    linux-ws05     Linux
+
+====================================================================================================
+  GLOSARIO DE PROTOCOLOS
+====================================================================================================
+  ARP      Address Resolution Protocol    — resuelve IP → MAC en la red local
+  DHCP     Dynamic Host Configuration     — asignación automática de IPs
+  DNS      Domain Name System (UDP 53)    — resuelve nombres → IPs
+  ICMP     Internet Control Message       — diagnóstico (ping, errores)
+  HTTP     HyperText Transfer Protocol    — navegación web (TCP 80)
+  SMB2     Server Message Block v2        — acceso a archivos Windows (TCP 445)
+  NFS      Network File System (UDP 2049) — acceso a archivos Linux
+  SSH      Secure Shell (TCP 22)          — terminal remota cifrada
+  NBNS     NetBIOS Name Service (UDP 137) — resolución de nombres Windows
+  MDNS     Multicast DNS (UDP 5353)       — resolución local Linux/macOS
+
+====================================================================================================
+  Archivo generado automáticamente con generar_pcap.py — UTU 2026
+====================================================================================================

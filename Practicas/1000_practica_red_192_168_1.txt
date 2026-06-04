@@ -1,0 +1,1048 @@
+====================================================================================================
+  CAPTURA DE RED — 1000_practica_red_192_168_1.pcap
+  Fecha/hora de inicio : 2026-06-04 03:34:05
+  Total de paquetes    : 1000
+  Red analizada        : 192.168.1.0/255.255.255.0
+====================================================================================================
+
+  No.    Tiempo (s)  Origen                  Destino                 Proto     Long.  Información
+----------------------------------------------------------------------------------------------------
+    1      0.000000  00:50:56:aa:01:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.113?  Tell 192.168.1.101
+    2      0.067584  52:54:00:ee:02:03       00:50:56:aa:01:01       ARP          42  192.168.1.113 is at 52:54:00:ee:02:03
+    3      0.133070  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.1?  Tell 192.168.1.113
+    4      0.145785  c0:a8:01:01:00:01       52:54:00:ee:02:03       ARP          42  192.168.1.1 is at c0:a8:01:01:00:01
+    5      0.245646  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.115?  Tell 192.168.1.113
+    6      0.252621  de:ad:be:ef:02:05       52:54:00:ee:02:03       ARP          42  192.168.1.115 is at de:ad:be:ef:02:05
+    7      0.366287  de:ad:be:ef:02:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.104?  Tell 192.168.1.115
+    8      0.381458  08:00:27:bb:01:04       de:ad:be:ef:02:05       ARP          42  192.168.1.104 is at 08:00:27:bb:01:04
+    9      0.402291  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.111?  Tell 192.168.1.113
+   10      0.485331  00:0c:29:dd:02:01       52:54:00:ee:02:03       ARP          42  192.168.1.111 is at 00:0c:29:dd:02:01
+   11      0.507100  08:00:27:bb:01:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.105?  Tell 192.168.1.103
+   12      0.611719  b8:ac:6f:cc:01:05       08:00:27:bb:01:03       ARP          42  192.168.1.105 is at b8:ac:6f:cc:01:05
+   13      0.701711  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.113
+   14      0.757844  00:0c:29:dd:02:02       52:54:00:ee:02:03       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   15      0.836816  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.101?  Tell 192.168.1.113
+   16      0.845942  00:50:56:aa:01:01       52:54:00:ee:02:03       ARP          42  192.168.1.101 is at 00:50:56:aa:01:01
+   17      0.897174  52:54:00:ee:02:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.1?  Tell 192.168.1.114
+   18      0.947993  c0:a8:01:01:00:01       52:54:00:ee:02:04       ARP          42  192.168.1.1 is at c0:a8:01:01:00:01
+   19      1.026897  de:ad:be:ef:02:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.2?  Tell 192.168.1.115
+   20      1.089045  c0:a8:01:02:00:02       de:ad:be:ef:02:05       ARP          42  192.168.1.2 is at c0:a8:01:02:00:02
+   21      1.159197  08:00:27:bb:01:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.115?  Tell 192.168.1.104
+   22      1.192950  de:ad:be:ef:02:05       08:00:27:bb:01:04       ARP          42  192.168.1.115 is at de:ad:be:ef:02:05
+   23      1.266262  00:0c:29:dd:02:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.105?  Tell 192.168.1.112
+   24      1.379886  b8:ac:6f:cc:01:05       00:0c:29:dd:02:02       ARP          42  192.168.1.105 is at b8:ac:6f:cc:01:05
+   25      1.382190  52:54:00:ee:02:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.102?  Tell 192.168.1.113
+   26      1.472156  00:50:56:aa:01:02       52:54:00:ee:02:03       ARP          42  192.168.1.102 is at 00:50:56:aa:01:02
+   27      1.567422  08:00:27:bb:01:03       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.103
+   28      1.583236  00:0c:29:dd:02:02       08:00:27:bb:01:03       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   29      1.673389  00:50:56:aa:01:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.103?  Tell 192.168.1.102
+   30      1.790159  08:00:27:bb:01:03       00:50:56:aa:01:02       ARP          42  192.168.1.103 is at 08:00:27:bb:01:03
+   31      1.861340  00:0c:29:dd:02:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.10?  Tell 192.168.1.111
+   32      1.960559  c0:a8:01:0a:00:0a       00:0c:29:dd:02:01       ARP          42  192.168.1.10 is at c0:a8:01:0a:00:0a
+   33      1.996332  00:0c:29:dd:02:02       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.114?  Tell 192.168.1.112
+   34      2.097873  52:54:00:ee:02:04       00:0c:29:dd:02:02       ARP          42  192.168.1.114 is at 52:54:00:ee:02:04
+   35      2.182685  52:54:00:ee:02:04       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.2?  Tell 192.168.1.114
+   36      2.228072  c0:a8:01:02:00:02       52:54:00:ee:02:04       ARP          42  192.168.1.2 is at c0:a8:01:02:00:02
+   37      2.243493  b8:ac:6f:cc:01:05       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.101?  Tell 192.168.1.105
+   38      2.282762  00:50:56:aa:01:01       b8:ac:6f:cc:01:05       ARP          42  192.168.1.101 is at 00:50:56:aa:01:01
+   39      2.340547  00:0c:29:dd:02:01       ff:ff:ff:ff:ff:ff       ARP          42  Who has 192.168.1.112?  Tell 192.168.1.111
+   40      2.362077  00:0c:29:dd:02:02       00:0c:29:dd:02:01       ARP          42  192.168.1.112 is at 00:0c:29:dd:02:02
+   41      2.457523  192.168.1.101           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x84273ca3
+   42      2.552652  192.168.1.1             192.168.1.101           DHCP        310  DHCP Offer  Transaction ID 0x84273ca3
+   43      2.619064  192.168.1.101           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x84273ca3
+   44      2.643280  192.168.1.1             192.168.1.101           DHCP        310  DHCP Offer  Transaction ID 0x84273ca3
+   45      2.658027  192.168.1.102           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x91f76d1c
+   46      2.740786  192.168.1.1             192.168.1.102           DHCP        310  DHCP Offer  Transaction ID 0x91f76d1c
+   47      2.851905  192.168.1.102           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0x91f76d1c
+   48      2.919245  192.168.1.1             192.168.1.102           DHCP        310  DHCP Offer  Transaction ID 0x91f76d1c
+   49      2.940077  192.168.1.103           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xabe578c7
+   50      3.040820  192.168.1.1             192.168.1.103           DHCP        310  DHCP Offer  Transaction ID 0xabe578c7
+   51      3.112317  192.168.1.103           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xabe578c7
+   52      3.215173  192.168.1.1             192.168.1.103           DHCP        310  DHCP Offer  Transaction ID 0xabe578c7
+   53      3.216047  192.168.1.104           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xfc24a3c5
+   54      3.259334  192.168.1.1             192.168.1.104           DHCP        310  DHCP Offer  Transaction ID 0xfc24a3c5
+   55      3.262686  192.168.1.104           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xfc24a3c5
+   56      3.311062  192.168.1.1             192.168.1.104           DHCP        310  DHCP Offer  Transaction ID 0xfc24a3c5
+   57      3.420870  192.168.1.105           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xf0f3eab0
+   58      3.461976  192.168.1.1             192.168.1.105           DHCP        310  DHCP Offer  Transaction ID 0xf0f3eab0
+   59      3.470368  192.168.1.105           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xf0f3eab0
+   60      3.586250  192.168.1.1             192.168.1.105           DHCP        310  DHCP Offer  Transaction ID 0xf0f3eab0
+   61      3.597372  192.168.1.111           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xa13e4de2
+   62      3.694104  192.168.1.1             192.168.1.111           DHCP        310  DHCP Offer  Transaction ID 0xa13e4de2
+   63      3.801861  192.168.1.111           255.255.255.255         DHCP        286  DHCP Discover  Transaction ID 0xa13e4de2
+   64      3.902354  192.168.1.1             192.168.1.111           DHCP        310  DHCP Offer  Transaction ID 0xa13e4de2
+   65      3.965450  192.168.1.114           192.168.1.2             DNS          73  Standard query 0x2032  A gateway.local
+   66      4.000991  192.168.1.2             192.168.1.114           DNS          73  Standard query response 0x2032  No such name  gateway.local
+   67      4.029551  192.168.1.114           192.168.1.2             DNS          73  Standard query 0x9b4a  A gateway.local
+   68      4.126024  192.168.1.2             192.168.1.114           DNS          73  Standard query response 0x9b4a  No such name  gateway.local
+   69      4.214863  192.168.1.104           192.168.1.2             DNS          72  Standard query 0x4fcd  A nas-01.local
+   70      4.274840  192.168.1.2             192.168.1.104           DNS         100  Standard query response 0x4fcd  A (respuesta)  nas-01.local
+   71      4.278397  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x3986  A google.com
+   72      4.280139  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x3986  A (respuesta)  google.com
+   73      4.289773  192.168.1.102           192.168.1.2             DNS          72  Standard query 0xa190  A nas-01.local
+   74      4.333882  192.168.1.2             192.168.1.102           DNS          72  Standard query response 0xa190  No such name  nas-01.local
+   75      4.398306  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x3cee  A ubuntu.com
+   76      4.514761  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x3cee  A (respuesta)  ubuntu.com
+   77      4.577554  192.168.1.115           192.168.1.2             DNS          70  Standard query 0x7901  A ubuntu.com
+   78      4.590717  192.168.1.2             192.168.1.115           DNS          70  Standard query response 0x7901  No such name  ubuntu.com
+   79      4.645400  192.168.1.102           192.168.1.2             DNS          72  Standard query 0x6e5a  A nas-01.local
+   80      4.731849  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0x6e5a  A (respuesta)  nas-01.local
+   81      4.845590  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x6713  A utu.edu.uy
+   82      4.905190  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x6713  A (respuesta)  utu.edu.uy
+   83      4.938732  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x2efa  A github.com
+   84      4.997614  192.168.1.2             192.168.1.103           DNS          70  Standard query response 0x2efa  No such name  github.com
+   85      5.010638  192.168.1.114           192.168.1.2             DNS          70  Standard query 0x0cf4  A utu.edu.uy
+   86      5.042420  192.168.1.2             192.168.1.114           DNS          70  Standard query response 0x0cf4  No such name  utu.edu.uy
+   87      5.156551  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x7c53  A github.com
+   88      5.157633  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x7c53  A (respuesta)  github.com
+   89      5.213877  192.168.1.112           192.168.1.2             DNS          73  Standard query 0xed31  A microsoft.com
+   90      5.301429  192.168.1.2             192.168.1.112           DNS         102  Standard query response 0xed31  A (respuesta)  microsoft.com
+   91      5.309894  192.168.1.113           192.168.1.2             DNS          70  Standard query 0x309e  A google.com
+   92      5.351798  192.168.1.2             192.168.1.113           DNS          96  Standard query response 0x309e  A (respuesta)  google.com
+   93      5.464365  192.168.1.101           192.168.1.2             DNS          70  Standard query 0x958d  A utu.edu.uy
+   94      5.475665  192.168.1.2             192.168.1.101           DNS          96  Standard query response 0x958d  A (respuesta)  utu.edu.uy
+   95      5.589425  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x9855  A utu.edu.uy
+   96      5.664893  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x9855  A (respuesta)  utu.edu.uy
+   97      5.676438  192.168.1.104           192.168.1.2             DNS          70  Standard query 0x9833  A ubuntu.com
+   98      5.718705  192.168.1.2             192.168.1.104           DNS          96  Standard query response 0x9833  A (respuesta)  ubuntu.com
+   99      5.754319  192.168.1.105           192.168.1.2             DNS          70  Standard query 0xab74  A google.com
+  100      5.815048  192.168.1.2             192.168.1.105           DNS          96  Standard query response 0xab74  A (respuesta)  google.com
+  101      5.875916  192.168.1.111           192.168.1.2             DNS          73  Standard query 0xef8d  A gateway.local
+  102      5.947184  192.168.1.2             192.168.1.111           DNS         102  Standard query response 0xef8d  A (respuesta)  gateway.local
+  103      5.993729  192.168.1.104           192.168.1.2             DNS          70  Standard query 0x43e5  A ubuntu.com
+  104      6.026547  192.168.1.2             192.168.1.104           DNS          70  Standard query response 0x43e5  No such name  ubuntu.com
+  105      6.098547  192.168.1.111           192.168.1.2             DNS          73  Standard query 0x2863  A microsoft.com
+  106      6.205135  192.168.1.2             192.168.1.111           DNS         102  Standard query response 0x2863  A (respuesta)  microsoft.com
+  107      6.292886  192.168.1.114           192.168.1.2             DNS          70  Standard query 0xaafa  A utu.edu.uy
+  108      6.308815  192.168.1.2             192.168.1.114           DNS          96  Standard query response 0xaafa  A (respuesta)  utu.edu.uy
+  109      6.346545  192.168.1.102           192.168.1.2             DNS          72  Standard query 0x8da1  A nas-01.local
+  110      6.437456  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0x8da1  A (respuesta)  nas-01.local
+  111      6.557290  192.168.1.105           192.168.1.2             DNS          70  Standard query 0x7d11  A ubuntu.com
+  112      6.641226  192.168.1.2             192.168.1.105           DNS          70  Standard query response 0x7d11  No such name  ubuntu.com
+  113      6.685745  192.168.1.112           192.168.1.2             DNS          73  Standard query 0x46d5  A gateway.local
+  114      6.707723  192.168.1.2             192.168.1.112           DNS         102  Standard query response 0x46d5  A (respuesta)  gateway.local
+  115      6.709790  192.168.1.113           192.168.1.2             DNS          70  Standard query 0xb4a7  A ubuntu.com
+  116      6.829069  192.168.1.2             192.168.1.113           DNS          96  Standard query response 0xb4a7  A (respuesta)  ubuntu.com
+  117      6.902289  192.168.1.103           192.168.1.2             DNS          70  Standard query 0x093a  A ubuntu.com
+  118      6.950884  192.168.1.2             192.168.1.103           DNS          96  Standard query response 0x093a  A (respuesta)  ubuntu.com
+  119      6.965157  192.168.1.101           192.168.1.2             DNS          73  Standard query 0x35c8  A microsoft.com
+  120      7.019221  192.168.1.2             192.168.1.101           DNS         102  Standard query response 0x35c8  A (respuesta)  microsoft.com
+  121      7.041320  192.168.1.115           192.168.1.2             DNS          72  Standard query 0x2791  A nas-01.local
+  122      7.065326  192.168.1.2             192.168.1.115           DNS          72  Standard query response 0x2791  No such name  nas-01.local
+  123      7.120090  192.168.1.112           192.168.1.2             DNS          70  Standard query 0x2deb  A utu.edu.uy
+  124      7.217235  192.168.1.2             192.168.1.112           DNS          70  Standard query response 0x2deb  No such name  utu.edu.uy
+  125      7.332351  192.168.1.104           192.168.1.2             DNS          73  Standard query 0x28c2  A microsoft.com
+  126      7.440182  192.168.1.2             192.168.1.104           DNS         102  Standard query response 0x28c2  A (respuesta)  microsoft.com
+  127      7.444083  192.168.1.113           192.168.1.2             DNS          73  Standard query 0x4e21  A microsoft.com
+  128      7.558175  192.168.1.2             192.168.1.113           DNS         102  Standard query response 0x4e21  A (respuesta)  microsoft.com
+  129      7.625743  192.168.1.102           192.168.1.2             DNS          73  Standard query 0x4775  A gateway.local
+  130      7.669947  192.168.1.2             192.168.1.102           DNS         102  Standard query response 0x4775  A (respuesta)  gateway.local
+  131      7.746846  192.168.1.101           192.168.1.2             DNS          70  Standard query 0xe086  A utu.edu.uy
+  132      7.752660  192.168.1.2             192.168.1.101           DNS          70  Standard query response 0xe086  No such name  utu.edu.uy
+  133      7.856538  192.168.1.102           192.168.1.2             DNS          70  Standard query 0x6f40  A ubuntu.com
+  134      7.872495  192.168.1.2             192.168.1.102           DNS          96  Standard query response 0x6f40  A (respuesta)  ubuntu.com
+  135      7.966196  192.168.1.112           192.168.1.2             DNS          70  Standard query 0x30aa  A ubuntu.com
+  136      8.037571  192.168.1.2             192.168.1.112           DNS          96  Standard query response 0x30aa  A (respuesta)  ubuntu.com
+  137      8.125433  192.168.1.104           192.168.1.2             DNS          73  Standard query 0x6e6a  A microsoft.com
+  138      8.167378  192.168.1.2             192.168.1.104           DNS          73  Standard query response 0x6e6a  No such name  microsoft.com
+  139      8.208716  192.168.1.102           192.168.1.2             DNS          72  Standard query 0xe66a  A nas-01.local
+  140      8.248268  192.168.1.2             192.168.1.102           DNS         100  Standard query response 0xe66a  A (respuesta)  nas-01.local
+  141      8.298763  192.168.1.114           192.168.1.2             DNS          70  Standard query 0x311d  A google.com
+  142      8.374156  192.168.1.2             192.168.1.114           DNS          96  Standard query response 0x311d  A (respuesta)  google.com
+  143      8.412562  192.168.1.105           192.168.1.2             DNS          70  Standard query 0x8c46  A github.com
+  144      8.499175  192.168.1.2             192.168.1.105           DNS          96  Standard query response 0x8c46  A (respuesta)  github.com
+  145      8.527985  192.168.1.111           192.168.1.105           ICMP         70  Echo (ping) request  id=0x7119, seq=8, ttl=64
+  146      8.590806  192.168.1.105           192.168.1.111           ICMP         70  Echo (ping) reply    id=0x7119, seq=8, ttl=64
+  147      8.678618  192.168.1.103           192.168.1.113           ICMP         70  Echo (ping) request  id=0x15b6, seq=5, ttl=64
+  148      8.760585  192.168.1.113           192.168.1.103           ICMP         70  Echo (ping) reply    id=0x15b6, seq=5, ttl=64
+  149      8.802072  192.168.1.111           192.168.1.2             ICMP         70  Echo (ping) request  id=0xd185, seq=4, ttl=64
+  150      8.908589  192.168.1.2             192.168.1.111           ICMP         70  Echo (ping) reply    id=0xd185, seq=4, ttl=64
+  151      8.971666  192.168.1.104           192.168.1.10            ICMP         70  Echo (ping) request  id=0x0641, seq=1, ttl=64
+  152      9.083842  192.168.1.10            192.168.1.104           ICMP         70  Echo (ping) reply    id=0x0641, seq=1, ttl=64
+  153      9.178797  192.168.1.102           192.168.1.105           ICMP         70  Echo (ping) request  id=0x6a19, seq=10, ttl=64
+  154      9.229925  192.168.1.105           192.168.1.102           ICMP         70  Echo (ping) reply    id=0x6a19, seq=10, ttl=64
+  155      9.320853  192.168.1.113           192.168.1.104           ICMP         70  Echo (ping) request  id=0x3e76, seq=3, ttl=64
+  156      9.438655  192.168.1.104           192.168.1.113           ICMP         70  Echo (ping) reply    id=0x3e76, seq=3, ttl=64
+  157      9.544851  192.168.1.102           192.168.1.115           ICMP         70  Echo (ping) request  id=0x6cd7, seq=4, ttl=64
+  158      9.636865  192.168.1.115           192.168.1.102           ICMP         70  Echo (ping) reply    id=0x6cd7, seq=4, ttl=64
+  159      9.748858  192.168.1.114           192.168.1.105           ICMP         70  Echo (ping) request  id=0x0cdc, seq=9, ttl=64
+  160      9.809487  192.168.1.105           192.168.1.114           ICMP         70  Echo (ping) reply    id=0x0cdc, seq=9, ttl=64
+  161      9.883546  192.168.1.103           192.168.1.115           ICMP         70  Echo (ping) request  id=0x76f3, seq=9, ttl=64
+  162      9.925934  192.168.1.115           192.168.1.103           ICMP         70  Echo (ping) reply    id=0x76f3, seq=9, ttl=64
+  163     10.035598  192.168.1.113           192.168.1.112           ICMP         70  Echo (ping) request  id=0xd0a5, seq=9, ttl=64
+  164     10.108208  192.168.1.112           192.168.1.113           ICMP         70  Echo (ping) reply    id=0xd0a5, seq=9, ttl=64
+  165     10.142980  192.168.1.113           192.168.1.10            ICMP         70  Echo (ping) request  id=0xbe61, seq=8, ttl=64
+  166     10.176186  192.168.1.10            192.168.1.113           ICMP         70  Echo (ping) reply    id=0xbe61, seq=8, ttl=64
+  167     10.259135  192.168.1.105           192.168.1.115           ICMP         70  Echo (ping) request  id=0xc716, seq=9, ttl=64
+  168     10.295927  192.168.1.115           192.168.1.105           ICMP         70  Echo (ping) reply    id=0xc716, seq=9, ttl=64
+  169     10.332341  192.168.1.113           192.168.1.2             ICMP         70  Echo (ping) request  id=0xb6ab, seq=5, ttl=64
+  170     10.375045  192.168.1.2             192.168.1.113           ICMP         70  Echo (ping) reply    id=0xb6ab, seq=5, ttl=64
+  171     10.426050  192.168.1.114           192.168.1.2             ICMP         70  Echo (ping) request  id=0x236d, seq=3, ttl=64
+  172     10.446878  192.168.1.2             192.168.1.114           ICMP         70  Echo (ping) reply    id=0x236d, seq=3, ttl=64
+  173     10.518799  192.168.1.104           192.168.1.2             ICMP         70  Echo (ping) request  id=0x6a35, seq=7, ttl=64
+  174     10.574095  192.168.1.2             192.168.1.104           ICMP         70  Echo (ping) reply    id=0x6a35, seq=7, ttl=64
+  175     10.666058  192.168.1.112           192.168.1.104           ICMP         70  Echo (ping) request  id=0xe7a4, seq=10, ttl=64
+  176     10.779151  192.168.1.104           192.168.1.112           ICMP         70  Echo (ping) reply    id=0xe7a4, seq=10, ttl=64
+  177     10.826056  192.168.1.115           192.168.1.104           ICMP         70  Echo (ping) request  id=0x7a1c, seq=1, ttl=64
+  178     10.925615  192.168.1.104           192.168.1.115           ICMP         70  Echo (ping) reply    id=0x7a1c, seq=1, ttl=64
+  179     11.005484  192.168.1.112           192.168.1.104           ICMP         70  Echo (ping) request  id=0x89c9, seq=9, ttl=64
+  180     11.035190  192.168.1.104           192.168.1.112           ICMP         70  Echo (ping) reply    id=0x89c9, seq=9, ttl=64
+  181     11.039794  192.168.1.113           192.168.1.101           ICMP         70  Echo (ping) request  id=0x45e0, seq=7, ttl=64
+  182     11.084651  192.168.1.101           192.168.1.113           ICMP         70  Echo (ping) reply    id=0x45e0, seq=7, ttl=64
+  183     11.102179  192.168.1.112           192.168.1.114           ICMP         70  Echo (ping) request  id=0x2a41, seq=8, ttl=64
+  184     11.184539  192.168.1.114           192.168.1.112           ICMP         70  Echo (ping) reply    id=0x2a41, seq=8, ttl=64
+  185     11.298958  192.168.1.114           192.168.1.1             TCP          54  51902 → 80  [SYN]  Seq=6391774  Ack=0  Len=0
+  186     11.323577  192.168.1.1             192.168.1.114           TCP          54  80 → 51902  [SYN, ACK]  Seq=4595464  Ack=6391775  Len=0
+  187     11.358476  192.168.1.114           192.168.1.1             TCP          54  51902 → 80  [ACK]  Seq=6391775  Ack=4595465  Len=0
+  188     11.402182  192.168.1.114           192.168.1.1             HTTP        228  GET / HTTP/1.1
+  189     11.447218  192.168.1.1             192.168.1.114           HTTP        166  HTTP/1.1 200 OK
+  190     11.450558  192.168.1.112           192.168.1.1             TCP          54  57418 → 80  [SYN]  Seq=8003740  Ack=0  Len=0
+  191     11.522060  192.168.1.1             192.168.1.112           TCP          54  80 → 57418  [SYN, ACK]  Seq=1687079  Ack=8003741  Len=0
+  192     11.568730  192.168.1.112           192.168.1.1             TCP          54  57418 → 80  [ACK]  Seq=8003741  Ack=1687080  Len=0
+  193     11.654745  192.168.1.112           192.168.1.1             HTTP        238  GET /robots.txt HTTP/1.1
+  194     11.740971  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  195     11.758315  192.168.1.101           192.168.1.1             TCP          54  49819 → 80  [SYN]  Seq=6212141  Ack=0  Len=0
+  196     11.846862  192.168.1.1             192.168.1.101           TCP          54  80 → 49819  [SYN, ACK]  Seq=2278275  Ack=6212142  Len=0
+  197     11.921582  192.168.1.101           192.168.1.1             TCP          54  49819 → 80  [ACK]  Seq=6212142  Ack=2278276  Len=0
+  198     11.950951  192.168.1.101           192.168.1.1             HTTP        251  GET /api/v1/status HTTP/1.1
+  199     12.052269  192.168.1.1             192.168.1.101           HTTP        166  HTTP/1.1 200 OK
+  200     12.056434  192.168.1.111           192.168.1.1             TCP          54  54518 → 80  [SYN]  Seq=3609183  Ack=0  Len=0
+  201     12.098122  192.168.1.1             192.168.1.111           TCP          54  80 → 54518  [SYN, ACK]  Seq=1906798  Ack=3609184  Len=0
+  202     12.187703  192.168.1.111           192.168.1.1             TCP          54  54518 → 80  [ACK]  Seq=3609184  Ack=1906799  Len=0
+  203     12.237695  192.168.1.111           192.168.1.1             HTTP        238  GET /index.html HTTP/1.1
+  204     12.264490  192.168.1.1             192.168.1.111           HTTP        166  HTTP/1.1 200 OK
+  205     12.270673  192.168.1.102           192.168.1.1             TCP          54  53118 → 80  [SYN]  Seq=7679237  Ack=0  Len=0
+  206     12.341300  192.168.1.1             192.168.1.102           TCP          54  80 → 53118  [SYN, ACK]  Seq=5747386  Ack=7679238  Len=0
+  207     12.428806  192.168.1.102           192.168.1.1             TCP          54  53118 → 80  [ACK]  Seq=7679238  Ack=5747387  Len=0
+  208     12.438644  192.168.1.102           192.168.1.1             HTTP        251  GET /static/app.js HTTP/1.1
+  209     12.441102  192.168.1.1             192.168.1.102           HTTP        166  HTTP/1.1 200 OK
+  210     12.502160  192.168.1.112           192.168.1.1             TCP          54  61020 → 80  [SYN]  Seq=6331674  Ack=0  Len=0
+  211     12.523012  192.168.1.1             192.168.1.112           TCP          54  80 → 61020  [SYN, ACK]  Seq=8479073  Ack=6331675  Len=0
+  212     12.546898  192.168.1.112           192.168.1.1             TCP          54  61020 → 80  [ACK]  Seq=6331675  Ack=8479074  Len=0
+  213     12.616084  192.168.1.112           192.168.1.1             HTTP        235  GET /robots.txt HTTP/1.1
+  214     12.697612  192.168.1.1             192.168.1.112           HTTP        184  HTTP/1.1 404 Not Found
+  215     12.807297  192.168.1.114           192.168.1.1             TCP          54  57946 → 80  [SYN]  Seq=3703686  Ack=0  Len=0
+  216     12.819456  192.168.1.1             192.168.1.114           TCP          54  80 → 57946  [SYN, ACK]  Seq=8144687  Ack=3703687  Len=0
+  217     12.935813  192.168.1.114           192.168.1.1             TCP          54  57946 → 80  [ACK]  Seq=3703687  Ack=8144688  Len=0
+  218     12.968576  192.168.1.114           192.168.1.1             HTTP        235  GET /robots.txt HTTP/1.1
+  219     13.049373  192.168.1.1             192.168.1.114           HTTP        166  HTTP/1.1 200 OK
+  220     13.096680  192.168.1.112           192.168.1.1             TCP          54  59802 → 80  [SYN]  Seq=2525383  Ack=0  Len=0
+  221     13.131342  192.168.1.1             192.168.1.112           TCP          54  80 → 59802  [SYN, ACK]  Seq=5089865  Ack=2525384  Len=0
+  222     13.168797  192.168.1.112           192.168.1.1             TCP          54  59802 → 80  [ACK]  Seq=2525384  Ack=5089866  Len=0
+  223     13.247736  192.168.1.112           192.168.1.1             HTTP        240  GET /images/logo.png HTTP/1.1
+  224     13.321384  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  225     13.353683  192.168.1.101           192.168.1.1             TCP          54  62469 → 80  [SYN]  Seq=5098488  Ack=0  Len=0
+  226     13.416885  192.168.1.1             192.168.1.101           TCP          54  80 → 62469  [SYN, ACK]  Seq=5657155  Ack=5098489  Len=0
+  227     13.510987  192.168.1.101           192.168.1.1             TCP          54  62469 → 80  [ACK]  Seq=5098489  Ack=5657156  Len=0
+  228     13.570530  192.168.1.101           192.168.1.1             HTTP        251  GET /api/v1/status HTTP/1.1
+  229     13.609896  192.168.1.1             192.168.1.101           HTTP        166  HTTP/1.1 200 OK
+  230     13.672727  192.168.1.104           192.168.1.1             TCP          54  59185 → 80  [SYN]  Seq=6569700  Ack=0  Len=0
+  231     13.743115  192.168.1.1             192.168.1.104           TCP          54  80 → 59185  [SYN, ACK]  Seq=5878441  Ack=6569701  Len=0
+  232     13.799686  192.168.1.104           192.168.1.1             TCP          54  59185 → 80  [ACK]  Seq=6569701  Ack=5878442  Len=0
+  233     13.898257  192.168.1.104           192.168.1.1             HTTP        242  GET /api/v1/status HTTP/1.1
+  234     13.991181  192.168.1.1             192.168.1.104           HTTP        166  HTTP/1.1 200 OK
+  235     14.033340  192.168.1.113           192.168.1.1             TCP          54  56706 → 80  [SYN]  Seq=2012134  Ack=0  Len=0
+  236     14.131510  192.168.1.1             192.168.1.113           TCP          54  80 → 56706  [SYN, ACK]  Seq=7050571  Ack=2012135  Len=0
+  237     14.232211  192.168.1.113           192.168.1.1             TCP          54  56706 → 80  [ACK]  Seq=2012135  Ack=7050572  Len=0
+  238     14.257278  192.168.1.113           192.168.1.1             HTTP        241  GET /static/app.js HTTP/1.1
+  239     14.321542  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  240     14.361960  192.168.1.105           192.168.1.1             TCP          54  58859 → 80  [SYN]  Seq=2908267  Ack=0  Len=0
+  241     14.455561  192.168.1.1             192.168.1.105           TCP          54  80 → 58859  [SYN, ACK]  Seq=4027289  Ack=2908268  Len=0
+  242     14.472952  192.168.1.105           192.168.1.1             TCP          54  58859 → 80  [ACK]  Seq=2908268  Ack=4027290  Len=0
+  243     14.479717  192.168.1.105           192.168.1.1             HTTP        240  GET /api/v1/status HTTP/1.1
+  244     14.518807  192.168.1.1             192.168.1.105           HTTP        184  HTTP/1.1 404 Not Found
+  245     14.564264  192.168.1.103           192.168.1.1             TCP          54  58469 → 80  [SYN]  Seq=4937586  Ack=0  Len=0
+  246     14.571798  192.168.1.1             192.168.1.103           TCP          54  80 → 58469  [SYN, ACK]  Seq=5015745  Ack=4937587  Len=0
+  247     14.685545  192.168.1.103           192.168.1.1             TCP          54  58469 → 80  [ACK]  Seq=4937587  Ack=5015746  Len=0
+  248     14.701298  192.168.1.103           192.168.1.1             HTTP        227  GET / HTTP/1.1
+  249     14.766552  192.168.1.1             192.168.1.103           HTTP        166  HTTP/1.1 200 OK
+  250     14.840499  192.168.1.102           192.168.1.1             TCP          54  59108 → 80  [SYN]  Seq=1714549  Ack=0  Len=0
+  251     14.895847  192.168.1.1             192.168.1.102           TCP          54  80 → 59108  [SYN, ACK]  Seq=3081976  Ack=1714550  Len=0
+  252     14.974782  192.168.1.102           192.168.1.1             TCP          54  59108 → 80  [ACK]  Seq=1714550  Ack=3081977  Len=0
+  253     15.056639  192.168.1.102           192.168.1.1             HTTP        243  GET /login HTTP/1.1
+  254     15.107295  192.168.1.1             192.168.1.102           HTTP        166  HTTP/1.1 200 OK
+  255     15.188000  192.168.1.113           192.168.1.1             TCP          54  59158 → 80  [SYN]  Seq=5770009  Ack=0  Len=0
+  256     15.285804  192.168.1.1             192.168.1.113           TCP          54  80 → 59158  [SYN, ACK]  Seq=6209554  Ack=5770010  Len=0
+  257     15.386577  192.168.1.113           192.168.1.1             TCP          54  59158 → 80  [ACK]  Seq=5770010  Ack=6209555  Len=0
+  258     15.469364  192.168.1.113           192.168.1.1             HTTP        238  GET /robots.txt HTTP/1.1
+  259     15.480805  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  260     15.571962  192.168.1.103           192.168.1.1             TCP          54  54281 → 80  [SYN]  Seq=1022445  Ack=0  Len=0
+  261     15.634354  192.168.1.1             192.168.1.103           TCP          54  80 → 54281  [SYN, ACK]  Seq=4426893  Ack=1022446  Len=0
+  262     15.639432  192.168.1.103           192.168.1.1             TCP          54  54281 → 80  [ACK]  Seq=1022446  Ack=4426894  Len=0
+  263     15.677994  192.168.1.103           192.168.1.1             HTTP        248  GET /index.html HTTP/1.1
+  264     15.791464  192.168.1.1             192.168.1.103           HTTP        166  HTTP/1.1 200 OK
+  265     15.869568  192.168.1.113           192.168.1.1             TCP          54  57820 → 80  [SYN]  Seq=7608780  Ack=0  Len=0
+  266     15.975737  192.168.1.1             192.168.1.113           TCP          54  80 → 57820  [SYN, ACK]  Seq=7637467  Ack=7608781  Len=0
+  267     16.002465  192.168.1.113           192.168.1.1             TCP          54  57820 → 80  [ACK]  Seq=7608781  Ack=7637468  Len=0
+  268     16.018308  192.168.1.113           192.168.1.1             HTTP        243  GET /api/v1/status HTTP/1.1
+  269     16.038636  192.168.1.1             192.168.1.113           HTTP        166  HTTP/1.1 200 OK
+  270     16.137603  192.168.1.105           192.168.1.1             TCP          54  54588 → 80  [SYN]  Seq=7649050  Ack=0  Len=0
+  271     16.213010  192.168.1.1             192.168.1.105           TCP          54  80 → 54588  [SYN, ACK]  Seq=3580434  Ack=7649051  Len=0
+  272     16.251638  192.168.1.105           192.168.1.1             TCP          54  54588 → 80  [ACK]  Seq=7649051  Ack=3580435  Len=0
+  273     16.268737  192.168.1.105           192.168.1.1             HTTP        238  GET / HTTP/1.1
+  274     16.361252  192.168.1.1             192.168.1.105           HTTP        166  HTTP/1.1 200 OK
+  275     16.478630  192.168.1.112           192.168.1.1             TCP          54  63496 → 80  [SYN]  Seq=1674795  Ack=0  Len=0
+  276     16.575706  192.168.1.1             192.168.1.112           TCP          54  80 → 63496  [SYN, ACK]  Seq=6016695  Ack=1674796  Len=0
+  277     16.655635  192.168.1.112           192.168.1.1             TCP          54  63496 → 80  [ACK]  Seq=1674796  Ack=6016696  Len=0
+  278     16.659825  192.168.1.112           192.168.1.1             HTTP        240  GET /images/logo.png HTTP/1.1
+  279     16.749006  192.168.1.1             192.168.1.112           HTTP        166  HTTP/1.1 200 OK
+  280     16.811475  192.168.1.115           192.168.1.1             TCP          54  50470 → 80  [SYN]  Seq=7401422  Ack=0  Len=0
+  281     16.897669  192.168.1.1             192.168.1.115           TCP          54  80 → 50470  [SYN, ACK]  Seq=7344042  Ack=7401423  Len=0
+  282     16.934927  192.168.1.115           192.168.1.1             TCP          54  50470 → 80  [ACK]  Seq=7401423  Ack=7344043  Len=0
+  283     17.012447  192.168.1.115           192.168.1.1             HTTP        244  GET /static/app.js HTTP/1.1
+  284     17.077698  192.168.1.1             192.168.1.115           HTTP        166  HTTP/1.1 200 OK
+  285     17.120579  192.168.1.101           192.168.1.10            SMB2         54  64553 → 445  [SYN]  Seq=3918908  Ack=0
+  286     17.135089  192.168.1.10            192.168.1.101           SMB2         54  445 → 64553  [SYN, ACK]  Seq=4425472  Ack=3918909
+  287     17.156968  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  288     17.211723  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  289     17.319158  192.168.1.104           192.168.1.10            SMB2         54  58596 → 445  [SYN]  Seq=6558153  Ack=0
+  290     17.392060  192.168.1.10            192.168.1.104           SMB2         54  445 → 58596  [SYN, ACK]  Seq=8928858  Ack=6558154
+  291     17.452474  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  292     17.494498  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  293     17.608663  192.168.1.103           192.168.1.10            SMB2         54  59745 → 445  [SYN]  Seq=1972420  Ack=0
+  294     17.717587  192.168.1.10            192.168.1.103           SMB2         54  445 → 59745  [SYN, ACK]  Seq=7480601  Ack=1972421
+  295     17.718537  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  296     17.833286  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  297     17.902038  192.168.1.105           192.168.1.10            SMB2         54  64290 → 445  [SYN]  Seq=4466571  Ack=0
+  298     17.984447  192.168.1.10            192.168.1.105           SMB2         54  445 → 64290  [SYN, ACK]  Seq=1454696  Ack=4466572
+  299     18.050585  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  300     18.109324  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  301     18.147876  192.168.1.101           192.168.1.10            SMB2         54  55822 → 445  [SYN]  Seq=3240230  Ack=0
+  302     18.264130  192.168.1.10            192.168.1.101           SMB2         54  445 → 55822  [SYN, ACK]  Seq=5607188  Ack=3240231
+  303     18.328462  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  304     18.333045  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  305     18.406044  192.168.1.105           192.168.1.10            SMB2         54  56993 → 445  [SYN]  Seq=6954089  Ack=0
+  306     18.479228  192.168.1.10            192.168.1.105           SMB2         54  445 → 56993  [SYN, ACK]  Seq=2328572  Ack=6954090
+  307     18.492245  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  308     18.603329  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  309     18.713199  192.168.1.101           192.168.1.10            SMB2         54  64272 → 445  [SYN]  Seq=8944521  Ack=0
+  310     18.779322  192.168.1.10            192.168.1.101           SMB2         54  445 → 64272  [SYN, ACK]  Seq=1985377  Ack=8944522
+  311     18.874048  192.168.1.101           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  312     18.941546  192.168.1.10            192.168.1.101           SMB2        120  SMB2 Negotiate Response
+  313     19.004240  192.168.1.103           192.168.1.10            SMB2         54  62766 → 445  [SYN]  Seq=8002171  Ack=0
+  314     19.064911  192.168.1.10            192.168.1.103           SMB2         54  445 → 62766  [SYN, ACK]  Seq=5047499  Ack=8002172
+  315     19.084669  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  316     19.110452  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  317     19.212528  192.168.1.105           192.168.1.10            SMB2         54  53625 → 445  [SYN]  Seq=8247983  Ack=0
+  318     19.325317  192.168.1.10            192.168.1.105           SMB2         54  445 → 53625  [SYN, ACK]  Seq=1585609  Ack=8247984
+  319     19.370665  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  320     19.474712  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  321     19.570676  192.168.1.105           192.168.1.10            SMB2         54  57906 → 445  [SYN]  Seq=7883267  Ack=0
+  322     19.681245  192.168.1.10            192.168.1.105           SMB2         54  445 → 57906  [SYN, ACK]  Seq=1021518  Ack=7883268
+  323     19.758056  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  324     19.845355  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  325     19.891391  192.168.1.104           192.168.1.10            SMB2         54  54021 → 445  [SYN]  Seq=4745911  Ack=0
+  326     19.964531  192.168.1.10            192.168.1.104           SMB2         54  445 → 54021  [SYN, ACK]  Seq=5517941  Ack=4745912
+  327     20.036559  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  328     20.097041  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  329     20.148037  192.168.1.103           192.168.1.10            SMB2         54  55333 → 445  [SYN]  Seq=6851040  Ack=0
+  330     20.261036  192.168.1.10            192.168.1.103           SMB2         54  445 → 55333  [SYN, ACK]  Seq=3003246  Ack=6851041
+  331     20.315677  192.168.1.103           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  332     20.358181  192.168.1.10            192.168.1.103           SMB2        120  SMB2 Negotiate Response
+  333     20.466558  192.168.1.104           192.168.1.10            SMB2         54  61644 → 445  [SYN]  Seq=4238663  Ack=0
+  334     20.487294  192.168.1.10            192.168.1.104           SMB2         54  445 → 61644  [SYN, ACK]  Seq=6567425  Ack=4238664
+  335     20.492946  192.168.1.104           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  336     20.559582  192.168.1.10            192.168.1.104           SMB2        120  SMB2 Negotiate Response
+  337     20.671143  192.168.1.105           192.168.1.10            SMB2         54  60030 → 445  [SYN]  Seq=8295575  Ack=0
+  338     20.685012  192.168.1.10            192.168.1.105           SMB2         54  445 → 60030  [SYN, ACK]  Seq=1841919  Ack=8295576
+  339     20.745702  192.168.1.105           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  340     20.841194  192.168.1.10            192.168.1.105           SMB2        120  SMB2 Negotiate Response
+  341     20.862226  192.168.1.102           192.168.1.10            SMB2         54  62586 → 445  [SYN]  Seq=8305915  Ack=0
+  342     20.924563  192.168.1.10            192.168.1.102           SMB2         54  445 → 62586  [SYN, ACK]  Seq=6492703  Ack=8305916
+  343     20.960100  192.168.1.102           192.168.1.10            SMB2        120  SMB2 Negotiate Request
+  344     21.042591  192.168.1.10            192.168.1.102           SMB2        120  SMB2 Negotiate Response
+  345     21.086456  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  346     21.128761  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  347     21.138529  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  348     21.229034  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  349     21.241680  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  350     21.255383  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  351     21.295434  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  352     21.338750  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  353     21.396000  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  354     21.466421  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  355     21.490167  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  356     21.605109  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  357     21.682344  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  358     21.743587  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  359     21.745618  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  360     21.784118  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  361     21.830211  192.168.1.115           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  362     21.886626  192.168.1.10            192.168.1.115           NFS          62  RPC Reply  NFS NULL procedure
+  363     21.937848  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  364     21.969739  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  365     22.009319  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  366     22.118913  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  367     22.233099  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  368     22.313381  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  369     22.418889  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  370     22.524799  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  371     22.558449  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  372     22.571984  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  373     22.648749  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  374     22.666773  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  375     22.765546  192.168.1.111           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  376     22.792664  192.168.1.10            192.168.1.111           NFS          62  RPC Reply  NFS NULL procedure
+  377     22.859235  192.168.1.112           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  378     22.881602  192.168.1.10            192.168.1.112           NFS          62  RPC Reply  NFS NULL procedure
+  379     22.988110  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  380     23.102994  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  381     23.113663  192.168.1.113           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  382     23.144034  192.168.1.10            192.168.1.113           NFS          62  RPC Reply  NFS NULL procedure
+  383     23.248470  192.168.1.114           192.168.1.10            NFS          74  RPC Call  NFS NULL procedure
+  384     23.283933  192.168.1.10            192.168.1.114           NFS          62  RPC Reply  NFS NULL procedure
+  385     23.372858  192.168.1.115           192.168.1.1             SSH          54  64054 → 22  [SYN]  Seq=4091920  Ack=0
+  386     23.450277  192.168.1.1             192.168.1.115           SSH          54  22 → 64054  [SYN, ACK]  Seq=6644093  Ack=4091921
+  387     23.558872  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  388     23.608361  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  389     23.682745  192.168.1.111           192.168.1.1             SSH          54  64601 → 22  [SYN]  Seq=1209921  Ack=0
+  390     23.763509  192.168.1.1             192.168.1.111           SSH          54  22 → 64601  [SYN, ACK]  Seq=6197135  Ack=1209922
+  391     23.849198  192.168.1.1             192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  392     23.933281  192.168.1.111           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  393     23.938958  192.168.1.114           192.168.1.10            SSH          54  62531 → 22  [SYN]  Seq=1978748  Ack=0
+  394     24.004327  192.168.1.10            192.168.1.114           SSH          54  22 → 62531  [SYN, ACK]  Seq=2172534  Ack=1978749
+  395     24.017866  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  396     24.134960  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  397     24.233164  192.168.1.115           192.168.1.1             SSH          54  61887 → 22  [SYN]  Seq=4805439  Ack=0
+  398     24.304768  192.168.1.1             192.168.1.115           SSH          54  22 → 61887  [SYN, ACK]  Seq=4112270  Ack=4805440
+  399     24.382551  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  400     24.478587  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  401     24.532879  192.168.1.112           192.168.1.10            SSH          54  52396 → 22  [SYN]  Seq=7993524  Ack=0
+  402     24.570345  192.168.1.10            192.168.1.112           SSH          54  22 → 52396  [SYN, ACK]  Seq=5104940  Ack=7993525
+  403     24.661621  192.168.1.10            192.168.1.112           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  404     24.690898  192.168.1.112           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  405     24.781571  192.168.1.114           192.168.1.10            SSH          54  56888 → 22  [SYN]  Seq=8176036  Ack=0
+  406     24.853735  192.168.1.10            192.168.1.114           SSH          54  22 → 56888  [SYN, ACK]  Seq=4042431  Ack=8176037
+  407     24.939053  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  408     24.947789  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  409     25.056617  192.168.1.114           192.168.1.10            SSH          54  55371 → 22  [SYN]  Seq=2024749  Ack=0
+  410     25.069432  192.168.1.10            192.168.1.114           SSH          54  22 → 55371  [SYN, ACK]  Seq=8960879  Ack=2024750
+  411     25.098033  192.168.1.10            192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  412     25.182652  192.168.1.114           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  413     25.199957  192.168.1.115           192.168.1.1             SSH          54  50809 → 22  [SYN]  Seq=7600111  Ack=0
+  414     25.274757  192.168.1.1             192.168.1.115           SSH          54  22 → 50809  [SYN, ACK]  Seq=3797677  Ack=7600112
+  415     25.284549  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  416     25.385639  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  417     25.429503  192.168.1.115           192.168.1.1             SSH          54  56228 → 22  [SYN]  Seq=7820382  Ack=0
+  418     25.449643  192.168.1.1             192.168.1.115           SSH          54  22 → 56228  [SYN, ACK]  Seq=8295534  Ack=7820383
+  419     25.568477  192.168.1.1             192.168.1.115           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  420     25.569648  192.168.1.115           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  421     25.593319  192.168.1.113           192.168.1.1             SSH          54  53411 → 22  [SYN]  Seq=5531655  Ack=0
+  422     25.680765  192.168.1.1             192.168.1.113           SSH          54  22 → 53411  [SYN, ACK]  Seq=3102639  Ack=5531656
+  423     25.684944  192.168.1.1             192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  424     25.687691  192.168.1.113           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  425     25.695359  192.168.1.113           192.168.1.1             SSH          54  59761 → 22  [SYN]  Seq=1132381  Ack=0
+  426     25.793377  192.168.1.1             192.168.1.113           SSH          54  22 → 59761  [SYN, ACK]  Seq=2461683  Ack=1132382
+  427     25.863132  192.168.1.1             192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  428     25.961667  192.168.1.113           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  429     26.040279  192.168.1.111           192.168.1.10            SSH          54  63841 → 22  [SYN]  Seq=7526479  Ack=0
+  430     26.100324  192.168.1.10            192.168.1.111           SSH          54  22 → 63841  [SYN, ACK]  Seq=4037003  Ack=7526480
+  431     26.130162  192.168.1.10            192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  432     26.211585  192.168.1.111           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  433     26.275166  192.168.1.111           192.168.1.10            SSH          54  64161 → 22  [SYN]  Seq=6396732  Ack=0
+  434     26.328606  192.168.1.10            192.168.1.111           SSH          54  22 → 64161  [SYN, ACK]  Seq=1261310  Ack=6396733
+  435     26.419334  192.168.1.10            192.168.1.111           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  436     26.484394  192.168.1.111           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  437     26.493803  192.168.1.114           192.168.1.1             SSH          54  51799 → 22  [SYN]  Seq=3702069  Ack=0
+  438     26.530649  192.168.1.1             192.168.1.114           SSH          54  22 → 51799  [SYN, ACK]  Seq=6102768  Ack=3702070
+  439     26.614427  192.168.1.1             192.168.1.114           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  440     26.687101  192.168.1.114           192.168.1.1             SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  441     26.744288  192.168.1.113           192.168.1.10            SSH          54  58815 → 22  [SYN]  Seq=4806040  Ack=0
+  442     26.849040  192.168.1.10            192.168.1.113           SSH          54  22 → 58815  [SYN, ACK]  Seq=5240869  Ack=4806041
+  443     26.864836  192.168.1.10            192.168.1.113           SSH          75  Servidor: SSH-2.0-OpenSSH_9.6
+  444     26.951450  192.168.1.113           192.168.1.10            SSH          93  Cliente: SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3
+  445     27.008620  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  446     27.117871  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  447     27.131134  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  448     27.165342  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  449     27.228305  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  450     27.241324  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  451     27.290967  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  452     27.365375  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  453     27.420020  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  454     27.476255  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  455     27.523145  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  456     27.544225  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  457     27.590915  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  458     27.628227  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  459     27.739803  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  460     27.824842  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  461     27.911865  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  462     28.004769  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  463     28.029346  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  464     28.039266  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  465     28.044084  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  466     28.094192  192.168.1.101           192.168.1.255           NBNS         96  Name service query  192.168.1.101 → 192.168.1.255
+  467     28.143495  192.168.1.104           192.168.1.255           NBNS         96  Name service query  192.168.1.104 → 192.168.1.255
+  468     28.218690  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  469     28.239882  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  470     28.251375  192.168.1.102           192.168.1.255           NBNS         96  Name service query  192.168.1.102 → 192.168.1.255
+  471     28.315831  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  472     28.344886  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  473     28.360220  192.168.1.105           192.168.1.255           NBNS         96  Name service query  192.168.1.105 → 192.168.1.255
+  474     28.424803  192.168.1.103           192.168.1.255           NBNS         96  Name service query  192.168.1.103 → 192.168.1.255
+  475     28.466028  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  476     28.518635  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  477     28.520442  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  478     28.548928  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  479     28.583219  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  480     28.599745  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  481     28.698457  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  482     28.716189  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  483     28.809220  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  484     28.883253  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  485     28.936097  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  486     28.939353  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  487     28.950358  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  488     29.007425  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  489     29.101220  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  490     29.117116  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  491     29.160484  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  492     29.242302  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  493     29.333490  192.168.1.114           224.0.0.251             MDNS         76  Standard query  linux-ws04.local
+  494     29.391530  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  495     29.449434  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  496     29.518910  192.168.1.115           224.0.0.251             MDNS         76  Standard query  linux-ws05.local
+  497     29.633811  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  498     29.679111  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  499     29.782031  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  500     29.849741  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  501     29.917381  192.168.1.111           224.0.0.251             MDNS         76  Standard query  linux-ws01.local
+  502     30.019922  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  503     30.116061  192.168.1.113           224.0.0.251             MDNS         76  Standard query  linux-ws03.local
+  504     30.130335  192.168.1.112           224.0.0.251             MDNS         76  Standard query  linux-ws02.local
+  505     30.141011  192.168.1.104           192.168.1.101           TCP          54  54161 → 80  [ACK, FIN]  Seq=7377148  Ack=7368231  Len=0
+  506     30.241409  192.168.1.103           192.168.1.114           TCP          54  65343 → 80  [ACK, FIN]  Seq=4891920  Ack=7328750  Len=0
+  507     30.261995  192.168.1.115           192.168.1.111           TCP          54  59742 → 80  [ACK, FIN]  Seq=8249828  Ack=6261480  Len=0
+  508     30.367171  192.168.1.113           192.168.1.10            TCP          54  64517 → 80  [ACK, FIN]  Seq=4709510  Ack=6296442  Len=0
+  509     30.408656  192.168.1.105           192.168.1.113           TCP          54  50992 → 80  [ACK, FIN]  Seq=3952305  Ack=5255850  Len=0
+  510     30.447083  192.168.1.113           192.168.1.111           TCP          54  50384 → 80  [ACK, FIN]  Seq=1477228  Ack=4093195  Len=0
+  511     30.498277  192.168.1.102           192.168.1.114           TCP          54  52110 → 80  [ACK, FIN]  Seq=6159064  Ack=5983502  Len=0
+  512     30.574005  192.168.1.114           192.168.1.115           TCP          54  50496 → 80  [ACK, FIN]  Seq=4772639  Ack=8625663  Len=0
+  513     30.681100  192.168.1.115           192.168.1.111           TCP          54  54095 → 80  [ACK, FIN]  Seq=1519034  Ack=4779261  Len=0
+  514     30.687030  192.168.1.111           192.168.1.115           TCP          54  51915 → 80  [ACK, FIN]  Seq=5232463  Ack=6420106  Len=0
+  515     30.767758  192.168.1.104           192.168.1.115           TCP          54  63496 → 80  [ACK, FIN]  Seq=4686137  Ack=5396205  Len=0
+  516     30.822136  192.168.1.103           192.168.1.104           TCP          54  61369 → 80  [ACK, FIN]  Seq=8700211  Ack=3373083  Len=0
+  517     30.866799  192.168.1.111           192.168.1.114           TCP          54  50867 → 80  [ACK, FIN]  Seq=7620515  Ack=6292260  Len=0
+  518     30.904842  192.168.1.102           192.168.1.104           TCP          54  52248 → 80  [ACK, FIN]  Seq=5680534  Ack=6690658  Len=0
+  519     30.992622  192.168.1.105           192.168.1.115           TCP          54  54079 → 80  [ACK, FIN]  Seq=3796443  Ack=1683688  Len=0
+  520     31.044796  192.168.1.103           192.168.1.104           TCP          54  59317 → 80  [ACK, FIN]  Seq=6503385  Ack=6859274  Len=0
+  521     31.129939  192.168.1.103           192.168.1.113           TCP          54  51928 → 80  [ACK, FIN]  Seq=3596961  Ack=5688578  Len=0
+  522     31.197387  192.168.1.111           192.168.1.101           TCP          54  52214 → 80  [ACK, FIN]  Seq=6419248  Ack=6624192  Len=0
+  523     31.226261  192.168.1.111           192.168.1.1             TCP          54  61033 → 80  [ACK, FIN]  Seq=3590956  Ack=2512154  Len=0
+  524     31.337741  192.168.1.104           192.168.1.102           TCP          54  53659 → 80  [ACK, FIN]  Seq=2299774  Ack=1647307  Len=0
+  525     31.438982  192.168.1.102           192.168.1.112           TCP          54  50388 → 80  [ACK, FIN]  Seq=6552664  Ack=3824984  Len=0
+  526     31.548748  192.168.1.115           192.168.1.101           TCP          54  61496 → 80  [ACK, FIN]  Seq=2293965  Ack=2361028  Len=0
+  527     31.638200  192.168.1.115           192.168.1.101           TCP          54  63493 → 80  [ACK, FIN]  Seq=1366518  Ack=4446531  Len=0
+  528     31.697841  192.168.1.104           192.168.1.111           TCP          54  58488 → 80  [ACK, FIN]  Seq=7311514  Ack=7279179  Len=0
+  529     31.760115  192.168.1.104           192.168.1.112           TCP          54  56989 → 80  [ACK, FIN]  Seq=3596004  Ack=7783228  Len=0
+  530     31.810967  192.168.1.115           192.168.1.111           TCP          54  64280 → 80  [ACK, FIN]  Seq=7454518  Ack=3363672  Len=0
+  531     31.916789  192.168.1.114           192.168.1.112           TCP          54  62870 → 80  [ACK, FIN]  Seq=2359442  Ack=7852580  Len=0
+  532     32.032161  192.168.1.115           192.168.1.101           TCP          54  57344 → 80  [ACK, FIN]  Seq=1437715  Ack=6378599  Len=0
+  533     32.144525  192.168.1.111           192.168.1.112           TCP          54  52513 → 80  [ACK, FIN]  Seq=6967663  Ack=8095858  Len=0
+  534     32.204218  192.168.1.102           192.168.1.103           TCP          54  51900 → 80  [ACK, FIN]  Seq=7401487  Ack=2344797  Len=0
+  535     32.234120  192.168.1.114           192.168.1.101           TCP          54  63487 → 80  [ACK, FIN]  Seq=1769349  Ack=8939089  Len=0
+  536     32.300719  192.168.1.113           192.168.1.104           TCP          54  50025 → 80  [ACK, FIN]  Seq=4480407  Ack=1446751  Len=0
+  537     32.305213  192.168.1.111           192.168.1.102           TCP          54  61805 → 80  [ACK, FIN]  Seq=1684556  Ack=4144995  Len=0
+  538     32.311033  192.168.1.111           192.168.1.10            TCP          54  60138 → 80  [ACK, FIN]  Seq=7638581  Ack=2225150  Len=0
+  539     32.370632  192.168.1.105           192.168.1.111           TCP          54  53699 → 80  [ACK, FIN]  Seq=7365620  Ack=6918466  Len=0
+  540     32.480872  192.168.1.115           192.168.1.1             TCP          54  51748 → 80  [ACK, FIN]  Seq=1159416  Ack=3146845  Len=0
+  541     32.512819  192.168.1.103           192.168.1.112           TCP          54  63021 → 80  [ACK, FIN]  Seq=1932702  Ack=7511007  Len=0
+  542     32.617676  192.168.1.105           192.168.1.10            TCP          54  50716 → 80  [ACK, FIN]  Seq=3000175  Ack=4521751  Len=0
+  543     32.683989  192.168.1.115           192.168.1.111           TCP          54  51210 → 80  [ACK, FIN]  Seq=1929943  Ack=8018645  Len=0
+  544     32.716500  192.168.1.115           192.168.1.112           TCP          54  49690 → 80  [ACK, FIN]  Seq=6301222  Ack=5323284  Len=0
+  545     32.741851  192.168.1.112           192.168.1.1             TCP          54  60713 → 80  [ACK, FIN]  Seq=3017999  Ack=5787074  Len=0
+  546     32.813964  192.168.1.102           192.168.1.112           TCP          54  60968 → 80  [ACK, FIN]  Seq=1567735  Ack=8997729  Len=0
+  547     32.820470  192.168.1.114           192.168.1.112           TCP          54  49818 → 80  [ACK, FIN]  Seq=4275363  Ack=8326035  Len=0
+  548     32.924622  192.168.1.112           192.168.1.104           TCP          54  57463 → 80  [ACK, FIN]  Seq=7268945  Ack=1136249  Len=0
+  549     32.939009  192.168.1.102           192.168.1.104           TCP          54  57053 → 80  [ACK, FIN]  Seq=7148354  Ack=6512191  Len=0
+  550     33.046437  192.168.1.111           192.168.1.101           TCP          54  50604 → 80  [ACK, FIN]  Seq=3955298  Ack=5580295  Len=0
+  551     33.071128  192.168.1.103           192.168.1.114           TCP          54  64376 → 80  [ACK, FIN]  Seq=6833347  Ack=5014210  Len=0
+  552     33.077669  192.168.1.103           192.168.1.10            TCP          54  64149 → 80  [ACK, FIN]  Seq=1310242  Ack=3461574  Len=0
+  553     33.130665  192.168.1.104           192.168.1.1             TCP          54  59493 → 80  [ACK, FIN]  Seq=8829683  Ack=3601105  Len=0
+  554     33.156513  192.168.1.114           192.168.1.111           TCP          54  57452 → 80  [ACK, FIN]  Seq=1307197  Ack=7319062  Len=0
+  555     33.193124  192.168.1.105           192.168.1.104           TCP          54  50718 → 80  [ACK, FIN]  Seq=8262842  Ack=6500673  Len=0
+  556     33.251561  192.168.1.102           192.168.1.104           TCP          54  63470 → 80  [ACK, FIN]  Seq=8461553  Ack=4355625  Len=0
+  557     33.300509  192.168.1.112           192.168.1.104           TCP          54  55273 → 80  [ACK, FIN]  Seq=5162454  Ack=6805491  Len=0
+  558     33.357749  192.168.1.114           192.168.1.103           TCP          54  51859 → 80  [ACK, FIN]  Seq=7099200  Ack=4560961  Len=0
+  559     33.401530  192.168.1.115           192.168.1.101           TCP          54  58778 → 80  [ACK, FIN]  Seq=3694516  Ack=1860653  Len=0
+  560     33.424172  192.168.1.105           192.168.1.103           TCP          54  63763 → 80  [ACK, FIN]  Seq=6055156  Ack=7020192  Len=0
+  561     33.471182  192.168.1.113           192.168.1.104           TCP          54  63803 → 80  [ACK, FIN]  Seq=1355300  Ack=7096961  Len=0
+  562     33.479500  192.168.1.115           192.168.1.105           TCP          54  58148 → 80  [ACK, FIN]  Seq=6364257  Ack=7639397  Len=0
+  563     33.578590  192.168.1.102           192.168.1.114           TCP          54  62462 → 80  [ACK, FIN]  Seq=4047674  Ack=5304077  Len=0
+  564     33.681798  192.168.1.103           192.168.1.1             TCP          54  53830 → 80  [ACK, FIN]  Seq=8119154  Ack=6096690  Len=0
+  565     33.767160  192.168.1.113           192.168.1.1             TCP          54  53288 → 80  [ACK, FIN]  Seq=1563994  Ack=2979672  Len=0
+  566     33.847270  192.168.1.111           192.168.1.104           TCP          54  61697 → 80  [ACK, FIN]  Seq=8964707  Ack=5758392  Len=0
+  567     33.906258  192.168.1.103           192.168.1.114           TCP          54  63895 → 80  [ACK, FIN]  Seq=8959308  Ack=4111875  Len=0
+  568     33.948265  192.168.1.102           192.168.1.113           TCP          54  53663 → 80  [ACK, FIN]  Seq=5441431  Ack=4078199  Len=0
+  569     34.014475  192.168.1.105           192.168.1.102           TCP          54  52869 → 80  [ACK, FIN]  Seq=1217376  Ack=7171288  Len=0
+  570     34.107554  192.168.1.114           192.168.1.105           TCP          54  53010 → 80  [ACK, FIN]  Seq=3195941  Ack=7500873  Len=0
+  571     34.172736  192.168.1.113           192.168.1.102           TCP          54  58509 → 80  [ACK, FIN]  Seq=6821531  Ack=8687982  Len=0
+  572     34.196166  192.168.1.104           192.168.1.10            TCP          54  53599 → 80  [ACK, FIN]  Seq=8154025  Ack=1621193  Len=0
+  573     34.205477  192.168.1.113           192.168.1.10            TCP          54  59624 → 80  [ACK, FIN]  Seq=6602246  Ack=3914414  Len=0
+  574     34.226921  192.168.1.114           192.168.1.112           TCP          54  58666 → 80  [ACK, FIN]  Seq=8477032  Ack=3516218  Len=0
+  575     34.245923  192.168.1.103           192.168.1.104           TCP          54  56499 → 80  [ACK, FIN]  Seq=2018062  Ack=2685945  Len=0
+  576     34.295076  192.168.1.104           192.168.1.111           TCP          54  50013 → 80  [ACK, FIN]  Seq=4027419  Ack=5647468  Len=0
+  577     34.304493  192.168.1.113           192.168.1.112           TCP          54  53404 → 80  [ACK, FIN]  Seq=6133394  Ack=8417596  Len=0
+  578     34.380646  192.168.1.113           192.168.1.112           TCP          54  62612 → 80  [ACK, FIN]  Seq=7452219  Ack=4434577  Len=0
+  579     34.442503  192.168.1.102           192.168.1.101           TCP          54  59540 → 80  [ACK, FIN]  Seq=6388326  Ack=1622141  Len=0
+  580     34.515563  192.168.1.114           192.168.1.104           TCP          54  53357 → 80  [ACK, FIN]  Seq=8364863  Ack=7954606  Len=0
+  581     34.630161  192.168.1.115           192.168.1.101           TCP          54  53380 → 80  [ACK, FIN]  Seq=4629065  Ack=5218327  Len=0
+  582     34.673252  192.168.1.101           192.168.1.10            TCP          54  54166 → 80  [ACK, FIN]  Seq=3551181  Ack=2381243  Len=0
+  583     34.746251  192.168.1.114           192.168.1.103           TCP          54  51736 → 80  [ACK, FIN]  Seq=3102229  Ack=2646699  Len=0
+  584     34.812924  192.168.1.105           192.168.1.101           TCP          54  59074 → 80  [ACK, FIN]  Seq=6154197  Ack=5475138  Len=0
+  585     34.908178  192.168.1.103           192.168.1.113           TCP          54  54204 → 80  [ACK, FIN]  Seq=2436134  Ack=6525851  Len=0
+  586     34.919624  192.168.1.115           192.168.1.104           TCP          54  50501 → 80  [ACK, FIN]  Seq=7922583  Ack=8245921  Len=0
+  587     34.995415  192.168.1.101           192.168.1.114           TCP          54  57824 → 80  [ACK, FIN]  Seq=6462074  Ack=2768388  Len=0
+  588     35.067724  192.168.1.112           192.168.1.113           TCP          54  50144 → 80  [ACK, FIN]  Seq=5177846  Ack=8457446  Len=0
+  589     35.174344  192.168.1.105           192.168.1.114           TCP          54  59051 → 80  [ACK, FIN]  Seq=5051234  Ack=3054184  Len=0
+  590     35.195863  192.168.1.112           192.168.1.103           TCP          54  64013 → 80  [ACK, FIN]  Seq=1612142  Ack=6776509  Len=0
+  591     35.276179  192.168.1.113           192.168.1.105           TCP          54  65019 → 80  [ACK, FIN]  Seq=4896023  Ack=2711469  Len=0
+  592     35.329239  192.168.1.103           192.168.1.104           TCP          54  59615 → 80  [ACK, FIN]  Seq=7158913  Ack=8220723  Len=0
+  593     35.346098  192.168.1.103           192.168.1.104           TCP          54  52631 → 80  [ACK, FIN]  Seq=3676938  Ack=3027844  Len=0
+  594     35.384936  192.168.1.105           192.168.1.111           TCP          54  57275 → 80  [ACK, FIN]  Seq=2181767  Ack=1812115  Len=0
+  595     35.406668  192.168.1.112           192.168.1.113           TCP          54  62853 → 80  [ACK, FIN]  Seq=3082642  Ack=8258725  Len=0
+  596     35.472776  192.168.1.111           192.168.1.113           TCP          54  59399 → 80  [ACK, FIN]  Seq=2592443  Ack=7401526  Len=0
+  597     35.476613  192.168.1.114           192.168.1.111           TCP          54  65495 → 80  [ACK, FIN]  Seq=8374221  Ack=3588225  Len=0
+  598     35.523667  192.168.1.102           192.168.1.105           TCP          54  64134 → 80  [ACK, FIN]  Seq=3019378  Ack=2804762  Len=0
+  599     35.634940  192.168.1.101           192.168.1.1             TCP          54  58371 → 80  [ACK, FIN]  Seq=5151473  Ack=6012350  Len=0
+  600     35.653295  192.168.1.113           192.168.1.103           TCP          54  49419 → 80  [ACK, FIN]  Seq=8106596  Ack=1901750  Len=0
+  601     35.660025  192.168.1.105           192.168.1.115           TCP          54  61137 → 80  [ACK, FIN]  Seq=7407694  Ack=4382740  Len=0
+  602     35.670462  192.168.1.112           192.168.1.1             TCP          54  55530 → 80  [ACK, FIN]  Seq=4041069  Ack=5640770  Len=0
+  603     35.751352  192.168.1.113           192.168.1.112           TCP          54  58317 → 80  [ACK, FIN]  Seq=7923213  Ack=6228129  Len=0
+  604     35.796596  192.168.1.102           192.168.1.101           TCP          54  52320 → 80  [ACK, FIN]  Seq=4304303  Ack=4130614  Len=0
+  605     35.850006  192.168.1.114           192.168.1.104           TCP          54  53879 → 80  [ACK, FIN]  Seq=2669818  Ack=6053825  Len=0
+  606     35.894458  192.168.1.114           192.168.1.1             TCP          54  50636 → 80  [ACK, FIN]  Seq=1326434  Ack=2149544  Len=0
+  607     35.962826  192.168.1.113           192.168.1.112           TCP          54  64126 → 80  [ACK, FIN]  Seq=2249404  Ack=6085681  Len=0
+  608     36.044431  192.168.1.103           192.168.1.104           TCP          54  59589 → 80  [ACK, FIN]  Seq=2363165  Ack=4296341  Len=0
+  609     36.115005  192.168.1.105           192.168.1.113           TCP          54  60174 → 80  [ACK, FIN]  Seq=5255666  Ack=7948194  Len=0
+  610     36.164086  192.168.1.113           192.168.1.115           TCP          54  58975 → 80  [ACK, FIN]  Seq=4983687  Ack=7842997  Len=0
+  611     36.269318  192.168.1.111           192.168.1.114           TCP          54  52743 → 80  [ACK, FIN]  Seq=4494193  Ack=5896448  Len=0
+  612     36.371851  192.168.1.101           192.168.1.113           TCP          54  64703 → 80  [ACK, FIN]  Seq=3227430  Ack=6499495  Len=0
+  613     36.435624  192.168.1.115           192.168.1.113           TCP          54  56608 → 80  [ACK, FIN]  Seq=7051542  Ack=1430798  Len=0
+  614     36.468169  192.168.1.103           192.168.1.112           TCP          54  61610 → 80  [ACK, FIN]  Seq=2239632  Ack=7892594  Len=0
+  615     36.510085  192.168.1.101           192.168.1.113           TCP          54  52753 → 80  [ACK, FIN]  Seq=2600414  Ack=1158858  Len=0
+  616     36.576659  192.168.1.112           192.168.1.101           TCP          54  62683 → 80  [ACK, FIN]  Seq=6792336  Ack=2710367  Len=0
+  617     36.604635  192.168.1.115           192.168.1.111           TCP          54  51192 → 80  [ACK, FIN]  Seq=6920471  Ack=2158319  Len=0
+  618     36.628134  192.168.1.114           192.168.1.104           TCP          54  64827 → 80  [ACK, FIN]  Seq=5408021  Ack=4161035  Len=0
+  619     36.730120  192.168.1.113           192.168.1.112           TCP          54  60369 → 80  [ACK, FIN]  Seq=5582471  Ack=3971974  Len=0
+  620     36.804069  192.168.1.105           192.168.1.113           TCP          54  65017 → 80  [ACK, FIN]  Seq=2612828  Ack=3067952  Len=0
+  621     36.832037  192.168.1.105           192.168.1.102           TCP          54  58904 → 80  [ACK, FIN]  Seq=7469078  Ack=3424342  Len=0
+  622     36.937092  192.168.1.113           192.168.1.104           TCP          54  64874 → 80  [ACK, FIN]  Seq=3925973  Ack=5701710  Len=0
+  623     36.987659  192.168.1.105           192.168.1.103           TCP          54  53145 → 80  [ACK, FIN]  Seq=5810672  Ack=6675918  Len=0
+  624     37.082062  192.168.1.112           192.168.1.104           TCP          54  53951 → 80  [ACK, FIN]  Seq=3436493  Ack=1352879  Len=0
+  625     37.145655  192.168.1.102           192.168.1.104           TCP          54  63647 → 80  [ACK, FIN]  Seq=6502692  Ack=3151207  Len=0
+  626     37.182056  192.168.1.104           192.168.1.102           TCP          54  58036 → 80  [ACK, FIN]  Seq=8826772  Ack=5714548  Len=0
+  627     37.301500  192.168.1.103           192.168.1.10            TCP          54  56992 → 80  [ACK, FIN]  Seq=3033885  Ack=1425851  Len=0
+  628     37.345592  192.168.1.114           192.168.1.102           TCP          54  56781 → 80  [ACK, FIN]  Seq=1440327  Ack=1840521  Len=0
+  629     37.367093  192.168.1.113           192.168.1.10            TCP          54  53656 → 80  [ACK, FIN]  Seq=1043465  Ack=5616691  Len=0
+  630     37.466971  192.168.1.112           192.168.1.114           TCP          54  64739 → 80  [ACK, FIN]  Seq=5005128  Ack=6457114  Len=0
+  631     37.568529  192.168.1.105           192.168.1.104           TCP          54  58504 → 80  [ACK, FIN]  Seq=6418184  Ack=1496291  Len=0
+  632     37.680783  192.168.1.102           192.168.1.114           TCP          54  56761 → 80  [ACK, FIN]  Seq=5489182  Ack=7196551  Len=0
+  633     37.746513  192.168.1.112           192.168.1.101           TCP          54  50342 → 80  [ACK, FIN]  Seq=8014580  Ack=4330231  Len=0
+  634     37.786423  192.168.1.103           192.168.1.115           TCP          54  58637 → 80  [ACK, FIN]  Seq=8354654  Ack=1314289  Len=0
+  635     37.846775  192.168.1.115           192.168.1.113           TCP          54  52668 → 80  [ACK, FIN]  Seq=8788443  Ack=3810536  Len=0
+  636     37.959125  192.168.1.114           192.168.1.112           TCP          54  65336 → 80  [ACK, FIN]  Seq=8459653  Ack=8873216  Len=0
+  637     38.003268  192.168.1.114           192.168.1.111           TCP          54  58092 → 80  [ACK, FIN]  Seq=2617419  Ack=7784822  Len=0
+  638     38.028473  192.168.1.103           192.168.1.115           TCP          54  64189 → 80  [ACK, FIN]  Seq=6438211  Ack=3158094  Len=0
+  639     38.117668  192.168.1.101           192.168.1.115           TCP          54  60198 → 80  [ACK, FIN]  Seq=7633439  Ack=3474842  Len=0
+  640     38.161450  192.168.1.104           192.168.1.101           TCP          54  62439 → 80  [ACK, FIN]  Seq=7937293  Ack=4587834  Len=0
+  641     38.204665  192.168.1.102           192.168.1.105           TCP          54  52277 → 80  [ACK, FIN]  Seq=2550057  Ack=2179537  Len=0
+  642     38.304261  192.168.1.104           192.168.1.1             TCP          54  57697 → 80  [ACK, FIN]  Seq=4217655  Ack=2975695  Len=0
+  643     38.306559  192.168.1.105           192.168.1.104           TCP          54  59046 → 80  [ACK, FIN]  Seq=5886034  Ack=7063978  Len=0
+  644     38.394887  192.168.1.105           192.168.1.114           TCP          54  60933 → 80  [ACK, FIN]  Seq=6811364  Ack=2982249  Len=0
+  645     38.461553  192.168.1.102           192.168.1.111           TCP          54  59205 → 80  [ACK, FIN]  Seq=2339801  Ack=4400881  Len=0
+  646     38.501024  192.168.1.105           192.168.1.115           TCP          54  52999 → 80  [ACK, FIN]  Seq=6357898  Ack=8685058  Len=0
+  647     38.521902  192.168.1.111           192.168.1.113           TCP          54  56388 → 80  [ACK, FIN]  Seq=2838183  Ack=2120456  Len=0
+  648     38.584414  192.168.1.113           192.168.1.115           TCP          54  61394 → 80  [ACK, FIN]  Seq=4488365  Ack=6888305  Len=0
+  649     38.677458  192.168.1.104           192.168.1.102           TCP          54  51834 → 80  [ACK, FIN]  Seq=5408269  Ack=4747593  Len=0
+  650     38.796601  192.168.1.111           192.168.1.10            TCP          54  52828 → 80  [ACK, FIN]  Seq=1518064  Ack=7952260  Len=0
+  651     38.865603  192.168.1.114           192.168.1.102           TCP          54  54062 → 80  [ACK, FIN]  Seq=2380237  Ack=3752450  Len=0
+  652     38.878322  192.168.1.113           192.168.1.10            TCP          54  55882 → 80  [ACK, FIN]  Seq=7013943  Ack=5891797  Len=0
+  653     38.933572  192.168.1.114           192.168.1.111           TCP          54  50975 → 80  [ACK, FIN]  Seq=4803665  Ack=2106829  Len=0
+  654     39.029173  192.168.1.101           192.168.1.112           TCP          54  64303 → 80  [ACK, FIN]  Seq=6643584  Ack=7768896  Len=0
+  655     39.058533  192.168.1.101           192.168.1.105           TCP          54  57490 → 80  [ACK, FIN]  Seq=7848906  Ack=1025295  Len=0
+  656     39.067690  192.168.1.115           192.168.1.10            TCP          54  50636 → 80  [ACK, FIN]  Seq=4554231  Ack=3890117  Len=0
+  657     39.106119  192.168.1.114           192.168.1.1             TCP          54  51413 → 80  [ACK, FIN]  Seq=8833077  Ack=4960020  Len=0
+  658     39.202508  192.168.1.112           192.168.1.101           TCP          54  53589 → 80  [ACK, FIN]  Seq=7424228  Ack=6381501  Len=0
+  659     39.322159  192.168.1.112           192.168.1.104           TCP          54  61685 → 80  [ACK, FIN]  Seq=4762602  Ack=8294903  Len=0
+  660     39.393646  192.168.1.112           192.168.1.105           TCP          54  51781 → 80  [ACK, FIN]  Seq=6727157  Ack=6551518  Len=0
+  661     39.464865  192.168.1.103           192.168.1.114           TCP          54  60547 → 80  [ACK, FIN]  Seq=1995167  Ack=2497145  Len=0
+  662     39.468644  192.168.1.103           192.168.1.115           TCP          54  56449 → 80  [ACK, FIN]  Seq=8002991  Ack=1029136  Len=0
+  663     39.499546  192.168.1.105           192.168.1.111           TCP          54  63049 → 80  [ACK, FIN]  Seq=5462182  Ack=4181601  Len=0
+  664     39.615061  192.168.1.104           192.168.1.111           TCP          54  60494 → 80  [ACK, FIN]  Seq=2301252  Ack=3312317  Len=0
+  665     39.731696  192.168.1.102           192.168.1.1             TCP          54  62889 → 80  [ACK, FIN]  Seq=6158349  Ack=7426122  Len=0
+  666     39.736896  192.168.1.101           192.168.1.102           TCP          54  55904 → 80  [ACK, FIN]  Seq=1564477  Ack=1846382  Len=0
+  667     39.808443  192.168.1.101           192.168.1.102           TCP          54  50601 → 80  [ACK, FIN]  Seq=4374446  Ack=4682286  Len=0
+  668     39.916169  192.168.1.104           192.168.1.1             TCP          54  53743 → 80  [ACK, FIN]  Seq=5226984  Ack=3426517  Len=0
+  669     39.935746  192.168.1.115           192.168.1.104           TCP          54  59659 → 80  [ACK, FIN]  Seq=2987295  Ack=3531383  Len=0
+  670     40.009516  192.168.1.114           192.168.1.102           TCP          54  62703 → 80  [ACK, FIN]  Seq=3520784  Ack=3308158  Len=0
+  671     40.055459  192.168.1.103           192.168.1.114           TCP          54  63150 → 80  [ACK, FIN]  Seq=5662813  Ack=5157568  Len=0
+  672     40.105602  192.168.1.111           192.168.1.115           TCP          54  62794 → 80  [ACK, FIN]  Seq=4424726  Ack=2251728  Len=0
+  673     40.145820  192.168.1.103           192.168.1.112           TCP          54  64668 → 80  [ACK, FIN]  Seq=3021387  Ack=8124788  Len=0
+  674     40.201212  192.168.1.103           192.168.1.111           TCP          54  51040 → 80  [ACK, FIN]  Seq=5717635  Ack=4461789  Len=0
+  675     40.228663  192.168.1.114           192.168.1.112           TCP          54  53545 → 80  [ACK, FIN]  Seq=4258295  Ack=3037244  Len=0
+  676     40.278100  192.168.1.111           192.168.1.114           TCP          54  51742 → 80  [ACK, FIN]  Seq=8736193  Ack=4773085  Len=0
+  677     40.367199  192.168.1.102           192.168.1.112           TCP          54  55393 → 80  [ACK, FIN]  Seq=1432320  Ack=3252019  Len=0
+  678     40.473466  192.168.1.115           192.168.1.113           TCP          54  50447 → 80  [ACK, FIN]  Seq=8328459  Ack=1610559  Len=0
+  679     40.517908  192.168.1.114           192.168.1.102           TCP          54  64860 → 80  [ACK, FIN]  Seq=2752288  Ack=8293675  Len=0
+  680     40.615894  192.168.1.105           192.168.1.1             TCP          54  56092 → 80  [ACK, FIN]  Seq=8861465  Ack=2594034  Len=0
+  681     40.695914  192.168.1.102           192.168.1.115           TCP          54  64845 → 80  [ACK, FIN]  Seq=8670889  Ack=3035019  Len=0
+  682     40.733815  192.168.1.104           192.168.1.105           TCP          54  56994 → 80  [ACK, FIN]  Seq=5631176  Ack=3697902  Len=0
+  683     40.801830  192.168.1.112           192.168.1.111           TCP          54  60924 → 80  [ACK, FIN]  Seq=3587233  Ack=3194137  Len=0
+  684     40.902458  192.168.1.113           192.168.1.111           TCP          54  52383 → 80  [ACK, FIN]  Seq=7734513  Ack=7060044  Len=0
+  685     40.976989  192.168.1.111           192.168.1.102           TCP          54  61299 → 80  [ACK, FIN]  Seq=3624980  Ack=4472297  Len=0
+  686     41.054339  192.168.1.104           192.168.1.115           TCP          54  53933 → 80  [ACK, FIN]  Seq=1136062  Ack=3187531  Len=0
+  687     41.104925  192.168.1.112           192.168.1.103           TCP          54  54146 → 80  [ACK, FIN]  Seq=2645775  Ack=3767110  Len=0
+  688     41.195489  192.168.1.115           192.168.1.102           TCP          54  65513 → 80  [ACK, FIN]  Seq=5619124  Ack=6491249  Len=0
+  689     41.260592  192.168.1.111           192.168.1.103           TCP          54  65163 → 80  [ACK, FIN]  Seq=7069643  Ack=6382923  Len=0
+  690     41.333028  192.168.1.113           192.168.1.101           TCP          54  60692 → 80  [ACK, FIN]  Seq=2419903  Ack=2174057  Len=0
+  691     41.444806  192.168.1.113           192.168.1.101           TCP          54  51076 → 80  [ACK, FIN]  Seq=5395164  Ack=1283734  Len=0
+  692     41.463627  192.168.1.102           192.168.1.114           TCP          54  50741 → 80  [ACK, FIN]  Seq=7411738  Ack=1053551  Len=0
+  693     41.524197  192.168.1.104           192.168.1.10            TCP          54  54100 → 80  [ACK, FIN]  Seq=1076684  Ack=2834753  Len=0
+  694     41.525863  192.168.1.111           192.168.1.1             TCP          54  64985 → 80  [ACK, FIN]  Seq=6530477  Ack=5092419  Len=0
+  695     41.621322  192.168.1.114           192.168.1.112           TCP          54  62630 → 80  [ACK, FIN]  Seq=1099413  Ack=1140309  Len=0
+  696     41.713591  192.168.1.105           192.168.1.112           TCP          54  58546 → 80  [ACK, FIN]  Seq=1143802  Ack=5212893  Len=0
+  697     41.733907  192.168.1.112           192.168.1.101           TCP          54  52658 → 80  [ACK, FIN]  Seq=8701151  Ack=1807939  Len=0
+  698     41.838900  192.168.1.104           192.168.1.102           TCP          54  57423 → 80  [ACK, FIN]  Seq=7838513  Ack=3973267  Len=0
+  699     41.871577  192.168.1.112           192.168.1.10            TCP          54  61376 → 80  [ACK, FIN]  Seq=4406004  Ack=4850352  Len=0
+  700     41.971937  192.168.1.104           192.168.1.103           TCP          54  51793 → 80  [ACK, FIN]  Seq=6483932  Ack=8199264  Len=0
+  701     42.035127  192.168.1.101           192.168.1.10            TCP          54  62432 → 80  [ACK, FIN]  Seq=4181497  Ack=4163927  Len=0
+  702     42.101444  192.168.1.101           192.168.1.114           TCP          54  49461 → 80  [ACK, FIN]  Seq=6895892  Ack=2437669  Len=0
+  703     42.114743  192.168.1.112           192.168.1.114           TCP          54  60007 → 80  [ACK, FIN]  Seq=5746749  Ack=8197092  Len=0
+  704     42.206282  192.168.1.114           192.168.1.1             TCP          54  56680 → 80  [ACK, FIN]  Seq=2773494  Ack=8560425  Len=0
+  705     42.296791  192.168.1.115           192.168.1.111           TCP          54  58035 → 80  [ACK, FIN]  Seq=1390590  Ack=8752409  Len=0
+  706     42.338811  192.168.1.105           192.168.1.112           TCP          54  50230 → 80  [ACK, FIN]  Seq=2504534  Ack=8791056  Len=0
+  707     42.447208  192.168.1.101           192.168.1.102           TCP          54  53876 → 80  [ACK, FIN]  Seq=7310367  Ack=7884452  Len=0
+  708     42.522285  192.168.1.112           192.168.1.10            TCP          54  58958 → 80  [ACK, FIN]  Seq=2362731  Ack=5730824  Len=0
+  709     42.541428  192.168.1.112           192.168.1.114           TCP          54  60022 → 80  [ACK, FIN]  Seq=4219935  Ack=7338509  Len=0
+  710     42.572655  192.168.1.102           192.168.1.112           TCP          54  60485 → 80  [ACK, FIN]  Seq=1450438  Ack=1819447  Len=0
+  711     42.656570  192.168.1.102           192.168.1.104           TCP          54  62151 → 80  [ACK, FIN]  Seq=7489048  Ack=3737845  Len=0
+  712     42.706577  192.168.1.105           192.168.1.111           TCP          54  65228 → 80  [ACK, FIN]  Seq=2913763  Ack=3984760  Len=0
+  713     42.746092  192.168.1.112           192.168.1.101           TCP          54  61606 → 80  [ACK, FIN]  Seq=1718854  Ack=7477409  Len=0
+  714     42.796699  192.168.1.104           192.168.1.115           TCP          54  51560 → 80  [ACK, FIN]  Seq=1688184  Ack=3247912  Len=0
+  715     42.809494  192.168.1.103           192.168.1.115           TCP          54  61919 → 80  [ACK, FIN]  Seq=3656489  Ack=4025772  Len=0
+  716     42.823693  192.168.1.101           192.168.1.103           TCP          54  63725 → 80  [ACK, FIN]  Seq=4019206  Ack=7386637  Len=0
+  717     42.897203  192.168.1.103           192.168.1.10            TCP          54  55292 → 80  [ACK, FIN]  Seq=4615318  Ack=4765173  Len=0
+  718     42.970645  192.168.1.114           192.168.1.105           TCP          54  52536 → 80  [ACK, FIN]  Seq=1220300  Ack=1751777  Len=0
+  719     43.009698  192.168.1.102           192.168.1.113           TCP          54  59782 → 80  [ACK, FIN]  Seq=8245393  Ack=4231609  Len=0
+  720     43.129145  192.168.1.112           192.168.1.105           TCP          54  51927 → 80  [ACK, FIN]  Seq=7080430  Ack=8559277  Len=0
+  721     43.148143  192.168.1.104           192.168.1.113           TCP          54  54708 → 80  [ACK, FIN]  Seq=6748847  Ack=4193811  Len=0
+  722     43.170859  192.168.1.105           192.168.1.103           TCP          54  57947 → 80  [ACK, FIN]  Seq=5136623  Ack=2224190  Len=0
+  723     43.181741  192.168.1.112           192.168.1.103           TCP          54  62950 → 80  [ACK, FIN]  Seq=3514504  Ack=5062026  Len=0
+  724     43.260372  192.168.1.111           192.168.1.103           TCP          54  57232 → 80  [ACK, FIN]  Seq=7047342  Ack=6243162  Len=0
+  725     43.262059  192.168.1.115           192.168.1.102           TCP          54  64155 → 80  [ACK, FIN]  Seq=1897349  Ack=2136568  Len=0
+  726     43.320559  192.168.1.112           192.168.1.104           TCP          54  61600 → 80  [ACK, FIN]  Seq=7745082  Ack=8232643  Len=0
+  727     43.412492  192.168.1.111           192.168.1.105           TCP          54  53612 → 80  [ACK, FIN]  Seq=3520233  Ack=3689934  Len=0
+  728     43.455122  192.168.1.104           192.168.1.111           TCP          54  59447 → 80  [ACK, FIN]  Seq=2490129  Ack=4340675  Len=0
+  729     43.498636  192.168.1.105           192.168.1.115           TCP          54  65241 → 80  [ACK, FIN]  Seq=5830825  Ack=7559676  Len=0
+  730     43.573341  192.168.1.112           192.168.1.103           TCP          54  62027 → 80  [ACK, FIN]  Seq=4061972  Ack=1955360  Len=0
+  731     43.577668  192.168.1.104           192.168.1.113           TCP          54  55047 → 80  [ACK, FIN]  Seq=6718620  Ack=7439245  Len=0
+  732     43.687425  192.168.1.113           192.168.1.115           TCP          54  56021 → 80  [ACK, FIN]  Seq=4678026  Ack=7691471  Len=0
+  733     43.719947  192.168.1.102           192.168.1.105           TCP          54  65513 → 80  [ACK, FIN]  Seq=2167519  Ack=6312807  Len=0
+  734     43.770159  192.168.1.105           192.168.1.114           TCP          54  54202 → 80  [ACK, FIN]  Seq=6999837  Ack=4549454  Len=0
+  735     43.837361  192.168.1.102           192.168.1.111           TCP          54  64855 → 80  [ACK, FIN]  Seq=5884216  Ack=4362196  Len=0
+  736     43.924354  192.168.1.101           192.168.1.104           TCP          54  51936 → 80  [ACK, FIN]  Seq=1917457  Ack=7450454  Len=0
+  737     44.009923  192.168.1.111           192.168.1.101           TCP          54  50603 → 80  [ACK, FIN]  Seq=5724634  Ack=6410913  Len=0
+  738     44.044636  192.168.1.112           192.168.1.104           TCP          54  63257 → 80  [ACK, FIN]  Seq=1888727  Ack=1088481  Len=0
+  739     44.106130  192.168.1.104           192.168.1.112           TCP          54  56394 → 80  [ACK, FIN]  Seq=4739461  Ack=4138342  Len=0
+  740     44.145652  192.168.1.114           192.168.1.101           TCP          54  60455 → 80  [ACK, FIN]  Seq=1206046  Ack=5049777  Len=0
+  741     44.165021  192.168.1.112           192.168.1.10            TCP          54  52955 → 80  [ACK, FIN]  Seq=7973598  Ack=8890963  Len=0
+  742     44.234124  192.168.1.111           192.168.1.103           TCP          54  60393 → 80  [ACK, FIN]  Seq=4819606  Ack=7578933  Len=0
+  743     44.326250  192.168.1.113           192.168.1.104           TCP          54  64754 → 80  [ACK, FIN]  Seq=1818921  Ack=4675602  Len=0
+  744     44.420213  192.168.1.113           192.168.1.104           TCP          54  51353 → 80  [ACK, FIN]  Seq=3518797  Ack=1374828  Len=0
+  745     44.525877  192.168.1.102           192.168.1.1             TCP          54  60393 → 80  [ACK, FIN]  Seq=6435565  Ack=1917400  Len=0
+  746     44.547666  192.168.1.103           192.168.1.115           TCP          54  57144 → 80  [ACK, FIN]  Seq=5328470  Ack=2463419  Len=0
+  747     44.601556  192.168.1.111           192.168.1.112           TCP          54  63123 → 80  [ACK, FIN]  Seq=4875991  Ack=2944945  Len=0
+  748     44.682848  192.168.1.103           192.168.1.101           TCP          54  63312 → 80  [ACK, FIN]  Seq=4318385  Ack=1244882  Len=0
+  749     44.711801  192.168.1.104           192.168.1.111           TCP          54  63227 → 80  [ACK, FIN]  Seq=4261790  Ack=1037329  Len=0
+  750     44.826893  192.168.1.104           192.168.1.103           TCP          54  51202 → 80  [ACK, FIN]  Seq=5843145  Ack=1853558  Len=0
+  751     44.842629  192.168.1.114           192.168.1.101           TCP          54  61138 → 80  [ACK, FIN]  Seq=3734559  Ack=2653178  Len=0
+  752     44.921675  192.168.1.105           192.168.1.114           TCP          54  65191 → 80  [ACK, FIN]  Seq=5426794  Ack=6361231  Len=0
+  753     44.968610  192.168.1.112           192.168.1.113           TCP          54  62014 → 80  [ACK, FIN]  Seq=5924152  Ack=1958248  Len=0
+  754     44.980518  192.168.1.103           192.168.1.114           TCP          54  58898 → 80  [ACK, FIN]  Seq=8706468  Ack=6154669  Len=0
+  755     45.005310  192.168.1.103           192.168.1.104           TCP          54  53014 → 80  [ACK, FIN]  Seq=3001293  Ack=3561713  Len=0
+  756     45.084284  192.168.1.111           192.168.1.115           TCP          54  53784 → 80  [ACK, FIN]  Seq=5285109  Ack=4258666  Len=0
+  757     45.168380  192.168.1.103           192.168.1.113           TCP          54  61725 → 80  [ACK, FIN]  Seq=4548706  Ack=2558214  Len=0
+  758     45.207038  192.168.1.114           192.168.1.115           TCP          54  54828 → 80  [ACK, FIN]  Seq=5654944  Ack=2399769  Len=0
+  759     45.214864  192.168.1.103           192.168.1.101           TCP          54  59460 → 80  [ACK, FIN]  Seq=8063083  Ack=4783270  Len=0
+  760     45.265988  192.168.1.111           192.168.1.1             TCP          54  65031 → 80  [ACK, FIN]  Seq=2145336  Ack=2636856  Len=0
+  761     45.321265  192.168.1.114           192.168.1.112           TCP          54  65371 → 80  [ACK, FIN]  Seq=4432067  Ack=6743651  Len=0
+  762     45.426382  192.168.1.113           192.168.1.111           TCP          54  54632 → 80  [ACK, FIN]  Seq=1693491  Ack=5742900  Len=0
+  763     45.465018  192.168.1.104           192.168.1.103           TCP          54  50223 → 80  [ACK, FIN]  Seq=3305633  Ack=2886123  Len=0
+  764     45.540884  192.168.1.103           192.168.1.111           TCP          54  65382 → 80  [ACK, FIN]  Seq=5611437  Ack=5284951  Len=0
+  765     45.547137  192.168.1.102           192.168.1.103           TCP          54  61173 → 80  [ACK, FIN]  Seq=5546989  Ack=7900560  Len=0
+  766     45.656736  192.168.1.113           192.168.1.112           TCP          54  56313 → 80  [ACK, FIN]  Seq=4566456  Ack=1859131  Len=0
+  767     45.770546  192.168.1.104           192.168.1.103           TCP          54  50208 → 80  [ACK, FIN]  Seq=4772628  Ack=3204653  Len=0
+  768     45.798855  192.168.1.102           192.168.1.111           TCP          54  52998 → 80  [ACK, FIN]  Seq=7506469  Ack=7810617  Len=0
+  769     45.902526  192.168.1.111           192.168.1.115           TCP          54  63182 → 80  [ACK, FIN]  Seq=2392354  Ack=6168650  Len=0
+  770     45.940168  192.168.1.104           192.168.1.102           TCP          54  51097 → 80  [ACK, FIN]  Seq=5782130  Ack=3942853  Len=0
+  771     45.978891  192.168.1.115           192.168.1.112           TCP          54  54669 → 80  [ACK, FIN]  Seq=3715003  Ack=6906031  Len=0
+  772     46.033639  192.168.1.115           192.168.1.103           TCP          54  52272 → 80  [ACK, FIN]  Seq=2137402  Ack=7292245  Len=0
+  773     46.067164  192.168.1.101           192.168.1.103           TCP          54  53309 → 80  [ACK, FIN]  Seq=6883992  Ack=8265195  Len=0
+  774     46.178530  192.168.1.103           192.168.1.115           TCP          54  59706 → 80  [ACK, FIN]  Seq=7949809  Ack=3076639  Len=0
+  775     46.261618  192.168.1.112           192.168.1.111           TCP          54  53810 → 80  [ACK, FIN]  Seq=5843796  Ack=6304972  Len=0
+  776     46.377777  192.168.1.112           192.168.1.105           TCP          54  63962 → 80  [ACK, FIN]  Seq=1633476  Ack=6315254  Len=0
+  777     46.426951  192.168.1.102           192.168.1.105           TCP          54  58268 → 80  [ACK, FIN]  Seq=6827596  Ack=8854556  Len=0
+  778     46.529218  192.168.1.113           192.168.1.111           TCP          54  59876 → 80  [ACK, FIN]  Seq=5881796  Ack=1020745  Len=0
+  779     46.576970  192.168.1.102           192.168.1.115           TCP          54  64174 → 80  [ACK, FIN]  Seq=6325428  Ack=6571242  Len=0
+  780     46.605537  192.168.1.102           192.168.1.112           TCP          54  62184 → 80  [ACK, FIN]  Seq=2827289  Ack=4604107  Len=0
+  781     46.678074  192.168.1.113           192.168.1.103           TCP          54  59731 → 80  [ACK, FIN]  Seq=7948649  Ack=3378951  Len=0
+  782     46.768337  192.168.1.115           192.168.1.101           TCP          54  65055 → 80  [ACK, FIN]  Seq=7612770  Ack=3883496  Len=0
+  783     46.829375  192.168.1.101           192.168.1.1             TCP          54  52414 → 80  [ACK, FIN]  Seq=6252774  Ack=7575743  Len=0
+  784     46.886247  192.168.1.101           192.168.1.10            TCP          54  54328 → 80  [ACK, FIN]  Seq=4701774  Ack=4829551  Len=0
+  785     46.907884  192.168.1.104           192.168.1.115           TCP          54  53474 → 80  [ACK, FIN]  Seq=8399991  Ack=6452571  Len=0
+  786     46.995782  192.168.1.105           192.168.1.10            TCP          54  60962 → 80  [ACK, FIN]  Seq=3100417  Ack=1691393  Len=0
+  787     47.088259  192.168.1.103           192.168.1.1             TCP          54  62139 → 80  [ACK, FIN]  Seq=6247949  Ack=3562797  Len=0
+  788     47.117032  192.168.1.104           192.168.1.105           TCP          54  52140 → 80  [ACK, FIN]  Seq=6903047  Ack=1798458  Len=0
+  789     47.206958  192.168.1.113           192.168.1.10            TCP          54  53500 → 80  [ACK, FIN]  Seq=5980144  Ack=2897426  Len=0
+  790     47.223564  192.168.1.113           192.168.1.1             TCP          54  49416 → 80  [ACK, FIN]  Seq=6835091  Ack=3882108  Len=0
+  791     47.274573  192.168.1.112           192.168.1.115           TCP          54  53483 → 80  [ACK, FIN]  Seq=5007240  Ack=1594150  Len=0
+  792     47.390845  192.168.1.102           192.168.1.115           TCP          54  52508 → 80  [ACK, FIN]  Seq=1865717  Ack=3628582  Len=0
+  793     47.506267  192.168.1.105           192.168.1.101           TCP          54  61693 → 80  [ACK, FIN]  Seq=7488256  Ack=7823024  Len=0
+  794     47.508177  192.168.1.103           192.168.1.114           TCP          54  53833 → 80  [ACK, FIN]  Seq=1573878  Ack=5450225  Len=0
+  795     47.536902  192.168.1.115           192.168.1.114           TCP          54  54529 → 80  [ACK, FIN]  Seq=4691821  Ack=3945976  Len=0
+  796     47.655220  192.168.1.103           192.168.1.105           TCP          54  63648 → 80  [ACK, FIN]  Seq=8213888  Ack=2822380  Len=0
+  797     47.702096  192.168.1.102           192.168.1.101           TCP          54  53187 → 80  [ACK, FIN]  Seq=5945704  Ack=7123760  Len=0
+  798     47.713938  192.168.1.112           192.168.1.104           TCP          54  53733 → 80  [ACK, FIN]  Seq=3078582  Ack=3323373  Len=0
+  799     47.718253  192.168.1.104           192.168.1.112           TCP          54  58488 → 80  [ACK, FIN]  Seq=7534471  Ack=8896022  Len=0
+  800     47.803747  192.168.1.105           192.168.1.102           TCP          54  55333 → 80  [ACK, FIN]  Seq=7273367  Ack=4286245  Len=0
+  801     47.870028  192.168.1.101           192.168.1.102           TCP          54  65368 → 80  [ACK, FIN]  Seq=4237042  Ack=1945762  Len=0
+  802     47.888127  192.168.1.115           192.168.1.10            TCP          54  49547 → 80  [ACK, FIN]  Seq=4029111  Ack=8834325  Len=0
+  803     47.911572  192.168.1.112           192.168.1.113           TCP          54  62942 → 80  [ACK, FIN]  Seq=4065301  Ack=5583168  Len=0
+  804     47.946737  192.168.1.113           192.168.1.10            TCP          54  49698 → 80  [ACK, FIN]  Seq=5927162  Ack=1566504  Len=0
+  805     48.013939  192.168.1.104           192.168.1.1             TCP          54  51133 → 80  [ACK, FIN]  Seq=8958104  Ack=7621044  Len=0
+  806     48.025542  192.168.1.105           192.168.1.114           TCP          54  62764 → 80  [ACK, FIN]  Seq=4553206  Ack=6887214  Len=0
+  807     48.036699  192.168.1.114           192.168.1.112           TCP          54  54155 → 80  [ACK, FIN]  Seq=3327568  Ack=1701263  Len=0
+  808     48.114364  192.168.1.114           192.168.1.102           TCP          54  54243 → 80  [ACK, FIN]  Seq=5499566  Ack=3740980  Len=0
+  809     48.146442  192.168.1.102           192.168.1.103           TCP          54  63487 → 80  [ACK, FIN]  Seq=7123334  Ack=8997933  Len=0
+  810     48.206666  192.168.1.101           192.168.1.102           TCP          54  51977 → 80  [ACK, FIN]  Seq=8756339  Ack=4644712  Len=0
+  811     48.293718  192.168.1.115           192.168.1.113           TCP          54  50955 → 80  [ACK, FIN]  Seq=3594513  Ack=6587480  Len=0
+  812     48.296005  192.168.1.103           192.168.1.10            TCP          54  49567 → 80  [ACK, FIN]  Seq=6938300  Ack=2151015  Len=0
+  813     48.404612  192.168.1.103           192.168.1.111           TCP          54  60512 → 80  [ACK, FIN]  Seq=5387286  Ack=5338779  Len=0
+  814     48.519898  192.168.1.105           192.168.1.101           TCP          54  61337 → 80  [ACK, FIN]  Seq=2064771  Ack=7289580  Len=0
+  815     48.564608  192.168.1.105           192.168.1.115           TCP          54  53020 → 80  [ACK, FIN]  Seq=7471226  Ack=8548886  Len=0
+  816     48.640990  192.168.1.112           192.168.1.103           TCP          54  51244 → 80  [ACK, FIN]  Seq=3205781  Ack=6975400  Len=0
+  817     48.707274  192.168.1.102           192.168.1.111           TCP          54  64067 → 80  [ACK, FIN]  Seq=5284748  Ack=4020938  Len=0
+  818     48.721561  192.168.1.115           192.168.1.101           TCP          54  61200 → 80  [ACK, FIN]  Seq=2319611  Ack=3140068  Len=0
+  819     48.722697  192.168.1.115           192.168.1.114           TCP          54  52931 → 80  [ACK, FIN]  Seq=2915995  Ack=7214112  Len=0
+  820     48.773694  192.168.1.101           192.168.1.1             TCP          54  57165 → 80  [ACK, FIN]  Seq=1385721  Ack=4957448  Len=0
+  821     48.868082  192.168.1.103           192.168.1.101           TCP          54  50310 → 80  [ACK, FIN]  Seq=5637765  Ack=7737020  Len=0
+  822     48.963291  192.168.1.112           192.168.1.102           TCP          54  59696 → 80  [ACK, FIN]  Seq=3082582  Ack=4491813  Len=0
+  823     49.029894  192.168.1.111           192.168.1.103           TCP          54  51704 → 80  [ACK, FIN]  Seq=5794391  Ack=4127341  Len=0
+  824     49.091654  192.168.1.104           192.168.1.112           TCP          54  50656 → 80  [ACK, FIN]  Seq=4363201  Ack=1578196  Len=0
+  825     49.093498  192.168.1.105           192.168.1.103           TCP          54  59876 → 80  [ACK, FIN]  Seq=1724654  Ack=5639666  Len=0
+  826     49.191235  192.168.1.111           192.168.1.102           TCP          54  58706 → 80  [ACK, FIN]  Seq=5729553  Ack=7580923  Len=0
+  827     49.256700  192.168.1.115           192.168.1.102           TCP          54  64353 → 80  [ACK, FIN]  Seq=4089303  Ack=5963463  Len=0
+  828     49.311244  192.168.1.104           192.168.1.115           TCP          54  57184 → 80  [ACK, FIN]  Seq=2263042  Ack=1053501  Len=0
+  829     49.427020  192.168.1.101           192.168.1.102           TCP          54  60503 → 80  [ACK, FIN]  Seq=6334666  Ack=8042857  Len=0
+  830     49.539100  192.168.1.101           192.168.1.104           TCP          54  49199 → 80  [ACK, FIN]  Seq=7366359  Ack=6513864  Len=0
+  831     49.604391  192.168.1.105           192.168.1.10            TCP          54  55875 → 80  [ACK, FIN]  Seq=5444406  Ack=2997894  Len=0
+  832     49.716012  192.168.1.105           192.168.1.10            TCP          54  50590 → 80  [ACK, FIN]  Seq=8728209  Ack=2941732  Len=0
+  833     49.792934  192.168.1.114           192.168.1.105           TCP          54  61357 → 80  [ACK, FIN]  Seq=4845824  Ack=7273834  Len=0
+  834     49.803542  192.168.1.102           192.168.1.112           TCP          54  53526 → 80  [ACK, FIN]  Seq=6345352  Ack=7878347  Len=0
+  835     49.821474  192.168.1.115           192.168.1.113           TCP          54  51192 → 80  [ACK, FIN]  Seq=4648900  Ack=6556982  Len=0
+  836     49.927238  192.168.1.104           192.168.1.103           TCP          54  57704 → 80  [ACK, FIN]  Seq=8137981  Ack=3642486  Len=0
+  837     49.958657  192.168.1.112           192.168.1.115           TCP          54  59842 → 80  [ACK, FIN]  Seq=3668061  Ack=4798008  Len=0
+  838     50.018382  192.168.1.103           192.168.1.113           TCP          54  52722 → 80  [ACK, FIN]  Seq=2303678  Ack=1886321  Len=0
+  839     50.120151  192.168.1.113           192.168.1.104           TCP          54  62472 → 80  [ACK, FIN]  Seq=2012813  Ack=5495660  Len=0
+  840     50.136668  192.168.1.104           192.168.1.111           TCP          54  59254 → 80  [ACK, FIN]  Seq=4886832  Ack=3223047  Len=0
+  841     50.216544  192.168.1.102           192.168.1.101           TCP          54  59120 → 80  [ACK, FIN]  Seq=7932233  Ack=6911492  Len=0
+  842     50.249878  192.168.1.101           192.168.1.102           TCP          54  59893 → 80  [ACK, FIN]  Seq=2244230  Ack=1765149  Len=0
+  843     50.358168  192.168.1.111           192.168.1.105           TCP          54  50756 → 80  [ACK, FIN]  Seq=6680625  Ack=3506857  Len=0
+  844     50.457020  192.168.1.103           192.168.1.1             TCP          54  62403 → 80  [ACK, FIN]  Seq=8168915  Ack=4793338  Len=0
+  845     50.561866  192.168.1.114           192.168.1.102           TCP          54  52255 → 80  [ACK, FIN]  Seq=4875899  Ack=1854860  Len=0
+  846     50.591801  192.168.1.103           192.168.1.10            TCP          54  49543 → 80  [ACK, FIN]  Seq=1517318  Ack=7965667  Len=0
+  847     50.677101  192.168.1.103           192.168.1.102           TCP          54  62278 → 80  [ACK, FIN]  Seq=4122573  Ack=6756978  Len=0
+  848     50.680758  192.168.1.102           192.168.1.113           TCP          54  57633 → 80  [ACK, FIN]  Seq=8695948  Ack=7817816  Len=0
+  849     50.787580  192.168.1.113           192.168.1.101           TCP          54  52165 → 80  [ACK, FIN]  Seq=8592344  Ack=8107461  Len=0
+  850     50.810398  192.168.1.111           192.168.1.10            TCP          54  50551 → 80  [ACK, FIN]  Seq=8904423  Ack=4867105  Len=0
+  851     50.900748  192.168.1.115           192.168.1.105           TCP          54  62095 → 80  [ACK, FIN]  Seq=5161809  Ack=1247315  Len=0
+  852     50.937590  192.168.1.112           192.168.1.101           TCP          54  60750 → 80  [ACK, FIN]  Seq=2801169  Ack=8619408  Len=0
+  853     51.019258  192.168.1.105           192.168.1.111           TCP          54  54022 → 80  [ACK, FIN]  Seq=1290660  Ack=6151499  Len=0
+  854     51.092237  192.168.1.104           192.168.1.114           TCP          54  58822 → 80  [ACK, FIN]  Seq=5185006  Ack=4456041  Len=0
+  855     51.147986  192.168.1.113           192.168.1.1             TCP          54  52026 → 80  [ACK, FIN]  Seq=3346931  Ack=4212965  Len=0
+  856     51.252968  192.168.1.104           192.168.1.114           TCP          54  57316 → 80  [ACK, FIN]  Seq=6291151  Ack=7729073  Len=0
+  857     51.317295  192.168.1.101           192.168.1.105           TCP          54  60919 → 80  [ACK, FIN]  Seq=5023884  Ack=5567746  Len=0
+  858     51.321511  192.168.1.111           192.168.1.113           TCP          54  59690 → 80  [ACK, FIN]  Seq=4257978  Ack=3268578  Len=0
+  859     51.424355  192.168.1.111           192.168.1.113           TCP          54  56328 → 80  [ACK, FIN]  Seq=1245815  Ack=8514219  Len=0
+  860     51.501699  192.168.1.105           192.168.1.1             TCP          54  64608 → 80  [ACK, FIN]  Seq=5441199  Ack=3998364  Len=0
+  861     51.537433  192.168.1.104           192.168.1.101           TCP          54  52433 → 80  [ACK, FIN]  Seq=3079175  Ack=6510178  Len=0
+  862     51.613690  192.168.1.114           192.168.1.115           TCP          54  50984 → 80  [ACK, FIN]  Seq=7409313  Ack=8950743  Len=0
+  863     51.656171  192.168.1.112           192.168.1.104           TCP          54  54844 → 80  [ACK, FIN]  Seq=2477236  Ack=2984334  Len=0
+  864     51.731374  192.168.1.111           192.168.1.113           TCP          54  50076 → 80  [ACK, FIN]  Seq=6900990  Ack=6876729  Len=0
+  865     51.796691  192.168.1.115           192.168.1.101           TCP          54  55320 → 80  [ACK, FIN]  Seq=8018721  Ack=7798137  Len=0
+  866     51.804853  192.168.1.114           192.168.1.103           TCP          54  54904 → 80  [ACK, FIN]  Seq=5114078  Ack=1318462  Len=0
+  867     51.805742  192.168.1.104           192.168.1.113           TCP          54  56321 → 80  [ACK, FIN]  Seq=1167168  Ack=5416170  Len=0
+  868     51.900512  192.168.1.111           192.168.1.113           TCP          54  55753 → 80  [ACK, FIN]  Seq=7764954  Ack=2094625  Len=0
+  869     51.993677  192.168.1.103           192.168.1.104           TCP          54  51103 → 80  [ACK, FIN]  Seq=1183818  Ack=2239098  Len=0
+  870     52.081264  192.168.1.103           192.168.1.10            TCP          54  61108 → 80  [ACK, FIN]  Seq=1608439  Ack=4133906  Len=0
+  871     52.099948  192.168.1.112           192.168.1.113           TCP          54  52462 → 80  [ACK, FIN]  Seq=3823278  Ack=3531389  Len=0
+  872     52.164606  192.168.1.103           192.168.1.115           TCP          54  63467 → 80  [ACK, FIN]  Seq=7642456  Ack=6362551  Len=0
+  873     52.272158  192.168.1.111           192.168.1.101           TCP          54  60844 → 80  [ACK, FIN]  Seq=2872649  Ack=6582884  Len=0
+  874     52.289649  192.168.1.103           192.168.1.105           TCP          54  59205 → 80  [ACK, FIN]  Seq=7157196  Ack=6775543  Len=0
+  875     52.365531  192.168.1.103           192.168.1.115           TCP          54  49210 → 80  [ACK, FIN]  Seq=8959011  Ack=6888873  Len=0
+  876     52.472342  192.168.1.112           192.168.1.113           TCP          54  50213 → 80  [ACK, FIN]  Seq=2527412  Ack=6053202  Len=0
+  877     52.516548  192.168.1.115           192.168.1.102           TCP          54  52563 → 80  [ACK, FIN]  Seq=8857506  Ack=5162301  Len=0
+  878     52.528977  192.168.1.111           192.168.1.104           TCP          54  54653 → 80  [ACK, FIN]  Seq=6336721  Ack=8426604  Len=0
+  879     52.575715  192.168.1.101           192.168.1.103           TCP          54  56022 → 80  [ACK, FIN]  Seq=3093300  Ack=6814782  Len=0
+  880     52.672536  192.168.1.105           192.168.1.10            TCP          54  49193 → 80  [ACK, FIN]  Seq=1403890  Ack=4237475  Len=0
+  881     52.719372  192.168.1.112           192.168.1.101           TCP          54  62718 → 80  [ACK, FIN]  Seq=5136271  Ack=8396828  Len=0
+  882     52.833424  192.168.1.114           192.168.1.105           TCP          54  52475 → 80  [ACK, FIN]  Seq=7952536  Ack=5022247  Len=0
+  883     52.938976  192.168.1.115           192.168.1.114           TCP          54  56543 → 80  [ACK, FIN]  Seq=2364461  Ack=4785673  Len=0
+  884     52.953502  192.168.1.101           192.168.1.103           TCP          54  49809 → 80  [ACK, FIN]  Seq=3673591  Ack=3190497  Len=0
+  885     53.050244  192.168.1.102           192.168.1.104           TCP          54  54726 → 80  [ACK, FIN]  Seq=8448507  Ack=4149569  Len=0
+  886     53.131475  192.168.1.102           192.168.1.112           TCP          54  52202 → 80  [ACK, FIN]  Seq=3834934  Ack=5983089  Len=0
+  887     53.153901  192.168.1.113           192.168.1.115           TCP          54  50167 → 80  [ACK, FIN]  Seq=4618202  Ack=8905778  Len=0
+  888     53.181642  192.168.1.115           192.168.1.105           TCP          54  54299 → 80  [ACK, FIN]  Seq=1449258  Ack=1849412  Len=0
+  889     53.213577  192.168.1.104           192.168.1.105           TCP          54  57844 → 80  [ACK, FIN]  Seq=6541496  Ack=3361586  Len=0
+  890     53.278726  192.168.1.102           192.168.1.1             TCP          54  62026 → 80  [ACK, FIN]  Seq=5796352  Ack=5610904  Len=0
+  891     53.318133  192.168.1.103           192.168.1.1             TCP          54  60975 → 80  [ACK, FIN]  Seq=1032007  Ack=4587018  Len=0
+  892     53.341324  192.168.1.115           192.168.1.111           TCP          54  55694 → 80  [ACK, FIN]  Seq=1813585  Ack=1215886  Len=0
+  893     53.444999  192.168.1.105           192.168.1.10            TCP          54  64669 → 80  [ACK, FIN]  Seq=8078048  Ack=1968959  Len=0
+  894     53.457744  192.168.1.112           192.168.1.111           TCP          54  65178 → 80  [ACK, FIN]  Seq=8506776  Ack=6545205  Len=0
+  895     53.506962  192.168.1.114           192.168.1.105           TCP          54  55210 → 80  [ACK, FIN]  Seq=4112345  Ack=8428051  Len=0
+  896     53.542286  192.168.1.103           192.168.1.111           TCP          54  50614 → 80  [ACK, FIN]  Seq=3208686  Ack=4688810  Len=0
+  897     53.630572  192.168.1.104           192.168.1.103           TCP          54  51171 → 80  [ACK, FIN]  Seq=2267775  Ack=7310205  Len=0
+  898     53.730522  192.168.1.102           192.168.1.10            TCP          54  60417 → 80  [ACK, FIN]  Seq=7779506  Ack=5542003  Len=0
+  899     53.799817  192.168.1.115           192.168.1.102           TCP          54  51150 → 80  [ACK, FIN]  Seq=8053117  Ack=4247281  Len=0
+  900     53.912544  192.168.1.104           192.168.1.111           TCP          54  58944 → 80  [ACK, FIN]  Seq=1662322  Ack=4311859  Len=0
+  901     53.972200  192.168.1.101           192.168.1.112           TCP          54  53983 → 80  [ACK, FIN]  Seq=2008997  Ack=8962926  Len=0
+  902     53.978593  192.168.1.103           192.168.1.101           TCP          54  56095 → 80  [ACK, FIN]  Seq=7781860  Ack=2616703  Len=0
+  903     53.998775  192.168.1.112           192.168.1.10            TCP          54  63418 → 80  [ACK, FIN]  Seq=2693821  Ack=7900167  Len=0
+  904     54.105395  192.168.1.115           192.168.1.103           TCP          54  59629 → 80  [ACK, FIN]  Seq=8640381  Ack=7099382  Len=0
+  905     54.148941  192.168.1.102           192.168.1.10            TCP          54  61869 → 80  [ACK, FIN]  Seq=5667121  Ack=4333255  Len=0
+  906     54.252835  192.168.1.105           192.168.1.112           TCP          54  64164 → 80  [ACK, FIN]  Seq=8693711  Ack=8327166  Len=0
+  907     54.273059  192.168.1.115           192.168.1.113           TCP          54  62901 → 80  [ACK, FIN]  Seq=1943876  Ack=4476594  Len=0
+  908     54.376035  192.168.1.115           192.168.1.113           TCP          54  52435 → 80  [ACK, FIN]  Seq=8758859  Ack=1886129  Len=0
+  909     54.427041  192.168.1.102           192.168.1.103           TCP          54  60419 → 80  [ACK, FIN]  Seq=8364304  Ack=4446795  Len=0
+  910     54.446696  192.168.1.115           192.168.1.111           TCP          54  50379 → 80  [ACK, FIN]  Seq=2444516  Ack=3310341  Len=0
+  911     54.562702  192.168.1.115           192.168.1.113           TCP          54  62315 → 80  [ACK, FIN]  Seq=1325331  Ack=4320150  Len=0
+  912     54.598705  192.168.1.111           192.168.1.115           TCP          54  56936 → 80  [ACK, FIN]  Seq=1413482  Ack=7255802  Len=0
+  913     54.640261  192.168.1.111           192.168.1.1             TCP          54  60223 → 80  [ACK, FIN]  Seq=7856730  Ack=7657636  Len=0
+  914     54.680445  192.168.1.105           192.168.1.111           TCP          54  52370 → 80  [ACK, FIN]  Seq=8288861  Ack=2912245  Len=0
+  915     54.765859  192.168.1.113           192.168.1.104           TCP          54  57980 → 80  [ACK, FIN]  Seq=7113612  Ack=4496143  Len=0
+  916     54.834357  192.168.1.113           192.168.1.102           TCP          54  62494 → 80  [ACK, FIN]  Seq=7215495  Ack=5063947  Len=0
+  917     54.901583  192.168.1.111           192.168.1.1             TCP          54  54361 → 80  [ACK, FIN]  Seq=1550435  Ack=3609889  Len=0
+  918     55.011556  192.168.1.112           192.168.1.101           TCP          54  50100 → 80  [ACK, FIN]  Seq=2457414  Ack=2617016  Len=0
+  919     55.059591  192.168.1.104           192.168.1.1             TCP          54  57327 → 80  [ACK, FIN]  Seq=1277420  Ack=4828968  Len=0
+  920     55.112419  192.168.1.104           192.168.1.103           TCP          54  61222 → 80  [ACK, FIN]  Seq=7908071  Ack=4894146  Len=0
+  921     55.191081  192.168.1.102           192.168.1.114           TCP          54  50153 → 80  [ACK, FIN]  Seq=3029523  Ack=4124477  Len=0
+  922     55.237002  192.168.1.113           192.168.1.101           TCP          54  64703 → 80  [ACK, FIN]  Seq=5923108  Ack=5624922  Len=0
+  923     55.349714  192.168.1.102           192.168.1.103           TCP          54  50051 → 80  [ACK, FIN]  Seq=4242747  Ack=1416503  Len=0
+  924     55.377610  192.168.1.115           192.168.1.102           TCP          54  56405 → 80  [ACK, FIN]  Seq=6430616  Ack=2888376  Len=0
+  925     55.480685  192.168.1.105           192.168.1.114           TCP          54  62570 → 80  [ACK, FIN]  Seq=5305715  Ack=1168211  Len=0
+  926     55.586455  192.168.1.101           192.168.1.111           TCP          54  53487 → 80  [ACK, FIN]  Seq=6430546  Ack=2452912  Len=0
+  927     55.627292  192.168.1.101           192.168.1.102           TCP          54  57422 → 80  [ACK, FIN]  Seq=6103158  Ack=7753547  Len=0
+  928     55.667694  192.168.1.112           192.168.1.104           TCP          54  64192 → 80  [ACK, FIN]  Seq=3113918  Ack=2830470  Len=0
+  929     55.735539  192.168.1.114           192.168.1.113           TCP          54  62165 → 80  [ACK, FIN]  Seq=5903033  Ack=1858256  Len=0
+  930     55.799481  192.168.1.111           192.168.1.112           TCP          54  58414 → 80  [ACK, FIN]  Seq=3503797  Ack=6741273  Len=0
+  931     55.836572  192.168.1.102           192.168.1.104           TCP          54  58211 → 80  [ACK, FIN]  Seq=6373698  Ack=3727447  Len=0
+  932     55.937704  192.168.1.105           192.168.1.114           TCP          54  58942 → 80  [ACK, FIN]  Seq=2580078  Ack=2257698  Len=0
+  933     55.956844  192.168.1.104           192.168.1.1             TCP          54  62393 → 80  [ACK, FIN]  Seq=6540929  Ack=3680879  Len=0
+  934     56.012506  192.168.1.101           192.168.1.114           TCP          54  65449 → 80  [ACK, FIN]  Seq=3479711  Ack=3176225  Len=0
+  935     56.088284  192.168.1.112           192.168.1.105           TCP          54  50309 → 80  [ACK, FIN]  Seq=5890757  Ack=6939712  Len=0
+  936     56.136072  192.168.1.104           192.168.1.114           TCP          54  64740 → 80  [ACK, FIN]  Seq=8604495  Ack=8890894  Len=0
+  937     56.210042  192.168.1.114           192.168.1.103           TCP          54  54722 → 80  [ACK, FIN]  Seq=8051788  Ack=6516471  Len=0
+  938     56.316793  192.168.1.102           192.168.1.111           TCP          54  53344 → 80  [ACK, FIN]  Seq=7215278  Ack=3169728  Len=0
+  939     56.364160  192.168.1.114           192.168.1.101           TCP          54  60150 → 80  [ACK, FIN]  Seq=6489795  Ack=1749101  Len=0
+  940     56.408386  192.168.1.104           192.168.1.115           TCP          54  59214 → 80  [ACK, FIN]  Seq=4527179  Ack=7610981  Len=0
+  941     56.470860  192.168.1.111           192.168.1.103           TCP          54  58787 → 80  [ACK, FIN]  Seq=4890306  Ack=8140499  Len=0
+  942     56.537258  192.168.1.101           192.168.1.114           TCP          54  51485 → 80  [ACK, FIN]  Seq=4961265  Ack=8461046  Len=0
+  943     56.545144  192.168.1.102           192.168.1.114           TCP          54  61658 → 80  [ACK, FIN]  Seq=5444607  Ack=3502789  Len=0
+  944     56.620576  192.168.1.103           192.168.1.101           TCP          54  55715 → 80  [ACK, FIN]  Seq=3874523  Ack=4432549  Len=0
+  945     56.723473  192.168.1.113           192.168.1.101           TCP          54  59519 → 80  [ACK, FIN]  Seq=8234284  Ack=7003462  Len=0
+  946     56.807438  192.168.1.102           192.168.1.111           TCP          54  60051 → 80  [ACK, FIN]  Seq=6293486  Ack=2483309  Len=0
+  947     56.909627  192.168.1.101           192.168.1.1             TCP          54  63964 → 80  [ACK, FIN]  Seq=3294518  Ack=2756426  Len=0
+  948     57.012630  192.168.1.103           192.168.1.113           TCP          54  54343 → 80  [ACK, FIN]  Seq=5106870  Ack=7586826  Len=0
+  949     57.069663  192.168.1.102           192.168.1.101           TCP          54  63363 → 80  [ACK, FIN]  Seq=6314078  Ack=4602149  Len=0
+  950     57.166231  192.168.1.113           192.168.1.105           TCP          54  49304 → 80  [ACK, FIN]  Seq=1316462  Ack=5477693  Len=0
+  951     57.192010  192.168.1.111           192.168.1.1             TCP          54  59710 → 80  [ACK, FIN]  Seq=7348898  Ack=7989628  Len=0
+  952     57.222467  192.168.1.101           192.168.1.114           TCP          54  49287 → 80  [ACK, FIN]  Seq=6257030  Ack=7153910  Len=0
+  953     57.300425  192.168.1.111           192.168.1.103           TCP          54  53376 → 80  [ACK, FIN]  Seq=1861579  Ack=4217454  Len=0
+  954     57.339344  192.168.1.105           192.168.1.101           TCP          54  51291 → 80  [ACK, FIN]  Seq=7910902  Ack=1383513  Len=0
+  955     57.357680  192.168.1.113           192.168.1.115           TCP          54  60222 → 80  [ACK, FIN]  Seq=4637847  Ack=8448866  Len=0
+  956     57.464911  192.168.1.111           192.168.1.102           TCP          54  54554 → 80  [ACK, FIN]  Seq=8953107  Ack=8607580  Len=0
+  957     57.482908  192.168.1.112           192.168.1.1             TCP          54  56636 → 80  [ACK, FIN]  Seq=2881743  Ack=7099934  Len=0
+  958     57.499851  192.168.1.104           192.168.1.115           TCP          54  49870 → 80  [ACK, FIN]  Seq=5946702  Ack=5233173  Len=0
+  959     57.534177  192.168.1.111           192.168.1.115           TCP          54  50376 → 80  [ACK, FIN]  Seq=4147342  Ack=8352985  Len=0
+  960     57.549147  192.168.1.114           192.168.1.113           TCP          54  50744 → 80  [ACK, FIN]  Seq=5982196  Ack=1402320  Len=0
+  961     57.566146  192.168.1.101           192.168.1.1             TCP          54  52946 → 80  [ACK, FIN]  Seq=4496166  Ack=4727178  Len=0
+  962     57.658066  192.168.1.114           192.168.1.103           TCP          54  64697 → 80  [ACK, FIN]  Seq=6887697  Ack=2284523  Len=0
+  963     57.727063  192.168.1.101           192.168.1.103           TCP          54  62943 → 80  [ACK, FIN]  Seq=6550444  Ack=1847080  Len=0
+  964     57.741614  192.168.1.105           192.168.1.113           TCP          54  53646 → 80  [ACK, FIN]  Seq=4513365  Ack=7968020  Len=0
+  965     57.756342  192.168.1.114           192.168.1.115           TCP          54  53009 → 80  [ACK, FIN]  Seq=3371516  Ack=1956406  Len=0
+  966     57.825711  192.168.1.113           192.168.1.102           TCP          54  55697 → 80  [ACK, FIN]  Seq=7525992  Ack=3206152  Len=0
+  967     57.853733  192.168.1.112           192.168.1.103           TCP          54  54407 → 80  [ACK, FIN]  Seq=1330559  Ack=5598121  Len=0
+  968     57.866198  192.168.1.113           192.168.1.104           TCP          54  56836 → 80  [ACK, FIN]  Seq=1022968  Ack=1106949  Len=0
+  969     57.969172  192.168.1.102           192.168.1.113           TCP          54  65342 → 80  [ACK, FIN]  Seq=2251114  Ack=8964530  Len=0
+  970     58.000270  192.168.1.114           192.168.1.10            TCP          54  52471 → 80  [ACK, FIN]  Seq=8589839  Ack=3146578  Len=0
+  971     58.107654  192.168.1.113           192.168.1.103           TCP          54  57806 → 80  [ACK, FIN]  Seq=4894640  Ack=1420103  Len=0
+  972     58.149441  192.168.1.103           192.168.1.1             TCP          54  58673 → 80  [ACK, FIN]  Seq=4021699  Ack=7724275  Len=0
+  973     58.266933  192.168.1.112           192.168.1.115           TCP          54  52949 → 80  [ACK, FIN]  Seq=1796904  Ack=8140768  Len=0
+  974     58.310811  192.168.1.101           192.168.1.1             TCP          54  53686 → 80  [ACK, FIN]  Seq=6564625  Ack=6429095  Len=0
+  975     58.335580  192.168.1.115           192.168.1.103           TCP          54  52197 → 80  [ACK, FIN]  Seq=4125781  Ack=7836415  Len=0
+  976     58.386936  192.168.1.102           192.168.1.105           TCP          54  62267 → 80  [ACK, FIN]  Seq=4829724  Ack=3280301  Len=0
+  977     58.482948  192.168.1.113           192.168.1.105           TCP          54  54617 → 80  [ACK, FIN]  Seq=1948387  Ack=2111587  Len=0
+  978     58.541178  192.168.1.102           192.168.1.105           TCP          54  64968 → 80  [ACK, FIN]  Seq=7729884  Ack=5772643  Len=0
+  979     58.545755  192.168.1.103           192.168.1.113           TCP          54  61595 → 80  [ACK, FIN]  Seq=7536103  Ack=4008145  Len=0
+  980     58.604316  192.168.1.103           192.168.1.111           TCP          54  65146 → 80  [ACK, FIN]  Seq=1947388  Ack=8445677  Len=0
+  981     58.697465  192.168.1.101           192.168.1.10            TCP          54  57724 → 80  [ACK, FIN]  Seq=6494316  Ack=3636018  Len=0
+  982     58.766304  192.168.1.114           192.168.1.115           TCP          54  56491 → 80  [ACK, FIN]  Seq=6619061  Ack=8324459  Len=0
+  983     58.799685  192.168.1.114           192.168.1.115           TCP          54  52272 → 80  [ACK, FIN]  Seq=4630991  Ack=6550853  Len=0
+  984     58.873668  192.168.1.113           192.168.1.104           TCP          54  61763 → 80  [ACK, FIN]  Seq=2247003  Ack=8038319  Len=0
+  985     58.940733  192.168.1.115           192.168.1.1             TCP          54  49533 → 80  [ACK, FIN]  Seq=6397219  Ack=8838075  Len=0
+  986     58.983559  192.168.1.113           192.168.1.111           TCP          54  54571 → 80  [ACK, FIN]  Seq=1628015  Ack=7303451  Len=0
+  987     59.037217  192.168.1.105           192.168.1.1             TCP          54  56449 → 80  [ACK, FIN]  Seq=5617891  Ack=6396536  Len=0
+  988     59.096750  192.168.1.104           192.168.1.10            TCP          54  64195 → 80  [ACK, FIN]  Seq=4726126  Ack=7721466  Len=0
+  989     59.162741  192.168.1.102           192.168.1.111           TCP          54  63801 → 80  [ACK, FIN]  Seq=3651316  Ack=1995785  Len=0
+  990     59.235512  192.168.1.101           192.168.1.10            TCP          54  62371 → 80  [ACK, FIN]  Seq=4458946  Ack=1300580  Len=0
+  991     59.263424  192.168.1.101           192.168.1.10            TCP          54  59133 → 80  [ACK, FIN]  Seq=8466791  Ack=5264246  Len=0
+  992     59.293442  192.168.1.113           192.168.1.104           TCP          54  61058 → 80  [ACK, FIN]  Seq=7923210  Ack=1455293  Len=0
+  993     59.388078  192.168.1.113           192.168.1.104           TCP          54  64655 → 80  [ACK, FIN]  Seq=7011763  Ack=6512718  Len=0
+  994     59.389165  192.168.1.113           192.168.1.10            TCP          54  52344 → 80  [ACK, FIN]  Seq=7369637  Ack=6527339  Len=0
+  995     59.481990  192.168.1.111           192.168.1.104           TCP          54  58719 → 80  [ACK, FIN]  Seq=5594361  Ack=5378728  Len=0
+  996     59.576749  192.168.1.102           192.168.1.1             TCP          54  54531 → 80  [ACK, FIN]  Seq=5130736  Ack=2178173  Len=0
+  997     59.593375  192.168.1.112           192.168.1.10            TCP          54  57484 → 80  [ACK, FIN]  Seq=6124196  Ack=2643508  Len=0
+  998     59.688125  192.168.1.112           192.168.1.102           TCP          54  64128 → 80  [ACK, FIN]  Seq=7916861  Ack=7555029  Len=0
+  999     59.798693  192.168.1.111           192.168.1.10            TCP          54  62733 → 80  [ACK, FIN]  Seq=1390073  Ack=8773106  Len=0
+ 1000     59.865579  192.168.1.115           192.168.1.10            TCP          54  63914 → 80  [ACK, FIN]  Seq=4836847  Ack=6523535  Len=0
+
+====================================================================================================
+  REFERENCIA DE HOSTS
+====================================================================================================
+  IP                 MAC                  Nombre         Sistema operativo
+  ----------------------------------------------------------------------
+  192.168.1.1        c0:a8:01:01:00:01    gateway        Infraestructura (router)
+  192.168.1.2        c0:a8:01:02:00:02    dns-srv        Infraestructura (DNS)
+  192.168.1.10       c0:a8:01:0a:00:0a    nas-01         Infraestructura (NAS)
+  ----------------------------------------------------------------------
+  192.168.1.101      00:50:56:aa:01:01    WIN-PC01       Windows
+  192.168.1.102      00:50:56:aa:01:02    WIN-PC02       Windows
+  192.168.1.103      08:00:27:bb:01:03    WIN-PC03       Windows
+  192.168.1.104      08:00:27:bb:01:04    WIN-PC04       Windows
+  192.168.1.105      b8:ac:6f:cc:01:05    WIN-PC05       Windows
+  ----------------------------------------------------------------------
+  192.168.1.111      00:0c:29:dd:02:01    linux-ws01     Linux
+  192.168.1.112      00:0c:29:dd:02:02    linux-ws02     Linux
+  192.168.1.113      52:54:00:ee:02:03    linux-ws03     Linux
+  192.168.1.114      52:54:00:ee:02:04    linux-ws04     Linux
+  192.168.1.115      de:ad:be:ef:02:05    linux-ws05     Linux
+
+====================================================================================================
+  GLOSARIO DE PROTOCOLOS
+====================================================================================================
+  ARP      Address Resolution Protocol    — resuelve IP → MAC en la red local
+  DHCP     Dynamic Host Configuration     — asignación automática de IPs
+  DNS      Domain Name System (UDP 53)    — resuelve nombres → IPs
+  ICMP     Internet Control Message       — diagnóstico (ping, errores)
+  HTTP     HyperText Transfer Protocol    — navegación web (TCP 80)
+  SMB2     Server Message Block v2        — acceso a archivos Windows (TCP 445)
+  NFS      Network File System (UDP 2049) — acceso a archivos Linux
+  SSH      Secure Shell (TCP 22)          — terminal remota cifrada
+  NBNS     NetBIOS Name Service (UDP 137) — resolución de nombres Windows
+  MDNS     Multicast DNS (UDP 5353)       — resolución local Linux/macOS
+
+====================================================================================================
+  Archivo generado automáticamente con generar_pcap.py — UTU 2026
+====================================================================================================

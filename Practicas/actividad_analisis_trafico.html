@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad: Análisis de Tráfico de Red — UTU 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0a0c10; --bg2:#0f1218; --bg3:#151a22; --bg4:#1b2230;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --text:#e8eaf0; --text2:#8b9ab5; --text3:#566378;
+  --mono:'JetBrains Mono',monospace; --sans:'Space Grotesk',sans-serif;
+  --blue:#4da8ff; --blue-bg:rgba(77,168,255,0.08);
+  --teal:#2dd4bf; --teal-bg:rgba(45,212,191,0.08);
+  --amber:#f59e0b; --amber-bg:rgba(245,158,11,0.08);
+  --purple:#a78bfa; --purple-bg:rgba(167,139,250,0.08);
+  --coral:#fb7185; --coral-bg:rgba(251,113,133,0.08);
+  --green:#4ade80; --green-bg:rgba(74,222,128,0.08);
+}
+html { scroll-behavior: smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text);
+       min-height:100vh; font-size:15px; line-height:1.6; overflow-x:hidden; }
+body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:linear-gradient(rgba(77,168,255,0.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(77,168,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px; }
+
+/* NAV */
+nav { position:sticky; top:0; z-index:100; background:rgba(10,12,16,0.92);
+      backdrop-filter:blur(16px); border-bottom:1px solid var(--border);
+      padding:0 25%; display:flex; align-items:center; gap:2rem; height:56px; }
+.nav-logo { font-family:var(--mono); font-size:13px; font-weight:700;
+            color:var(--teal); letter-spacing:0.05em; text-decoration:none; white-space:nowrap; }
+.nav-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+.prog-label { font-family:var(--mono); font-size:11px; color:var(--text3); white-space:nowrap; }
+.prog-bar-wrap { width:120px; height:6px; background:var(--bg4); border-radius:3px; }
+.prog-bar { height:6px; background:var(--teal); border-radius:3px; transition:width .4s ease; }
+
+/* HERO */
+.hero { position:relative; z-index:1; padding:5rem 25% 3rem; }
+.hero-tag { display:inline-flex; align-items:center; gap:6px; font-family:var(--mono);
+            font-size:11px; color:var(--amber); background:var(--amber-bg);
+            border:1px solid rgba(245,158,11,0.2); border-radius:20px; padding:4px 12px;
+            margin-bottom:1.5rem; letter-spacing:0.05em; }
+.hero-tag::before { content:''; width:6px; height:6px; background:var(--amber);
+                    border-radius:50%; animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+h1 { font-size:clamp(2rem,5vw,3rem); font-weight:700; line-height:1.1;
+     letter-spacing:-0.02em; color:#fff; margin-bottom:1rem; }
+h1 span { color:var(--teal); }
+.hero-sub { font-size:1.05rem; color:var(--text2); max-width:640px; line-height:1.7; }
+
+/* MAIN */
+main { position:relative; z-index:1; padding:0 25% 6rem;
+       display:flex; flex-direction:column; gap:1.5rem; }
+
+/* AVISO INICIAL */
+.alert-box { background:var(--amber-bg); border:1px solid rgba(245,158,11,0.25);
+             border-radius:14px; padding:1.25rem 1.5rem; display:flex; gap:1rem; align-items:flex-start; }
+.alert-icon { font-size:1.4rem; flex-shrink:0; }
+.alert-text h3 { color:var(--amber); font-size:14px; font-weight:700; margin-bottom:4px; }
+.alert-text p  { color:var(--text2); font-size:13px; line-height:1.6; }
+.alert-text code { font-family:var(--mono); color:var(--teal); font-size:12px;
+                   background:rgba(45,212,191,0.1); padding:1px 6px; border-radius:4px; }
+
+/* STEP CARDS */
+.step-card { background:var(--bg2); border:1px solid var(--border);
+             border-radius:16px; overflow:hidden; transition:border-color .3s;
+             animation:fadeUp .4s ease both; }
+.step-card:hover { border-color:var(--border2); }
+.step-card.done { border-color:rgba(45,212,191,0.3); }
+.step-header { padding:1.1rem 1.5rem; border-bottom:1px solid var(--border);
+               display:flex; align-items:center; gap:14px; background:var(--bg3);
+               cursor:pointer; user-select:none; }
+.step-badge { font-family:var(--mono); font-size:11px; font-weight:700; min-width:32px;
+              height:32px; display:flex; align-items:center; justify-content:center;
+              border-radius:50%; flex-shrink:0; }
+.step-badge.pending { background:var(--bg4); color:var(--text3); border:1px solid var(--border2); }
+.step-badge.done    { background:var(--teal-bg); color:var(--teal); border:1px solid rgba(45,212,191,0.35); }
+.step-meta { flex:1; }
+.step-title { font-size:15px; font-weight:600; color:#fff; }
+.step-obj   { font-size:12px; color:var(--text3); margin-top:2px; font-family:var(--mono); }
+.step-toggle { color:var(--text3); font-size:12px; margin-left:auto; transition:transform .2s; }
+.step-toggle.open { transform:rotate(180deg); }
+.step-body { padding:1.5rem; display:none; flex-direction:column; gap:1.25rem; }
+.step-body.open { display:flex; }
+p { color:var(--text2); line-height:1.7; font-size:14px; }
+strong { color:#fff; }
+
+/* CONTEXTO */
+.ctx-box { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; }
+.ctx-box p { font-size:13px; }
+
+/* TAREA */
+.task-box { background:rgba(77,168,255,0.06); border:1px solid rgba(77,168,255,0.2);
+            border-radius:10px; padding:1rem 1.25rem; }
+.task-title { font-family:var(--mono); font-size:11px; color:var(--blue);
+              text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+.filter-pill { display:inline-block; font-family:var(--mono); font-size:11px;
+               background:var(--bg4); border:1px solid var(--border2); color:var(--teal);
+               border-radius:6px; padding:2px 10px; margin-top:6px; }
+
+/* PREGUNTAS */
+.questions { display:flex; flex-direction:column; gap:10px; }
+.q-row { display:flex; flex-direction:column; gap:4px; }
+.q-label { font-size:13px; color:var(--text2); font-weight:500; }
+.q-label .qnum { font-family:var(--mono); color:var(--amber); font-size:11px;
+                 background:var(--amber-bg); border-radius:20px; padding:1px 7px;
+                 margin-right:6px; }
+input[type="text"], textarea, select {
+  background:var(--bg3); border:1px solid var(--border); color:var(--text);
+  border-radius:8px; padding:8px 12px; font-family:var(--mono); font-size:12px;
+  width:100%; outline:none; transition:border-color .2s; resize:vertical; }
+input[type="text"]:focus, textarea:focus, select:focus {
+  border-color:rgba(45,212,191,0.4); box-shadow:0 0 0 3px rgba(45,212,191,0.08); }
+textarea { min-height:70px; }
+.q-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.table-input { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:11px;
+               margin-top:6px; }
+.table-input th { text-align:left; color:var(--text3); padding:6px 10px;
+                  border-bottom:1px solid var(--border2); text-transform:uppercase;
+                  font-size:10px; letter-spacing:0.05em; }
+.table-input td { padding:4px 6px; }
+.table-input td input { padding:5px 8px; font-size:11px; }
+
+/* PISTA */
+.hint-wrap { display:flex; flex-direction:column; gap:6px; }
+.hint-btn { width:fit-content; background:transparent; border:1px solid var(--border2);
+            color:var(--text3); border-radius:8px; padding:6px 14px; font-size:12px;
+            cursor:pointer; font-family:var(--sans); transition:all .2s; }
+.hint-btn:hover { border-color:var(--amber); color:var(--amber); background:var(--amber-bg); }
+.hint-box { background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.2);
+            border-radius:10px; padding:10px 14px; display:none; }
+.hint-box p { font-size:12px; color:var(--text2); }
+.hint-box code { font-family:var(--mono); color:var(--amber); font-size:11px; }
+
+/* NOTAS */
+.notes-label { font-size:12px; color:var(--text3); font-family:var(--mono);
+               text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; }
+
+/* COMPLETAR */
+.complete-btn { width:fit-content; background:var(--teal); color:#0a0c10; border:none;
+                border-radius:8px; padding:8px 20px; font-size:13px; font-weight:700;
+                cursor:pointer; font-family:var(--sans); transition:opacity .2s; }
+.complete-btn:hover { opacity:.85; }
+.complete-btn.undone { background:var(--bg4); color:var(--text3);
+                       border:1px solid var(--border2); }
+
+/* INFORME FINAL */
+.report-section { background:var(--bg3); border:1px solid var(--border);
+                  border-radius:12px; padding:1.25rem; margin-top:6px; }
+.report-section h3 { font-size:14px; color:var(--teal); margin-bottom:12px;
+                     font-family:var(--mono); letter-spacing:0.04em; }
+.report-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.rf-row { display:flex; flex-direction:column; gap:4px; }
+.rf-label { font-size:11px; color:var(--text3); font-family:var(--mono);
+            text-transform:uppercase; letter-spacing:0.05em; }
+.report-btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:1.25rem; }
+.print-btn { background:var(--purple); color:#fff; border:none; border-radius:8px;
+             padding:10px 24px; font-size:14px; font-weight:700; cursor:pointer;
+             font-family:var(--sans); transition:opacity .2s; }
+.print-btn:hover { opacity:.85; }
+.clear-btn { background:transparent; border:1px solid var(--coral-bg);
+             color:var(--coral); border-radius:8px; padding:10px 18px;
+             font-size:13px; cursor:pointer; font-family:var(--sans); transition:all .2s; }
+.clear-btn:hover { background:var(--coral-bg); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.step-card:nth-child(1){animation-delay:.04s} .step-card:nth-child(2){animation-delay:.07s}
+.step-card:nth-child(3){animation-delay:.10s} .step-card:nth-child(4){animation-delay:.13s}
+.step-card:nth-child(5){animation-delay:.16s}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+footer { z-index:1; text-align:center; padding:2rem; font-size:12px; color:var(--text3);
+         border-top:1px solid var(--border); font-family:var(--mono); }
+
+@media(max-width:900px){
+  nav { padding:0 1rem; } .hero { padding:3rem 1rem 2rem; }
+  main { padding:0 1rem 4rem; } .q-grid { grid-template-columns:1fr; }
+  .report-grid { grid-template-columns:1fr; }
+}
+/* ── Modal respuestas correctas ── */
+.ans-btn { width:100%; background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(45,212,191,0.15));
+           border:1px solid rgba(167,139,250,0.35); color:var(--purple); border-radius:12px;
+           padding:1rem 1.5rem; font-size:15px; font-weight:700; cursor:pointer;
+           font-family:var(--sans); transition:all .25s; display:flex; align-items:center;
+           justify-content:center; gap:10px; }
+.ans-btn:hover { background:linear-gradient(135deg,rgba(167,139,250,0.3),rgba(45,212,191,0.25));
+                 border-color:rgba(167,139,250,0.6); transform:translateY(-1px); }
+
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:500;
+                 display:none; overflow-y:auto; padding:2rem 1rem; }
+.modal-overlay.open { display:block; }
+.modal-box { background:var(--bg2); border:1px solid var(--border2); border-radius:20px;
+             max-width:860px; margin:0 auto; overflow:hidden; }
+.modal-head { position:sticky; top:0; background:var(--bg3); border-bottom:1px solid var(--border2);
+              padding:1.1rem 1.5rem; display:flex; align-items:center; gap:14px; z-index:2; }
+.modal-head-icon { font-size:1.3rem; }
+.modal-head-title { flex:1; }
+.modal-head-title h2 { font-size:16px; font-weight:700; color:#fff; }
+.modal-head-title p  { font-size:12px; color:var(--text3); font-family:var(--mono); }
+.modal-close { background:var(--bg4); border:1px solid var(--border2); color:var(--text2);
+               border-radius:8px; width:34px; height:34px; cursor:pointer; font-size:16px;
+               display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.modal-close:hover { border-color:var(--coral); color:var(--coral); }
+.modal-body { padding:1.5rem; display:flex; flex-direction:column; gap:1.25rem; }
+
+.ans-card { background:var(--bg3); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.ans-card-head { padding:.75rem 1.1rem; background:var(--bg4); border-bottom:1px solid var(--border);
+                 display:flex; align-items:center; gap:10px; }
+.ans-num-badge { font-family:var(--mono); font-size:10px; font-weight:700; width:28px; height:28px;
+                 display:flex; align-items:center; justify-content:center; border-radius:50%;
+                 background:var(--teal-bg); color:var(--teal); border:1px solid rgba(45,212,191,0.3);
+                 flex-shrink:0; }
+.ans-card-title { font-size:13px; font-weight:600; color:#fff; }
+.ans-card-body { padding:.9rem 1.1rem; display:flex; flex-direction:column; gap:.65rem; }
+.ans-row { display:grid; grid-template-columns:22px 1fr 1.4fr; gap:10px; align-items:baseline; }
+.ans-qnum { font-family:var(--mono); font-size:10px; color:var(--amber); font-weight:700; }
+.ans-q    { font-size:12px; color:var(--text3); line-height:1.5; }
+.ans-val  { font-size:12px; color:var(--green); font-family:var(--mono); line-height:1.5;
+            word-break:break-word; }
+.ans-val.variable { color:var(--text2); font-style:italic; font-family:var(--sans); }
+.ans-val.multiline { white-space:pre-line; }
+.ans-sep { border:none; border-top:1px solid var(--border); margin:.2rem 0; }
+.ans-note { font-size:11px; color:var(--text3); font-style:italic; padding:.5rem .75rem;
+            background:rgba(45,212,191,0.04); border-radius:6px; border-left:2px solid rgba(45,212,191,0.3); }
+
+@media print {
+  nav,footer,.hint-wrap,.complete-btn,.report-btns,.alert-box { display:none!important; }
+  body { background:#fff; color:#000; }
+  .step-card { border:1px solid #ccc; border-radius:0; page-break-inside:avoid; }
+  input,textarea { border:1px solid #ccc; background:#fafafa; color:#000; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">LAB://ANaLISIS.DE.TRAFICO</a>
+  <div class="nav-right">
+    <span class="prog-label" id="progLabel">0 / 20 pasos</span>
+    <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Practica de laboratorio · Redes Informaticas · UTU 2026</div>
+  <h1>Analisis de<br><span>Trafico de Red</span></h1>
+  <p class="hero-sub">Actividad guiada de 20 pasos para identificar dispositivos, protocolos y comportamientos en una captura de red real usando el Simulador Wireshark. Al finalizar la práctica se generará un ejemplo de informe profesional de analisis.</p>
+</section>
+
+<main>
+
+<!-- AVISO -->
+<div class="alert-box">
+  <div class="alert-icon">⚙️</div>
+  <div class="alert-text">
+    <h3>Antes de empezar — abrir el simulador</h3>
+    <p>Abre en otra pestaña o ventana el archivo <code>wireshark_simulador.html</code> y carga la captura
+    <code>practica_red_192_168_1.pcap</code> (o <code>.txt</code>). Usa ese simulador para responder las
+    preguntas de cada paso. <strong>Tus respuestas se guardan automáticamente</strong> en el navegador.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     PASOS 1–20
+     ════════════════════════════════════════════════════════════════════════ -->
+
+<!-- PASO 1 -->
+<div class="step-card" id="sc1">
+  <div class="step-header" onclick="toggleStep(1)">
+    <div class="step-badge pending" id="badge1">01</div>
+    <div class="step-meta">
+      <div class="step-title">Cargar la captura en el simulador</div>
+      <div class="step-obj">Objetivo · Familiarizarse con la interfaz y registrar datos generales de la captura</div>
+    </div>
+    <span class="step-toggle" id="tog1">▼</span>
+  </div>
+  <div class="step-body" id="body1">
+    <div class="ctx-box"><p>El primer paso en cualquier análisis es entender el alcance de la captura: cuántos paquetes contiene, cuánto tiempo duró y qué interfaz se usó. Esta información establece el contexto de todo el análisis posterior.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Arrastra el archivo <strong>practica_red_192_168_1.pcap</strong> (o el .txt) sobre la zona de carga del simulador. Observa la barra de título de la captura y el panel de estadísticas.</p>
+    </div>
+    <div class="questions">
+      <div class="q-row"><label class="q-label"><span class="qnum">1.1</span>¿Cuántos paquetes contiene la captura?</label><input type="text" id="q1_1" placeholder="ej: 500"></div>
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">1.2</span>¿Cuánto dura la captura en segundos? (tiempo del último paquete)</label><input type="text" id="q1_2" placeholder="ej: 29.85 s"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">1.3</span>¿Cuál es el protocolo con más paquetes?</label><input type="text" id="q1_3" placeholder="ej: DNS"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">1.4</span>¿Cuántos protocolos distintos identificas en el panel de estadísticas? Listalos.</label><textarea id="q1_4" placeholder="ARP, DHCP, DNS..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h1')">💡 Pista</button>
+      <div class="hint-box" id="h1"><p>El número de paquetes aparece en la barra superior del simulador tras la carga. El tiempo del último paquete es el valor <code>Tiempo</code> de la última fila de la tabla. Las estadísticas están en la tarjeta 03 al pie.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n1" placeholder="Anotaciones libres sobre este paso..."></textarea></div>
+    <button class="complete-btn undone" id="btn1" onclick="markDone(1)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 2 -->
+<div class="step-card" id="sc2">
+  <div class="step-header" onclick="toggleStep(2)">
+    <div class="step-badge pending" id="badge2">02</div>
+    <div class="step-meta">
+      <div class="step-title">Identificar la red</div>
+      <div class="step-obj">Objetivo · Determinar dirección de red, máscara y broadcast</div>
+    </div>
+    <span class="step-toggle" id="tog2">▼</span>
+  </div>
+  <div class="step-body" id="body2">
+    <div class="ctx-box"><p>Antes de analizar el tráfico es fundamental saber en qué red se produjo la captura. La dirección de red, máscara y broadcast delimitan el espacio de direcciones válidas y permiten identificar qué tráfico es local y cuál sale hacia Internet.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Observa las IPs que aparecen como <em>Origen</em> y <em>Destino</em>. Busca patrones en los primeros octetos. Filtra por <strong>ARP</strong> para ver IPs locales. Filtra por <strong>DHCP</strong> para ver la máscara ofrecida.</p>
+      <span class="filter-pill">Filtro: arp</span>&nbsp;<span class="filter-pill">Filtro: dhcp</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">2.1</span>Dirección de red (ej: 192.168.1.0)</label><input type="text" id="q2_1" placeholder="___.___.___.___ "></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">2.2</span>Máscara de subred</label><input type="text" id="q2_2" placeholder="255.255.___.___ "></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">2.3</span>Dirección de broadcast</label><input type="text" id="q2_3" placeholder="___.___.___.___ "></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">2.4</span>Notación CIDR (ej: /24)</label><input type="text" id="q2_4" placeholder="/___"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">2.5</span>¿Cómo determinaste la máscara? ¿Qué paquete te dio esa información?</label><textarea id="q2_5" placeholder="Explica tu razonamiento..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h2')">💡 Pista</button>
+      <div class="hint-box" id="h2"><p>Las IPs locales empiezan con los mismos primeros tres octetos. En un paquete DHCP Offer, la capa de aplicación muestra la opción <code>Subnet mask</code> que el servidor envía al cliente.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n2" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn2" onclick="markDone(2)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 3 -->
+<div class="step-card" id="sc3">
+  <div class="step-header" onclick="toggleStep(3)">
+    <div class="step-badge pending" id="badge3">03</div>
+    <div class="step-meta">
+      <div class="step-title">Inventario de dispositivos</div>
+      <div class="step-obj">Objetivo · Listar todos los equipos que participan en la captura</div>
+    </div>
+    <span class="step-toggle" id="tog3">▼</span>
+  </div>
+  <div class="step-body" id="body3">
+    <div class="ctx-box"><p>Un analista de red siempre comienza por entender <em>quiénes</em> están en la red. Cada dispositivo tiene una IP única y una MAC única. Listar estos pares es el primer paso del inventario.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Revisa las columnas <em>Origen</em> y <em>Destino</em> en toda la captura. Anota cada IP/MAC única que aparezca. Filtra por <strong>ARP</strong> para obtener la tabla MAC↔IP más fácilmente.</p>
+      <span class="filter-pill">Filtro: arp</span>
+    </div>
+    <div class="questions">
+      <div class="q-row"><label class="q-label"><span class="qnum">3.1</span>Completa la tabla de dispositivos encontrados:</label>
+        <table class="table-input">
+          <thead><tr><th>IP</th><th>MAC address</th><th>Rol / nombre</th></tr></thead>
+          <tbody id="invTable">
+            <tr><td><input type="text" id="inv_ip1" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac1" placeholder="xx:xx:xx:xx:xx:xx"></td><td><input type="text" id="inv_rol1" placeholder="gateway / WIN-PC01..."></td></tr>
+            <tr><td><input type="text" id="inv_ip2" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac2"></td><td><input type="text" id="inv_rol2"></td></tr>
+            <tr><td><input type="text" id="inv_ip3" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac3"></td><td><input type="text" id="inv_rol3"></td></tr>
+            <tr><td><input type="text" id="inv_ip4" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac4"></td><td><input type="text" id="inv_rol4"></td></tr>
+            <tr><td><input type="text" id="inv_ip5" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac5"></td><td><input type="text" id="inv_rol5"></td></tr>
+            <tr><td><input type="text" id="inv_ip6" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac6"></td><td><input type="text" id="inv_rol6"></td></tr>
+            <tr><td><input type="text" id="inv_ip7" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac7"></td><td><input type="text" id="inv_rol7"></td></tr>
+            <tr><td><input type="text" id="inv_ip8" placeholder="192.168.1.x"></td><td><input type="text" id="inv_mac8"></td><td><input type="text" id="inv_rol8"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">3.2</span>¿Cuántos dispositivos únicos encontraste en total?</label><input type="text" id="q3_2" placeholder="Número total"></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h3')">💡 Pista</button>
+      <div class="hint-box" id="h3"><p>Con el filtro <code>arp</code> cada fila muestra un par IP/MAC en los campos <em>Origen</em> y <em>Destino</em>. Las respuestas ARP (<em>"is at"</em>) son las más directas porque muestran MAC e IP del respondedor.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n3" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn3" onclick="markDone(3)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 4 -->
+<div class="step-card" id="sc4">
+  <div class="step-header" onclick="toggleStep(4)">
+    <div class="step-badge pending" id="badge4">04</div>
+    <div class="step-meta">
+      <div class="step-title">Distinguir sistemas operativos</div>
+      <div class="step-obj">Objetivo · Identificar hosts Windows y Linux por sus protocolos y MACs</div>
+    </div>
+    <span class="step-toggle" id="tog4">▼</span>
+  </div>
+  <div class="step-body" id="body4">
+    <div class="ctx-box"><p>Los sistemas operativos dejan "huellas" en la red: Windows usa NetBIOS y SMB; Linux usa mDNS y NFS. Las MACs también revelan el fabricante del adaptador de red.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>nbns</strong> (solo Windows) y por <strong>mdns</strong> (Linux/macOS). Observa qué IPs generan cada tipo. Luego filtra por <strong>smb2</strong> y <strong>nfs</strong>.</p>
+      <span class="filter-pill">Filtro: nbns</span>&nbsp;<span class="filter-pill">Filtro: mdns</span>&nbsp;<span class="filter-pill">Filtro: smb2</span>&nbsp;<span class="filter-pill">Filtro: nfs</span>
+    </div>
+    <div class="questions">
+      <div class="q-row"><label class="q-label"><span class="qnum">4.1</span>IPs de los equipos <strong>Windows</strong> (separadas por coma)</label><input type="text" id="q4_1" placeholder="192.168.1.101, 192.168.1.102 ..."></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">4.2</span>IPs de los equipos <strong>Linux</strong></label><input type="text" id="q4_2" placeholder="192.168.1.111, 192.168.1.112 ..."></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">4.3</span>¿Qué protocolos te permitieron identificar los equipos Windows? ¿Y los Linux?</label><textarea id="q4_3" placeholder="Windows: ... / Linux: ..."></textarea></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">4.4</span>¿Qué prefijos de MAC ves en los equipos Windows? (primeros 6 dígitos, ej: 00:50:56)</label><input type="text" id="q4_4" placeholder="00:50:56 ..."></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h4')">💡 Pista</button>
+      <div class="hint-box" id="h4"><p>Los prefijos de MAC identifican fabricantes: <code>00:50:56</code> = VMware (usado por VMs Windows), <code>08:00:27</code> = VirtualBox, <code>00:0c:29</code> = VMware (Linux), <code>52:54:00</code> = QEMU/KVM (Linux).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n4" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn4" onclick="markDone(4)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 5 -->
+<div class="step-card" id="sc5">
+  <div class="step-header" onclick="toggleStep(5)">
+    <div class="step-badge pending" id="badge5">05</div>
+    <div class="step-meta">
+      <div class="step-title">Infraestructura de red</div>
+      <div class="step-obj">Objetivo · Identificar gateway, servidor DNS y NAS</div>
+    </div>
+    <span class="step-toggle" id="tog5">▼</span>
+  </div>
+  <div class="step-body" id="body5">
+    <div class="ctx-box"><p>Toda red tiene infraestructura compartida: un gateway (puerta de enlace) que enruta hacia Internet, un servidor DNS que resuelve nombres, y posiblemente servidores de archivos como un NAS.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>En un paquete DHCP <em>Offer</em>, el árbol de disección muestra las opciones que el servidor envía: Router (gateway) y DNS. Para el NAS busca quién recibe tráfico SMB2 y NFS.</p>
+      <span class="filter-pill">Filtro: dhcp</span>&nbsp;<span class="filter-pill">Filtro: smb2</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">5.1</span>IP del Gateway</label><input type="text" id="q5_1" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">5.2</span>MAC del Gateway</label><input type="text" id="q5_2" placeholder="xx:xx:xx:xx:xx:xx"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">5.3</span>IP del servidor DNS</label><input type="text" id="q5_3" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">5.4</span>IP del NAS</label><input type="text" id="q5_4" placeholder="192.168.1.x"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">5.5</span>¿Qué diferencia hay entre el DNS interno y un DNS público como 8.8.8.8?</label><textarea id="q5_5" placeholder="Un DNS interno resuelve nombres locales..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h5')">💡 Pista</button>
+      <div class="hint-box" id="h5"><p>En un paquete DHCP Offer, haz clic sobre él y expande el árbol de disección → <em>Dynamic Host Configuration Protocol (Offer)</em>. Las opciones 3 (Router) y 6 (DNS) están listadas ahí.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n5" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn5" onclick="markDone(5)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 6 -->
+<div class="step-card" id="sc6">
+  <div class="step-header" onclick="toggleStep(6)">
+    <div class="step-badge pending" id="badge6">06</div>
+    <div class="step-meta">
+      <div class="step-title">Protocolo ARP — Resolución de direcciones</div>
+      <div class="step-obj">Objetivo · Analizar el proceso de resolución MAC desde una IP</div>
+    </div>
+    <span class="step-toggle" id="tog6">▼</span>
+  </div>
+  <div class="step-body" id="body6">
+    <div class="ctx-box"><p>ARP (Address Resolution Protocol) traduce IPs a MACs en la red local. Sin ARP, un equipo no puede enviar tramas Ethernet aunque conozca la IP de destino. Cada conversación comienza con ARP.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>ARP</strong>. Busca un par Request/Reply consecutivo (dos filas seguidas donde la primera dice <em>"Who has…"</em> y la segunda <em>"is at…"</em>). Haz clic en cada uno y analiza el árbol de disección.</p>
+      <span class="filter-pill">Filtro: arp</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">6.1</span>No. del paquete ARP Request elegido</label><input type="text" id="q6_1" placeholder="Nro. de fila"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">6.2</span>¿Qué IP se está buscando?</label><input type="text" id="q6_2" placeholder="Who has ___?"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">6.3</span>¿Qué MAC respondió? (ARP Reply)</label><input type="text" id="q6_3" placeholder="xx:xx:xx:xx:xx:xx"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">6.4</span>¿Qué MAC aparece como destino en el Request? ¿Por qué?</label><input type="text" id="q6_4" placeholder="ff:ff:ff:ff:ff:ff porque..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">6.5</span>¿Qué es la caché ARP y por qué evita enviar un ARP por cada paquete?</label><textarea id="q6_5" placeholder="La caché ARP almacena..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h6')">💡 Pista</button>
+      <div class="hint-box" id="h6"><p>El Request se envía a <code>ff:ff:ff:ff:ff:ff</code> (broadcast) porque no se conoce la MAC destino. El Reply es unicast: solo el dueño de esa IP responde. El campo <code>Opcode</code> en el árbol distingue Request (1) de Reply (2).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n6" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn6" onclick="markDone(6)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 7 -->
+<div class="step-card" id="sc7">
+  <div class="step-header" onclick="toggleStep(7)">
+    <div class="step-badge pending" id="badge7">07</div>
+    <div class="step-meta">
+      <div class="step-title">DHCP — Proceso DORA completo</div>
+      <div class="step-obj">Objetivo · Documentar los cuatro mensajes del proceso de asignación de IP</div>
+    </div>
+    <span class="step-toggle" id="tog7">▼</span>
+  </div>
+  <div class="step-body" id="body7">
+    <div class="ctx-box"><p>DHCP asigna IPs automáticamente mediante cuatro mensajes: <strong>D</strong>iscover → <strong>O</strong>ffer → <strong>R</strong>equest → <strong>A</strong>CK. Cada uno tiene un rol específico en la negociación.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>DHCP</strong>. Elige un Transaction ID (aparece en la columna Info) y sigue los cuatro mensajes que comparten ese ID. Haz clic en el Offer y expande el árbol.</p>
+      <span class="filter-pill">Filtro: dhcp</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">7.1</span>Transaction ID elegido</label><input type="text" id="q7_1" placeholder="0x________"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">7.2</span>IP ofrecida al cliente (en el Offer)</label><input type="text" id="q7_2" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">7.3</span>¿Desde qué IP se envía el Discover? ¿Por qué?</label><input type="text" id="q7_3" placeholder="0.0.0.0 porque..."></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">7.4</span>¿Hacia qué IP va el Discover? ¿Por qué?</label><input type="text" id="q7_4" placeholder="255.255.255.255 porque..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">7.5</span>¿Qué diferencia hay entre el Offer y el ACK? ¿Por qué son necesarios los dos?</label><textarea id="q7_5" placeholder="El Offer es una propuesta... el ACK confirma..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h7')">💡 Pista</button>
+      <div class="hint-box" id="h7"><p>El <code>Transaction ID</code> es el mismo en los cuatro mensajes de un mismo ciclo DORA. El cliente aún no tiene IP al enviar el Discover, por eso usa <code>0.0.0.0</code> como origen y <code>255.255.255.255</code> como destino (broadcast).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n7" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn7" onclick="markDone(7)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 8 -->
+<div class="step-card" id="sc8">
+  <div class="step-header" onclick="toggleStep(8)">
+    <div class="step-badge pending" id="badge8">08</div>
+    <div class="step-meta">
+      <div class="step-title">DNS — Consulta y respuesta exitosa</div>
+      <div class="step-obj">Objetivo · Analizar una resolución de nombre completa (query + response)</div>
+    </div>
+    <span class="step-toggle" id="tog8">▼</span>
+  </div>
+  <div class="step-body" id="body8">
+    <div class="ctx-box"><p>DNS traduce nombres de dominio a IPs. Cada consulta tiene una respuesta que incluye la IP buscada y el TTL (tiempo en segundos que puede guardarse en caché). DNS usa UDP puerto 53 para mayor velocidad.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>DNS</strong>. Elige una consulta (<em>Standard query</em>) y su respuesta (<em>Standard query response</em>) que compartan el mismo Transaction ID. Analiza el árbol de disección de ambos.</p>
+      <span class="filter-pill">Filtro: dns</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">8.1</span>Nombre de dominio consultado</label><input type="text" id="q8_1" placeholder="ej: utu.edu.uy"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">8.2</span>IP que respondió el DNS</label><input type="text" id="q8_2" placeholder="ej: 93.184.x.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">8.3</span>Transaction ID</label><input type="text" id="q8_3" placeholder="0x____"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">8.4</span>Puerto origen de la consulta</label><input type="text" id="q8_4" placeholder="ej: 51234 (efímero)"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">8.5</span>¿Por qué DNS usa UDP en lugar de TCP? ¿Qué ventaja tiene?</label><textarea id="q8_5" placeholder="UDP es más rápido porque..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h8')">💡 Pista</button>
+      <div class="hint-box" id="h8"><p>La consulta siempre va al puerto <code>53</code>. El puerto <em>origen</em> es efímero (aleatorio &gt;49151). La respuesta tiene el mismo Transaction ID que la consulta. En el árbol podés ver <em>Name consultado</em> y <em>Address</em> (la IP respondida).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n8" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn8" onclick="markDone(8)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 9 -->
+<div class="step-card" id="sc9">
+  <div class="step-header" onclick="toggleStep(9)">
+    <div class="step-badge pending" id="badge9">09</div>
+    <div class="step-meta">
+      <div class="step-title">DNS fallido — NXDOMAIN</div>
+      <div class="step-obj">Objetivo · Identificar y explicar una resolución DNS que falla</div>
+    </div>
+    <span class="step-toggle" id="tog9">▼</span>
+  </div>
+  <div class="step-body" id="body9">
+    <div class="ctx-box"><p>No todas las consultas DNS son exitosas. Cuando un nombre no existe, el servidor responde con <strong>NXDOMAIN</strong> (Non-Existent Domain, código de error 3). Esto puede indicar typos, dominios vencidos o configuraciones incorrectas.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>DNS</strong> y busca en la columna Info el texto <em>"No such name"</em>. Haz clic en ese paquete y analiza su árbol de disección.</p>
+      <span class="filter-pill">Filtro: dns</span><br>
+      <span class="filter-pill">Buscar en Info: no such name</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">9.1</span>¿Qué dominio generó el NXDOMAIN?</label><input type="text" id="q9_1" placeholder="nombre.dominio"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">9.2</span>¿Qué flag en la respuesta indica el error? (código numérico)</label><input type="text" id="q9_2" placeholder="rcode = ___"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">9.3</span>¿El cliente recibe la respuesta NXDOMAIN por UDP también? ¿Cómo lo sabés?</label><textarea id="q9_3" placeholder="Sí/No, porque en el árbol se ve..."></textarea></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">9.4</span>¿Qué sucede después del NXDOMAIN en la red? ¿El cliente reintenta?</label><textarea id="q9_4" placeholder="Observa los paquetes siguientes..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h9')">💡 Pista</button>
+      <div class="hint-box" id="h9"><p>El campo <code>Flags</code> en el árbol DNS de la respuesta muestra <code>rcode: 3</code> cuando el dominio no existe. El árbol también muestra que <code>Answer RRs: 0</code> (ninguna respuesta válida).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n9" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn9" onclick="markDone(9)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 10 -->
+<div class="step-card" id="sc10">
+  <div class="step-header" onclick="toggleStep(10)">
+    <div class="step-badge pending" id="badge10">10</div>
+    <div class="step-meta">
+      <div class="step-title">TCP — Three-way handshake</div>
+      <div class="step-obj">Objetivo · Identificar y documentar el establecimiento de una conexión TCP</div>
+    </div>
+    <span class="step-toggle" id="tog10">▼</span>
+  </div>
+  <div class="step-body" id="body10">
+    <div class="ctx-box"><p>TCP establece conexiones mediante tres pasos: <strong>SYN → SYN,ACK → ACK</strong>. Este handshake garantiza que ambos lados están listos y acuerdan los números de secuencia iniciales antes de transmitir datos.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>TCP</strong>. Busca tres paquetes consecutivos entre el mismo par de IPs donde los flags sean <em>[SYN]</em>, <em>[SYN, ACK]</em>, <em>[ACK]</em>. Analiza el árbol de disección del primer SYN.</p>
+      <span class="filter-pill">Filtro: tcp</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">10.1</span>IP del cliente (quien inicia con SYN)</label><input type="text" id="q10_1" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">10.2</span>IP del servidor</label><input type="text" id="q10_2" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">10.3</span>Puerto destino (servicio)</label><input type="text" id="q10_3" placeholder="ej: 80, 445, 22"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">10.4</span>Número de secuencia inicial del cliente (ISN)</label><input type="text" id="q10_4" placeholder="Seq=________"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">10.5</span>¿Por qué son necesarios los tres pasos? ¿Qué pasaría si se omite el tercer ACK?</label><textarea id="q10_5" placeholder="Sin el tercer ACK..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h10')">💡 Pista</button>
+      <div class="hint-box" id="h10"><p>En el árbol TCP del SYN, el campo <code>Flags</code> muestra <code>0x002 (SYN)</code>. El <code>Sequence number</code> del SYN es el ISN del cliente. En el SYN-ACK el servidor elige su propio ISN y confirma el ISN del cliente con <code>Acknowledgment number = ISN_cliente + 1</code>.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n10" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn10" onclick="markDone(10)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 11 -->
+<div class="step-card" id="sc11">
+  <div class="step-header" onclick="toggleStep(11)">
+    <div class="step-badge pending" id="badge11">11</div>
+    <div class="step-meta">
+      <div class="step-title">HTTP — Tráfico web sin cifrar</div>
+      <div class="step-obj">Objetivo · Leer una solicitud HTTP y su respuesta; evaluar la privacidad</div>
+    </div>
+    <span class="step-toggle" id="tog11">▼</span>
+  </div>
+  <div class="step-body" id="body11">
+    <div class="ctx-box"><p>HTTP (puerto 80) transmite todo en texto plano. Cualquiera que capture la red puede leer las solicitudes y respuestas completas, incluyendo credenciales o contenido sensible. HTTPS cifra esto con TLS.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>HTTP</strong>. Busca un par GET + respuesta (200 OK o 404). Haz clic en el GET y analiza la columna Info y el árbol.</p>
+      <span class="filter-pill">Filtro: http</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">11.1</span>Método y recurso solicitado (ej: GET /index.html)</label><input type="text" id="q11_1" placeholder="GET /___"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">11.2</span>Código de respuesta del servidor</label><input type="text" id="q11_2" placeholder="200 / 404 / ..."></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">11.3</span>IP del equipo que hizo la solicitud</label><input type="text" id="q11_3" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">11.4</span>User-Agent del cliente (si lo ves en la Info)</label><input type="text" id="q11_4" placeholder="Mozilla/5.0..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">11.5</span>¿Qué información sensible podría verse en una captura HTTP real (no HTTPS)?</label><textarea id="q11_5" placeholder="Contraseñas, cookies, formularios..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h11')">💡 Pista</button>
+      <div class="hint-box" id="h11"><p>La columna Info del paquete HTTP GET muestra directamente la primera línea de la solicitud. El User-Agent identifica el sistema operativo y navegador del cliente — es útil para detectar qué equipos son Windows y cuáles Linux.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n11" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn11" onclick="markDone(11)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 12 -->
+<div class="step-card" id="sc12">
+  <div class="step-header" onclick="toggleStep(12)">
+    <div class="step-badge pending" id="badge12">12</div>
+    <div class="step-meta">
+      <div class="step-title">SMB2 — Windows accede al NAS</div>
+      <div class="step-obj">Objetivo · Identificar el protocolo de compartición de archivos de Windows</div>
+    </div>
+    <span class="step-toggle" id="tog12">▼</span>
+  </div>
+  <div class="step-body" id="body12">
+    <div class="ctx-box"><p>SMB2 (Server Message Block v2) es el protocolo de Windows para compartir archivos, impresoras y recursos en red. Opera sobre TCP puerto 445. El NAS sirve como almacenamiento centralizado.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>SMB2</strong>. Analiza los paquetes: qué IPs son los clientes, cuál es el servidor, y qué comandos SMB2 aparecen (Negotiate, Session Setup, etc.).</p>
+      <span class="filter-pill">Filtro: smb2</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">12.1</span>IP del servidor NAS (destino del SMB)</label><input type="text" id="q12_1" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">12.2</span>Un ejemplo de IP de cliente Windows</label><input type="text" id="q12_2" placeholder="192.168.1.x"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">12.3</span>¿Qué comandos SMB2 Observas? (Negotiate, Session Setup, etc.)</label><textarea id="q12_3" placeholder="Negotiate Request, Session Setup Request..."></textarea></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">12.4</span>¿Por qué SMB requiere un TCP handshake antes de enviar el Negotiate?</label><textarea id="q12_4" placeholder="Porque SMB corre sobre TCP y..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h12')">💡 Pista</button>
+      <div class="hint-box" id="h12"><p>SMB2 siempre va a la IP <code>.10</code> (el NAS) en esta captura. El primer intercambio es siempre <em>Negotiate</em> (el cliente propone versiones SMB) seguido de <em>Session Setup</em> (autenticación).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n12" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn12" onclick="markDone(12)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 13 -->
+<div class="step-card" id="sc13">
+  <div class="step-header" onclick="toggleStep(13)">
+    <div class="step-badge pending" id="badge13">13</div>
+    <div class="step-meta">
+      <div class="step-title">NFS — Linux accede al NAS</div>
+      <div class="step-obj">Objetivo · Identificar el sistema de archivos en red de Linux</div>
+    </div>
+    <span class="step-toggle" id="tog13">▼</span>
+  </div>
+  <div class="step-body" id="body13">
+    <div class="ctx-box"><p>NFS (Network File System) es el equivalente Linux/Unix de SMB. Usa UDP puerto 2049 y el protocolo RPC (Remote Procedure Call) para montar sistemas de archivos remotos.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>NFS</strong>. Compara con el tráfico SMB del paso anterior: ¿qué diferencias ves en protocolos de transporte (TCP vs UDP), puertos y sistemas operativos clientes?</p>
+      <span class="filter-pill">Filtro: nfs</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">13.1</span>¿Qué protocolo de transporte usa NFS? (TCP o UDP)</label><input type="text" id="q13_1" placeholder="TCP / UDP"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">13.2</span>Puerto de destino del NFS</label><input type="text" id="q13_2" placeholder="____"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">13.3</span>Un ejemplo de cliente Linux que usa NFS</label><input type="text" id="q13_3" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">13.4</span>¿Qué operación RPC aparece en el campo Info?</label><input type="text" id="q13_4" placeholder="RPC Call/Reply NULL..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">13.5</span>Compara NFS con SMB2: ¿cuáles son las diferencias principales (OS, transporte, puerto)?</label><textarea id="q13_5" placeholder="NFS: Linux, UDP, 2049 / SMB: Windows, TCP, 445..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h13')">💡 Pista</button>
+      <div class="hint-box" id="h13"><p>NFS usa <code>UDP 2049</code> por defecto. La operación <em>NULL</em> en RPC es el equivalente a un "ping" de verificación: el cliente comprueba que el servidor NFS responde antes de montar el filesystem.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n13" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn13" onclick="markDone(13)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 14 -->
+<div class="step-card" id="sc14">
+  <div class="step-header" onclick="toggleStep(14)">
+    <div class="step-badge pending" id="badge14">14</div>
+    <div class="step-meta">
+      <div class="step-title">SSH — Conexiones seguras</div>
+      <div class="step-obj">Objetivo · Identificar sesiones SSH y entender el intercambio de banners</div>
+    </div>
+    <span class="step-toggle" id="tog14">▼</span>
+  </div>
+  <div class="step-body" id="body14">
+    <div class="ctx-box"><p>SSH (Secure Shell, puerto 22) cifra toda la comunicación. Sin embargo, el intercambio inicial de <em>banners</em> (versiones) ocurre en texto plano antes de que el cifrado se active, revelando versiones del software.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>SSH</strong>. Busca paquetes donde la Info muestre un banner (<em>"Servidor: SSH-2.0-…"</em> o <em>"Cliente: SSH-2.0-…"</em>). Analiza el árbol de disección.</p>
+      <span class="filter-pill">Filtro: ssh</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">14.1</span>Versión de SSH del servidor (banner)</label><input type="text" id="q14_1" placeholder="SSH-2.0-OpenSSH_x.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">14.2</span>Versión SSH del cliente Linux</label><input type="text" id="q14_2" placeholder="SSH-2.0-OpenSSH_x.x Ubuntu..."></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">14.3</span>¿A qué servidor/es se conectan los clientes Linux por SSH?</label><input type="text" id="q14_3" placeholder="192.168.1.x (gateway/NAS)"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">14.4</span>¿Por qué el resto del tráfico SSH aparece sin información legible?</label><input type="text" id="q14_4" placeholder="Porque está cifrado..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">14.5</span>¿Qué información revela el banner SSH en un contexto real de seguridad? ¿Es un riesgo?</label><textarea id="q14_5" placeholder="El banner revela la versión del servidor SSH, lo que..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h14')">💡 Pista</button>
+      <div class="hint-box" id="h14"><p>Los banners SSH son el primer intercambio antes del Key Exchange. Revelan nombre del sistema operativo (Ubuntu, Debian) y versión exacta de OpenSSH. Los administradores de seguridad suelen ocultar o modificar estos banners.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n14" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn14" onclick="markDone(14)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 15 -->
+<div class="step-card" id="sc15">
+  <div class="step-header" onclick="toggleStep(15)">
+    <div class="step-badge pending" id="badge15">15</div>
+    <div class="step-meta">
+      <div class="step-title">ICMP — Ping y diagnóstico de red</div>
+      <div class="step-obj">Objetivo · Analizar mensajes Echo Request/Reply y entender el TTL</div>
+    </div>
+    <span class="step-toggle" id="tog15">▼</span>
+  </div>
+  <div class="step-body" id="body15">
+    <div class="ctx-box"><p>ICMP (Internet Control Message Protocol) es la herramienta básica de diagnóstico de red. El comando <code>ping</code> envía Echo Request (tipo 8) y espera Echo Reply (tipo 0). El TTL (Time To Live) indica cuántos saltos puede viajar el paquete.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>ICMP</strong>. Elige un par Echo Request / Echo Reply. Compara el árbol de disección de ambos, especialmente el TTL y los campos ID y Seq.</p>
+      <span class="filter-pill">Filtro: icmp</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">15.1</span>IP del equipo que hace el ping</label><input type="text" id="q15_1" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">15.2</span>IP del equipo destino</label><input type="text" id="q15_2" placeholder="192.168.1.x"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">15.3</span>TTL del Echo Request</label><input type="text" id="q15_3" placeholder="ej: 64"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">15.4</span>Número de secuencia (Seq) del Request</label><input type="text" id="q15_4" placeholder="ej: 3"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">15.5</span>¿Para qué sirve el campo TTL? ¿Qué sucede si llega a 0?</label><textarea id="q15_5" placeholder="El TTL evita que los paquetes circulen infinitamente..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h15')">💡 Pista</button>
+      <div class="hint-box" id="h15"><p>El TTL suele ser 64 en Linux y 128 en Windows al salir. Cada router que reenvía el paquete resta 1. Si llega a 0, el router descarta el paquete y envía un ICMP <em>Time Exceeded</em>. El ID del Request debe coincidir con el del Reply.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n15" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn15" onclick="markDone(15)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 16 -->
+<div class="step-card" id="sc16">
+  <div class="step-header" onclick="toggleStep(16)">
+    <div class="step-badge pending" id="badge16">16</div>
+    <div class="step-meta">
+      <div class="step-title">NetBIOS — Resolución de nombres Windows</div>
+      <div class="step-obj">Objetivo · Entender cómo Windows descubre equipos sin servidor DNS</div>
+    </div>
+    <span class="step-toggle" id="tog16">▼</span>
+  </div>
+  <div class="step-body" id="body16">
+    <div class="ctx-box"><p>NetBIOS Name Service (puerto UDP 137) permite a Windows descubrir equipos en la red local mediante <em>broadcast</em>, sin necesitar un servidor DNS. Es un protocolo antiguo pero aún presente en redes Windows.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>NBNS</strong>. Observa qué IPs generan estos paquetes, hacia dónde van (¿broadcast?) y qué dice la columna Info.</p>
+      <span class="filter-pill">Filtro: nbns</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">16.1</span>¿A qué dirección van los paquetes NBNS?</label><input type="text" id="q16_1" placeholder="192.168.1.255 (broadcast)"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">16.2</span>¿Qué sistemas operativos generan NBNS? ¿Cómo lo sabes?</label><input type="text" id="q16_2" placeholder="Solo Windows, porque..."></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">16.3</span>¿Por qué NetBIOS puede ser un problema de seguridad en redes modernas?</label><textarea id="q16_3" placeholder="Porque el broadcast revela nombres de equipos y..."></textarea></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">16.4</span>¿Qué protocolo moderno reemplaza a NetBIOS para resolución de nombres en Windows?</label><textarea id="q16_4" placeholder="DNS y/o LLMNR (Link-Local Multicast Name Resolution)..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h16')">💡 Pista</button>
+      <div class="hint-box" id="h16"><p>NBNS se envía siempre a la dirección de broadcast de la subred (<code>.255</code>). Esto significa que <em>todos</em> los equipos de la red reciben estas consultas, lo que puede revelar nombres de equipos a un atacante que esté escuchando.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n16" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn16" onclick="markDone(16)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 17 -->
+<div class="step-card" id="sc17">
+  <div class="step-header" onclick="toggleStep(17)">
+    <div class="step-badge pending" id="badge17">17</div>
+    <div class="step-meta">
+      <div class="step-title">mDNS — Resolución local en Linux</div>
+      <div class="step-obj">Objetivo · Entender el descubrimiento de servicios multicast en redes locales</div>
+    </div>
+    <span class="step-toggle" id="tog17">▼</span>
+  </div>
+  <div class="step-body" id="body17">
+    <div class="ctx-box"><p>mDNS (Multicast DNS, puerto UDP 5353) permite que Linux y macOS resuelvan nombres <em>.local</em> sin servidor DNS. Usa la dirección multicast <code>224.0.0.251</code> en lugar de broadcast, lo que es más eficiente.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Filtra por <strong>MDNS</strong>. Observa las IPs de origen, el destino multicast y los nombres <em>.local</em> consultados en la columna Info.</p>
+      <span class="filter-pill">Filtro: mdns</span>
+    </div>
+    <div class="questions">
+      <div class="q-grid">
+        <div class="q-row"><label class="q-label"><span class="qnum">17.1</span>¿A qué dirección IP van los paquetes mDNS?</label><input type="text" id="q17_1" placeholder="224.0.0.___"></div>
+        <div class="q-row"><label class="q-label"><span class="qnum">17.2</span>¿Cuál es el puerto UDP usado?</label><input type="text" id="q17_2" placeholder="____"></div>
+      </div>
+      <div class="q-row"><label class="q-label"><span class="qnum">17.3</span>¿Qué nombres .local aparecen consultados? Listalos.</label><textarea id="q17_3" placeholder="linux-ws01.local, linux-ws02.local..."></textarea></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">17.4</span>¿En qué se diferencia multicast de broadcast? ¿Cuál es más eficiente y por qué?</label><textarea id="q17_4" placeholder="El broadcast llega a todos... el multicast solo a los suscritos..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h17')">💡 Pista</button>
+      <div class="hint-box" id="h17"><p><code>224.0.0.251</code> es la dirección multicast reservada para mDNS (RFC 6762). Solo los equipos que "escuchan" ese grupo reciben los paquetes, a diferencia del broadcast que llega a todos aunque no estén interesados.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n17" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn17" onclick="markDone(17)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 18 -->
+<div class="step-card" id="sc18">
+  <div class="step-header" onclick="toggleStep(18)">
+    <div class="step-badge pending" id="badge18">18</div>
+    <div class="step-meta">
+      <div class="step-title">Árbol de disección — Análisis por capas OSI</div>
+      <div class="step-obj">Objetivo · Usar el panel de disección para descomponer un paquete en sus capas</div>
+    </div>
+    <span class="step-toggle" id="tog18">▼</span>
+  </div>
+  <div class="step-body" id="body18">
+    <div class="ctx-box"><p>El árbol de disección (panel medio en Wireshark) muestra cada paquete descompuesto capa por capa, desde la trama Ethernet hasta la aplicación. Es la herramienta principal para entender qué contiene un paquete.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Elige un paquete DNS cualquiera. Haz clic sobre él y expande <strong>todos</strong> los nodos del árbol de disección (Frame, Ethernet, IPv4, UDP, DNS). Anota cada campo importante.</p>
+      <span class="filter-pill">Filtro: dns</span>
+    </div>
+    <div class="questions">
+      <div class="q-row"><label class="q-label"><span class="qnum">18.1</span>Nodo Frame: ¿cuántos bytes tiene el paquete? ¿Cuántos bits?</label><input type="text" id="q18_1" placeholder="__ bytes (____ bits)"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">18.2</span>Nodo Ethernet II: MAC origen y destino</label><input type="text" id="q18_2" placeholder="Src: xx:xx:xx:xx:xx:xx / Dst: xx:xx:xx:xx:xx:xx"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">18.3</span>Nodo IPv4: IP origen, destino y TTL</label><input type="text" id="q18_3" placeholder="Src: ___ / Dst: ___ / TTL: ___"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">18.4</span>Nodo UDP: puertos origen y destino</label><input type="text" id="q18_4" placeholder="Sport: ___ / Dport: 53"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">18.5</span>Nodo DNS: Transaction ID, nombre consultado y tipo</label><input type="text" id="q18_5" placeholder="ID: 0x____ / Name: ___ / Type: A"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">18.6</span>¿Cómo se corresponde cada nodo con las capas del modelo OSI?</label><textarea id="q18_6" placeholder="Ethernet → capa 2, IPv4 → capa 3, UDP → capa 4, DNS → capa 7..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h18')">💡 Pista</button>
+      <div class="hint-box" id="h18"><p>Haz clic en el triángulo ▶ de cada nodo para expandirlo. El nodo <em>Frame</em> corresponde a la capa física/enlace (tamaño total). <em>Ethernet II</em> = capa 2. <em>IPv4</em> = capa 3. <em>UDP</em> = capa 4. <em>DNS</em> = capa de aplicación (capa 7).</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n18" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn18" onclick="markDone(18)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 19 -->
+<div class="step-card" id="sc19">
+  <div class="step-header" onclick="toggleStep(19)">
+    <div class="step-badge pending" id="badge19">19</div>
+    <div class="step-meta">
+      <div class="step-title">Vista hexadecimal — Leer bytes crudos</div>
+      <div class="step-obj">Objetivo · Interpretar el panel hex dump y relacionarlo con los campos del protocolo</div>
+    </div>
+    <span class="step-toggle" id="tog19">▼</span>
+  </div>
+  <div class="step-body" id="body19">
+    <div class="ctx-box"><p>El hex dump muestra los bytes reales del paquete en hexadecimal y ASCII. Los primeros 6 bytes son la MAC destino, los siguientes 6 la MAC origen, y los siguientes 2 el EtherType. Esta vista muestra exactamente lo que viaja por el cable.</p></div>
+    <div class="task-box">
+      <div class="task-title">🔍 Tarea</div>
+      <p>Esta actividad requiere el archivo <strong>.pcap</strong> (no el .txt). Carga el PCAP, selecciona un paquete ARP y analiza el hex dump. Los primeros 14 bytes son la cabecera Ethernet.</p>
+      <span class="filter-pill">Requiere: archivo .pcap</span>
+    </div>
+    <div class="questions">
+      <div class="q-row"><label class="q-label"><span class="qnum">19.1</span>Primeros 6 bytes (hex) del dump — ¿qué representan?</label><input type="text" id="q19_1" placeholder="ff ff ff ff ff ff → MAC destino"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">19.2</span>Bytes 7–12 (hex) — ¿qué representan?</label><input type="text" id="q19_2" placeholder="00 50 56 ... → MAC origen"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">19.3</span>Bytes 13–14 (hex) — ¿qué indican?</label><input type="text" id="q19_3" placeholder="08 06 → ARP (0x0806)"></div>
+      <div class="q-row"><label class="q-label"><span class="qnum">19.4</span>¿Qué representa la columna ASCII del lado derecho del dump?</label><textarea id="q19_4" placeholder="Los bytes imprimibles se muestran como caracteres... los no imprimibles como puntos '.'..."></textarea></div>
+    </div>
+    <div class="hint-wrap">
+      <button class="hint-btn" onclick="toggleHint('h19')">💡 Pista</button>
+      <div class="hint-box" id="h19"><p>Offset <code>0000</code>: bytes 0–15. Los 6 primeros son MAC dst. Bytes 6–11 son MAC src. Bytes 12–13 son EtherType: <code>08 06</code> = ARP, <code>08 00</code> = IPv4. A partir del byte 14 empieza la carga útil (payload) del protocolo.</p></div>
+    </div>
+    <div class="q-row"><label class="notes-label">📝 Observaciones</label><textarea id="n19" placeholder=""></textarea></div>
+    <button class="complete-btn undone" id="btn19" onclick="markDone(19)">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- PASO 20 — INFORME FINAL -->
+<div class="step-card" id="sc20">
+  <div class="step-header" onclick="toggleStep(20)">
+    <div class="step-badge pending" id="badge20">20</div>
+    <div class="step-meta">
+      <div class="step-title">Informe de análisis de tráfico</div>
+      <div class="step-obj">Objetivo · Elaborar un informe profesional con todos los hallazgos del análisis</div>
+    </div>
+    <span class="step-toggle" id="tog20">▼</span>
+  </div>
+  <div class="step-body" id="body20">
+    <div class="ctx-box"><p>Un informe de análisis de tráfico documenta de forma estructurada los hallazgos de la captura. Incluye resumen ejecutivo, topología detectada, inventario de hosts, análisis por protocolo, observaciones de seguridad y conclusiones.</p></div>
+
+    <div class="report-section">
+      <h3>1. Datos de la captura</h3>
+      <div class="report-grid">
+        <div class="rf-row"><label class="rf-label">Nombre del archivo</label><input type="text" id="r_file" placeholder="practica_red_192_168_1.pcap"></div>
+        <div class="rf-row"><label class="rf-label">Total de paquetes</label><input type="text" id="r_pkts" placeholder="ej: 500"></div>
+        <div class="rf-row"><label class="rf-label">Duración de la captura</label><input type="text" id="r_dur" placeholder="ej: 30.2 s"></div>
+        <div class="rf-row"><label class="rf-label">Fecha de análisis</label><input type="text" id="r_date" placeholder="dd/mm/aaaa"></div>
+        <div class="rf-row"><label class="rf-label">Analista</label><input type="text" id="r_name" placeholder="Nombre completo"></div>
+        <div class="rf-row"><label class="rf-label">Grupo / comisión</label><input type="text" id="r_group" placeholder="Grupo X"></div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>2. Topología de red detectada</h3>
+      <div class="report-grid">
+        <div class="rf-row"><label class="rf-label">Dirección de red</label><input type="text" id="r_net" placeholder="192.168.x.0/24"></div>
+        <div class="rf-row"><label class="rf-label">Máscara</label><input type="text" id="r_mask" placeholder="255.255.255.0"></div>
+        <div class="rf-row"><label class="rf-label">Gateway (IP / MAC)</label><input type="text" id="r_gw" placeholder="IP: ___ / MAC: ___"></div>
+        <div class="rf-row"><label class="rf-label">Servidor DNS</label><input type="text" id="r_dns" placeholder="192.168.x.x"></div>
+        <div class="rf-row"><label class="rf-label">NAS (IP / MAC)</label><input type="text" id="r_nas" placeholder="IP: ___ / MAC: ___"></div>
+        <div class="rf-row"><label class="rf-label">Cant. hosts Windows / Linux</label><input type="text" id="r_hosts" placeholder="5 Windows / 5 Linux"></div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h3>3. Análisis por protocolo</h3>
+      <div class="rf-row"><label class="rf-label">Hallazgos ARP</label><textarea id="r_arp" placeholder="Se observaron N pares Request/Reply. Los equipos resuelven MACs de gateway, DNS y NAS..."></textarea></div>
+      <div class="rf-row" style="margin-top:10px"><label class="rf-label">Hallazgos DHCP</label><textarea id="r_dhcp" placeholder="Se identificaron N ciclos DORA completos. El servidor DHCP en 192.168.x.x asigna IPs y distribuye máscara, gateway y DNS..."></textarea></div>
+      <div class="rf-row" style="margin-top:10px"><label class="rf-label">Hallazgos DNS</label><textarea id="r_dns2" placeholder="Se realizaron N consultas DNS. El 80% fue exitoso; el 20% devolvió NXDOMAIN. Los dominios más consultados fueron..."></textarea></div>
+      <div class="rf-row" style="margin-top:10px"><label class="rf-label">Hallazgos TCP/HTTP</label><textarea id="r_http" placeholder="Se observaron N conexiones TCP. Los equipos realizaron solicitudes HTTP al gateway como punto de salida. Se detectaron requests GET y respuestas 200/404..."></textarea></div>
+      <div class="rf-row" style="margin-top:10px"><label class="rf-label">Hallazgos SMB2 / NFS</label><textarea id="r_nas2" placeholder="Los equipos Windows acceden al NAS por SMB2 (TCP 445). Los Linux lo hacen por NFS (UDP 2049). Se observaron negociaciones de protocolo..."></textarea></div>
+    </div>
+
+    <div class="report-section">
+      <h3>4. Observaciones de seguridad</h3>
+      <textarea id="r_sec" style="min-height:100px" placeholder="• El tráfico HTTP no está cifrado — credenciales y contenido son visibles en la captura.&#10;• Los banners SSH revelan versiones exactas del software instalado.&#10;• NetBIOS difunde nombres de equipos Windows a toda la red.&#10;• Agrega aquí otras observaciones..."></textarea>
+    </div>
+
+    <div class="report-section">
+      <h3>5. Conclusiones</h3>
+      <textarea id="r_conc" style="min-height:100px" placeholder="Resume los hallazgos más importantes, el estado general de la red, y qué acciones se recomendarían para mejorar la seguridad o el rendimiento..."></textarea>
+    </div>
+
+    <div class="report-btns">
+      <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Exportar PDF</button>
+      <button class="clear-btn" onclick="clearAll()">🗑️ Borrar todo el progreso</button>
+    </div>
+    <button class="complete-btn undone" id="btn20" onclick="markDone(20)" style="margin-top:12px">✓ Marcar como completado</button>
+  </div>
+</div>
+
+<!-- ── Botón respuestas correctas ── -->
+<button class="ans-btn" onclick="openAnswers()">
+  <span style="font-size:1.2rem">🔑</span>
+  Ver informe con respuestas correctas paso a paso
+</button>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     MODAL — RESPUESTAS CORRECTAS
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="answersModal" onclick="handleModalClick(event)">
+<div class="modal-box">
+
+  <div class="modal-head">
+    <div class="modal-head-icon">🔑</div>
+    <div class="modal-head-title">
+      <h2>Respuestas correctas — Análisis de tráfico</h2>
+      <p>Red: 192.168.1.0/24 · Captura: practica_red_192_168_1.pcap · UTU 2026</p>
+    </div>
+    <button class="modal-close" onclick="closeAnswers()" title="Cerrar (Esc)">✕</button>
+  </div>
+
+  <div class="modal-body">
+
+  <!-- P1 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">01</div><div class="ans-card-title">Cargar la captura en el simulador</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">1.1</span><span class="ans-q">¿Cuántos paquetes?</span><span class="ans-val">500, 800 o 1000 según el archivo cargado (prefijo del nombre)</span></div>
+      <div class="ans-row"><span class="ans-qnum">1.2</span><span class="ans-q">¿Cuánto dura la captura?</span><span class="ans-val">≈ 30–35 s (500 pkts) · ≈ 50 s (800) · ≈ 70 s (1000)</span></div>
+      <div class="ans-row"><span class="ans-qnum">1.3</span><span class="ans-q">Protocolo con más paquetes</span><span class="ans-val">DNS (≈ 16 % del total)</span></div>
+      <div class="ans-row"><span class="ans-qnum">1.4</span><span class="ans-q">Protocolos presentes</span><span class="ans-val multiline">ARP · DHCP · DNS · ICMP · HTTP · TCP · SMB2 · NFS · SSH · NBNS · MDNS</span></div>
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">02</div><div class="ans-card-title">Identificar la red</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">2.1</span><span class="ans-q">Dirección de red</span><span class="ans-val">192.168.1.0</span></div>
+      <div class="ans-row"><span class="ans-qnum">2.2</span><span class="ans-q">Máscara de subred</span><span class="ans-val">255.255.255.0</span></div>
+      <div class="ans-row"><span class="ans-qnum">2.3</span><span class="ans-q">Dirección de broadcast</span><span class="ans-val">192.168.1.255</span></div>
+      <div class="ans-row"><span class="ans-qnum">2.4</span><span class="ans-q">Notación CIDR</span><span class="ans-val">/24</span></div>
+      <div class="ans-row"><span class="ans-qnum">2.5</span><span class="ans-q">¿Cómo determinaste la máscara?</span><span class="ans-val">En un paquete DHCP Offer → árbol de disección → opción 1 (Subnet mask): 255.255.255.0</span></div>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">03</div><div class="ans-card-title">Inventario de dispositivos</div></div>
+    <div class="ans-card-body">
+      <div class="ans-note">Tabla completa de los 13 dispositivos de la red:</div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.1 · c0:a8:01:01:00:01</span><span class="ans-val">gateway (router)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.2 · c0:a8:01:02:00:02</span><span class="ans-val">dns-srv (servidor DNS)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.10 · c0:a8:01:0a:00:0a</span><span class="ans-val">nas-01 (NAS)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.101 · 00:50:56:aa:01:01</span><span class="ans-val">WIN-PC01 (Windows)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.102 · 00:50:56:aa:01:02</span><span class="ans-val">WIN-PC02 (Windows)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.103 · 08:00:27:bb:01:03</span><span class="ans-val">WIN-PC03 (Windows)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.104 · 08:00:27:bb:01:04</span><span class="ans-val">WIN-PC04 (Windows)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.105 · b8:ac:6f:cc:01:05</span><span class="ans-val">WIN-PC05 (Windows)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.111 · 00:0c:29:dd:02:01</span><span class="ans-val">linux-ws01 (Linux)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.112 · 00:0c:29:dd:02:02</span><span class="ans-val">linux-ws02 (Linux)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.113 · 52:54:00:ee:02:03</span><span class="ans-val">linux-ws03 (Linux)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.114 · 52:54:00:ee:02:04</span><span class="ans-val">linux-ws04 (Linux)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q" style="color:var(--text2)">192.168.1.115 · de:ad:be:ef:02:05</span><span class="ans-val">linux-ws05 (Linux)</span></div>
+      <div class="ans-row"><span class="ans-qnum">3.2</span><span class="ans-q">Total de dispositivos</span><span class="ans-val">13 dispositivos únicos</span></div>
+    </div>
+  </div>
+
+  <!-- P4 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">04</div><div class="ans-card-title">Distinguir sistemas operativos</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">4.1</span><span class="ans-q">IPs Windows</span><span class="ans-val">192.168.1.101 · 102 · 103 · 104 · 105</span></div>
+      <div class="ans-row"><span class="ans-qnum">4.2</span><span class="ans-q">IPs Linux</span><span class="ans-val">192.168.1.111 · 112 · 113 · 114 · 115</span></div>
+      <div class="ans-row"><span class="ans-qnum">4.3</span><span class="ans-q">Protocolos identificadores</span><span class="ans-val multiline">Windows → NBNS (UDP 137) + SMB2 (TCP 445)
+Linux → mDNS (UDP 5353) + NFS (UDP 2049)</span></div>
+      <div class="ans-row"><span class="ans-qnum">4.4</span><span class="ans-q">Prefijos de MAC Windows</span><span class="ans-val">00:50:56 (VMware) · 08:00:27 (VirtualBox) · b8:ac:6f (Dell)</span></div>
+    </div>
+  </div>
+
+  <!-- P5 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">05</div><div class="ans-card-title">Infraestructura de red</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">5.1</span><span class="ans-q">IP del Gateway</span><span class="ans-val">192.168.1.1</span></div>
+      <div class="ans-row"><span class="ans-qnum">5.2</span><span class="ans-q">MAC del Gateway</span><span class="ans-val">c0:a8:01:01:00:01</span></div>
+      <div class="ans-row"><span class="ans-qnum">5.3</span><span class="ans-q">IP del servidor DNS</span><span class="ans-val">192.168.1.2</span></div>
+      <div class="ans-row"><span class="ans-qnum">5.4</span><span class="ans-q">IP del NAS</span><span class="ans-val">192.168.1.10</span></div>
+      <div class="ans-row"><span class="ans-qnum">5.5</span><span class="ans-q">DNS interno vs DNS público</span><span class="ans-val">El DNS interno resuelve nombres locales (.local, gateway.local). Un DNS público (8.8.8.8) solo conoce dominios de Internet.</span></div>
+    </div>
+  </div>
+
+  <!-- P6 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">06</div><div class="ans-card-title">Protocolo ARP</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">6.1</span><span class="ans-q">No. del paquete elegido</span><span class="ans-val variable">Variable — cualquier fila ARP con "Who has"</span></div>
+      <div class="ans-row"><span class="ans-qnum">6.2</span><span class="ans-q">IP buscada</span><span class="ans-val variable">Variable — la IP que aparece en "Who has ___?"</span></div>
+      <div class="ans-row"><span class="ans-qnum">6.3</span><span class="ans-q">MAC que respondió</span><span class="ans-val variable">Variable — la MAC del equipo con esa IP (ver tabla del Paso 3)</span></div>
+      <div class="ans-row"><span class="ans-qnum">6.4</span><span class="ans-q">MAC destino en el Request</span><span class="ans-val">ff:ff:ff:ff:ff:ff — broadcast porque se desconoce la MAC destino</span></div>
+      <div class="ans-row"><span class="ans-qnum">6.5</span><span class="ans-q">¿Qué es la caché ARP?</span><span class="ans-val">Tabla IP↔MAC con TTL almacenada en RAM. Evita enviar un ARP por cada paquete; mientras la entrada esté vigente, la trama Ethernet se construye directamente.</span></div>
+    </div>
+  </div>
+
+  <!-- P7 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">07</div><div class="ans-card-title">DHCP — Proceso DORA</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">7.1</span><span class="ans-q">Transaction ID</span><span class="ans-val variable">Variable — cualquier ID del filtro DHCP (ej: 0x84273ca3)</span></div>
+      <div class="ans-row"><span class="ans-qnum">7.2</span><span class="ans-q">IP ofrecida</span><span class="ans-val variable">Variable — la IP del cliente en esa sesión (rango .101–.115)</span></div>
+      <div class="ans-row"><span class="ans-qnum">7.3</span><span class="ans-q">IP origen del Discover</span><span class="ans-val">0.0.0.0 — el cliente aún no tiene IP asignada</span></div>
+      <div class="ans-row"><span class="ans-qnum">7.4</span><span class="ans-q">IP destino del Discover</span><span class="ans-val">255.255.255.255 — broadcast porque no conoce la IP del servidor DHCP</span></div>
+      <div class="ans-row"><span class="ans-qnum">7.5</span><span class="ans-q">Diferencia Offer / ACK</span><span class="ans-val">Offer = propuesta tentativa (puede haber varios servidores). ACK = confirmación oficial. El cliente elige un Offer y lo confirma con Request; el servidor finaliza con ACK.</span></div>
+    </div>
+  </div>
+
+  <!-- P8 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">08</div><div class="ans-card-title">DNS — Consulta exitosa</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">8.1</span><span class="ans-q">Dominio consultado</span><span class="ans-val variable">Variable — utu.edu.uy, google.com, microsoft.com, github.com, ubuntu.com…</span></div>
+      <div class="ans-row"><span class="ans-qnum">8.2</span><span class="ans-q">IP respondida</span><span class="ans-val variable">Variable — IP externa tipo 93.184.x.x (generada sintéticamente)</span></div>
+      <div class="ans-row"><span class="ans-qnum">8.3</span><span class="ans-q">Transaction ID</span><span class="ans-val variable">Variable — mismo ID en la query y en la response correspondiente</span></div>
+      <div class="ans-row"><span class="ans-qnum">8.4</span><span class="ans-q">Puerto origen</span><span class="ans-val">Puerto efímero &gt; 49151 (aleatorio por cada consulta)</span></div>
+      <div class="ans-row"><span class="ans-qnum">8.5</span><span class="ans-q">¿Por qué DNS usa UDP?</span><span class="ans-val">UDP es más rápido: sin handshake previo. Las consultas DNS son pequeñas (&lt;512 bytes); si se pierde un paquete, el resolver simplemente reenvía la consulta.</span></div>
+    </div>
+  </div>
+
+  <!-- P9 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">09</div><div class="ans-card-title">DNS fallido — NXDOMAIN</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">9.1</span><span class="ans-q">Dominio con NXDOMAIN</span><span class="ans-val variable">Variable — cualquier consulta respondida con "No such name" (~20 % de las DNS)</span></div>
+      <div class="ans-row"><span class="ans-qnum">9.2</span><span class="ans-q">Flag de error</span><span class="ans-val">rcode = 3 (NXDOMAIN — Non-Existent Domain)</span></div>
+      <div class="ans-row"><span class="ans-qnum">9.3</span><span class="ans-q">¿NXDOMAIN también usa UDP?</span><span class="ans-val">Sí. El árbol muestra "User Datagram Protocol" → "Domain Name System (response)". DNS usa UDP para todos sus mensajes, incluso los de error.</span></div>
+      <div class="ans-row"><span class="ans-qnum">9.4</span><span class="ans-q">¿El cliente reintenta?</span><span class="ans-val">En NXDOMAIN generalmente no reintenta automáticamente (la respuesta es definitiva). Solo reintenta si hay timeout o si la respuesta es un error de servidor (rcode 2).</span></div>
+    </div>
+  </div>
+
+  <!-- P10 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">10</div><div class="ans-card-title">TCP — Three-way handshake</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">10.1</span><span class="ans-q">IP del cliente</span><span class="ans-val variable">Variable — cualquier host .101–.115 (quien envía el SYN)</span></div>
+      <div class="ans-row"><span class="ans-qnum">10.2</span><span class="ans-q">IP del servidor</span><span class="ans-val variable">Variable — 192.168.1.1 (gateway/HTTP) o 192.168.1.10 (NAS/SMB)</span></div>
+      <div class="ans-row"><span class="ans-qnum">10.3</span><span class="ans-q">Puerto destino (servicio)</span><span class="ans-val">80 (HTTP) · 445 (SMB2) · 22 (SSH) según el flujo elegido</span></div>
+      <div class="ans-row"><span class="ans-qnum">10.4</span><span class="ans-q">ISN del cliente</span><span class="ans-val variable">Variable — número aleatorio grande visible en el campo Seq del SYN</span></div>
+      <div class="ans-row"><span class="ans-qnum">10.5</span><span class="ans-q">¿Por qué son necesarios 3 pasos?</span><span class="ans-val">SYN = cliente anuncia ISN. SYN-ACK = servidor confirma ISN del cliente y anuncia el suyo. ACK = cliente confirma ISN del servidor. Sin el ACK final el servidor nunca sabe si el cliente recibió su SYN-ACK.</span></div>
+    </div>
+  </div>
+
+  <!-- P11 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">11</div><div class="ans-card-title">HTTP — Tráfico web sin cifrar</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">11.1</span><span class="ans-q">Método y recurso</span><span class="ans-val variable">Variable — ej: GET / · GET /index.html · GET /login · GET /api/v1/status</span></div>
+      <div class="ans-row"><span class="ans-qnum">11.2</span><span class="ans-q">Código de respuesta</span><span class="ans-val">200 OK (85 % de los casos) · 404 Not Found (15 %)</span></div>
+      <div class="ans-row"><span class="ans-qnum">11.3</span><span class="ans-q">IP del cliente</span><span class="ans-val variable">Variable — cualquier host .101–.115</span></div>
+      <div class="ans-row"><span class="ans-qnum">11.4</span><span class="ans-q">User-Agent</span><span class="ans-val variable">Windows: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)…" · Linux: "Mozilla/5.0 (X11; Linux x86_64)…"</span></div>
+      <div class="ans-row"><span class="ans-qnum">11.5</span><span class="ans-q">Información visible en HTTP</span><span class="ans-val">Contraseñas en formularios, cookies de sesión, tokens, contenido HTML completo, cabeceras de autenticación (Basic Auth en base64).</span></div>
+    </div>
+  </div>
+
+  <!-- P12 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">12</div><div class="ans-card-title">SMB2 — Windows accede al NAS</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">12.1</span><span class="ans-q">IP del servidor NAS</span><span class="ans-val">192.168.1.10</span></div>
+      <div class="ans-row"><span class="ans-qnum">12.2</span><span class="ans-q">Ejemplo de cliente Windows</span><span class="ans-val variable">Variable — cualquier IP del rango .101–.105</span></div>
+      <div class="ans-row"><span class="ans-qnum">12.3</span><span class="ans-q">Comandos SMB2 observados</span><span class="ans-val">Negotiate Request · Negotiate Response · Session Setup Request · Session Setup Response</span></div>
+      <div class="ans-row"><span class="ans-qnum">12.4</span><span class="ans-q">¿Por qué SMB necesita TCP antes?</span><span class="ans-val">SMB es un protocolo de capa de aplicación. TCP (capa 4) garantiza entrega ordenada y sin errores de los comandos de sistema de archivos.</span></div>
+    </div>
+  </div>
+
+  <!-- P13 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">13</div><div class="ans-card-title">NFS — Linux accede al NAS</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">13.1</span><span class="ans-q">Protocolo de transporte</span><span class="ans-val">UDP (User Datagram Protocol)</span></div>
+      <div class="ans-row"><span class="ans-qnum">13.2</span><span class="ans-q">Puerto de destino</span><span class="ans-val">2049</span></div>
+      <div class="ans-row"><span class="ans-qnum">13.3</span><span class="ans-q">Ejemplo de cliente Linux</span><span class="ans-val variable">Variable — cualquier IP del rango .111–.115</span></div>
+      <div class="ans-row"><span class="ans-qnum">13.4</span><span class="ans-q">Operación RPC visible</span><span class="ans-val">RPC Call NULL / RPC Reply NULL (verificación de disponibilidad del servidor NFS)</span></div>
+      <div class="ans-row"><span class="ans-qnum">13.5</span><span class="ans-q">NFS vs SMB2</span><span class="ans-val multiline">NFS: Linux/Unix · UDP · Puerto 2049 · RPC
+SMB2: Windows · TCP · Puerto 445 · autenticación NTLM/Kerberos</span></div>
+    </div>
+  </div>
+
+  <!-- P14 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">14</div><div class="ans-card-title">SSH — Conexiones seguras</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">14.1</span><span class="ans-q">Banner del servidor</span><span class="ans-val">SSH-2.0-OpenSSH_9.6</span></div>
+      <div class="ans-row"><span class="ans-qnum">14.2</span><span class="ans-q">Banner del cliente Linux</span><span class="ans-val">SSH-2.0-OpenSSH_9.3p2 Ubuntu-1ubuntu3</span></div>
+      <div class="ans-row"><span class="ans-qnum">14.3</span><span class="ans-q">Servidores destino SSH</span><span class="ans-val">192.168.1.1 (gateway) · 192.168.1.10 (NAS)</span></div>
+      <div class="ans-row"><span class="ans-qnum">14.4</span><span class="ans-q">¿Por qué el tráfico SSH no es legible?</span><span class="ans-val">Después del intercambio de banners se negocia el algoritmo de cifrado (Key Exchange). Todo el tráfico posterior queda cifrado y Wireshark solo ve bytes cifrados.</span></div>
+      <div class="ans-row"><span class="ans-qnum">14.5</span><span class="ans-q">¿Riesgo del banner SSH?</span><span class="ans-val">El banner revela SO y versión exacta de OpenSSH. Un atacante puede buscar CVEs conocidos para esa versión. Buena práctica: modificar el banner para no revelar versión.</span></div>
+    </div>
+  </div>
+
+  <!-- P15 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">15</div><div class="ans-card-title">ICMP — Ping y diagnóstico</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">15.1</span><span class="ans-q">IP origen del ping</span><span class="ans-val variable">Variable — cualquier host de la red</span></div>
+      <div class="ans-row"><span class="ans-qnum">15.2</span><span class="ans-q">IP destino</span><span class="ans-val variable">Variable — cualquier otro host (incluye gateway, DNS, NAS)</span></div>
+      <div class="ans-row"><span class="ans-qnum">15.3</span><span class="ans-q">TTL del Echo Request</span><span class="ans-val">64 (valor por defecto en Linux y en la captura)</span></div>
+      <div class="ans-row"><span class="ans-qnum">15.4</span><span class="ans-q">Número de secuencia</span><span class="ans-val variable">Variable — entero entre 1 y 10 (generado aleatoriamente)</span></div>
+      <div class="ans-row"><span class="ans-qnum">15.5</span><span class="ans-q">¿Para qué sirve el TTL?</span><span class="ans-val">Evita que los paquetes circulen indefinidamente. Cada router resta 1. Si llega a 0, el router descarta el paquete y envía ICMP Time Exceeded al origen. Linux parte de 64; Windows de 128.</span></div>
+    </div>
+  </div>
+
+  <!-- P16 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">16</div><div class="ans-card-title">NetBIOS Name Service</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">16.1</span><span class="ans-q">Dirección destino de NBNS</span><span class="ans-val">192.168.1.255 (broadcast de la subred /24)</span></div>
+      <div class="ans-row"><span class="ans-qnum">16.2</span><span class="ans-q">¿Qué SO genera NBNS?</span><span class="ans-val">Solo Windows. Se confirma porque las IPs origen son .101–.105 y esos hosts también generan SMB2.</span></div>
+      <div class="ans-row"><span class="ans-qnum">16.3</span><span class="ans-q">Riesgo de seguridad</span><span class="ans-val">Revela nombres de equipos Windows a toda la red. Atacantes pueden usar NBNS Poisoning para redirigir tráfico (ej: herramienta Responder). Se recomienda desactivar NetBIOS en redes modernas.</span></div>
+      <div class="ans-row"><span class="ans-qnum">16.4</span><span class="ans-q">Reemplazo moderno</span><span class="ans-val">DNS (con registros internos) y LLMNR (Link-Local Multicast Name Resolution, RFC 4795). Aunque LLMNR también tiene vulnerabilidades similares.</span></div>
+    </div>
+  </div>
+
+  <!-- P17 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">17</div><div class="ans-card-title">mDNS — Resolución local Linux</div></div>
+    <div class="ans-card-body">
+      <div class="ans-row"><span class="ans-qnum">17.1</span><span class="ans-q">IP destino multicast</span><span class="ans-val">224.0.0.251 (grupo multicast reservado para mDNS, RFC 6762)</span></div>
+      <div class="ans-row"><span class="ans-qnum">17.2</span><span class="ans-q">Puerto UDP</span><span class="ans-val">5353</span></div>
+      <div class="ans-row"><span class="ans-qnum">17.3</span><span class="ans-q">Nombres .local consultados</span><span class="ans-val">linux-ws01.local · linux-ws02.local · linux-ws03.local · linux-ws04.local · linux-ws05.local</span></div>
+      <div class="ans-row"><span class="ans-qnum">17.4</span><span class="ans-q">Multicast vs Broadcast</span><span class="ans-val">Broadcast (.255) llega a TODOS los hosts aunque no les interese. Multicast llega solo a los suscritos al grupo 224.0.0.251 — menor consumo de recursos en la red y en los hosts.</span></div>
+    </div>
+  </div>
+
+  <!-- P18 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">18</div><div class="ans-card-title">Árbol de disección — Capas OSI</div></div>
+    <div class="ans-card-body">
+      <div class="ans-note">Las respuestas 18.1–18.5 dependen del paquete DNS elegido. Los valores de referencia son:</div>
+      <div class="ans-row"><span class="ans-qnum">18.1</span><span class="ans-q">Tamaño típico de un DNS query</span><span class="ans-val variable">≈ 60–80 bytes (480–640 bits), según el dominio consultado</span></div>
+      <div class="ans-row"><span class="ans-qnum">18.2</span><span class="ans-q">Ethernet — MAC destino</span><span class="ans-val">c0:a8:01:02:00:02 (MAC del servidor DNS 192.168.1.2)</span></div>
+      <div class="ans-row"><span class="ans-qnum">18.3</span><span class="ans-q">IPv4 — TTL típico</span><span class="ans-val">64 (valor estándar Linux/cliente)</span></div>
+      <div class="ans-row"><span class="ans-qnum">18.4</span><span class="ans-q">UDP — Puertos</span><span class="ans-val">Puerto origen: efímero (&gt;49151) → Puerto destino: 53</span></div>
+      <div class="ans-row"><span class="ans-qnum">18.5</span><span class="ans-q">DNS — Campos clave</span><span class="ans-val variable">Transaction ID: variable · Name: el dominio consultado · Type: A (registro IPv4)</span></div>
+      <div class="ans-row"><span class="ans-qnum">18.6</span><span class="ans-q">Nodos y capas OSI</span><span class="ans-val multiline">Frame → Capas 1 y 2 (físico/enlace)
+Ethernet II → Capa 2 (enlace de datos)
+IPv4 → Capa 3 (red)
+UDP → Capa 4 (transporte)
+DNS → Capa 7 (aplicación)</span></div>
+    </div>
+  </div>
+
+  <!-- P19 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">19</div><div class="ans-card-title">Vista hexadecimal — Bytes crudos</div></div>
+    <div class="ans-card-body">
+      <div class="ans-note">Ejemplo con un paquete ARP (42 bytes). Offset 0000:</div>
+      <div class="ans-row"><span class="ans-qnum">19.1</span><span class="ans-q">Bytes 0–5 (hex)</span><span class="ans-val">ff ff ff ff ff ff → MAC destino (Broadcast en ARP Request)</span></div>
+      <div class="ans-row"><span class="ans-qnum">19.2</span><span class="ans-q">Bytes 6–11 (hex)</span><span class="ans-val">ej: 00 50 56 aa 01 01 → MAC origen (WIN-PC01)</span></div>
+      <div class="ans-row"><span class="ans-qnum">19.3</span><span class="ans-q">Bytes 12–13 (hex)</span><span class="ans-val">08 06 → EtherType ARP (0x0806) · Si fuera IPv4 serían: 08 00</span></div>
+      <div class="ans-row"><span class="ans-qnum">19.4</span><span class="ans-q">Columna ASCII (derecha)</span><span class="ans-val">Muestra bytes con representación ASCII imprimible (32–126). Bytes no imprimibles aparecen como "." — por eso los encabezados binarios aparecen como puntos y solo el payload texto es legible.</span></div>
+    </div>
+  </div>
+
+  <!-- P20 -->
+  <div class="ans-card">
+    <div class="ans-card-head"><div class="ans-num-badge">20</div><div class="ans-card-title">Informe final — Valores de referencia</div></div>
+    <div class="ans-card-body">
+      <div class="ans-note">El informe es personal y no tiene una única respuesta correcta. Estos son los valores esperados en cada sección:</div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q">Red analizada</span><span class="ans-val">192.168.1.0 / 255.255.255.0 (/24)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q">Hosts Windows / Linux</span><span class="ans-val">5 Windows (.101–.105) · 5 Linux (.111–.115) · 3 infraestructura</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q">Protocolo dominante</span><span class="ans-val">DNS (≈16 %) seguido de HTTP (≈20 %) y SMB2 (≈12 %)</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q">Observaciones de seguridad clave</span><span class="ans-val multiline">• HTTP sin cifrar: contenido visible en la captura
+• Banners SSH revelan versión exacta del software
+• NetBIOS broadcast expone nombres de equipos Windows
+• NFS sin autenticación fuerte en este escenario</span></div>
+      <div class="ans-row"><span class="ans-qnum"></span><span class="ans-q">Conclusión esperada</span><span class="ans-val">Red mixta Windows/Linux bien segmentada. Se recomienda migrar HTTP → HTTPS, deshabilitar NetBIOS, y ocultar banners SSH. La segmentación entre terminales (rango .101+ ) e infraestructura (.1–.10) es correcta.</span></div>
+    </div>
+  </div>
+
+  </div><!-- /modal-body -->
+</div><!-- /modal-box -->
+</div><!-- /modal-overlay -->
+<footer>LAB://ANÁLISIS.DE.TRÁFICO · UTU 2026 · El progreso se guarda en el navegador (localStorage)</footer>
+
+<script>
+const TOTAL = 20;
+const KEY = 'utu_ws_act_';
+
+/* ── Persistencia ─────────────────────────────────────────────────── */
+function saveField(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  localStorage.setItem(KEY + id, el.value);
+}
+
+function loadAll() {
+  for (let i = 1; i <= TOTAL; i++) {
+    const done = localStorage.getItem(KEY + 'done' + i) === '1';
+    if (done) { applyDone(i); }
+  }
+  // Load all input/textarea values
+  document.querySelectorAll('input[type="text"],textarea').forEach(el => {
+    const saved = localStorage.getItem(KEY + el.id);
+    if (saved !== null) el.value = saved;
+  });
+  updateProgress();
+}
+
+/* ── Toggle pasos ─────────────────────────────────────────────────── */
+function toggleStep(n) {
+  const body = document.getElementById('body' + n);
+  const tog  = document.getElementById('tog'  + n);
+  const isOpen = body.classList.toggle('open');
+  tog.classList.toggle('open', isOpen);
+}
+
+function toggleHint(id) {
+  const box = document.getElementById(id);
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ── Marcar completado ────────────────────────────────────────────── */
+function markDone(n) {
+  const isDone = localStorage.getItem(KEY + 'done' + n) === '1';
+  if (!isDone) {
+    localStorage.setItem(KEY + 'done' + n, '1');
+    applyDone(n);
+  } else {
+    localStorage.removeItem(KEY + 'done' + n);
+    applyUndone(n);
+  }
+  updateProgress();
+}
+
+function applyDone(n) {
+  const badge = document.getElementById('badge' + n);
+  const card  = document.getElementById('sc' + n);
+  const btn   = document.getElementById('btn' + n);
+  if (badge) { badge.textContent = '✓'; badge.className = 'step-badge done'; }
+  if (card)  card.classList.add('done');
+  if (btn)   { btn.textContent = '↩ Desmarcar'; btn.className = 'complete-btn'; }
+}
+
+function applyUndone(n) {
+  const badge = document.getElementById('badge' + n);
+  const card  = document.getElementById('sc' + n);
+  const btn   = document.getElementById('btn' + n);
+  const num   = String(n).padStart(2, '0');
+  if (badge) { badge.textContent = num; badge.className = 'step-badge pending'; }
+  if (card)  card.classList.remove('done');
+  if (btn)   { btn.textContent = '✓ Marcar como completado'; btn.className = 'complete-btn undone'; }
+}
+
+function updateProgress() {
+  let done = 0;
+  for (let i = 1; i <= TOTAL; i++) {
+    if (localStorage.getItem(KEY + 'done' + i) === '1') done++;
+  }
+  const pct = (done / TOTAL * 100).toFixed(0);
+  document.getElementById('progBar').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = `${done} / ${TOTAL} pasos`;
+}
+
+/* ── Guardar auto ─────────────────────────────────────────────────── */
+document.addEventListener('input', e => {
+  if (e.target.matches('input[type="text"],textarea')) saveField(e.target.id);
+});
+
+/* ── Borrar todo ──────────────────────────────────────────────────── */
+function clearAll() {
+  if (!confirm('¿Borrar todo el progreso? Esta acción no se puede deshacer.')) return;
+  Object.keys(localStorage).filter(k => k.startsWith(KEY)).forEach(k => localStorage.removeItem(k));
+  location.reload();
+}
+
+/* ── Modal respuestas correctas ───────────────────────────────────── */
+function openAnswers() {
+  document.getElementById('answersModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAnswers() {
+  document.getElementById('answersModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleModalClick(e) {
+  if (e.target === document.getElementById('answersModal')) closeAnswers();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAnswers(); });
+
+/* ── Abrir el primer paso automáticamente ─────────────────────────── */
+loadAll();
+toggleStep(1);
+</script>
+</body>
+</html>

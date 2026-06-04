@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Wireshark — UTU 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0c10; --bg2: #0f1218; --bg3: #151a22; --bg4: #1b2230;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0; --text2: #8b9ab5; --text3: #566378;
+  --mono: 'JetBrains Mono', monospace; --sans: 'Space Grotesk', sans-serif;
+  --blue: #4da8ff;    --blue-bg: rgba(77,168,255,0.08);
+  --teal: #2dd4bf;    --teal-bg: rgba(45,212,191,0.08);
+  --amber: #f59e0b;   --amber-bg: rgba(245,158,11,0.08);
+  --purple: #a78bfa;  --purple-bg: rgba(167,139,250,0.08);
+  --coral: #fb7185;   --coral-bg: rgba(251,113,133,0.08);
+  --green: #4ade80;   --green-bg: rgba(74,222,128,0.08);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text);
+       min-height: 100vh; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(77,168,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(77,168,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px; pointer-events: none; z-index: 0; }
+
+nav { position: sticky; top: 0; z-index: 100; background: rgba(10,12,16,0.9);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+      padding: 0 25%; display: flex; align-items: center; gap: 2rem; height: 56px; }
+.nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 700;
+            color: var(--teal); letter-spacing: 0.05em; text-decoration: none; }
+.nav-links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-link { font-size: 12px; color: var(--text3); text-decoration: none; padding: 4px 10px;
+            border-radius: 6px; white-space: nowrap; transition: all .2s; font-weight: 500; }
+.nav-link:hover { color: var(--text); background: var(--bg4); }
+.nav-link.active { color: var(--teal); background: var(--teal-bg); }
+
+.hero { position: relative; z-index: 1; padding: 5rem 25% 3rem; }
+.hero-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono);
+            font-size: 11px; color: var(--teal); background: var(--teal-bg);
+            border: 1px solid rgba(45,212,191,0.2); border-radius: 20px; padding: 4px 12px;
+            margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+.hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--teal);
+                    border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.1;
+     letter-spacing: -0.02em; color: #fff; margin-bottom: 1rem; }
+h1 span { color: var(--teal); }
+.hero-sub { font-size: 1.05rem; color: var(--text2); max-width: 640px; line-height: 1.7; }
+
+main { position: relative; z-index: 1;
+       padding: 0 10% 6rem; display: flex; flex-direction: column; gap: 2rem; }
+
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+        overflow: hidden; transition: border-color .3s; animation: fadeUp .5s ease both; }
+.card:hover { border-color: var(--border2); }
+.card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
+               display: flex; align-items: center; gap: 12px; background: var(--bg3); }
+.card-num { font-family: var(--mono); font-size: 11px; font-weight: 700;
+            padding: 3px 9px; border-radius: 20px; letter-spacing: 0.05em; }
+.num-teal  { background: var(--teal-bg);   color: var(--teal);   border: 1px solid rgba(45,212,191,0.25); }
+.num-blue  { background: var(--blue-bg);   color: var(--blue);   border: 1px solid rgba(77,168,255,0.25); }
+.num-amber { background: var(--amber-bg);  color: var(--amber);  border: 1px solid rgba(245,158,11,0.25); }
+.card-title { font-size: 15px; font-weight: 600; color: #fff; }
+.card-body { padding: 1.5rem; }
+p { color: var(--text2); line-height: 1.7; }
+strong { color: #fff; }
+
+/* ── Drop zone ── */
+.drop-zone { border: 2px dashed var(--border2); border-radius: 14px;
+             padding: 3rem 2rem; text-align: center; cursor: pointer;
+             transition: all .25s; background: var(--bg3); position: relative; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: var(--teal);
+  background: var(--teal-bg); }
+.drop-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.drop-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: .5rem; }
+.drop-sub { font-size: 13px; color: var(--text3); }
+.drop-formats { margin-top: 1rem; display: flex; gap: 8px; justify-content: center; }
+.fmt-badge { font-family: var(--mono); font-size: 11px; padding: 3px 10px;
+             border-radius: 20px; border: 1px solid var(--border2); color: var(--text3); }
+.fmt-badge.pcap { color: var(--blue); background: var(--blue-bg); border-color: rgba(77,168,255,0.3); }
+.fmt-badge.txt  { color: var(--amber); background: var(--amber-bg); border-color: rgba(245,158,11,0.3); }
+
+.file-btn { margin-top: 1.25rem; background: var(--teal); color: #0a0c10;
+            border: none; border-radius: 8px; padding: 9px 20px; font-size: 13px;
+            font-weight: 700; cursor: pointer; font-family: var(--sans); transition: opacity .2s; }
+.file-btn:hover { opacity: .85; }
+
+/* ── Toolbar ── */
+.capture-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 1.25rem 0 1rem; }
+.filter-input { flex: 1; min-width: 200px; background: var(--bg3); border: 1px solid var(--border);
+                color: var(--text); border-radius: 8px; padding: 9px 12px;
+                font-family: var(--mono); font-size: 12px; outline: none; }
+.filter-input:focus { border-color: rgba(45,212,191,0.4); box-shadow: 0 0 0 3px rgba(45,212,191,0.08); }
+.chip { border: 1px solid var(--border2); background: transparent; color: var(--text2);
+        border-radius: 20px; padding: 6px 12px; font-size: 12px; cursor: pointer; transition: all .2s; }
+.chip:hover, .chip.active { background: var(--teal-bg); color: var(--teal);
+                             border-color: rgba(45,212,191,0.35); }
+
+/* ── Wireshark shell ── */
+.wireshark-shell { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #0b0e13; }
+.ws-titlebar { background: var(--bg3); border-bottom: 1px solid var(--border); padding: 10px 14px;
+               display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ws-title { font-family: var(--mono); color: var(--text2); font-size: 12px; }
+.ws-count { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.packet-table-wrap { max-height: 460px; overflow: auto; }
+
+table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 11px; min-width: 820px; }
+thead { position: sticky; top: 0; background: #121720; z-index: 2; }
+th { text-align: left; color: var(--text3); font-weight: 700; padding: 8px 10px;
+     border-bottom: 1px solid var(--border2); text-transform: uppercase; letter-spacing: 0.05em; }
+td { padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text2); white-space: nowrap; }
+td.info-cell { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 380px; }
+tbody tr { cursor: pointer; transition: background .12s; }
+tbody tr:hover { background: rgba(255,255,255,0.035); }
+tbody tr.selected { background: rgba(45,212,191,0.1); outline: 1px solid rgba(45,212,191,0.25); }
+
+.proto { font-weight: 700; padding: 2px 7px; border-radius: 999px; border: 1px solid; font-size: 10px; }
+.p-arp  { color: var(--amber);  background: var(--amber-bg);  border-color: rgba(245,158,11,0.25); }
+.p-dns  { color: var(--purple); background: var(--purple-bg); border-color: rgba(167,139,250,0.25); }
+.p-tcp  { color: var(--blue);   background: var(--blue-bg);   border-color: rgba(77,168,255,0.25); }
+.p-http { color: var(--green);  background: var(--green-bg);  border-color: rgba(74,222,128,0.25); }
+.p-tls  { color: var(--teal);   background: var(--teal-bg);   border-color: rgba(45,212,191,0.25); }
+.p-icmp { color: var(--coral);  background: var(--coral-bg);  border-color: rgba(251,113,133,0.25); }
+.p-dhcp { color: #facc15; background: rgba(250,204,21,0.08);  border-color: rgba(250,204,21,0.25); }
+.p-udp  { color: #c084fc; background: rgba(192,132,252,0.08); border-color: rgba(192,132,252,0.25); }
+.p-smb  { color: #38bdf8; background: rgba(56,189,248,0.08);  border-color: rgba(56,189,248,0.25); }
+.p-nfs  { color: #fb923c; background: rgba(251,146,60,0.08);  border-color: rgba(251,146,60,0.25); }
+.p-nb   { color: #a3e635; background: rgba(163,230,53,0.08);  border-color: rgba(163,230,53,0.25); }
+
+/* ── Analysis panel ── */
+.analysis-panel { margin-top: 1rem; border: 1px solid var(--border); border-radius: 12px;
+                  background: var(--bg3); overflow: hidden; }
+.analysis-head { padding: 12px 14px; border-bottom: 1px solid var(--border);
+                 display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.analysis-title { font-size: 14px; font-weight: 700; color: #fff; }
+.analysis-body { padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.detail-box { background: var(--bg4); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.detail-k { color: var(--text3); font-family: var(--mono); font-size: 10px;
+            text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+.detail-v { color: var(--text2); font-size: 12px; line-height: 1.6; font-family: var(--mono); word-break: break-word; white-space: normal; }
+.packet-explain { grid-column: 1 / -1; background: rgba(45,212,191,0.06); border-color: rgba(45,212,191,0.18); }
+.packet-explain .detail-v { font-family: var(--sans); font-size: 13px; color: var(--text); }
+
+/* ── Paneles inferiores (árbol disección + hex dump) ── */
+.ws-bottom-panels { display: grid; grid-template-columns: 1fr 1fr; margin-top: 8px;
+                    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+                    background: #0b0e13; }
+.ws-bottom-panel { overflow: hidden; min-width: 0; }
+.ws-bottom-panel + .ws-bottom-panel { border-left: 1px solid var(--border); }
+.ws-panel-bar { background: var(--bg3); border-bottom: 1px solid var(--border); padding: 7px 12px;
+                font-family: var(--mono); font-size: 10px; color: var(--text3);
+                text-transform: uppercase; letter-spacing: 0.06em; user-select: none; }
+/* árbol */
+.ws-tree { padding: 4px 0; max-height: 220px; overflow: auto; }
+.tree-node { font-family: var(--mono); font-size: 11px; }
+.tree-row  { display: flex; align-items: baseline; gap: 4px; padding: 2px 10px;
+             cursor: pointer; user-select: none; }
+.tree-row:hover { background: rgba(255,255,255,0.04); }
+.tree-arr  { color: var(--text3); font-size: 9px; width: 10px; flex-shrink: 0; transition: transform .12s; }
+.tree-arr.open { transform: rotate(90deg); }
+.tree-lbl  { color: var(--text2); }
+.tree-kids { padding-left: 18px; display: none; }
+.tree-kids.open { display: block; }
+.tree-leaf { display: flex; gap: 6px; padding: 1px 10px 1px 22px;
+             font-family: var(--mono); font-size: 11px; }
+.tl-k { color: var(--text3); white-space: nowrap; }
+.tl-v { color: var(--text); word-break: break-all; }
+/* hex dump */
+.hex-view { padding: 8px 10px; max-height: 220px; overflow: auto;
+            font-family: var(--mono); font-size: 11px; line-height: 1.8; }
+.hex-row { display: flex; gap: 14px; }
+.hx-off  { color: var(--text3); flex-shrink: 0; }
+.hx-b    { color: var(--blue); flex-shrink: 0; }
+.hx-asc  { color: var(--green); }
+.hex-empty { padding: 2rem; text-align: center; color: var(--text3); font-size: 11px; }
+
+/* ── Stats ── */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 1.25rem; }
+.stat-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.stat-pct { font-family: var(--mono); font-size: 12px; color: var(--text3); }
+.stat-bar-wrap { height: 4px; background: var(--bg4); border-radius: 2px; margin-bottom: 6px; }
+.stat-bar { height: 4px; border-radius: 2px; transition: width .6s ease; }
+.stat-count { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+
+/* ── Empty state ── */
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--text3);
+               font-family: var(--mono); font-size: 12px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.card:nth-child(1){animation-delay:.05s} .card:nth-child(2){animation-delay:.10s}
+.card:nth-child(3){animation-delay:.15s} .card:nth-child(4){animation-delay:.20s}
+::-webkit-scrollbar{width:6px;height:6px} ::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--border2)}
+
+footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font-size: 12px;
+         color: var(--text3); border-top: 1px solid var(--border); font-family: var(--mono); }
+
+@media(max-width:760px){
+  nav{gap:1rem;padding:0 1rem} .hero{padding:3rem 1rem 2rem} main{padding:0 1rem 4rem}
+  .card-body{padding:1rem} h1{font-size:1.9rem} .analysis-body{grid-template-columns:1fr}
+  .capture-toolbar{align-items:stretch} .chip{flex:1;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">WS://SIMULADOR</a>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">Abrir archivo</a>
+    <a class="nav-link" href="#s2">Captura</a>
+    <a class="nav-link" href="#s3">Estadísticas</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Simulador · PCAP · TXT · Análisis de capas</div>
+  <h1>Simulador de <span>Wireshark</span></h1>
+  <p class="hero-sub">Abre un archivo <strong>.pcap</strong> real o el <strong>.txt</strong> generado por el generador de capturas. Hacé clic en cualquier paquete para ver el análisis detallado por capas.</p>
+</section>
+
+<main>
+
+<!-- ── Tarjeta 1: abrir archivo ────────────────────────────────────────────── -->
+<div class="card" id="s1">
+  <div class="card-header">
+    <span class="card-num num-teal">01</span>
+    <span class="card-title">Abrir archivo de captura</span>
+  </div>
+  <div class="card-body">
+    <p>El simulador acepta dos formatos generados por <strong>generar_pcap.py</strong>: el binario PCAP (para Wireshark real) y el texto plano TXT (para análisis sin instalar nada).</p>
+    <div class="drop-zone" id="dropZone">
+      <div class="drop-icon">📂</div>
+      <div class="drop-title">Arrastrar archivo aquí o hacer clic</div>
+      <div class="drop-sub">El archivo no se sube a ningún servidor — se procesa en el navegador</div>
+      <div class="drop-formats">
+        <span class="fmt-badge pcap">.pcap — binario Wireshark</span>
+        <span class="fmt-badge txt">.txt — texto plano del generador</span>
+      </div>
+      <button class="file-btn" onclick="document.getElementById('fileInput').click()">Seleccionar archivo</button>
+    </div>
+    <input type="file" id="fileInput" accept=".pcap,.pcapng,.txt" style="display:none">
+  </div>
+</div>
+
+<!-- ── Tarjeta 2: captura ─────────────────────────────────────────────────── -->
+<div class="card" id="s2">
+  <div class="card-header">
+    <span class="card-num num-blue">02</span>
+    <span class="card-title" id="captureCardTitle">Captura de paquetes</span>
+  </div>
+  <div class="card-body">
+
+    <div class="capture-toolbar">
+      <input class="filter-input" id="filterInput" type="text"
+             placeholder="Filtrar: dns, tcp, 192.168.1.10, SYN, HTTP, ARP, 192.168..." oninput="applyFilter()">
+      <button class="chip active"  onclick="setQuickFilter('', this)">Todo</button>
+      <button class="chip" onclick="setQuickFilter('arp', this)">ARP</button>
+      <button class="chip" onclick="setQuickFilter('dhcp', this)">DHCP</button>
+      <button class="chip" onclick="setQuickFilter('dns', this)">DNS</button>
+      <button class="chip" onclick="setQuickFilter('icmp', this)">ICMP</button>
+      <button class="chip" onclick="setQuickFilter('http', this)">HTTP</button>
+      <button class="chip" onclick="setQuickFilter('tcp', this)">TCP</button>
+      <button class="chip" onclick="setQuickFilter('smb2', this)">SMB2</button>
+      <button class="chip" onclick="setQuickFilter('nfs', this)">NFS</button>
+      <button class="chip" onclick="setQuickFilter('ssh', this)">SSH</button>
+    </div>
+
+    <div class="wireshark-shell">
+      <div class="ws-titlebar">
+        <div class="ws-title" id="wsTitle">— sin archivo cargado —</div>
+        <div class="ws-count" id="visibleCount">0 visibles</div>
+      </div>
+      <div class="packet-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:52px">No.</th>
+              <th style="width:96px">Tiempo</th>
+              <th style="width:160px">Origen</th>
+              <th style="width:160px">Destino</th>
+              <th style="width:80px">Protocolo</th>
+              <th style="width:54px">Long.</th>
+              <th>Información</th>
+            </tr>
+          </thead>
+          <tbody id="packetBody">
+            <tr><td colspan="7"><div class="empty-state">Carga un archivo .pcap o .txt para ver los paquetes</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="analysis-panel" id="analysisPanel">
+      <div class="analysis-head">
+        <div class="analysis-title" id="analysisTitle">Selecciona un paquete de la captura</div>
+        <span class="ws-count" id="analysisMeta">sin paquete seleccionado</span>
+      </div>
+      <div class="analysis-body">
+        <div class="detail-box packet-explain">
+          <div class="detail-k">Descripción educativa</div>
+          <div class="detail-v" id="analysisDesc">Al hacer clic sobre una fila, verás una explicación del paquete, qué rol cumple en la red y cómo se relaciona con las capas OSI.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa 2 — Enlace (Ethernet)</div>
+          <div class="detail-v" id="l2">MAC origen y MAC destino.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa 3 — Red (IP / ARP)</div>
+          <div class="detail-v" id="l3">Direccionamiento IP o resolución ARP.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa 4 — Transporte (TCP / UDP)</div>
+          <div class="detail-v" id="l4">Puertos, flags y control de flujo.</div>
+        </div>
+        <div class="detail-box">
+          <div class="detail-k">Capa 7 — Aplicación</div>
+          <div class="detail-v" id="l7">Protocolo visible: DNS, HTTP, DHCP, SSH, SMB, NFS…</div>
+        </div>
+      </div>
+
+    <!-- ── Árbol de disección + Hex dump ── -->
+    <div class="ws-bottom-panels">
+      <div class="ws-bottom-panel">
+        <div class="ws-panel-bar">▸ Detalle del paquete — disección de protocolos</div>
+        <div class="ws-tree" id="wsTree">
+          <div class="hex-empty">Seleccioná un paquete de la captura</div>
+        </div>
+      </div>
+      <div class="ws-bottom-panel">
+        <div class="ws-panel-bar">▸ Vista hexadecimal — bytes en crudo</div>
+        <div class="hex-view" id="wsHex">
+          <div class="hex-empty">Seleccioná un paquete de la captura</div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Tarjeta 3: estadísticas ────────────────────────────────────────────── -->
+<div class="card" id="s3">
+  <div class="card-header">
+    <span class="card-num num-amber">03</span>
+    <span class="card-title">Estadísticas de protocolos</span>
+  </div>
+  <div class="card-body">
+    <p>Distribución de protocolos en la captura cargada.</p>
+    <div class="stats-grid" id="statsGrid">
+      <div class="empty-state" style="grid-column:1/-1">Cargá un archivo para ver las estadísticas</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>WS://SIMULADOR WIRESHARK · UTU 2026 · Diego Vera</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════════════
+   Estado global
+   ════════════════════════════════════════════════════════════════════════════ */
+let allPackets = [];
+let filteredPackets = [];
+let selectedNum = null;
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Utilidades binarias
+   ════════════════════════════════════════════════════════════════════════════ */
+const r16 = (b, o) => (b[o] << 8) | b[o + 1];
+const r32 = (b, o) => (((b[o] << 24) | (b[o+1] << 16) | (b[o+2] << 8) | b[o+3]) >>> 0);
+const macStr = (b, o) => Array.from({length:6}, (_,i) => b[o+i].toString(16).padStart(2,'0')).join(':');
+const ipStr  = (b, o) => `${b[o]}.${b[o+1]}.${b[o+2]}.${b[o+3]}`;
+const esc    = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const bytes2text = (b, maxLen=256) => Array.from(b.slice(0, maxLen)).map(c => String.fromCharCode(c)).join('');
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Parser DNS (con soporte de compresión de punteros)
+   ════════════════════════════════════════════════════════════════════════════ */
+function dnsName(bytes, offset) {
+  const labels = []; let o = offset, jumped = false, nextOff = offset, safety = 60;
+  while (o < bytes.length && safety-- > 0) {
+    const len = bytes[o];
+    if (len === 0) { if (!jumped) nextOff = o + 1; break; }
+    if ((len & 0xc0) === 0xc0) {
+      if (!jumped) nextOff = o + 2;
+      o = ((len & 0x3f) << 8) | bytes[o + 1]; jumped = true; continue;
+    }
+    o++;
+    labels.push(bytes.slice(o, o + len).reduce((s, c) => s + String.fromCharCode(c), ''));
+    o += len; if (!jumped) nextOff = o;
+  }
+  return { name: labels.join('.'), end: nextOff };
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Parsers de protocolos (capa 7)
+   ════════════════════════════════════════════════════════════════════════════ */
+function parseArp(fr, offset, pkt) {
+  if (fr.length < offset + 28) return;
+  const op = r16(fr, offset + 6);
+  const sM = macStr(fr, offset + 8);  const sI = ipStr(fr, offset + 14);
+  const tM = macStr(fr, offset + 18); const tI = ipStr(fr, offset + 24);
+  pkt.l3 = `ARP ${op===1?'Request':'Reply'} — Sender: ${sI} (${sM}) | Target: ${tI}`;
+  pkt.l4 = 'N/A — ARP no usa TCP/UDP (opera en capa 2/3)';
+  pkt.l7 = 'N/A — ARP no tiene capa de aplicación';
+  pkt.info = op === 1 ? `Who has ${tI}?  Tell ${sI}` : `${sI} is at ${sM}`;
+  pkt._arp = { op, sM, sI, tM, tI };
+}
+
+function parseDns(pl, pkt, sport, dport) {
+  pkt.proto = 'DNS';
+  if (pl.length < 12) { pkt.l7 = 'DNS — datos insuficientes'; return; }
+  const txid = r16(pl, 0), flags = r16(pl, 2);
+  const qdcount = r16(pl, 4), ancount = r16(pl, 6);
+  const isResp = !!(flags & 0x8000), rcode = flags & 0x000f;
+  let off = 12, qname = '', qtypeStr = '';
+  if (qdcount > 0 && off < pl.length) {
+    const r = dnsName(pl, off); qname = r.name; off = r.end;
+    if (off + 4 <= pl.length) {
+      const qt = r16(pl, off);
+      qtypeStr = qt===1?'A':qt===28?'AAAA':qt===12?'PTR':`${qt}`;
+      off += 4;
+    }
+  }
+  let ansIp = '';
+  if (isResp && ancount > 0 && off < pl.length) {
+    const ar = dnsName(pl, off); off = ar.end;
+    if (off + 10 <= pl.length) {
+      const atype = r16(pl, off), rdlen = r16(pl, off + 8); off += 10;
+      if (atype === 1 && rdlen === 4 && off + 4 <= pl.length) ansIp = ipStr(pl, off);
+    }
+  }
+  const idHex = `0x${txid.toString(16).padStart(4,'0')}`;
+  if (isResp) {
+    pkt.l7 = rcode===3
+      ? `DNS Respuesta NXDOMAIN — ID: ${idHex} | Nombre: ${qname} | El dominio no existe (código 3)`
+      : `DNS Respuesta — ID: ${idHex} | ${qname} → ${ansIp||'(ver respuesta)'} | ${ancount} respuesta(s)`;
+    pkt.info = rcode===3
+      ? `Standard query response ${idHex}  No such name ${qtypeStr} ${qname}`
+      : `Standard query response ${idHex}  ${qtypeStr} ${qname}${ansIp?' '+ansIp:''}`;
+  } else {
+    pkt.l7 = `DNS Consulta — ID: ${idHex} | Tipo: ${qtypeStr} | Nombre: ${qname}`;
+    pkt.info = `Standard query ${idHex}  ${qtypeStr} ${qname}`;
+  }
+  pkt._dns = { txid, qname, qtypeStr, isResp, rcode, ansIp };
+}
+
+function parseDhcp(pl, pkt) {
+  pkt.proto = 'DHCP';
+  if (pl.length < 241) { pkt.l7 = 'DHCP — datos insuficientes'; return; }
+  const xid = r32(pl, 4); let mtype = 0;
+  if (pl.length > 244 && r32(pl, 236) === 0x63825363) {
+    let i = 240;
+    while (i < pl.length) {
+      const code = pl[i]; if (code === 0xff) break; if (code === 0) { i++; continue; }
+      const ln = pl[i+1]||0;
+      if (code === 53 && i+2 < pl.length) mtype = pl[i+2];
+      i += 2 + ln;
+    }
+  }
+  const labels = {1:'Discover',2:'Offer',3:'Request',4:'Decline',5:'ACK',6:'NAK',7:'Release'};
+  const ms = labels[mtype] || `Tipo ${mtype}`;
+  const xHex = `0x${xid.toString(16).padStart(8,'0')}`;
+  pkt.l7 = `DHCP ${ms} — Transaction ID: ${xHex}`;
+  pkt.info = `DHCP ${ms}  Transaction ID ${xHex}`;
+  pkt._dhcp = { mtype, ms, xid };
+}
+
+function parseIcmp(pl, pkt) {
+  pkt.proto = 'ICMP';
+  if (pl.length < 8) return;
+  const type = pl[0], code = pl[1];
+  const id = r16(pl, 4), seq = r16(pl, 6);
+  const kind = type===8?'request':type===0?'reply':type===3?'unreachable':`tipo ${type}`;
+  pkt.l4 = `ICMP ${kind.charAt(0).toUpperCase()+kind.slice(1)} — Tipo: ${type} | Código: ${code} | ID: 0x${id.toString(16).padStart(4,'0')} | Seq: ${seq}`;
+  pkt.l7 = 'ICMP no tiene capa de aplicación';
+  pkt.info = type===8 ? `Echo (ping) request   id=0x${id.toString(16).padStart(4,'0')}, seq=${seq}`
+           : type===0 ? `Echo (ping) reply     id=0x${id.toString(16).padStart(4,'0')}, seq=${seq}`
+           :            `ICMP tipo ${type} código ${code}`;
+  pkt._icmp = { type, code, id, seq };
+}
+
+function flagsStr(f) {
+  const fl = [];
+  if (f & 0x002) fl.push('SYN'); if (f & 0x010) fl.push('ACK');
+  if (f & 0x008) fl.push('PSH'); if (f & 0x001) fl.push('FIN');
+  if (f & 0x004) fl.push('RST'); if (f & 0x020) fl.push('URG');
+  return fl.join(', ') || '—';
+}
+
+function parseTcp(pl, pkt, srcIp, dstIp) {
+  if (pl.length < 20) return;
+  const sport = r16(pl,0), dport = r16(pl,2);
+  const seq = r32(pl,4), ack = r32(pl,8);
+  const hdrLen = (pl[12]>>4)*4, rawFlags = r16(pl,12)&0x1ff;
+  const fStr = flagsStr(rawFlags), payload = pl.slice(hdrLen);
+  const ports = new Set([sport, dport]);
+
+  pkt.l4 = `TCP — Puerto origen: ${sport} | Puerto destino: ${dport} | Flags: [${fStr}] | Seq: ${seq} | Ack: ${ack} | Win: ${r16(pl,14)}`;
+  pkt._tcp = { sport, dport, seq, ack, rawFlags, fStr, payload };
+
+  if (ports.has(80))  return parseHttp(payload, pkt, sport, dport);
+  if (ports.has(445)) return parseSmb(payload, pkt, sport, dport);
+  if (ports.has(22))  return parseSsh(payload, pkt, sport, dport);
+
+  pkt.proto = 'TCP';
+  pkt.l7 = payload.length > 0 ? `Datos TCP: ${payload.length} bytes` : 'Paquete de control TCP (sin datos)';
+  pkt.info = `${sport} → ${dport}  [${fStr}]  Seq=${seq}  Ack=${ack}  Len=${payload.length}`;
+}
+
+function parseUdp(pl, pkt, srcIp, dstIp) {
+  if (pl.length < 8) return;
+  const sport = r16(pl,0), dport = r16(pl,2), udpPl = pl.slice(8);
+  const ports = new Set([sport, dport]);
+  pkt.l4 = `UDP — Puerto origen: ${sport} | Puerto destino: ${dport} | Longitud: ${r16(pl,4)} bytes`;
+
+  if (ports.has(53))   return parseDns(udpPl, pkt, sport, dport);
+  if (ports.has(67) || ports.has(68)) return parseDhcp(udpPl, pkt);
+  if (ports.has(137))  { pkt.proto='NBNS'; pkt.l7=`NetBIOS Name Service — UDP 137 — difusión de nombres Windows`; pkt.info=`Name service query  ${srcIp} → ${dstIp}`; return; }
+  if (ports.has(5353)) {
+    pkt.proto='MDNS'; let qn='';
+    if (udpPl.length>=13){const r=dnsName(udpPl,12);qn=r.name;}
+    pkt.l7=`mDNS — Multicast DNS UDP 5353 — 224.0.0.251 | Nombre: ${qn}`; pkt.info=`Standard query  ${qn}`; return;
+  }
+  if (ports.has(2049)) {
+    pkt.proto='NFS';
+    const dir = dport===2049?'Call':'Reply';
+    pkt.l7=`NFS — RPC ${dir} | UDP 2049`; pkt.info=`RPC ${dir}  NFS NULL procedure`; return;
+  }
+  pkt.proto='UDP'; pkt.l7=`UDP datos: ${udpPl.length} bytes`; pkt.info=`${sport} → ${dport}  Len=${udpPl.length}`;
+}
+
+function parseHttp(pl, pkt, sport, dport) {
+  pkt.proto='HTTP';
+  const txt = bytes2text(pl, 512);
+  const fl = txt.split('\r\n')[0]||txt.split('\n')[0]||'';
+  pkt.l7=`HTTP — ${fl}`; pkt.info=fl||`${sport} → ${dport}  [HTTP]`;
+}
+
+function parseSsh(pl, pkt, sport, dport) {
+  pkt.proto='SSH';
+  const txt = bytes2text(pl, 80);
+  const fl = txt.split('\r\n')[0]||txt.split('\n')[0]||'';
+  const side = sport===22?'Servidor':'Cliente';
+  pkt.l7=`SSH — Banner ${side}: ${fl||'(datos cifrados)'}`;
+  pkt.info = fl.startsWith('SSH-') ? `${side}: ${fl}` : `${sport} → ${dport}  [${flagsStr(pkt._tcp?.rawFlags||0)}]  (SSH cifrado)`;
+}
+
+function parseSmb(pl, pkt, sport, dport) {
+  pkt.proto='SMB2';
+  if (pl.length>4 && pl[0]===0xfe && pl[1]===0x53 && pl[2]===0x4d && pl[3]===0x42) {
+    const cmd = pl[16]||0;
+    const cmds={0:'Negotiate',1:'Session Setup',2:'Logoff',3:'Tree Connect',5:'Create',8:'Read',9:'Write'};
+    const cs=cmds[cmd]||`Cmd ${cmd}`, side=dport===445?'Request':'Response';
+    pkt.l7=`SMB2 — Comando: ${cs} | ${side} | TCP 445`; pkt.info=`SMB2 ${cs} ${side}`;
+  } else {
+    pkt.l7=`SMB2 sobre TCP 445`; pkt.info=`${sport} → ${dport}  [SMB2]`;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Parser de trama Ethernet completa
+   ════════════════════════════════════════════════════════════════════════════ */
+function parseFrame(fr, num, tsSec, tsUsec) {
+  const pkt = {
+    num, ts: tsSec + tsUsec/1e6, relTs: 0,
+    src:'', dst:'', proto:'DATA', length:fr.length, info:'',
+    l2:'', l3:'', l4:'No aplica o datos insuficientes', l7:'—',
+    _raw: fr   // bytes crudos de la trama para hex dump y árbol
+  };
+  if (fr.length < 14) return pkt;
+
+  const dstMac = macStr(fr,0), srcMac = macStr(fr,6), etype = r16(fr,12);
+  pkt.l2 = `Ethernet II — Origen: ${srcMac} | Destino: ${dstMac} | EtherType: 0x${etype.toString(16).padStart(4,'0')}`;
+
+  if (etype === 0x0806) { // ARP
+    pkt.src=srcMac; pkt.dst=dstMac; pkt.proto='ARP';
+    parseArp(fr, 14, pkt); return pkt;
+  }
+  if (etype !== 0x0800) {
+    pkt.src=srcMac; pkt.dst=dstMac; pkt.proto='ETH';
+    pkt.l3=`EtherType desconocido: 0x${etype.toString(16)}`; return pkt;
+  }
+
+  // IPv4
+  if (fr.length < 34) return pkt;
+  const ihl = (fr[14] & 0x0f)*4, ttl = fr[22], proto = fr[23];
+  const totLen = r16(fr,16);
+  const srcIp = ipStr(fr,26), dstIp = ipStr(fr,30);
+  pkt.src=srcIp; pkt.dst=dstIp;
+  pkt.l3 = `IPv4 — Origen: ${srcIp} | Destino: ${dstIp} | TTL: ${ttl} | Protocolo: ${proto} | Long. total: ${totLen} bytes`;
+
+  const pl = fr.slice(14 + ihl);
+  if (proto===1)  { parseIcmp(pl, pkt); }
+  else if (proto===6)  { parseTcp(pl, pkt, srcIp, dstIp); }
+  else if (proto===17) { parseUdp(pl, pkt, srcIp, dstIp); }
+  else { pkt.proto=`IP/${proto}`; pkt.l4=`Protocolo IP número ${proto}`; }
+
+  return pkt;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Parser PCAP binario
+   ════════════════════════════════════════════════════════════════════════════ */
+function parsePcap(buf, filename) {
+  const bytes = new Uint8Array(buf);
+  if (bytes.length < 24) return [];
+  const magic = (bytes[0]|(bytes[1]<<8)|(bytes[2]<<16)|(bytes[3]<<24))>>>0;
+  const le = (magic === 0xa1b2c3d4 || magic === 0xa1b23c4d);
+  const dv = new DataView(buf);
+  const gu32 = (o) => dv.getUint32(o, le);
+
+  const packets=[]; let offset=24, num=1;
+  while (offset+16 <= bytes.length) {
+    const tsSec = gu32(offset), tsUsec = gu32(offset+4);
+    const caplen = gu32(offset+8);
+    offset += 16;
+    if (caplen > 65535 || offset+caplen > bytes.length) break;
+    const fr = bytes.slice(offset, offset+caplen);
+    packets.push(parseFrame(fr, num++, tsSec, tsUsec));
+    offset += caplen;
+  }
+  if (packets.length) { const t0=packets[0].ts; packets.forEach(p=>p.relTs=p.ts-t0); }
+  return packets;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Parser TXT (formato generado por generar_pcap.py)
+   ════════════════════════════════════════════════════════════════════════════ */
+function parseTxt(text) {
+  const packets=[];
+  for (const line of text.split('\n')) {
+    const trimmed = line.trimStart();
+    if (!trimmed || !/^\d/.test(trimmed)) continue;
+    // columnas fijas: num(5) 2sp time(12) 2sp src(22) 2sp dst(22) 2sp proto(8) 2sp len(5) 2sp info
+    const m = line.match(/^\s*(\d+)\s+([\d.]+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\d+)\s*(.*?)$/);
+    if (!m) continue;
+    const pkt = {
+      num:parseInt(m[1]), relTs:parseFloat(m[2]), ts:parseFloat(m[2]),
+      src:m[3].trim(), dst:m[4].trim(), proto:m[5].trim(),
+      length:parseInt(m[6]), info:m[7].trim(),
+      l2:'', l3:'', l4:'', l7:'', fromTxt:true
+    };
+    inferTxtLayers(pkt);
+    packets.push(pkt);
+  }
+  return packets;
+}
+
+function inferTxtLayers(pkt) {
+  const p=pkt.proto.toUpperCase(), {src,dst,info}=pkt;
+  const isIp = s => /^\d+\.\d+\.\d+\.\d+$/.test(s);
+
+  pkt.l2 = p==='ARP'
+    ? `Ethernet II — Origen: ${src} | Destino: ${dst} | EtherType: ARP (0x0806)`
+    : `Ethernet II — Origen: (MAC) | Destino: (MAC) | EtherType: IPv4 (0x0800)`;
+
+  if (p==='ARP') {
+    pkt.l3=info.includes('Who has')?`ARP Request — ${info}`:`ARP Reply — ${info}`;
+    pkt.l4='N/A — ARP no usa TCP/UDP'; pkt.l7='N/A — ARP no tiene capa de aplicación';
+  } else {
+    pkt.l3=`IPv4 — Origen: ${src} | Destino: ${dst}`;
+    if (p==='DHCP') { pkt.l4='UDP — Puerto 68 → 67 (o 67 → 68)'; pkt.l7=`DHCP — ${info}`; }
+    else if (p==='DNS') { pkt.l4='UDP — Puerto efímero → 53 (DNS)'; pkt.l7=`DNS — ${info}`; }
+    else if (p==='ICMP') { pkt.l4=`ICMP — ${info}`; pkt.l7='ICMP no tiene capa de aplicación'; }
+    else if (p==='HTTP') { pkt.l4='TCP — Puerto efímero → 80 (HTTP)'; pkt.l7=`HTTP — ${info}`; }
+    else if (p==='SMB2') { pkt.l4='TCP — Puerto efímero → 445 (SMB2)'; pkt.l7=`SMB2 — ${info}`; }
+    else if (p==='NFS')  { pkt.l4='UDP — Puerto efímero → 2049 (NFS)'; pkt.l7=`NFS — ${info}`; }
+    else if (p==='SSH')  { pkt.l4='TCP — Puerto efímero → 22 (SSH)'; pkt.l7=`SSH — ${info}`; }
+    else if (p==='NBNS') { pkt.l4='UDP — Puerto 137 (NetBIOS, broadcast)'; pkt.l7=`NetBIOS — ${info}`; }
+    else if (p==='MDNS') { pkt.l4='UDP — Puerto 5353 (mDNS multicast 224.0.0.251)'; pkt.l7=`mDNS — ${info}`; }
+    else if (p==='TCP')  {
+      const m=info.match(/(\d+) → (\d+)\s+\[([^\]]*)\]/);
+      pkt.l4=m?`TCP — Puerto ${m[1]} → ${m[2]} | Flags: [${m[3]}]`:`TCP — ${info}`;
+      pkt.l7='Datos TCP sin payload de aplicación identificado';
+    } else {
+      pkt.l4=`${p} — ${info}`; pkt.l7='—';
+    }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Descripción educativa por protocolo
+   ════════════════════════════════════════════════════════════════════════════ */
+function getDescription(pkt) {
+  const p=pkt.proto.toUpperCase(), {info,src,dst}=pkt;
+
+  if (p==='ARP') {
+    if (info.includes('Who has')) {
+      const m=info.match(/Who has ([\d.]+).*Tell ([\d.]+)/);
+      const t=m?m[1]:'?', s=m?m[2]:src;
+      return `El equipo ${s} pregunta en broadcast: "¿Quién tiene la IP ${t}?". Sin esta respuesta no puede construir la trama Ethernet de destino. ARP (Address Resolution Protocol) traduce IPs a MACs para permitir la comunicación en la red local.`;
+    }
+    const m=info.match(/([\d.]+) is at (.+)/);
+    return `Respuesta ARP: el equipo con IP ${m?m[1]:src} anuncia que su MAC es ${m?m[2]:'(ver paquete)'}. El equipo que preguntó guarda esta asociación en su caché ARP y puede enviar tramas Ethernet directamente sin volver a preguntar (hasta que expire el caché).`;
+  }
+
+  if (p==='DHCP') {
+    if (info.includes('Discover')) return `El equipo todavía no tiene IP y busca un servidor DHCP en la red. Envía en broadcast (255.255.255.255) porque aún no tiene dirección asignada. Primer paso del proceso DORA: Discover → Offer → Request → ACK.`;
+    if (info.includes('Offer')) return `El servidor DHCP ofrece una dirección IP al cliente. La oferta incluye: IP propuesta, máscara de subred, gateway (puerta de enlace) y servidor DNS. El cliente puede aceptar o ignorar la oferta.`;
+    if (info.includes('Request')) return `El cliente acepta la oferta DHCP y solicita formalmente la IP. Se envía en broadcast para que otros servidores DHCP sepan que ya eligió uno. Tercer paso del proceso DORA.`;
+    if (info.includes('ACK')) return `El servidor confirma la asignación de IP al cliente. Cuarto y último paso del proceso DORA. A partir de este momento el cliente puede usar la dirección por el tiempo de arrendamiento (lease time) establecido.`;
+    return 'Mensaje DHCP — gestión automática de direcciones IP en la red.';
+  }
+
+  if (p==='DNS') {
+    if (info.includes('No such name')) return `El servidor DNS (${src}) responde NXDOMAIN (código de error 3): el dominio solicitado no existe. El equipo cliente deberá tratar la dirección como no alcanzable por nombre.`;
+    if (info.includes('response') || info.includes('respuesta')) return `El servidor DNS (${src}) responde con la IP del dominio solicitado. El cliente puede guardar esta respuesta en su caché local por el tiempo indicado en el campo TTL. Sin DNS, cada conexión requeriría conocer la IP de destino de antemano.`;
+    const m=info.match(/A (.+)$/); const domain=m?m[1].trim():'el dominio';
+    return `El equipo ${src} consulta al servidor DNS (${dst}) la IP correspondiente al nombre "${domain}". Usa UDP puerto 53. El DNS es el directorio de Internet: traduce nombres legibles (como utu.edu.uy) a direcciones IP numéricas.`;
+  }
+
+  if (p==='ICMP') {
+    if (info.includes('request')) return `Comando ping: ${src} envía un "eco" (ICMP tipo 8, Echo Request) a ${dst} para verificar conectividad. Si el destino responde con tipo 0, la ruta de red funciona. ICMP no usa puertos — va directamente sobre IP.`;
+    if (info.includes('reply')) return `Respuesta ping (ICMP tipo 0, Echo Reply): ${dst} respondió correctamente al equipo ${src}. El TTL en la respuesta indica cuántos saltos viajó el paquete antes de llegar al destino.`;
+  }
+
+  if (p==='HTTP') {
+    if (/^GET |^POST |^HEAD /.test(info)) return `Solicitud HTTP de ${src} al servidor ${dst}. HTTP/1.1 es el protocolo de la web (capa de aplicación), viaja sobre TCP puerto 80 sin cifrado. Todo el contenido del request es visible en la captura — incluyendo cookies y formularios.`;
+    if (info.includes('200')) return `El servidor respondió con código 200 OK: el recurso fue encontrado y enviado. HTTP sin cifrar permite ver el contenido completo de la respuesta en Wireshark, incluyendo el cuerpo HTML.`;
+    if (info.includes('404')) return `El servidor respondió con código 404 Not Found: el recurso solicitado no existe en el servidor.`;
+    return `Tráfico HTTP sobre TCP puerto 80. Sin cifrado: Wireshark puede ver solicitudes y respuestas completas.`;
+  }
+
+  if (p==='TCP') {
+    if (info.includes('SYN') && !info.includes('ACK')) return `Primer paso del three-way handshake TCP: el cliente envía SYN para iniciar la conexión. Sin este handshake de tres pasos no hay comunicación TCP confiable. Secuencia: SYN → SYN+ACK → ACK.`;
+    if (info.includes('SYN') && info.includes('ACK')) return `Segundo paso del handshake: el servidor responde con SYN+ACK, confirmando que el puerto está abierto y listo. El cliente debe responder con un ACK final para completar el handshake.`;
+    if (info.includes('FIN')) return `El equipo ${src} inicia el cierre ordenado de la sesión TCP con el flag FIN. TCP usa un proceso de cuatro pasos (FIN, ACK, FIN, ACK) para garantizar que ambos lados terminaron de transmitir.`;
+    if (info.includes('RST')) return `Flag RST (Reset): el equipo rechaza o aborta la conexión de forma inmediata. Puede indicar que el puerto de destino está cerrado o que la conexión es inválida.`;
+    return `Segmento TCP entre ${src} y ${dst}. TCP garantiza entrega ordenada y confiable mediante números de secuencia (Seq) y confirmaciones (Ack).`;
+  }
+
+  if (p==='SMB2') return `SMB2 (Server Message Block v2) sobre TCP 445. Protocolo nativo de Windows para compartir archivos e impresoras en red. El equipo ${src} accede a recursos del NAS (${dst}).`;
+  if (p==='NFS')  return `NFS (Network File System) sobre UDP 2049. Sistema de archivos en red de Linux/Unix. El equipo ${src} accede a archivos almacenados en el NAS (${dst}).`;
+  if (p==='SSH')  return `SSH (Secure Shell) sobre TCP 22. Protocolo de terminal remota cifrada. El intercambio de banners identifica versiones antes de negociar el cifrado. A partir del Key Exchange, el tráfico es opaco en Wireshark.`;
+  if (p==='NBNS') return `NetBIOS Name Service (UDP 137). Windows difunde el nombre de un equipo en la red local para encontrar su IP, sin necesitar un servidor DNS. Funciona solo dentro de la misma subred (broadcast).`;
+  if (p==='MDNS') return `Multicast DNS (UDP 5353). Linux y macOS descubren equipos locales sin servidor DNS central. Los paquetes se envían a la dirección multicast 224.0.0.251. Los nombres terminan en .local y son resolvibles solo en la LAN.`;
+  if (p==='UDP')  return `Datagrama UDP entre ${src} y ${dst}. UDP no garantiza entrega ni orden — es más rápido que TCP pero sin control de flujo. Usado para protocolos tolerantes a pérdidas como DNS, DHCP, NFS y streaming.`;
+
+  return `Paquete ${pkt.proto} — Origen: ${src} | Destino: ${dst} | Longitud: ${pkt.length} bytes.`;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Árbol de disección — helpers
+   ════════════════════════════════════════════════════════════════════════════ */
+function toggleTN(row) {
+  const kids = row.nextElementSibling;
+  const arr  = row.querySelector('.tree-arr');
+  if (kids) kids.classList.toggle('open');
+  if (arr)  arr.classList.toggle('open');
+}
+
+function tN(label, items=[]) {
+  // items: strings "key: val" o sub-nodos HTML
+  const kids = items.map(i =>
+    typeof i === 'string'
+      ? `<div class="tree-leaf">${i}</div>`
+      : i                      // raw HTML (sub-nodo)
+  ).join('');
+  return `<div class="tree-node">
+    <div class="tree-row" onclick="toggleTN(this)">
+      <span class="tree-arr">▶</span>
+      <span class="tree-lbl">${label}</span>
+    </div>
+    <div class="tree-kids">${kids}</div>
+  </div>`;
+}
+
+function tL(k, v) {
+  return `<div class="tree-leaf"><span class="tl-k">${esc(k)}: </span><span class="tl-v">${esc(String(v))}</span></div>`;
+}
+
+/* ─── Árbol principal ────────────────────────────────────────────────────── */
+function buildTree(pkt) {
+  const fr = pkt._raw;
+  let html = '';
+
+  // Frame
+  html += tN(`Frame ${pkt.num}: ${pkt.length} bytes on wire (${pkt.length*8} bits), ${pkt.length} bytes captured`, [
+    tL('Número de paquete', pkt.num),
+    tL('Longitud en el cable', `${pkt.length} bytes (${pkt.length*8} bits)`),
+    tL('Tiempo relativo', `${pkt.relTs.toFixed(6)} s`),
+  ]);
+
+  if (!fr || fr.length < 14) {
+    // TXT: usar strings de capas
+    const layers = [
+      { str: pkt.l2, proto: 'Ethernet' },
+      { str: pkt.l3, proto: 'Red' },
+      { str: pkt.l4, proto: 'Transporte' },
+      { str: pkt.l7, proto: 'Aplicación' },
+    ];
+    layers.forEach(({str, proto}) => {
+      if (!str || str === '—' || str === 'No aplica o datos insuficientes') return;
+      const [title, rest=''] = str.split(' — ');
+      const leafs = rest.split(' | ').filter(Boolean).map(s => {
+        const ci = s.indexOf(': ');
+        return ci > -1 ? tL(s.slice(0,ci), s.slice(ci+2)) : `<div class="tree-leaf"><span class="tl-v">${esc(s)}</span></div>`;
+      });
+      html += tN(title.trim() || proto, leafs);
+    });
+    return html;
+  }
+
+  // ── Ethernet ──────────────────────────────────────────────────────────────
+  const dMac = macStr(fr, 0), sMac = macStr(fr, 6), etype = r16(fr, 12);
+  const dLbl = dMac === 'ff:ff:ff:ff:ff:ff' ? `${dMac} (Broadcast)` :
+               dMac.startsWith('01:00:5e') ? `${dMac} (Multicast)` : dMac;
+  html += tN(`Ethernet II, Src: ${sMac}, Dst: ${dLbl}`, [
+    tL('Destino', dLbl),
+    tL('Origen', sMac),
+    tL('Tipo', `0x${etype.toString(16).padStart(4,'0')} (${etype===0x0800?'IPv4':etype===0x0806?'ARP':'desconocido'})`),
+  ]);
+
+  // ── ARP ───────────────────────────────────────────────────────────────────
+  if (etype === 0x0806 && pkt._arp) {
+    const a = pkt._arp;
+    html += tN(`Address Resolution Protocol (${a.op===1?'request':'reply'})`, [
+      tL('Hardware type', 'Ethernet (1)'),
+      tL('Protocol type', 'IPv4 (0x0800)'),
+      tL('Hardware size', '6'),
+      tL('Protocol size', '4'),
+      tL('Opcode', `${a.op===1?'request':'reply'} (${a.op})`),
+      tL('Sender MAC address', a.sM),
+      tL('Sender IP address', a.sI),
+      tL('Target MAC address', a.op===1?'00:00:00:00:00:00':a.tM),
+      tL('Target IP address', a.tI),
+    ]);
+    return html;
+  }
+
+  // ── IPv4 ──────────────────────────────────────────────────────────────────
+  if (etype !== 0x0800 || fr.length < 34) return html;
+  const ihl = (fr[14]&0x0f)*4, dscp=fr[15], totLen=r16(fr,16);
+  const ident=r16(fr,18), flags=(fr[20]>>5), frag=((r16(fr,20)&0x1fff));
+  const ttl=fr[22], proto=fr[23];
+  const srcIp=ipStr(fr,26), dstIp=ipStr(fr,30);
+  const pnames={1:'ICMP',6:'TCP',17:'UDP',89:'OSPF'};
+  html += tN(`Internet Protocol Version 4, Src: ${srcIp}, Dst: ${dstIp}`, [
+    tL('Versión', '4'),
+    tL('Header length', `${ihl} bytes`),
+    tL('DSCP', dscp>>2),
+    tL('Total length', `${totLen} bytes`),
+    tL('Identification', `0x${ident.toString(16).padStart(4,'0')} (${ident})`),
+    tL('Flags', `Don't Fragment: ${(flags&2)?'Set':'Not set'}, More Fragments: ${(flags&1)?'Set':'Not set'}`),
+    tL('Fragment offset', frag),
+    tL('Time to live', ttl),
+    tL('Protocol', `${pnames[proto]||proto} (${proto})`),
+    tL('Origen', srcIp),
+    tL('Destino', dstIp),
+  ]);
+
+  const tpl = fr.slice(14+ihl);
+
+  // ── ICMP ──────────────────────────────────────────────────────────────────
+  if (proto===1 && tpl.length>=8) {
+    const t=tpl[0],c=tpl[1],id=r16(tpl,4),seq=r16(tpl,6);
+    const tn={8:'Echo (ping) Request',0:'Echo (ping) Reply',3:'Destination Unreachable',11:'Time Exceeded'};
+    html += tN(`Internet Control Message Protocol`, [
+      tL('Type', `${tn[t]||t} (${t})`),
+      tL('Code', c),
+      tL('Checksum', `0x${r16(tpl,2).toString(16).padStart(4,'0')}`),
+      tL('Identifier', `0x${id.toString(16).padStart(4,'0')} (${id})`),
+      tL('Sequence number', seq),
+      tL('Data length', `${tpl.length-8} bytes`),
+    ]);
+  }
+
+  // ── TCP ───────────────────────────────────────────────────────────────────
+  if (proto===6 && tpl.length>=20) {
+    const sp=r16(tpl,0),dp=r16(tpl,2),sq=r32(tpl,4),ak=r32(tpl,8);
+    const hdrLen=(tpl[12]>>4)*4, rawF=r16(tpl,12)&0x1ff, win=r16(tpl,14);
+    const fnames=[[0x002,'SYN'],[0x010,'ACK'],[0x008,'PSH'],[0x001,'FIN'],[0x004,'RST'],[0x020,'URG']];
+    const fset=fnames.filter(([b])=>rawF&b).map(([,n])=>n);
+    const pay=tpl.length-hdrLen;
+    html += tN(`Transmission Control Protocol, Src Port: ${sp}, Dst Port: ${dp}, Seq: ${sq}`, [
+      tL('Source port', sp),
+      tL('Destination port', dp),
+      tL('Sequence number', sq),
+      tL('Acknowledgment number', ak),
+      tL('Header length', `${hdrLen} bytes`),
+      tL('Flags', `0x${rawF.toString(16).padStart(3,'0')} (${fset.join(', ')||'—'})`),
+      tL('Window size', win),
+      tL('Checksum', `0x${r16(tpl,16).toString(16).padStart(4,'0')}`),
+      tL('Payload length', `${pay} bytes`),
+    ]);
+    // App layer dentro de TCP
+    if (pkt._dns)  html += dnsTree(pkt._dns);
+    if (pkt._dhcp) html += dhcpTree(pkt._dhcp);
+  }
+
+  // ── UDP ───────────────────────────────────────────────────────────────────
+  if (proto===17 && tpl.length>=8) {
+    const sp=r16(tpl,0),dp=r16(tpl,2),ul=r16(tpl,4);
+    html += tN(`User Datagram Protocol, Src Port: ${sp}, Dst Port: ${dp}`, [
+      tL('Source port', sp),
+      tL('Destination port', dp),
+      tL('Length', `${ul} bytes`),
+      tL('Checksum', `0x${r16(tpl,6).toString(16).padStart(4,'0')}`),
+      tL('UDP payload', `${ul-8} bytes`),
+    ]);
+    if (pkt._dns)  html += dnsTree(pkt._dns);
+    if (pkt._dhcp) html += dhcpTree(pkt._dhcp);
+  }
+
+  return html;
+}
+
+function dnsTree(d) {
+  return tN(`Domain Name System (${d.isResp?'response':'query'})`, [
+    tL('Transaction ID', `0x${d.txid.toString(16).padStart(4,'0')}`),
+    tL('Flags', d.isResp ? `0x8180 Standard query response${d.rcode===3?' (No such name)':''}` : '0x0100 Standard query'),
+    tL('Questions', 1),
+    tL('Answer RRs', d.isResp?1:0),
+    tL('Name consultado', d.qname),
+    tL('Type', d.qtypeStr),
+    ...(d.isResp && d.ansIp ? [tL('Address', d.ansIp)] : []),
+  ]);
+}
+
+function dhcpTree(d) {
+  return tN(`Dynamic Host Configuration Protocol (${d.ms})`, [
+    tL('Message type', `${d.ms} (${d.mtype})`),
+    tL('Transaction ID', `0x${d.xid.toString(16).padStart(8,'0')}`),
+    tL('Bootp flags', '0x0000 (Unicast)'),
+  ]);
+}
+
+/* ─── Hex dump ───────────────────────────────────────────────────────────── */
+function hexDump(bytes) {
+  if (!bytes || !bytes.length)
+    return '<div class="hex-empty">sin datos binarios — archivo TXT no contiene bytes crudos</div>';
+  const rows = [];
+  for (let i = 0; i < bytes.length; i += 16) {
+    const chunk = Array.from(bytes.slice(i, i+16));
+    const off  = i.toString(16).padStart(4,'0');
+    const b1   = chunk.slice(0,8).map(b=>b.toString(16).padStart(2,'0')).join(' ');
+    const b2   = chunk.slice(8).map(b=>b.toString(16).padStart(2,'0')).join(' ');
+    const gap  = chunk.length > 8 ? '' : ''.padEnd((8-chunk.length)*3);
+    const asc  = chunk.map(b=>(b>=32&&b<127)?esc(String.fromCharCode(b)):'.').join('');
+    rows.push(
+      `<div class="hex-row">` +
+      `<span class="hx-off">${off}</span>` +
+      `<span class="hx-b">${b1.padEnd(23)} ${(b2+gap).padEnd(23)}</span>` +
+      `<span class="hx-asc">${asc}</span>` +
+      `</div>`
+    );
+  }
+  return rows.join('');
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Colores de protocolo
+   ════════════════════════════════════════════════════════════════════════════ */
+const PROTO_CLS = {
+  ARP:'p-arp', DNS:'p-dns', TCP:'p-tcp', HTTP:'p-http', ICMP:'p-icmp',
+  DHCP:'p-dhcp', UDP:'p-udp', SSH:'p-tls', SMB2:'p-smb', NFS:'p-nfs',
+  NBNS:'p-nb', MDNS:'p-dns', ETH:'p-udp', TLS:'p-tls'
+};
+const PROTO_COLOR = {
+  'p-arp':'#f59e0b','p-dns':'#a78bfa','p-tcp':'#4da8ff','p-http':'#4ade80',
+  'p-icmp':'#fb7185','p-dhcp':'#facc15','p-udp':'#c084fc','p-tls':'#2dd4bf',
+  'p-smb':'#38bdf8','p-nfs':'#fb923c','p-nb':'#a3e635'
+};
+function protoClass(proto) { return PROTO_CLS[proto.toUpperCase()] || 'p-udp'; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Render tabla
+   ════════════════════════════════════════════════════════════════════════════ */
+function renderTable(pkts) {
+  const tbody = document.getElementById('packetBody');
+  tbody.innerHTML = '';
+  document.getElementById('visibleCount').textContent = `${pkts.length} visibles`;
+
+  if (!pkts.length) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">Ningún paquete coincide con el filtro</div></td></tr>';
+    return;
+  }
+
+  pkts.forEach(pkt => {
+    const tr = document.createElement('tr');
+    if (pkt.num === selectedNum) tr.classList.add('selected');
+    tr.onclick = () => selectPkt(tr, pkt);
+    const cls = protoClass(pkt.proto);
+    tr.innerHTML =
+      `<td>${pkt.num}</td>` +
+      `<td>${pkt.relTs.toFixed(6)}</td>` +
+      `<td>${esc(pkt.src)}</td>` +
+      `<td>${esc(pkt.dst)}</td>` +
+      `<td><span class="proto ${cls}">${esc(pkt.proto)}</span></td>` +
+      `<td>${pkt.length}</td>` +
+      `<td class="info-cell">${esc(pkt.info)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Selección de paquete → panel de análisis
+   ════════════════════════════════════════════════════════════════════════════ */
+function selectPkt(tr, pkt) {
+  document.querySelectorAll('#packetBody tr').forEach(r => r.classList.remove('selected'));
+  tr.classList.add('selected');
+  selectedNum = pkt.num;
+
+  document.getElementById('analysisTitle').textContent = `Paquete ${pkt.num} — ${pkt.proto}`;
+  document.getElementById('analysisMeta').textContent  = `${pkt.length} bytes · t=${pkt.relTs.toFixed(6)} s · ${pkt.src} → ${pkt.dst}`;
+  document.getElementById('analysisDesc').textContent  = getDescription(pkt);
+  document.getElementById('l2').textContent = pkt.l2 || 'No disponible';
+  document.getElementById('l3').textContent = pkt.l3 || 'No disponible';
+  document.getElementById('l4').textContent = pkt.l4 || 'No disponible';
+  document.getElementById('l7').textContent = pkt.l7 || 'No disponible';
+
+  // Árbol de disección
+  document.getElementById('wsTree').innerHTML = buildTree(pkt);
+  // Hex dump
+  document.getElementById('wsHex').innerHTML = hexDump(pkt._raw);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Filtro
+   ════════════════════════════════════════════════════════════════════════════ */
+function applyFilter() {
+  const term = document.getElementById('filterInput').value.toLowerCase().trim();
+  filteredPackets = term
+    ? allPackets.filter(p =>
+        p.proto.toLowerCase().includes(term) ||
+        p.src.toLowerCase().includes(term)   ||
+        p.dst.toLowerCase().includes(term)   ||
+        p.info.toLowerCase().includes(term)  ||
+        String(p.num) === term)
+    : [...allPackets];
+  renderTable(filteredPackets);
+}
+
+function setQuickFilter(proto, btn) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('filterInput').value = proto;
+  applyFilter();
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Estadísticas
+   ════════════════════════════════════════════════════════════════════════════ */
+function renderStats(pkts) {
+  const counts = {};
+  pkts.forEach(p => { counts[p.proto] = (counts[p.proto]||0) + 1; });
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const grid = document.getElementById('statsGrid');
+  grid.innerHTML = '';
+  sorted.forEach(([proto, count]) => {
+    const pct = ((count/pkts.length)*100).toFixed(1);
+    const cls = protoClass(proto);
+    const color = PROTO_COLOR[cls] || '#4da8ff';
+    const div = document.createElement('div');
+    div.className = 'stat-item';
+    div.innerHTML =
+      `<div class="stat-header"><span class="proto ${cls}">${esc(proto)}</span><span class="stat-pct">${pct}%</span></div>` +
+      `<div class="stat-bar-wrap"><div class="stat-bar" style="width:${pct}%;background:${color}"></div></div>` +
+      `<div class="stat-count">${count} paquetes</div>`;
+    div.onclick = () => { setQuickFilter(proto.toLowerCase(), document.querySelector('.chip')); };
+    grid.appendChild(div);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Carga de archivo
+   ════════════════════════════════════════════════════════════════════════════ */
+async function loadFile(file) {
+  const name = file.name.toLowerCase();
+  try {
+    if (name.endsWith('.pcap') || name.endsWith('.pcapng')) {
+      const buf = await file.arrayBuffer();
+      allPackets = parsePcap(buf, file.name);
+    } else if (name.endsWith('.txt')) {
+      const text = await file.text();
+      allPackets = parseTxt(text);
+    } else {
+      alert('Formato no soportado. Usar .pcap, .pcapng o .txt');
+      return;
+    }
+  } catch(e) {
+    alert(`Error al leer el archivo: ${e.message}`);
+    return;
+  }
+
+  if (!allPackets.length) { alert('No se encontraron paquetes en el archivo.'); return; }
+
+  filteredPackets = [...allPackets];
+  selectedNum = null;
+
+  document.getElementById('wsTitle').textContent =
+    `${file.name} · ${allPackets.length} paquetes capturados`;
+  document.getElementById('captureCardTitle').textContent =
+    `Captura: ${file.name}`;
+
+  document.getElementById('filterInput').value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('.chip').classList.add('active');
+
+  renderTable(filteredPackets);
+  renderStats(allPackets);
+
+  document.getElementById('s2').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Drop zone y navegación
+   ════════════════════════════════════════════════════════════════════════════ */
+(function setup() {
+  const zone  = document.getElementById('dropZone');
+  const input = document.getElementById('fileInput');
+
+  zone.addEventListener('click', e => { if (e.target.tagName!=='BUTTON') input.click(); });
+  input.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+  zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+
+  // Active nav link on scroll
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let active = null;
+    document.querySelectorAll('[id^="s"]').forEach(s => {
+      if (s.getBoundingClientRect().top <= 80) active = s.id;
+    });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active));
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
