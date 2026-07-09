@@ -82,18 +82,12 @@
 
   .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
   .res-card {
-    display: flex; flex-direction: column; gap: 8px; background: var(--bg3); border: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 6px; background: var(--bg3); border: 1px solid var(--border);
     border-radius: 12px; padding: 14px 16px; text-decoration: none; transition: .2s;
   }
   .res-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-  .res-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
   .res-title { font-size: 13.5px; font-weight: 600; color: #fff; }
   .res-desc { font-size: 12px; color: var(--text2); }
-  .res-tag { font-family: var(--mono); font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; text-transform: uppercase; letter-spacing: .03em; }
-  .tag-html { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74,222,128,.25); }
-  .tag-pdf  { background: var(--coral-bg); color: var(--coral); border: 1px solid rgba(251,113,133,.25); }
-  .tag-md   { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(77,168,255,.25); }
-  .tag-pcap { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,.25); }
   .res-empty { font-size: 12px; color: var(--text3); font-family: var(--mono); padding: 10px 2px; }
 
   .num-blue   { background: var(--blue-bg);   color: var(--blue); }
@@ -138,7 +132,7 @@
     — este portal solo lo organiza.
   </p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-v">10</div><div class="stat-k">Docs teóricos</div></div>
+    <div class="stat"><div class="stat-v" id="stat-teorico">9</div><div class="stat-k">Docs teóricos</div></div>
     <div class="stat"><div class="stat-v">3</div><div class="stat-k">Simuladores</div></div>
     <div class="stat"><div class="stat-v">5</div><div class="stat-k">Capturas PCAP</div></div>
     <div class="stat"><div class="stat-v">2</div><div class="stat-k">Evaluaciones</div></div>
@@ -154,46 +148,42 @@
       <span class="card-sub">Teorico/</span>
     </div>
     <div class="card-body">
-      <p class="card-desc">Modelos de referencia, las 7 capas OSI y los protocolos de red, con presentaciones interactivas por capa.</p>
-      <div class="res-grid">
-        <a class="res-card" href="Teorico/Modelos_OSI_TCPIP.md" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Modelos OSI y TCP/IP</span><span class="res-tag tag-md">MD</span></div>
-          <span class="res-desc">Historia, capas, protocolos, direccionamiento IP y subnetting.</span>
-        </a>
+      <p class="card-desc">Modelos de referencia, las 7 capas OSI y los protocolos de red, con presentaciones interactivas por capa. Este listado se genera automáticamente a partir del contenido HTML y PDF de la carpeta <code>Teorico/</code>.</p>
+      <div class="res-grid" id="teorico-grid">
         <a class="res-card" href="Teorico/Redes-Protocolos.pdf" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Redes y Protocolos</span><span class="res-tag tag-pdf">PDF</span></div>
+          <span class="res-title">Redes y Protocolos</span>
           <span class="res-desc">Presentación introductoria del curso.</span>
         </a>
         <a class="res-card" href="Teorico/capa_4_osi_presentacion_interactiva_v_4_completa.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Capa 4 — Transporte</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Capa 4 — Transporte</span>
           <span class="res-desc">TCP vs. UDP, puertos, segmentación y control de flujo.</span>
         </a>
         <a class="res-card" href="Teorico/capa_5_osi_sesion_interactiva.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Capa 5 — Sesión</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Capa 5 — Sesión</span>
           <span class="res-desc">Establecimiento, mantenimiento y cierre de sesiones.</span>
         </a>
         <a class="res-card" href="Teorico/capa_6_osi_presentacion_interactiva.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Capa 6 — Presentación</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Capa 6 — Presentación</span>
           <span class="res-desc">Formatos, cifrado y compresión de datos.</span>
         </a>
         <a class="res-card" href="Teorico/capa_7_osi_aplicacion_interactiva.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Capa 7 — Aplicación</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Capa 7 — Aplicación</span>
           <span class="res-desc">HTTP, DNS, DHCP, SMTP y simuladores de protocolos.</span>
         </a>
         <a class="res-card" href="Teorico/protocolo_ip.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Protocolo IP — Guía interactiva</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Protocolo IP — Guía interactiva</span>
           <span class="res-desc">Direccionamiento, clases y estructura de paquetes IP.</span>
         </a>
         <a class="res-card" href="Teorico/protocolo_ip_explicacion.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Protocolo IP — Explicación</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Protocolo IP — Explicación</span>
           <span class="res-desc">Complemento explicativo sobre el protocolo IP.</span>
         </a>
         <a class="res-card" href="Teorico/viaje_paquete_ip.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Viaje de un paquete IP</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Viaje de un paquete IP</span>
           <span class="res-desc">Visualización del recorrido de un paquete por la red.</span>
         </a>
         <a class="res-card" href="Teorico/pcap_wireshark.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">PCAP y Wireshark</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">PCAP y Wireshark</span>
           <span class="res-desc">Introducción a archivos de captura y su análisis.</span>
         </a>
       </div>
@@ -210,11 +200,11 @@
       <p class="card-desc">Capturas de tráfico real para analizar en Wireshark o en el simulador del curso.</p>
       <div class="res-grid">
         <a class="res-card" href="Practicas/800_practica_red_192_168_1.pcap" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Captura — 800 paquetes</span><span class="res-tag tag-pcap">PCAP</span></div>
+          <span class="res-title">Captura — 800 paquetes</span>
           <span class="res-desc">Red 192.168.1.0/24. Incluye <a href="Practicas/800_practica_red_192_168_1.txt" style="color:var(--text2)" target="_blank" rel="noopener">descripción en texto</a>.</span>
         </a>
         <a class="res-card" href="Practicas/1000_practica_red_192_168_1.pcap" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Captura — 1000 paquetes</span><span class="res-tag tag-pcap">PCAP</span></div>
+          <span class="res-title">Captura — 1000 paquetes</span>
           <span class="res-desc">Red 192.168.1.0/24. Incluye <a href="Practicas/1000_practica_red_192_168_1.txt" style="color:var(--text2)" target="_blank" rel="noopener">descripción en texto</a>.</span>
         </a>
       </div>
@@ -231,11 +221,11 @@
       <p class="card-desc">Simuladores interactivos para practicar sin depender de herramientas externas.</p>
       <div class="res-grid">
         <a class="res-card" href="Herramientas/terminal_simulador.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Terminal simulada</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Terminal simulada</span>
           <span class="res-desc">Simulador de terminal para practicar captura de red en el navegador.</span>
         </a>
         <a class="res-card" href="Herramientas/wireshark_simulador.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Simulador Wireshark</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Simulador Wireshark</span>
           <span class="res-desc">Interfaz interactiva que imita Wireshark en el navegador.</span>
         </a>
       </div>
@@ -252,19 +242,19 @@
       <p class="card-desc">Actividades de evaluación de análisis de tráfico, con sus versiones resueltas.</p>
       <div class="res-grid">
         <a class="res-card" href="Eval/actividad_analisis_trafico.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Análisis de tráfico de red</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Análisis de tráfico de red</span>
           <span class="res-desc">Actividad guiada con preguntas y ejercicios de análisis.</span>
         </a>
         <a class="res-card" href="Eval/500_practica_red_192_168_1.pcap" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Captura — 500 paquetes</span><span class="res-tag tag-pcap">PCAP</span></div>
+          <span class="res-title">Captura — 500 paquetes</span>
           <span class="res-desc">Red 192.168.1.0/24 para la evaluación. Incluye <a href="Eval/500_practica_red_192_168_1.txt" style="color:var(--text2)" target="_blank" rel="noopener">texto</a>.</span>
         </a>
         <a class="res-card" href="Eval/Hechas/evaluacion_redes_informaticas.html" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Evaluación — Redes Informáticas</span><span class="res-tag tag-html">HTML</span></div>
+          <span class="res-title">Evaluación — Redes Informáticas</span>
           <span class="res-desc">Versión de la evaluación ya realizada.</span>
         </a>
         <a class="res-card" href="Eval/Hechas/evaluacion_redes_respuestas.md" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Respuestas de la evaluación</span><span class="res-tag tag-md">MD</span></div>
+          <span class="res-title">Respuestas de la evaluación</span>
           <span class="res-desc">Respuestas correspondientes a la evaluación resuelta.</span>
         </a>
       </div>
@@ -281,7 +271,7 @@
       <p class="card-desc">Proyecto integrador: diseño e implementación de la red de una institución real o simulada, en equipos de 2–3 estudiantes.</p>
       <div class="res-grid">
         <a class="res-card" href="Proyecto/idea_proyecto.md" target="_blank" rel="noopener">
-          <div class="res-top"><span class="res-title">Idea y consigna del proyecto</span><span class="res-tag tag-md">MD</span></div>
+          <span class="res-title">Idea y consigna del proyecto</span>
           <span class="res-desc">Escenarios, requisitos, entregables y rúbrica de evaluación.</span>
         </a>
       </div>
@@ -306,6 +296,103 @@
   Redes de Computadoras · 2° EMT — Tecnologías de la Información · UTU 2026 ·
   <a href="https://github.com/portalutu/2--Redes-Informaticas" target="_blank" rel="noopener">repositorio en GitHub</a>
 </footer>
+
+<script>
+(function () {
+  const REPO = 'portalutu/2--Redes-Informaticas';
+  const FOLDER = 'Teorico';
+
+  function humanizeFilename(name) {
+    const base = name.replace(/\.[^.]+$/, '');
+    return base
+      .replace(/[_-]+/g, ' ')
+      .trim()
+      .split(' ')
+      .map(w => (/^[a-záéíóúñ]/.test(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w))
+      .join(' ');
+  }
+
+  function truncate(text, max) {
+    if (!text || text.length <= max) return text;
+    const cut = text.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…';
+  }
+
+  function extractHtmlMeta(doc) {
+    const title = (doc.title || '').trim();
+    const metaDesc = doc.querySelector('meta[name="description"]');
+    const heroSub = doc.querySelector('.hero-sub');
+    const subtitle = doc.querySelector('.subtitle');
+    const description =
+      (metaDesc && metaDesc.content.trim()) ||
+      (heroSub && heroSub.textContent.trim()) ||
+      (subtitle && subtitle.textContent.trim()) ||
+      '';
+    return { title, description };
+  }
+
+  function buildCard(fileName, title, description) {
+    const a = document.createElement('a');
+    a.className = 'res-card';
+    a.href = `${FOLDER}/${encodeURIComponent(fileName)}`;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    const t = document.createElement('span');
+    t.className = 'res-title';
+    t.textContent = title;
+    const d = document.createElement('span');
+    d.className = 'res-desc';
+    d.textContent = description;
+    a.append(t, d);
+    return a;
+  }
+
+  async function buildCardFor(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (ext === 'pdf') {
+      return buildCard(file.name, humanizeFilename(file.name), 'Documento PDF.');
+    }
+    try {
+      const pageRes = await fetch(`${FOLDER}/${encodeURIComponent(file.name)}`);
+      const html = await pageRes.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const meta = extractHtmlMeta(doc);
+      const title = meta.title || humanizeFilename(file.name);
+      const description = truncate(meta.description, 150) || 'Documento interactivo (HTML).';
+      return buildCard(file.name, title, description);
+    } catch (err) {
+      return buildCard(file.name, humanizeFilename(file.name), 'Documento interactivo (HTML).');
+    }
+  }
+
+  async function loadTeorico() {
+    const grid = document.getElementById('teorico-grid');
+    if (!grid) return;
+    try {
+      // La API de contenidos de GitHub permite listar la carpeta sin build step;
+      // en GitHub Pages no hay listado de directorios nativo. Requiere red y
+      // no funciona si el sitio se abre desde el disco (file://).
+      const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FOLDER}`);
+      if (!res.ok) throw new Error(`GitHub API respondió ${res.status}`);
+      const entries = await res.json();
+      const files = entries
+        .filter(e => e.type === 'file' && /\.(html|pdf)$/i.test(e.name))
+        .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+
+      const cards = await Promise.all(files.map(buildCardFor));
+      grid.replaceChildren(...cards);
+
+      const statEl = document.getElementById('stat-teorico');
+      if (statEl) statEl.textContent = String(files.length);
+    } catch (err) {
+      console.warn('No se pudo actualizar el listado de Teórico automáticamente, se muestra el último listado guardado.', err);
+    }
+  }
+
+  loadTeorico();
+})();
+</script>
 
 </body>
 </html>
