@@ -29,21 +29,23 @@ Todo el contenido de este repositorio está organizado y navegable desde **[inde
 
 | Archivo | Descripción |
 | ------- | ----------- |
-| [Modelos_OSI_TCPIP.md](Teorico/Modelos_OSI_TCPIP.md) | Documento completo sobre modelos OSI y TCP/IP: historia, capas, protocolos, direccionamiento IP, subnetting y comparativa entre modelos |
+| [modelos_osi_tcpip_interactivo.html](Teorico/modelos_osi_tcpip_interactivo.html) | Presentación interactiva de los modelos OSI y TCP/IP: historia, las 7 capas OSI (con enlace a cada presentación dedicada), las 4 capas TCP/IP, comparativa, correspondencia entre modelos y glosario |
 | [Redes-Protocolos.pdf](Teorico/Redes-Protocolos.pdf) | Presentación introductoria del curso |
 
-### Presentaciones interactivas (HTML)
+### Presentaciones interactivas por capa OSI (HTML)
 
 | Archivo | Contenido |
 | ------- | --------- |
+| [capa_1_osi_fisica_interactiva.html](Teorico/capa_1_osi_fisica_interactiva.html) | Capa 1 OSI – Física (medios de transmisión, distancias, CSMA/CD, seguridad física) |
+| [capa_2_osi_enlace_interactiva.html](Teorico/capa_2_osi_enlace_interactiva.html) | Capa 2 OSI – Enlace de datos (tramas Ethernet, MAC, switches, VLANs, seguridad) |
+| [capa_3_osi_red_interactiva.html](Teorico/capa_3_osi_red_interactiva.html) | Capa 3 OSI – Red (direccionamiento IP, subnetting, NAT, enrutamiento) |
 | [capa_4_osi_presentacion_interactiva_v_4_completa.html](Teorico/capa_4_osi_presentacion_interactiva_v_4_completa.html) | Capa 4 OSI – Transporte (TCP/UDP, puertos, segmentación) |
 | [capa_5_osi_sesion_interactiva.html](Teorico/capa_5_osi_sesion_interactiva.html) | Capa 5 OSI – Sesión |
 | [capa_6_osi_presentacion_interactiva.html](Teorico/capa_6_osi_presentacion_interactiva.html) | Capa 6 OSI – Presentación (formatos, cifrado, compresión) |
 | [capa_7_osi_aplicacion_interactiva.html](Teorico/capa_7_osi_aplicacion_interactiva.html) | Capa 7 OSI – Aplicación (HTTP, DNS, DHCP, SMTP) |
-| [protocolo_ip.html](Teorico/protocolo_ip.html) | Protocolo IP interactivo |
-| [protocolo_ip_explicacion.html](Teorico/protocolo_ip_explicacion.html) | Explicación del protocolo IP |
-| [viaje_paquete_ip.html](Teorico/viaje_paquete_ip.html) | Visualización del recorrido de un paquete IP por la red |
 | [pcap_wireshark.html](Teorico/pcap_wireshark.html) | Introducción a archivos PCAP y Wireshark |
+
+Los materiales previos sobre protocolo IP y modelos de referencia (`protocolo_ip.html`, `protocolo_ip_explicacion.html`, `viaje_paquete_ip.html`, `Modelos_OSI_TCPIP.md`) quedaron archivados en [Teorico/old/](Teorico/old/) al quedar reemplazados por las presentaciones interactivas por capa.
 
 ### Contenidos cubiertos en el teórico
 
