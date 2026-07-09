@@ -167,7 +167,7 @@ footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font
 <section class="hero">
   <div class="hero-tag">Simulador · tcpdump · curl · DNS · ICMP</div>
   <h1>Terminal simulada de <span>captura de red</span></h1>
-  <p class="hero-sub">Escribí comandos como <code>tcpdump</code>, <code>curl</code>, <code>dig</code>, <code>nslookup</code>
+  <p class="hero-sub">Escribe comandos como <code>tcpdump</code>, <code>curl</code>, <code>dig</code>, <code>nslookup</code>
     o <code>ping</code> igual que en una práctica real. Cada captura que cierres queda lista para descargar en
     formato <strong>.pcap</strong> y <strong>.txt</strong>, compatibles con el
     <strong>simulador de Wireshark</strong> del curso. Todo corre en tu navegador — no se sube nada a ningún servidor.</p>
@@ -182,7 +182,7 @@ footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font
     <span class="card-title">Cómo funciona</span>
   </div>
   <div class="card-body">
-    <p>Primero abrís una captura con <code>tcpdump -w archivo.pcap &lt;filtro&gt;</code>. Mientras esa captura
+    <p>Primero abres una captura con <code>tcpdump -w archivo.pcap &lt;filtro&gt;</code>. Mientras esa captura
       está activa, todo el tráfico que generes con <code>curl</code>, <code>dig</code>, <code>nslookup</code> o
       <code>ping</code> se agrega al archivo <strong>si coincide con el filtro</strong> — exactamente igual que con
       un tcpdump real. Al abrir un <code>tcpdump</code> nuevo (o escribir <code>stop</code>/<code>exit</code>) la
@@ -221,7 +221,7 @@ footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font
   <div class="card-body">
 
     <div class="script-wrap">
-      <textarea class="script-box" id="scriptBox" placeholder="Pegá aquí un bloque de comandos (como el ejemplo de arriba) y presioná Ejecutar guion..."></textarea>
+      <textarea class="script-box" id="scriptBox" placeholder="Pega aquí un bloque de comandos (como el ejemplo de arriba) y presiona Ejecutar guion..."></textarea>
       <div class="btn-row">
         <button class="file-btn" onclick="ejecutarGuion()">Ejecutar guion</button>
         <button class="file-btn btn-ghost" onclick="document.getElementById('scriptBox').value=''">Limpiar guion</button>
@@ -239,7 +239,7 @@ footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font
       <div class="terminal-input-row">
         <span class="terminal-prompt">alumno@utu-lab:~$</span>
         <input class="terminal-input" id="terminalInput" type="text" autocomplete="off" spellcheck="false"
-               placeholder="escribí un comando y presioná Enter (probá: ayuda)">
+               placeholder="escribe un comando y presiona Enter (prueba: ayuda)">
       </div>
     </div>
   </div>
@@ -252,8 +252,8 @@ footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font
     <span class="card-title">Capturas generadas</span>
   </div>
   <div class="card-body">
-    <p>Cada vez que cerrás una captura (nuevo <code>tcpdump</code>, <code>stop</code> o <code>exit</code>) aparece
-      aquí con sus dos archivos descargables. Después arrastrá cualquiera de los dos al
+    <p>Cada vez que cierras una captura (nuevo <code>tcpdump</code>, <code>stop</code> o <code>exit</code>) aparece
+      aquí con sus dos archivos descargables. Después arrastra cualquiera de los dos al
       <a href="wireshark_simulador.html" target="_blank" rel="noopener" style="color:var(--blue)">simulador de Wireshark</a>.</p>
     <div class="capturas-grid" id="capturasPanel">
       <div class="empty-state">Todavía no cerraste ninguna captura.</div>
@@ -813,7 +813,7 @@ function procesarLinea(linea) {
       break;
     case 'exit': case 'salir': case 'quit':
       if (activa !== null) { finalizarCaptura(activa); activa = null; }
-      out('simulador: sesión cerrada. Podés seguir escribiendo comandos cuando quieras.', 'line-info');
+      out('simulador: sesión cerrada. Puedes seguir escribiendo comandos cuando quieras.', 'line-info');
       break;
     case 'help': case 'ayuda': case '?': mostrarAyuda(); break;
     case 'clear': limpiarPantalla(); break;
@@ -867,7 +867,7 @@ function cargarGuion(nombre) {
 }
 
 /* ── Mensaje inicial ── */
-out('Terminal simulada lista. Escribí "ayuda" o cargá un ejemplo desde la tarjeta 01.', 'line-info');
+out('Terminal simulada lista. Escribe "ayuda" o carga un ejemplo desde la tarjeta 01.', 'line-info');
 actualizarEstado();
 renderCapturasPanel();
 </script>

@@ -258,7 +258,7 @@ footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px
     <span class="q-status" id="st1"></span>
   </div>
   <div class="card-body">
-    <div class="question-text">Seleccioná la opción correcta sobre la estructura del modelo OSI.</div>
+    <div class="question-text">Selecciona la opción correcta sobre la estructura del modelo OSI.</div>
     <div class="options" id="opts1">
       <div class="option" onclick="answer(1,'A',false)"><span class="option-letter">A</span><span class="option-text">3 capas</span></div>
       <div class="option" onclick="answer(1,'B',false)"><span class="option-letter">B</span><span class="option-text">4 capas</span></div>
@@ -529,7 +529,7 @@ footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px
     <span class="q-status" id="st12"></span>
   </div>
   <div class="card-body">
-    <div class="question-text">Aplicá la fórmula de subnetting para calcular los hosts disponibles en una red <code>/26</code>. Recordá restar las direcciones de red y broadcast.</div>
+    <div class="question-text">Aplica la fórmula de subnetting para calcular los hosts disponibles en una red <code>/26</code>. Recuerda restar las direcciones de red y broadcast.</div>
     <div class="options" id="opts12">
       <div class="option" onclick="answer(12,'A',false)"><span class="option-letter">A</span><span class="option-text">256 hosts utilizables</span></div>
       <div class="option" onclick="answer(12,'B',false)"><span class="option-letter">B</span><span class="option-text">126 hosts utilizables</span></div>
@@ -857,7 +857,7 @@ function startEval() {
   const n1 = document.getElementById('name1').value.trim();
   const n2 = document.getElementById('name2').value.trim();
   const gr = document.getElementById('grupo').value.trim();
-  if (!n1 || !n2) { alert('Por favor ingresá los nombres de ambos integrantes.'); return; }
+  if (!n1 || !n2) { alert('Por favor ingresa los nombres de ambos integrantes.'); return; }
   pairName = `${n1} & ${n2}${gr ? ' — ' + gr : ''}`;
   document.getElementById('pair-form').style.display = 'none';
   document.getElementById('pair-display').style.display = 'block';
@@ -936,9 +936,9 @@ function showResults() {
   document.getElementById('final-score').style.color = score >= 16 ? 'var(--green)' : score >= 10 ? 'var(--amber)' : 'var(--coral)';
   let rating = '';
   if (pct >= 90) rating = 'Excelente dominio de los contenidos.';
-  else if (pct >= 75) rating = 'Buen desempeño — repasá los temas donde cometiste errores.';
+  else if (pct >= 75) rating = 'Buen desempeño — repasa los temas donde cometiste errores.';
   else if (pct >= 50) rating = 'Desempeño regular — es recomendable repasar el material.';
-  else rating = 'Necesitás repasar los contenidos con más profundidad.';
+  else rating = 'Necesitas repasar los contenidos con más profundidad.';
   document.getElementById('final-rating').textContent = rating;
   if (pairName) document.getElementById('pair-result-display').textContent = pairName;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
