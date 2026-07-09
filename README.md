@@ -2,15 +2,23 @@
 
 Repositorio de materiales para la materia **Redes de Computadoras**, nivel 2° EMT – Tecnologías de la Información, UTU 2026.
 
+## 🌐 Sitio web del curso
+
+Todo el contenido de este repositorio está organizado y navegable desde **[index.html](index.html)**, un portal que centraliza el acceso a la teoría, las prácticas, las herramientas y las evaluaciones. Si el repositorio tiene GitHub Pages habilitado, el portal queda disponible también en la URL pública del sitio.
+
 ---
 
 ## Estructura del repositorio
 
 ```text
 2--Redes-Informaticas/
-├── Teorico/          # Documentos y presentaciones teóricas
-├── Practicas/        # Actividades prácticas y archivos de captura
-└── Proyecto/         # Proyecto final integrador
+├── index.html         # Portal de acceso a todos los materiales del curso
+├── Teorico/            # Documentos y presentaciones teóricas
+├── Practicas/          # Capturas de red para practicar análisis de tráfico
+├── Herramientas/        # Simuladores interactivos y scripts generadores de PCAP
+├── Eval/               # Actividades de evaluación (con subcarpeta Hechas/ de resueltas)
+├── Proyecto/           # Proyecto final integrador
+└── Documentos/         # Documentación adicional del curso
 ```
 
 ---
@@ -88,24 +96,36 @@ Repositorio de materiales para la materia **Redes de Computadoras**, nivel 2° E
 
 ## Prácticas
 
-### Análisis de tráfico de red
-
-| Archivo | Descripción |
-| ------- | ----------- |
-| [actividad_analisis_trafico.html](Practicas/actividad_analisis_trafico.html) | Actividad guiada de análisis de tráfico con preguntas y ejercicios |
-| [wireshark_simulador.html](Practicas/wireshark_simulador.html) | Simulador interactivo de Wireshark en el navegador |
-| [generar_pcap.py](Practicas/generar_pcap.py) | Script Python para generar archivos de captura PCAP |
-| [generar_pcap.sh](Practicas/generar_pcap.sh) | Script Shell para generar archivos de captura PCAP |
-
 ### Capturas de red para análisis
 
 | Archivos | Descripción |
 | -------- | ----------- |
-| [500_practica_red_192_168_1.pcap](Practicas/500_practica_red_192_168_1.pcap) / [.txt](Practicas/500_practica_red_192_168_1.txt) | Captura de 500 paquetes en la red 192.168.1.0/24 |
 | [800_practica_red_192_168_1.pcap](Practicas/800_practica_red_192_168_1.pcap) / [.txt](Practicas/800_practica_red_192_168_1.txt) | Captura de 800 paquetes en la red 192.168.1.0/24 |
 | [1000_practica_red_192_168_1.pcap](Practicas/1000_practica_red_192_168_1.pcap) / [.txt](Practicas/1000_practica_red_192_168_1.txt) | Captura de 1000 paquetes en la red 192.168.1.0/24 |
 
 Los archivos `.pcap` pueden abrirse con **Wireshark**. Los archivos `.txt` contienen la descripción del tráfico capturado.
+
+---
+
+## Herramientas del curso
+
+| Archivo | Descripción |
+| ------- | ----------- |
+| [terminal_simulador.html](Herramientas/terminal_simulador.html) | Simulador interactivo de terminal para practicar captura de red en el navegador |
+| [wireshark_simulador.html](Herramientas/wireshark_simulador.html) | Simulador interactivo de Wireshark en el navegador |
+| [generar_pcap.py](Herramientas/generar_pcap.py) / [.sh](Herramientas/generar_pcap.sh) | Scripts para generar archivos de captura PCAP de práctica |
+| [terminal_simulador.py](Herramientas/terminal_simulador.py) / [.sh](Herramientas/terminal_simulador.sh) | Versiones script del simulador de terminal |
+
+---
+
+## Evaluaciones
+
+| Archivo | Descripción |
+| ------- | ----------- |
+| [actividad_analisis_trafico.html](Eval/actividad_analisis_trafico.html) | Actividad guiada de análisis de tráfico con preguntas y ejercicios |
+| [500_practica_red_192_168_1.pcap](Eval/500_practica_red_192_168_1.pcap) / [.txt](Eval/500_practica_red_192_168_1.txt) | Captura de 500 paquetes en la red 192.168.1.0/24 para la evaluación |
+| [Hechas/evaluacion_redes_informaticas.html](Eval/Hechas/evaluacion_redes_informaticas.html) | Evaluación de Redes Informáticas ya realizada |
+| [Hechas/evaluacion_redes_respuestas.md](Eval/Hechas/evaluacion_redes_respuestas.md) | Respuestas correspondientes a la evaluación resuelta |
 
 ---
 
