@@ -16,7 +16,7 @@ Todo el contenido de este repositorio está organizado y navegable desde **[inde
 ├── Teorico/            # Documentos y presentaciones teóricas
 ├── Practicas/          # Capturas de red para practicar análisis de tráfico
 ├── Herramientas/        # Simuladores interactivos y scripts generadores de PCAP
-├── Eval/               # Actividades de evaluación (con subcarpeta Hechas/ de resueltas)
+├── Eval/               # Actividades de evaluación (con subcarpeta old/ de archivo docente)
 ├── Proyecto/           # Proyecto final integrador
 └── Documentos/         # Documentación adicional del curso
 ```
@@ -102,6 +102,7 @@ Los materiales previos sobre protocolo IP y modelos de referencia (`protocolo_ip
 
 | Archivos | Descripción |
 | -------- | ----------- |
+| [500_practica_red_192_168_1.pcap](Practicas/500_practica_red_192_168_1.pcap) / [.txt](Practicas/500_practica_red_192_168_1.txt) | Captura de 500 paquetes en la red 192.168.1.0/24 |
 | [800_practica_red_192_168_1.pcap](Practicas/800_practica_red_192_168_1.pcap) / [.txt](Practicas/800_practica_red_192_168_1.txt) | Captura de 800 paquetes en la red 192.168.1.0/24 |
 | [1000_practica_red_192_168_1.pcap](Practicas/1000_practica_red_192_168_1.pcap) / [.txt](Practicas/1000_practica_red_192_168_1.txt) | Captura de 1000 paquetes en la red 192.168.1.0/24 |
 
@@ -125,9 +126,8 @@ Los archivos `.pcap` pueden abrirse con **Wireshark**. Los archivos `.txt` conti
 | Archivo | Descripción |
 | ------- | ----------- |
 | [actividad_analisis_trafico.html](Eval/actividad_analisis_trafico.html) | Actividad guiada de análisis de tráfico con preguntas y ejercicios |
-| [500_practica_red_192_168_1.pcap](Eval/500_practica_red_192_168_1.pcap) / [.txt](Eval/500_practica_red_192_168_1.txt) | Captura de 500 paquetes en la red 192.168.1.0/24 para la evaluación |
-| [Hechas/evaluacion_redes_informaticas.html](Eval/Hechas/evaluacion_redes_informaticas.html) | Evaluación de Redes Informáticas ya realizada |
-| [Hechas/evaluacion_redes_respuestas.md](Eval/Hechas/evaluacion_redes_respuestas.md) | Respuestas correspondientes a la evaluación resuelta |
+
+La evaluación de Redes Informáticas y su clave de respuestas (uso exclusivo del docente) están archivadas en [Eval/old/](Eval/old/): [evaluacion_redes_informaticas.html](Eval/old/evaluacion_redes_informaticas.html) y [evaluacion_redes_respuestas.html](Eval/old/evaluacion_redes_respuestas.html).
 
 ---
 

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clave de Respuestas — Evaluación Redes Informáticas</title>
+<meta name="description" content="Clave de respuestas y justificaciones de la evaluación de Redes Informáticas: modelos OSI y TCP/IP, protocolo IP, capa de Transporte y capa de Sesión. Uso exclusivo del docente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(77,168,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(77,168,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;right:-20vw;bottom:-30vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(77,168,255,.08),transparent 62%);pointer-events:none;z-index:0}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--blue);text-decoration:none;white-space:nowrap}
+.nav-score-area{display:flex;align-items:center;gap:14px}
+.score-badge{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.25);border-radius:20px;padding:4px 14px}
+.progress-bar-wrap{width:160px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;border:1px solid var(--border2)}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:3px;transition:width .4s ease}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:4rem 2rem 2rem}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--blue);background:var(--blue-bg);border:1px solid rgba(77,168,255,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--blue);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:.8rem}
+h1 span{color:var(--blue)}
+.hero-sub{font-size:1rem;color:var(--text2);max-width:680px}
+
+/* ── ETHICS BANNER ── */
+.ethics-banner{position:relative;z-index:1;max-width:980px;margin:1.5rem auto 0;padding:0 2rem}
+.ethics-box{background:rgba(251,113,133,.06);border:1.5px solid rgba(251,113,133,.35);border-radius:14px;padding:1.1rem 1.5rem;display:flex;gap:14px;align-items:flex-start}
+.ethics-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.ethics-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.ethics-text{font-size:13px;color:var(--text2);line-height:1.55}
+.ethics-text strong{color:var(--coral)}
+
+/* ── PAIR FORM ── */
+.pair-form-wrap{position:relative;z-index:1;max-width:980px;margin:1.5rem auto 0;padding:0 2rem}
+.pair-form{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:1.25rem 1.5rem;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.pair-form label{font-size:12px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px}
+.pair-input{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;color:#fff;font-family:var(--sans);font-size:14px;outline:none;width:220px;transition:.2s}
+.pair-input:focus{border-color:rgba(77,168,255,.45);box-shadow:0 0 0 3px rgba(77,168,255,.08)}
+.pair-start-btn{font-family:var(--sans);font-size:13px;font-weight:600;background:var(--blue-bg);border:1px solid rgba(77,168,255,.35);color:var(--blue);border-radius:8px;padding:8px 18px;cursor:pointer;transition:.2s}
+.pair-start-btn:hover{background:rgba(77,168,255,.14);transform:translateY(-1px)}
+.pair-label-display{font-family:var(--mono);font-size:13px;color:var(--text2)}
+
+/* ── SECTION HEADERS ── */
+.section-label{position:relative;z-index:1;max-width:980px;margin:2.5rem auto 0;padding:0 2rem}
+.section-title{font-size:11px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.8rem;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── MAIN GRID ── */
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:1.5rem;margin-top:.5rem}
+
+/* ── QUESTION CARD ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both;transition:.2s}
+.card:hover{border-color:var(--border2)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card-header{padding:1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}
+.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}
+.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}
+.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
+.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}
+.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}
+.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}
+.card-title{font-size:14px;font-weight:600;color:#fff;flex:1}
+.q-status{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:12px;display:none}
+.q-status.correct{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.3);display:inline-block}
+.q-status.wrong{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.3);display:inline-block}
+.card-body{padding:1.4rem}
+.question-text{font-size:15px;color:#fff;font-weight:500;margin-bottom:1.1rem;line-height:1.55}
+.question-text code{font-family:var(--mono);font-size:13px;background:var(--bg4);border:1px solid var(--border2);padding:1px 6px;border-radius:4px;color:var(--teal)}
+
+/* ── OPTIONS ── */
+.options{display:flex;flex-direction:column;gap:8px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.2s;user-select:none}
+.option:hover:not(.answered){border-color:var(--border2);background:var(--bg4)}
+.option.selected-correct{background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.4);cursor:default}
+.option.selected-wrong{background:rgba(251,113,133,.06);border-color:rgba(251,113,133,.4);cursor:default}
+.option.correct-answer{background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.25);cursor:default}
+.option.disabled{cursor:default;opacity:.55}
+.option-letter{font-family:var(--mono);font-size:11px;font-weight:700;min-width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--bg4);border:1px solid var(--border2);color:var(--text3);flex-shrink:0;margin-top:1px;transition:.2s}
+.option.selected-correct .option-letter{background:var(--green-bg);border-color:rgba(74,222,128,.4);color:var(--green)}
+.option.selected-wrong .option-letter{background:var(--coral-bg);border-color:rgba(251,113,133,.4);color:var(--coral)}
+.option.correct-answer .option-letter{background:var(--green-bg);border-color:rgba(74,222,128,.3);color:var(--green)}
+.option-text{font-size:14px;color:var(--text2);line-height:1.5}
+.option.selected-correct .option-text,.option.correct-answer .option-text{color:#fff}
+.option.selected-wrong .option-text{color:var(--coral)}
+
+/* ── FEEDBACK BOX ── */
+.feedback{display:none;margin-top:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.1rem}
+.feedback.visible{display:block}
+.feedback.fb-correct{border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.04)}
+.feedback.fb-wrong{border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.04)}
+.feedback-title{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.fb-correct .feedback-title{color:var(--green)}
+.fb-wrong .feedback-title{color:var(--coral)}
+.feedback-text{font-size:13px;color:var(--text2);line-height:1.55}
+.feedback-text strong{color:#fff}
+
+/* ── SCORE PANEL ── */
+.score-panel{position:relative;z-index:1;max-width:980px;margin:1.5rem auto 0;padding:0 2rem;display:none}
+.score-panel.visible{display:block}
+.score-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:2rem;text-align:center}
+.score-number{font-family:var(--mono);font-size:4rem;font-weight:700;color:var(--green);line-height:1}
+.score-label{font-size:14px;color:var(--text2);margin-top:.5rem}
+.score-detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:1.5rem}
+.score-metric{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px}
+.score-metric-k{font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.score-metric-v{font-family:var(--mono);font-size:1.6rem;font-weight:700;margin-top:4px}
+.sv-green{color:var(--green)}
+.sv-coral{color:var(--coral)}
+.sv-amber{color:var(--amber)}
+.reset-btn{margin-top:1.5rem;font-family:var(--sans);font-size:13px;font-weight:600;background:var(--blue-bg);border:1px solid rgba(77,168,255,.35);color:var(--blue);border-radius:10px;padding:9px 20px;cursor:pointer;transition:.2s}
+.reset-btn:hover{transform:translateY(-2px);background:rgba(77,168,255,.14)}
+
+/* ── TOPIC TAG ── */
+.topic-tag{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--bg4);border:1px solid var(--border);border-radius:12px;padding:2px 8px;margin-left:auto}
+
+/* ── ACTION BUTTONS ── */
+.nav-action-btn{font-family:var(--mono);font-size:11px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:8px;padding:5px 11px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-action-btn:hover{color:#fff;border-color:rgba(77,168,255,.4);background:var(--blue-bg)}
+.form-reset-btn{font-family:var(--sans);font-size:13px;font-weight:600;background:transparent;border:1px solid var(--border2);color:var(--text3);border-radius:8px;padding:8px 14px;cursor:pointer;transition:.2s}
+.form-reset-btn:hover{color:var(--coral);border-color:rgba(251,113,133,.4)}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono);margin-top:2rem}
+
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:2.5rem 1rem 1.5rem}.ethics-banner,.pair-form-wrap,.section-label{padding:0 1rem}main{padding:0 1rem 4rem}.pair-input{width:100%}.score-panel{padding:0 1rem}.progress-bar-wrap{display:none}.nav-action-btn span.btn-label{display:none}}
+
+/* ── PRINT ── */
+@media print{
+  *{animation:none!important;transition:none!important}
+  body{background:#fff!important;color:#111!important;font-size:12pt}
+  body::before,body::after{display:none}
+  nav{position:static;background:#fff!important;border-bottom:1.5pt solid #ccc;height:auto;padding:.4rem 1rem;backdrop-filter:none}
+  .nav-logo{color:#1a1a2e!important}
+  .nav-score-area,.nav-action-btn{display:none!important}
+  .hero{padding:1rem 1rem .5rem}
+  h1{font-size:1.6rem;color:#111!important}
+  h1 span{color:#1a3a8f!important}
+  .hero-sub{color:#444!important}
+  .hero-tag{background:#e8eef8!important;color:#1a3a8f!important;border-color:#b0c4e8!important}
+  .hero-tag::before{display:none}
+  .ethics-banner{padding:0 1rem}
+  .ethics-box{background:#fff3f3!important;border:1.5pt solid #e88!important}
+  .ethics-title{color:#c00!important}
+  .ethics-text,.ethics-text strong{color:#222!important}
+  .pair-form-wrap{padding:0 1rem}
+  .pair-form{background:#f5f7fa!important;border:1pt solid #ccc!important}
+  .pair-form label{color:#555!important}
+  .pair-input{background:#fff!important;border:1pt solid #aaa!important;color:#111!important}
+  .pair-start-btn,.form-reset-btn{display:none!important}
+  .section-label{padding:0 1rem}
+  .section-title{color:#555!important}
+  .section-title::after{background:#ccc!important}
+  main{padding:0 1rem 1rem;gap:1rem}
+  .card{background:#fff!important;border:1pt solid #ccc!important;break-inside:avoid;page-break-inside:avoid}
+  .card-header{background:#f0f4fa!important;border-bottom:1pt solid #ddd!important}
+  .card-num{border:1pt solid #aaa!important}
+  .num-blue{background:#ddeeff!important;color:#1a4a8f!important}
+  .num-teal{background:#d0f5f0!important;color:#0a6b5a!important}
+  .num-amber{background:#fff3d0!important;color:#7a5a00!important}
+  .num-purple{background:#ede8ff!important;color:#5533aa!important}
+  .num-coral{background:#ffe8ec!important;color:#bb1133!important}
+  .num-green{background:#e0f9e8!important;color:#1a6b3a!important}
+  .card-title{color:#111!important}
+  .topic-tag{background:#eee!important;border-color:#ccc!important;color:#555!important}
+  .q-status{display:none!important}
+  .question-text{color:#111!important}
+  .question-text code{background:#f0f4f8!important;border:1pt solid #ccc!important;color:#1a6b5a!important}
+  .options{gap:5px}
+  .option{background:#f8fafc!important;border:1pt solid #ddd!important;padding:7px 10px}
+  .option-letter{background:#eee!important;border:1pt solid #bbb!important;color:#333!important}
+  .option-text{color:#333!important}
+  .feedback{display:none!important}
+  .score-panel{display:none!important}
+  footer{border-top:1pt solid #ccc;color:#888!important}
+}
+</style>
+<style>
+.resume-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.1rem}
+.resume-head{display:grid;grid-template-columns:repeat(6,1fr);background:var(--bg3);border-bottom:1px solid var(--border)}
+.resume-head>*{padding:8px 10px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.resume-row{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid var(--border)}
+.resume-row:last-child{border-bottom:none}
+.resume-row>*{padding:8px 10px;font-size:12.5px;text-align:center;color:var(--text2);border-left:1px solid var(--border)}
+.resume-row>*:first-child{border-left:none}
+.resume-row .rletter{font-family:var(--mono);font-weight:700;color:var(--green)}
+.criteria-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.1rem}
+.criteria-row{display:grid;grid-template-columns:1fr 1fr 1.6fr;border-bottom:1px solid var(--border)}
+.criteria-row:last-child{border-bottom:none}
+.criteria-row>*{padding:10px 14px;font-size:13px}
+.criteria-row.head{background:var(--bg3);font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.criteria-row>*:not(:first-child){border-left:1px solid var(--border)}
+.criteria-pts{font-family:var(--mono);color:#fff;font-weight:700}
+.confidential-box{background:rgba(245,158,11,.06);border:1.5px solid rgba(245,158,11,.35);border-radius:14px;padding:1.1rem 1.5rem;display:flex;gap:14px;align-items:flex-start}
+.confidential-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.confidential-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.confidential-text{font-size:13px;color:var(--text2);line-height:1.55}
+.confidential-text strong{color:var(--amber)}
+</style>
+
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="#">REDES://CLAVE_RESPUESTAS</a>
+  <div class="nav-score-area">
+    <a class="nav-action-btn" href="evaluacion_redes_informaticas.html">← Ver evaluación</a>
+    <button class="nav-action-btn" onclick="window.print()" title="Imprimir / Exportar PDF">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1" width="10" height="7" rx="1"/><path d="M3 8H1a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-2"/><rect x="3" y="11" width="10" height="4" rx="1"/><circle cx="13" cy="10.5" r=".7" fill="currentColor" stroke="none"/></svg>
+      <span class="btn-label">Imprimir / PDF</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-tag">Redes Informáticas · Clave de respuestas · 2026</div>
+  <h1>Clave de respuestas<br><span>Evaluación de Redes Informáticas</span></h1>
+  <p class="hero-sub">Respuestas correctas y justificación de las 20 preguntas sobre modelos OSI y TCP/IP, protocolo IP, capa de Transporte y capa de Sesión.</p>
+</section>
+
+<!-- ─── CONFIDENCIALIDAD ─── -->
+<div class="ethics-banner">
+  <div class="confidential-box">
+    <div class="confidential-icon">🔒</div>
+    <div>
+      <div class="confidential-title">Uso exclusivo del docente</div>
+      <div class="confidential-text">
+        Este documento contiene las <strong>respuestas correctas y justificaciones</strong> de la evaluación. No debe compartirse con los estudiantes antes de que completen la evaluación en <a href="evaluacion_redes_informaticas.html" style="color:var(--amber)">evaluacion_redes_informaticas.html</a>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-label" style="margin-top:2rem">
+  <div class="section-title">Sección 1 — Modelos OSI y TCP/IP</div>
+</div>
+
+<main>
+
+<div class="card" id="q1">
+  <div class="card-header">
+    <span class="card-num num-blue">01</span>
+    <span class="card-title">¿Cuántas capas tiene el modelo OSI?</span>
+    <span class="topic-tag">OSI/TCPIP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Selecciona la opción correcta sobre la estructura del modelo OSI.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">3 capas</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">4 capas</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">7 capas</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">5 capas</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">El modelo OSI tiene <strong>7 capas</strong>: Física, Enlace de datos, Red, Transporte, Sesión, Presentación y Aplicación. Cada capa resuelve un tipo de problema y ofrece servicios a la capa superior.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q2">
+  <div class="card-header">
+    <span class="card-num num-blue">02</span>
+    <span class="card-title">¿Cuántas capas tiene el modelo TCP/IP?</span>
+    <span class="topic-tag">OSI/TCPIP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">A diferencia del modelo OSI, el modelo TCP/IP organiza la comunicación en menos capas.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">7 capas</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">5 capas</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">4 capas</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">3 capas</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">El modelo TCP/IP organiza la comunicación en <strong>4 capas</strong>: Acceso a la Red, Internet, Transporte y Aplicación. Esta estructura más compacta es la que realmente domina en Internet.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q3">
+  <div class="card-header">
+    <span class="card-num num-blue">03</span>
+    <span class="card-title">¿Cuál fue el objetivo principal del modelo OSI impulsado por la ISO?</span>
+    <span class="topic-tag">OSI/TCPIP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">El modelo OSI surgió como respuesta a un problema histórico en las redes informáticas.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Crear la red ARPANET y conectar universidades militares</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">Definir un modelo de referencia estándar que permitiera la comunicación entre sistemas de distintos fabricantes</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">Reemplazar definitivamente al protocolo TCP/IP en todas las redes</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Crear los protocolos HTTP y DNS para la web</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. La ISO impulsó el modelo OSI para crear un <strong>estándar de referencia</strong> que permitiera la comunicación entre sistemas de distintos fabricantes, resolviendo el caos de protocolos propietarios incompatibles de los años 70.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q4">
+  <div class="card-header">
+    <span class="card-num num-blue">04</span>
+    <span class="card-title">¿A qué capas del modelo OSI corresponde la capa "Acceso a la Red" de TCP/IP?</span>
+    <span class="topic-tag">OSI/TCPIP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">El modelo TCP/IP agrupa varias capas OSI en una sola. ¿Cuáles agrupa la capa de Acceso a la Red?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Capa 3 (Red) y Capa 4 (Transporte)</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">Capa 1 (Física) y Capa 2 (Enlace de datos)</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">Capa 5 (Sesión) y Capa 6 (Presentación)</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Solo Capa 1 (Física)</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. La capa "Acceso a la Red" del modelo TCP/IP agrupa las funciones de la <strong>Capa 1 (Física)</strong> y la <strong>Capa 2 (Enlace de datos)</strong> del modelo OSI: transmisión de bits y comunicación en la red local.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q5">
+  <div class="card-header">
+    <span class="card-num num-blue">05</span>
+    <span class="card-title">¿En qué capa del modelo OSI trabaja el router como dispositivo principal?</span>
+    <span class="topic-tag">OSI/TCPIP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Cada dispositivo de red opera principalmente en una capa del modelo OSI. ¿En cuál trabaja el router?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Capa 1 — Física</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">Capa 2 — Enlace de datos</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">Capa 3 — Red</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Capa 4 — Transporte</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El router opera principalmente en la <strong>Capa 3 (Red)</strong>. Analiza direcciones IP de destino, consulta su tabla de enrutamiento y decide por qué interfaz reenviar el paquete. El hub opera en capa 1 y el switch en capa 2.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="section-label">
+  <div class="section-title">Sección 2 — Capa de Transporte (Capa 4) y Capa de Sesión (Capa 5)</div>
+</div>
+
+<main>
+
+<div class="card" id="q6">
+  <div class="card-header">
+    <span class="card-num num-purple">06</span>
+    <span class="card-title">¿Cuál es la unidad de datos (PDU) de la capa de Transporte?</span>
+    <span class="topic-tag">Capa 4</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Cada capa del modelo OSI trabaja con su propia unidad de datos. ¿Cuál corresponde a la capa 4?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Bit</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">Trama</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">Paquete</span></div>
+      <div class="option correct-answer"><span class="option-letter">D</span><span class="option-text">Segmento (o datagrama en UDP)</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. La PDU de la capa 4 es el <strong>segmento</strong> en TCP (o datagrama en UDP). La trama corresponde a capa 2, el paquete a capa 3 y el bit a capa 1.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q7">
+  <div class="card-header">
+    <span class="card-num num-purple">07</span>
+    <span class="card-title">¿Qué diferencia principal existe entre TCP y UDP?</span>
+    <span class="topic-tag">Capa 4</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Ambos protocolos operan en capa 4, pero tienen características muy distintas.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">TCP usa puertos y UDP no utiliza puertos</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">TCP garantiza entrega confiable, orden y control de flujo; UDP no garantiza entrega ni orden</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">UDP es más lento que TCP en todos los casos</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">TCP se usa para video en tiempo real y UDP para descarga de archivos</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. <strong>TCP</strong> garantiza entrega confiable, orden, control de flujo y retransmisión de datos perdidos. <strong>UDP</strong> es más simple y rápido pero no garantiza entrega ni orden — ideal para streaming, DNS y videollamadas donde la latencia importa más que la confiabilidad.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q8">
+  <div class="card-header">
+    <span class="card-num num-purple">08</span>
+    <span class="card-title">¿Cuántos pasos tiene el three-way handshake de TCP y cuáles son?</span>
+    <span class="topic-tag">Capa 4</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Antes de transmitir datos, TCP establece una conexión mediante un proceso específico.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">2 pasos: SYN → ACK</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">3 pasos: SYN → SYN-ACK → ACK</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">4 pasos: SYN → SYN-ACK → ACK → DATA</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">1 paso: el cliente envía un paquete DATA directamente</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El three-way handshake TCP tiene <strong>3 pasos</strong>: (1) el cliente envía <strong>SYN</strong>, (2) el servidor responde <strong>SYN-ACK</strong>, (3) el cliente confirma con <strong>ACK</strong>. Recién entonces se pueden transmitir datos.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q9">
+  <div class="card-header">
+    <span class="card-num num-teal">09</span>
+    <span class="card-title">¿Cuál es la función principal de la capa de Sesión (capa 5)?</span>
+    <span class="topic-tag">Capa 5</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">La capa 5 del modelo OSI tiene una responsabilidad diferente a la de las capas inferiores.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Transmitir bits por el medio físico (cables, fibra, radio)</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">Enrutar paquetes entre redes diferentes usando tablas de rutas</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">Gestionar el ciclo de vida de conversaciones entre aplicaciones: apertura, mantenimiento, sincronización y cierre</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Asignar direcciones IP automáticamente a los dispositivos de la red</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. La capa 5 gestiona el <strong>ciclo de vida de las conversaciones</strong>: apertura (negocia parámetros), mantenimiento (mantiene el canal activo), sincronización (puntos de recuperación) y cierre controlado. Piensen en una sesión SSH o SMB.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q10">
+  <div class="card-header">
+    <span class="card-num num-teal">10</span>
+    <span class="card-title">¿Qué función cumple la capa de Presentación (capa 6)?</span>
+    <span class="topic-tag">Capa 6</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">La capa 6 se ocupa del <em>formato</em> de los datos para que los sistemas puedan interpretarlos correctamente.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Controlar el acceso al medio físico y gestionar colisiones</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">Enrutar paquetes entre redes y mantener tablas de enrutamiento</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">Traducir formatos, codificar, comprimir y cifrar datos para que sistemas distintos los entiendan</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Segmentar datos y controlar el flujo entre extremos</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. La capa 6 (Presentación) se ocupa del <strong>formato de los datos</strong>: traducción entre formatos, codificación (ASCII, Unicode), compresión y cifrado/descifrado (como TLS en análisis didáctico). Permite que sistemas distintos se entiendan.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="section-label">
+  <div class="section-title">Sección 3 — Protocolo IP y Subredes</div>
+</div>
+
+<main>
+
+<div class="card" id="q11">
+  <div class="card-header">
+    <span class="card-num num-amber">11</span>
+    <span class="card-title">¿Cuántos bits tiene una dirección IPv4?</span>
+    <span class="topic-tag">Protocolo IP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Una dirección IPv4 se representa como cuatro octetos separados por puntos. ¿Cuántos bits la componen en total?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">16 bits</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">32 bits</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">64 bits</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">128 bits</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. Una dirección IPv4 tiene <strong>32 bits</strong>, divididos en 4 octetos de 8 bits cada uno (por eso los valores van de 0 a 255). Esto permite aproximadamente 4.294 millones de direcciones posibles.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q12">
+  <div class="card-header">
+    <span class="card-num num-amber">12</span>
+    <span class="card-title">¿Cuántos hosts utilizables tiene una red con máscara <code>/26</code>?</span>
+    <span class="topic-tag">Subredes</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Aplica la fórmula de subnetting para calcular los hosts disponibles en una red <code>/26</code>. Recuerda restar las direcciones de red y broadcast.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">256 hosts utilizables</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">126 hosts utilizables</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">62 hosts utilizables</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">30 hosts utilizables</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. Con máscara /26 quedan <strong>6 bits para hosts</strong>: 2⁶ = 64 direcciones totales, menos 2 (red y broadcast) = <strong>62 hosts utilizables</strong>. La máscara en decimal es 255.255.255.192.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q13">
+  <div class="card-header">
+    <span class="card-num num-amber">13</span>
+    <span class="card-title">¿Cuál de los siguientes rangos corresponde a direcciones IP privadas según RFC1918?</span>
+    <span class="topic-tag">Protocolo IP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">El RFC1918 define tres bloques de direcciones reservadas para uso en redes privadas (no enrutables en Internet).</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">192.0.0.0 – 192.255.255.255</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">172.16.0.0 – 172.31.255.255</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">10.255.0.0 – 11.0.0.0</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">8.8.8.0 – 8.8.8.255</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El rango <strong>172.16.0.0 – 172.31.255.255</strong> es uno de los tres rangos privados del RFC1918. Los otros dos son: 10.0.0.0 – 10.255.255.255 y 192.168.0.0 – 192.168.255.255. Ninguno es enrutable directamente en Internet.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q14">
+  <div class="card-header">
+    <span class="card-num num-amber">14</span>
+    <span class="card-title">¿Qué es el "gateway" (puerta de enlace) en una red IP?</span>
+    <span class="topic-tag">Protocolo IP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">El gateway es un concepto fundamental para entender cómo los equipos de una red local acceden a otras redes.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Un servidor DNS que traduce nombres de dominio a direcciones IP</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">El router que permite que una red local se comunique con otras redes, incluyendo Internet</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">La dirección de broadcast que envía tráfico a todos los dispositivos de la red</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Un switch de capa 2 que conecta dispositivos dentro de la misma LAN</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El <strong>gateway</strong> es el router que conecta la red local con otras redes (Internet incluida). Es la "puerta de salida". Sin un gateway correctamente configurado, un dispositivo solo puede comunicarse dentro de su red local.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q15">
+  <div class="card-header">
+    <span class="card-num num-amber">15</span>
+    <span class="card-title">¿Cuántos bits tiene una dirección IPv6 y por qué fue necesario crearlo?</span>
+    <span class="topic-tag">Protocolo IP</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">IPv6 fue diseñado para reemplazar a IPv4 ante el agotamiento de direcciones disponibles.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">32 bits — el mismo que IPv4 pero con mejor enrutamiento</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">64 bits — el doble de IPv4 para duplicar el espacio de direcciones</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">128 bits — representados en hexadecimal, con espacio de direcciones prácticamente ilimitado</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">256 bits — para garantizar seguridad criptográfica en el direccionamiento</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. IPv6 tiene <strong>128 bits</strong>, representados en hexadecimal separado por dos puntos. Esto genera 2¹²⁸ direcciones posibles — un número prácticamente ilimitado — resolviendo el agotamiento de las ~4.300 millones de IPv4.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="section-label">
+  <div class="section-title">Sección 4 — Protocolos, Puertos y Seguridad de Red</div>
+</div>
+
+<main>
+
+<div class="card" id="q16">
+  <div class="card-header">
+    <span class="card-num num-coral">16</span>
+    <span class="card-title">¿Qué puerto utiliza HTTPS y qué protocolo de seguridad agrega sobre HTTP?</span>
+    <span class="topic-tag">Puertos</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">HTTPS es la versión segura de HTTP. ¿Por qué puerto opera y qué tecnología lo protege?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Puerto 80 — protegido con IPSec</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">Puerto 22 — protegido con SSH</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">Puerto 53 — protegido con DNSSEC</span></div>
+      <div class="option correct-answer"><span class="option-letter">D</span><span class="option-text">Puerto 443 — protegido con TLS (Transport Layer Security)</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. HTTPS usa el <strong>puerto 443/TCP</strong> y protege la comunicación mediante <strong>TLS (Transport Layer Security)</strong>. En Wireshark se pueden ver el handshake TCP y la negociación TLS, pero el contenido de la aplicación viaja cifrado.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q17">
+  <div class="card-header">
+    <span class="card-num num-coral">17</span>
+    <span class="card-title">¿Qué significa la secuencia DORA en el protocolo DHCP?</span>
+    <span class="topic-tag">Puertos</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">DHCP asigna configuración de red automáticamente mediante un intercambio de mensajes con un orden específico.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">Data, Order, Request, Acknowledge</span></div>
+      <div class="option correct-answer"><span class="option-letter">B</span><span class="option-text">Discover, Offer, Request, Acknowledge</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">Detect, Obtain, Relay, Assign</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">Dispatch, Offer, Register, ACK</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. DORA describe los 4 mensajes del protocolo DHCP: <strong>Discover</strong> (el cliente busca servidores), <strong>Offer</strong> (el servidor ofrece una IP), <strong>Request</strong> (el cliente solicita esa IP) y <strong>Acknowledge</strong> (el servidor confirma la asignación).</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q18">
+  <div class="card-header">
+    <span class="card-num num-coral">18</span>
+    <span class="card-title">¿Qué ataque de capa 2 satura la tabla MAC de un switch para que reenvíe tráfico a todos los puertos?</span>
+    <span class="topic-tag">Seguridad</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Un atacante puede explotar un comportamiento específico de los switches cuando su tabla de direcciones se llena.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">ARP Spoofing — asocia una MAC falsa a una IP legítima</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">VLAN Hopping — salta entre VLANs sin autorización</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">MAC Flooding — inunda la tabla MAC del switch con direcciones falsas hasta que se comporta como hub</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">DHCP Snooping — bloquea servidores DHCP no autorizados</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El <strong>MAC Flooding</strong> inunda la tabla CAM del switch con miles de direcciones MAC falsas. Cuando la tabla se satura, el switch no puede identificar destinos y reenvía tráfico a todos los puertos (como un hub), permitiendo al atacante capturarlo.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q19">
+  <div class="card-header">
+    <span class="card-num num-coral">19</span>
+    <span class="card-title">¿Cuál de los siguientes NO es un protocolo de enrutamiento dinámico?</span>
+    <span class="topic-tag">Enrutamiento</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">Los protocolos de enrutamiento dinámico permiten que los routers aprendan rutas automáticamente. Uno de los siguientes no cumple esa función.</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">OSPF (Open Shortest Path First)</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">BGP (Border Gateway Protocol)</span></div>
+      <div class="option disabled"><span class="option-letter">C</span><span class="option-text">RIP (Routing Information Protocol)</span></div>
+      <div class="option correct-answer"><span class="option-letter">D</span><span class="option-text">FTP (File Transfer Protocol)</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. <strong>FTP (File Transfer Protocol)</strong> es un protocolo de transferencia de archivos de la capa de aplicación, no un protocolo de enrutamiento. OSPF, BGP y RIP son protocolos de enrutamiento dinámico que los routers usan para intercambiar información de rutas.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="q20">
+  <div class="card-header">
+    <span class="card-num num-green">20</span>
+    <span class="card-title">¿Qué indica el campo "Window Size" en la cabecera TCP?</span>
+    <span class="topic-tag">Capa 4</span>
+    <span class="q-status correct">✓ Respuesta correcta</span>
+  </div>
+  <div class="card-body">
+    <div class="question-text">La cabecera TCP contiene varios campos con funciones específicas. ¿Qué controla el campo <code>Window Size</code>?</div>
+    <div class="options">
+      <div class="option disabled"><span class="option-letter">A</span><span class="option-text">El checksum del segmento para verificar errores de transmisión</span></div>
+      <div class="option disabled"><span class="option-letter">B</span><span class="option-text">El número de secuencia de los datos enviados</span></div>
+      <div class="option correct-answer"><span class="option-letter">C</span><span class="option-text">La cantidad de datos que el receptor puede aceptar sin enviar una confirmación (control de flujo)</span></div>
+      <div class="option disabled"><span class="option-letter">D</span><span class="option-text">El número de puerto destino de la comunicación</span></div>
+    </div>
+    <div class="feedback visible fb-correct">
+      <div class="feedback-title">Justificación</div>
+      <div class="feedback-text">Correcto. El campo <strong>Window Size</strong> indica cuántos bytes puede recibir el receptor sin necesidad de enviar una confirmación. Es el mecanismo de <strong>control de flujo</strong> de TCP: si la ventana es pequeña, el emisor debe esperar antes de enviar más datos.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ─── TABLA RESUMEN ─── -->
+<div class="section-label">
+  <div class="section-title">Tabla resumen de respuestas</div>
+</div>
+<main>
+<div class="card">
+  <div class="card-body">
+    <div class="resume-table">
+  <div class="resume-head"><span>N°</span><span>Sec</span><span>Opción</span><span>N°</span><span>Sec</span><span>Opción</span></div>
+  <div class="resume-row"><span>01</span><span>1</span><span class="rletter">C</span><span>11</span><span>3</span><span class="rletter">B</span></div>
+  <div class="resume-row"><span>02</span><span>1</span><span class="rletter">C</span><span>12</span><span>3</span><span class="rletter">C</span></div>
+  <div class="resume-row"><span>03</span><span>1</span><span class="rletter">B</span><span>13</span><span>3</span><span class="rletter">B</span></div>
+  <div class="resume-row"><span>04</span><span>1</span><span class="rletter">B</span><span>14</span><span>3</span><span class="rletter">B</span></div>
+  <div class="resume-row"><span>05</span><span>1</span><span class="rletter">C</span><span>15</span><span>3</span><span class="rletter">C</span></div>
+  <div class="resume-row"><span>06</span><span>2</span><span class="rletter">D</span><span>16</span><span>4</span><span class="rletter">D</span></div>
+  <div class="resume-row"><span>07</span><span>2</span><span class="rletter">B</span><span>17</span><span>4</span><span class="rletter">B</span></div>
+  <div class="resume-row"><span>08</span><span>2</span><span class="rletter">B</span><span>18</span><span>4</span><span class="rletter">C</span></div>
+  <div class="resume-row"><span>09</span><span>2</span><span class="rletter">C</span><span>19</span><span>4</span><span class="rletter">D</span></div>
+  <div class="resume-row"><span>10</span><span>2</span><span class="rletter">C</span><span>20</span><span>4</span><span class="rletter">C</span></div>
+</div>
+  </div>
+</div>
+</main>
+
+<!-- ─── CRITERIO DE EVALUACIÓN ─── -->
+<div class="section-label">
+  <div class="section-title">Criterio de evaluación sugerido</div>
+</div>
+<main>
+<div class="card">
+  <div class="card-body">
+    <div class="criteria-table">
+  <div class="criteria-row head"><span>Puntaje</span><span>Porcentaje</span><span>Calificación</span></div>
+  <div class="criteria-row"><span class="criteria-pts">18 – 20</span><span>90 – 100%</span><span style="color:var(--green)">Muy Bueno / Sobresaliente</span></div>
+  <div class="criteria-row"><span class="criteria-pts">14 – 17</span><span>70 – 89%</span><span style="color:var(--teal)">Bueno</span></div>
+  <div class="criteria-row"><span class="criteria-pts">10 – 13</span><span>50 – 69%</span><span style="color:var(--amber)">Regular / Suficiente</span></div>
+  <div class="criteria-row"><span class="criteria-pts">0 – 9</span><span>0 – 49%</span><span style="color:var(--coral)">Insuficiente</span></div>
+</div>
+    <div class="note-box" style="margin-top:1.1rem;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem">
+      <div style="font-size:13px;color:var(--text2)">Cada pregunta vale 1 punto. Puntaje total: <strong style="color:#fff">20 puntos</strong>.</div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer><span style="color:var(--blue)">REDES://</span>Clave de respuestas · Modelos OSI · TCP/IP · Protocolo IP · Capa 4 · Capa 5 · 2026</footer>
+
+</body>
+</html>
