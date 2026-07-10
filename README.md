@@ -4,7 +4,7 @@ Repositorio de materiales para la materia **Redes de Computadoras**, nivel 2° E
 
 ## 🌐 Sitio web del curso
 
-Todo el contenido de este repositorio está organizado y navegable desde **[index.html](index.html)**, un portal que centraliza el acceso a la teoría, las prácticas, las herramientas y las evaluaciones. Si el repositorio tiene GitHub Pages habilitado, el portal queda disponible también en la URL pública del sitio.
+Todo el contenido de este repositorio está organizado y navegable desde **https://portalutu.github.io/2--Redes-Informaticas/(https://portalutu.github.io/2--Redes-Informaticas/)**, un portal que centraliza el acceso a la teoría, las prácticas, las herramientas y las evaluaciones. Si el repositorio tiene GitHub Pages habilitado, el portal queda disponible también en la URL pública del sitio.
 
 ---
 
