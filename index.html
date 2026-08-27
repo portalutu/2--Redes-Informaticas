@@ -132,7 +132,7 @@
     — este portal solo lo organiza.
   </p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-v" id="stat-teorico">10</div><div class="stat-k">Docs teóricos</div></div>
+    <div class="stat"><div class="stat-v" id="stat-teorico">12</div><div class="stat-k">Docs teóricos</div></div>
     <div class="stat"><div class="stat-v">3</div><div class="stat-k">Simuladores</div></div>
     <div class="stat"><div class="stat-v">5</div><div class="stat-k">Capturas PCAP</div></div>
     <div class="stat"><div class="stat-v" id="stat-eval">1</div><div class="stat-k">Evaluaciones</div></div>
@@ -154,9 +154,21 @@
           <span class="res-title">Redes y Protocolos</span>
           <span class="res-desc">Presentación introductoria del curso.</span>
         </a>
+        <a class="res-card" href="Teorico/modelos_osi_tcpip_interactivo.html" target="_blank" rel="noopener">
+          <span class="res-title">Modelos OSI y TCP/IP</span>
+          <span class="res-desc">Comparación interactiva entre el modelo de referencia OSI y el modelo TCP/IP.</span>
+        </a>
         <a class="res-card" href="Teorico/capa_1_osi_fisica_interactiva.html" target="_blank" rel="noopener">
           <span class="res-title">Capa 1 — Física</span>
           <span class="res-desc">Medios de transmisión, distancias máximas, CSMA/CD y seguridad física.</span>
+        </a>
+        <a class="res-card" href="Teorico/cableado_estructurado_2emt.html" target="_blank" rel="noopener">
+          <span class="res-title">Cableado estructurado</span>
+          <span class="res-desc">De la Capa 1 OSI a la instalación real: medios, conectores, racks, PoE, normas TIA/ISO/IEEE, testing y proyecto integrador.</span>
+        </a>
+        <a class="res-card" href="Teorico/ups_estabilizadores_interactivo.html" target="_blank" rel="noopener">
+          <span class="res-title">UPS, estabilizadores y filtros</span>
+          <span class="res-desc">Tipos de UPS, estabilizadores de corriente y filtros de línea, con simulador para calcular la UPS necesaria según potencia y autonomía.</span>
         </a>
         <a class="res-card" href="Teorico/capa_2_osi_enlace_interactiva.html" target="_blank" rel="noopener">
           <span class="res-title">Capa 2 — Enlace de datos</span>
@@ -181,18 +193,6 @@
         <a class="res-card" href="Teorico/capa_7_osi_aplicacion_interactiva.html" target="_blank" rel="noopener">
           <span class="res-title">Capa 7 — Aplicación</span>
           <span class="res-desc">HTTP, DNS, DHCP, SMTP y simuladores de protocolos.</span>
-        </a>
-        <a class="res-card" href="Teorico/protocolo_ip.html" target="_blank" rel="noopener">
-          <span class="res-title">Protocolo IP — Guía interactiva</span>
-          <span class="res-desc">Direccionamiento, clases y estructura de paquetes IP.</span>
-        </a>
-        <a class="res-card" href="Teorico/protocolo_ip_explicacion.html" target="_blank" rel="noopener">
-          <span class="res-title">Protocolo IP — Explicación</span>
-          <span class="res-desc">Complemento explicativo sobre el protocolo IP.</span>
-        </a>
-        <a class="res-card" href="Teorico/viaje_paquete_ip.html" target="_blank" rel="noopener">
-          <span class="res-title">Viaje de un paquete IP</span>
-          <span class="res-desc">Visualización del recorrido de un paquete por la red.</span>
         </a>
         <a class="res-card" href="Teorico/pcap_wireshark.html" target="_blank" rel="noopener">
           <span class="res-title">PCAP y Wireshark</span>
@@ -385,9 +385,22 @@
     }
   }
 
+  function fileNameFromCard(card) {
+    try {
+      return decodeURIComponent(new URL(card.href).pathname.split('/').pop());
+    } catch (err) {
+      return '';
+    }
+  }
+
   async function loadFolder(folder, gridId, statId) {
     const grid = document.getElementById(gridId);
     if (!grid) return;
+
+    // Tarjetas ya presentes en el HTML estático (el respaldo que se ve sin red
+    // o mientras el archivo todavía no llegó al repositorio remoto).
+    const staticCards = Array.from(grid.children);
+
     try {
       // La API de contenidos de GitHub permite listar la carpeta sin build step;
       // en GitHub Pages no hay listado de directorios nativo. Requiere red y
@@ -401,11 +414,24 @@
         .filter(e => e.type === 'file' && /\.(html|pdf)$/i.test(e.name))
         .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
 
+      const fetchedNames = new Set(files.map(f => f.name));
       const cards = await Promise.all(files.map(f => buildCardFor(folder, f)));
-      grid.replaceChildren(...cards);
+
+      // Los archivos que ya están en el disco local pero todavía no se subieron
+      // al repositorio remoto no aparecen en la respuesta de la API: se
+      // conservan sus tarjetas estáticas en vez de perderlas.
+      const leftoverStatic = staticCards.filter(c => !fetchedNames.has(fileNameFromCard(c)));
+
+      const merged = [...cards, ...leftoverStatic].sort((a, b) => {
+        const ta = a.querySelector('.res-title')?.textContent || '';
+        const tb = b.querySelector('.res-title')?.textContent || '';
+        return ta.localeCompare(tb, 'es', { sensitivity: 'base' });
+      });
+
+      grid.replaceChildren(...merged);
 
       const statEl = document.getElementById(statId);
-      if (statEl) statEl.textContent = String(files.length);
+      if (statEl) statEl.textContent = String(merged.length);
     } catch (err) {
       console.warn(`No se pudo actualizar el listado de ${folder} automáticamente, se muestra el último listado guardado.`, err);
     }

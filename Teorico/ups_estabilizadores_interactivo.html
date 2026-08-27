@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UPS, Estabilizadores y Filtros — 2º EMT Sistemas y Redes</title>
+<meta name="description" content="Guía interactiva sobre UPS, tipos de UPS (off-line, line-interactive, online), estabilizadores de corriente y filtros de línea, con un simulador para calcular la UPS necesaria según potencia y tiempo de autonomía.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(245,158,11,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;left:-20vw;top:-25vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(245,158,11,.10),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--amber);background:var(--amber-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber);background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--amber);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--amber)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--amber);background:var(--amber-bg);border-color:rgba(245,158,11,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}ul,ol{color:var(--text2);padding-left:1.2rem;margin-top:.6rem;display:flex;flex-direction:column;gap:4px}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s}.info-card:hover{border-color:rgba(245,158,11,.45);transform:translateY(-2px)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.subhead{font-size:14px;font-weight:700;color:#fff;margin-top:1.4rem;margin-bottom:.3rem}.subhead:first-child{margin-top:0}
+figure{margin-top:1.25rem}figure img{width:100%;border-radius:12px;border:1px solid var(--border);display:block}figcaption{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;margin-top:8px}
+table.md-table{width:100%;border-collapse:collapse;margin-top:1.1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:12.5px}table.md-table th{background:var(--bg3);color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;font-weight:700;text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}table.md-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2)}table.md-table tr:last-child td{border-bottom:none}table.md-table td:first-child{color:#fff;font-weight:600}table.md-table td.mono{font-family:var(--mono);color:var(--amber)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.2fr 1.8fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.tag{font-family:var(--mono);font-size:10px;color:var(--amber);background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:18px;padding:3px 8px;display:inline-block;margin:2px 4px 2px 0}
+.riesgo{border-left:3px solid var(--coral);background:rgba(251,113,133,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.riesgo strong{color:var(--coral)}
+.norma{border-left:3px solid var(--blue);background:rgba(77,168,255,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:8px;font-size:12px;color:var(--text2);font-family:var(--mono)}.norma strong{color:var(--blue);font-family:var(--sans)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1rem;font-family:var(--mono);font-size:12px}.flow span.step{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:#fff}.flow span.arrow{color:var(--text3)}
+.sim-box{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin-top:1.25rem}
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:1rem}
+.sim-field label{display:block;font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.sim-field .row{display:flex;align-items:center;gap:10px}
+.sim-field input[type=range]{flex:1;accent-color:var(--amber)}
+.sim-field input[type=number],.sim-field select{width:100%;background:var(--bg4);border:1px solid var(--border2);color:#fff;border-radius:8px;padding:7px 10px;font-family:var(--mono);font-size:13px}
+.sim-field .val{font-family:var(--mono);font-size:12px;color:var(--amber);min-width:56px;text-align:right}
+.sim-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:1rem}
+.res-tile{background:var(--bg4);border:1px solid var(--border2);border-radius:12px;padding:12px 14px}
+.res-tile .rk{font-size:10.5px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.res-tile .rv{font-size:20px;font-weight:700;color:#fff;margin-top:4px;font-family:var(--mono)}
+.res-tile .ru{font-size:11px;color:var(--amber);margin-top:2px}
+.res-tile.highlight{border-color:rgba(245,158,11,.45);background:var(--amber-bg)}
+.log{background:#080a0d;border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:12px;font-family:var(--mono);font-size:12px;min-height:60px}.log-line{border-bottom:1px solid rgba(255,255,255,.05);padding:5px 0}.log-ok{color:var(--green)}.log-warn{color:var(--amber)}.log-err{color:var(--coral)}.log-info{color:var(--text2)}
+.btn-calc{font-family:var(--sans);font-size:13px;font-weight:700;border:1px solid rgba(245,158,11,.4);background:var(--amber-bg);color:var(--amber);border-radius:10px;padding:9px 18px;cursor:pointer;transition:.2s}.btn-calc:hover{background:var(--amber);color:#0a0c10}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.card-body{padding:1rem}table.md-table{font-size:11px}}
+</style>
+</head>
+<body>
+<nav><a class="nav-logo" href="#">POWER://UPS</a><div class="nav-links">
+<a class="nav-link" href="#s1">Qué es un UPS</a>
+<a class="nav-link" href="#s2">Tipos de UPS</a>
+<a class="nav-link" href="#s3">Estabilizadores</a>
+<a class="nav-link" href="#s4">Filtros de línea</a>
+<a class="nav-link" href="#s5">Comparación</a>
+<a class="nav-link" href="#s6">Dimensionamiento</a>
+<a class="nav-link" href="#s7">Simulador</a>
+<a class="nav-link" href="#s8">Buenas prácticas</a>
+</div></nav>
+
+<section class="hero">
+<div class="hero-tag">Redes · 2.º EMT Sistemas y Redes · Alimentación eléctrica</div>
+<h1>UPS, estabilizadores<br>y <span>filtros de línea</span></h1>
+<p class="hero-sub">La disponibilidad de una red no depende solo del cableado y los equipos: también depende de la calidad y continuidad de la energía eléctrica que los alimenta. Esta guía explica qué protege cada dispositivo, cuándo usar cada uno, y ofrece un simulador para calcular la UPS necesaria según la potencia a proteger y el tiempo de autonomía deseado.</p>
+<div class="hero-actions"><a class="btn primary" href="#s1">Comenzar</a><a class="btn" href="#s7">Ir al simulador</a></div>
+</section>
+
+<main>
+
+<div class="card" id="s1"><div class="card-header"><span class="card-num num-amber">01</span><span class="card-title">¿Qué es un UPS y para qué sirve?</span></div><div class="card-body">
+<p>Un <strong>UPS</strong> (Uninterruptible Power Supply — Sistema de Alimentación Ininterrumpida, SAI) es un equipo que se ubica entre la red eléctrica y los dispositivos críticos (switches, routers, servidores, racks) para <strong>mantenerlos encendidos durante un corte de energía</strong> y, según el tipo, además <strong>corregir problemas de calidad eléctrica</strong> mientras hay suministro normal.</p>
+<div class="grid grid-4">
+<div class="info-card"><div class="info-label">Función 1</div><div class="info-title">Continuidad</div><div class="info-desc">Provee energía desde baterías cuando se corta el suministro eléctrico.</div></div>
+<div class="info-card"><div class="info-label">Función 2</div><div class="info-title">Filtrado</div><div class="info-desc">Atenúa ruido eléctrico y picos de tensión antes de llegar al equipo.</div></div>
+<div class="info-card"><div class="info-label">Función 3</div><div class="info-title">Regulación</div><div class="info-desc">Corrige sobretensiones y caídas de tensión sin pasar a batería.</div></div>
+<div class="info-card"><div class="info-label">Función 4</div><div class="info-title">Apagado ordenado</div><div class="info-desc">Con software de gestión, permite apagar servidores de forma segura antes de agotar la batería.</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo de no usar UPS:</strong> un corte de energía puede provocar caída abrupta de switches y servidores, pérdida de datos, corrupción de sistemas de archivos y daño a fuentes de alimentación por variaciones bruscas de tensión.</div>
+<figure><img src="assets/ups.png" alt="Esquema de un UPS protegiendo un rack de equipos"><figcaption>Un UPS entre la red eléctrica y los equipos críticos del rack</figcaption></figure>
+<div class="note-box"><div class="note-title">Idea clave</div><div class="note-line">El UPS no es solo "una batería": según su topología también protege contra ruido eléctrico, picos, caídas y armónicos que un simple banco de baterías no filtra.</div></div>
+</div></div>
+
+<div class="card" id="s2"><div class="card-header"><span class="card-num num-blue">02</span><span class="card-title">Tipos de UPS</span></div><div class="card-body">
+<p>Existen tres topologías principales, que se diferencian por <strong>cómo y cuándo</strong> intervienen las baterías frente a un problema en la red eléctrica.</p>
+
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Tipo 1</div><div class="info-title">Off-line / Standby</div><div class="info-desc">El equipo trabaja conectado directo a la red; ante un corte, conmuta a batería en unos milisegundos (5–10 ms).</div></div>
+<div class="info-card"><div class="info-label">Tipo 2</div><div class="info-title">Line-Interactive</div><div class="info-desc">Similar al off-line, pero incorpora un regulador automático de voltaje (AVR) que corrige variaciones sin pasar a batería.</div></div>
+<div class="info-card"><div class="info-label">Tipo 3</div><div class="info-title">Online / Doble conversión</div><div class="info-desc">Convierte la energía de CA a CC y nuevamente a CA de forma continua; el equipo siempre recibe energía "regenerada" desde el inversor.</div></div>
+</div>
+
+<p class="subhead">Off-line / Standby</p>
+<p>Es el más simple y económico. La carga se alimenta directamente de la red; el UPS solo monitorea la tensión y conmuta a batería cuando detecta un corte o una caída fuera de rango. Ese pequeño tiempo de conmutación (milisegundos) es imperceptible para la mayoría de los equipos de red, pero puede ser crítico para servidores muy sensibles.</p>
+<div class="riesgo"><strong>Riesgo:</strong> no corrige variaciones menores de tensión (microcortes, subidas/bajadas) sin pasar a batería, lo que acorta la vida útil de la batería si la red es inestable.</div>
+
+<p class="subhead">Line-Interactive</p>
+<p>Agrega un <strong>AVR</strong> (regulador automático de voltaje) integrado: ante una sobretensión o caída de tensión moderada, ajusta el voltaje con un transformador de derivaciones (taps) sin necesidad de usar la batería. Es el equilibrio más común entre costo y protección para racks de PyMEs, cuartos de telecomunicaciones y aulas.</p>
+<div class="note-box"><div class="note-line"><strong>Uso típico:</strong> racks de comunicaciones, switches, routers, PCs y servidores de gama media.</div></div>
+
+<p class="subhead">Online / Doble conversión</p>
+<p>Nunca conecta la carga directamente a la red: primero convierte la CA de entrada en CC para cargar la batería, y luego un inversor la vuelve a convertir en CA limpia y estable para el equipo. El resultado es <strong>tiempo de conmutación cero</strong> y la mejor calidad de energía posible, a costa de mayor consumo, tamaño y precio.</p>
+<div class="note-box"><div class="note-line"><strong>Uso típico:</strong> centros de datos, salas de equipos críticos, equipamiento médico e industrial sensible.</div></div>
+
+<table class="md-table"><tr><th>Tipo</th><th>Tiempo de conmutación</th><th>Regula tensión sin batería</th><th>Costo relativo</th><th>Uso recomendado</th></tr>
+<tr><td>Off-line / Standby</td><td class="mono">~5–10 ms</td><td>No</td><td class="mono">Bajo</td><td>PC individual, equipos poco críticos</td></tr>
+<tr><td>Line-Interactive</td><td class="mono">~2–6 ms</td><td>Sí (AVR)</td><td class="mono">Medio</td><td>Racks de comunicaciones, PyMEs, aulas</td></tr>
+<tr><td>Online / Doble conversión</td><td class="mono">0 ms</td><td>Sí (siempre activo)</td><td class="mono">Alto</td><td>Data center, servidores críticos, equipos médicos</td></tr>
+</table>
+<div class="norma"><strong>Normativa relacionada:</strong> IEC 62040 (sistemas UPS) y las recomendaciones eléctricas locales de instalación y puesta a tierra (relacionadas con TIA-607 en el rack de telecomunicaciones).</div>
+</div></div>
+
+<div class="card" id="s3"><div class="card-header"><span class="card-num num-teal">03</span><span class="card-title">Estabilizadores de corriente (AVR)</span></div><div class="card-body">
+<p>Un <strong>estabilizador de corriente</strong> (o regulador automático de voltaje, AVR) corrige las variaciones de tensión de la red eléctrica <strong>sin</strong> disponer de baterías: no protege ante un corte total de energía, solo ante tensión fuera de rango.</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Corrige</div><div class="info-title">Sobretensión</div><div class="info-desc">Tensión por encima del rango normal (ej. 240V en una red de 220V).</div></div>
+<div class="info-card"><div class="info-label">Corrige</div><div class="info-title">Subtensión</div><div class="info-desc">Caídas de tensión (ej. 190V en una red de 220V) por sobrecarga de la red eléctrica.</div></div>
+<div class="info-card"><div class="info-label">No corrige</div><div class="info-title">Corte total</div><div class="info-desc">Ante un apagón, el equipo conectado se apaga igual que sin estabilizador.</div></div>
+</div>
+<p style="margin-top:1rem">Funciona mediante un <strong>transformador con derivaciones (taps)</strong> que conmuta automáticamente para acercar la tensión de salida al valor nominal, en unos pocos milisegundos, sin usar batería.</p>
+<div class="riesgo"><strong>Riesgo:</strong> confundir un estabilizador con un UPS — un estabilizador no mantiene el equipo encendido durante un corte de suministro, solo evita que reciba tensión fuera de rango mientras hay energía.</div>
+<div class="note-box"><div class="note-title">Cuándo usarlo</div><div class="note-line">En zonas con red eléctrica inestable (muchas variaciones de tensión pero pocos cortes totales), como complemento económico antes o en combinación con un UPS.</div></div>
+</div></div>
+
+<div class="card" id="s4"><div class="card-header"><span class="card-num num-purple">04</span><span class="card-title">Filtros de línea y supresores de picos</span></div><div class="card-body">
+<p>Un <strong>filtro de línea</strong> (o supresor de picos/surge protector) protege contra <strong>transitorios de muy corta duración</strong>: picos de tensión producidos por rayos cercanos, arranque de motores, o ruido eléctrico de otros equipos en la misma instalación.</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Protege contra</div><div class="info-title">Picos de tensión (surge)</div><div class="info-desc">Sobretensiones muy breves (microsegundos) que pueden dañar fuentes de alimentación.</div></div>
+<div class="info-card"><div class="info-label">Protege contra</div><div class="info-title">Ruido eléctrico</div><div class="info-desc">Interferencia de alta frecuencia inyectada en la línea por otros equipos.</div></div>
+<div class="info-card"><div class="info-label">No protege contra</div><div class="info-title">Cortes ni variaciones sostenidas</div><div class="info-desc">No mantiene el equipo encendido ni corrige sub/sobretensión prolongada.</div></div>
+</div>
+<p style="margin-top:1rem">Internamente utiliza componentes como <strong>varistores (MOV)</strong> que absorben y disipan la energía del pico, desviándola a tierra. Por eso una buena puesta a tierra es indispensable para que el filtro funcione correctamente.</p>
+<div class="riesgo"><strong>Riesgo:</strong> los varistores se degradan con cada pico absorbido; un filtro que sufrió una sobretensión fuerte (por ejemplo una caída de rayo cercana) puede perder su capacidad de protección sin dar ningún aviso visible.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> la efectividad del filtro depende de una puesta a tierra correcta, coordinada con TIA-607-E en instalaciones de telecomunicaciones.</div>
+</div></div>
+
+<div class="card" id="s5"><div class="card-header"><span class="card-num num-coral">05</span><span class="card-title">UPS vs. estabilizador vs. filtro — cuándo usar cada uno</span></div><div class="card-body">
+<p>Los tres dispositivos se complementan; no son alternativas entre sí, sino capas de protección distintas frente a distintos problemas eléctricos.</p>
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">Filtro de línea</div><div class="compare-v">Protege solo contra picos y ruido de alta frecuencia. Ni regula tensión sostenida ni da autonomía.</div></div>
+<div class="compare-row"><div class="compare-k">Estabilizador (AVR)</div><div class="compare-v">Corrige sobre/subtensión sostenida. No da autonomía ante un corte total.</div></div>
+<div class="compare-row"><div class="compare-k">UPS Off-line</div><div class="compare-v">Da autonomía por batería ante un corte, con un breve tiempo de conmutación. Regulación de tensión limitada o nula.</div></div>
+<div class="compare-row"><div class="compare-k">UPS Line-Interactive</div><div class="compare-v">Da autonomía + regula tensión sostenida (AVR incorporado) sin usar batería para eso.</div></div>
+<div class="compare-row"><div class="compare-k">UPS Online</div><div class="compare-v">Da autonomía + regula + filtra de forma continua, con conmutación de 0 ms. La protección más completa.</div></div>
+</div>
+<div class="note-box"><div class="note-title">Regla práctica</div><div class="note-line">Un rack de comunicaciones bien protegido suele combinar: <strong>puesta a tierra correcta (TIA-607)</strong> + <strong>filtro/supresor de picos en la entrada de energía</strong> + <strong>UPS line-interactive u online</strong> dimensionado según la carga y la autonomía requerida.</div></div>
+<figure><img src="assets/estabilizadores_filtros.png" alt="Comparación entre estabilizador de corriente y filtro de línea"><figcaption>Estabilizador de corriente y filtro de línea como capas de protección previas al UPS</figcaption></figure>
+</div></div>
+
+<div class="card" id="s6"><div class="card-header"><span class="card-num num-green">06</span><span class="card-title">Dimensionamiento de un UPS: conceptos clave</span></div><div class="card-body">
+<p>Antes de calcular la UPS necesaria hay que entender cuatro conceptos que se usan en el simulador de la siguiente sección.</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">VA vs. W</div><div class="info-title">Potencia aparente vs. potencia real</div><div class="info-desc">Los UPS se especifican en <strong>VA</strong> (voltamperios); los equipos consumen <strong>W</strong> (watts reales). Se relacionan por el <strong>factor de potencia</strong>: W = VA × FP.</div></div>
+<div class="info-card"><div class="info-label">Factor de potencia (FP)</div><div class="info-title">Eficiencia de la carga</div><div class="info-desc">Equipos de TI modernos con corrección de factor de potencia (PFC) rondan FP ≈ 0,95–0,99; equipos antiguos, FP ≈ 0,6–0,7.</div></div>
+<div class="info-card"><div class="info-label">Autonomía</div><div class="info-title">Tiempo de respaldo</div><div class="info-desc">Cuánto tiempo debe seguir funcionando el equipo tras un corte: desde minutos (para apagar ordenadamente) hasta horas (para seguir operando).</div></div>
+<div class="info-card"><div class="info-label">Eficiencia del inversor</div><div class="info-title">Pérdidas de conversión</div><div class="info-desc">Al convertir la energía de la batería (CC) a CA para el equipo, se pierde una parte como calor; los UPS reales rondan 80–90% de eficiencia.</div></div>
+</div>
+<p style="margin-top:1rem">Con esos datos se calcula la <strong>energía necesaria</strong> (en Wh) y de ahí la <strong>capacidad de batería</strong> (en Ah) requerida para sostener la carga durante el tiempo deseado.</p>
+<div class="riesgo"><strong>Riesgo frecuente:</strong> dimensionar la UPS solo por la potencia nominal de placa de los equipos, sin margen de crecimiento ni considerando que a mayor carga (más cerca del 100% de la UPS) menor es su eficiencia y su vida útil.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> IEC 62040 para el sistema UPS y las especificaciones del fabricante de baterías.</div>
+</div></div>
+
+<div class="card" id="s7"><div class="card-header"><span class="card-num num-amber">07</span><span class="card-title">Simulador: ¿qué UPS necesito?</span></div><div class="card-body">
+<p>Ingresá la potencia real de los equipos a proteger y el tiempo de autonomía deseado. El simulador calcula la potencia aparente necesaria, sugiere una capacidad comercial de UPS, y estima la energía y la batería necesarias para sostener esa autonomía.</p>
+
+<div class="sim-box">
+<div class="sim-grid">
+<div class="sim-field">
+<label>Potencia real de la carga (W)</label>
+<div class="row"><input type="range" id="pw" min="50" max="6000" step="10" value="500" oninput="syncNum('pw','pwn')"><input type="number" id="pwn" min="1" max="20000" step="1" value="500" oninput="syncRange('pw','pwn')"></div>
+</div>
+<div class="sim-field">
+<label>Tiempo de autonomía deseado (minutos)</label>
+<div class="row"><input type="range" id="tm" min="1" max="240" step="1" value="15" oninput="syncNum('tm','tmn')"><input type="number" id="tmn" min="1" max="1440" step="1" value="15" oninput="syncRange('tm','tmn')"></div>
+</div>
+<div class="sim-field">
+<label>Factor de potencia de la carga</label>
+<div class="row"><input type="range" id="fp" min="0.6" max="1" step="0.01" value="0.9" oninput="syncNum('fp','fpn')"><input type="number" id="fpn" min="0.6" max="1" step="0.01" value="0.9" oninput="syncRange('fp','fpn')"></div>
+</div>
+<div class="sim-field">
+<label>Eficiencia del inversor (%)</label>
+<div class="row"><input type="range" id="ef" min="70" max="97" step="1" value="85" oninput="syncNum('ef','efn')"><input type="number" id="efn" min="50" max="99" step="1" value="85" oninput="syncRange('ef','efn')"></div>
+</div>
+<div class="sim-field">
+<label>Margen de crecimiento / seguridad (%)</label>
+<div class="row"><input type="range" id="mg" min="0" max="50" step="5" value="25" oninput="syncNum('mg','mgn')"><input type="number" id="mgn" min="0" max="100" step="5" value="25" oninput="syncRange('mg','mgn')"></div>
+</div>
+<div class="sim-field">
+<label>Voltaje del banco de baterías</label>
+<select id="bv"><option value="12">12 V (1 batería)</option><option value="24" selected>24 V (2 baterías en serie)</option><option value="48">48 V (4 baterías en serie)</option></select>
+</div>
+<div class="sim-field">
+<label>Capacidad unitaria de batería (Ah)</label>
+<select id="bah"><option value="7">7 Ah (batería chica de UPS)</option><option value="9">9 Ah</option><option value="18">18 Ah</option><option value="45">45 Ah</option><option value="100" selected>100 Ah (batería de gel/AGM externa)</option></select>
+</div>
+</div>
+<button class="btn-calc" onclick="calcularUPS()">Calcular UPS necesaria</button>
+
+<div class="sim-results" id="resultados"></div>
+<div class="log" id="sim-log"><div class="log-line log-info">Ajustá los valores y presioná «Calcular UPS necesaria».</div></div>
+</div>
+
+<div class="note-box" style="margin-top:1.25rem"><div class="note-title">Referencia rápida de consumos típicos</div><div class="note-line">Switch de acceso 24p: 15–40 W · Router/firewall pequeño: 20–60 W · Servidor 1U: 200–500 W · PC de escritorio: 150–350 W · AP Wi-Fi PoE: 8–25 W. Sumá los equipos reales del rack antes de usar el simulador.</div></div>
+</div></div>
+
+<div class="card" id="s8"><div class="card-header"><span class="card-num num-blue">08</span><span class="card-title">Buenas prácticas de instalación y mantenimiento</span></div><div class="card-body">
+<div class="grid grid-3">
+<div class="info-card"><div class="info-title">Puesta a tierra correcta</div><div class="info-desc">Sin tierra adecuada, ni el filtro ni el UPS protegen correctamente ante picos.</div></div>
+<div class="info-card"><div class="info-title">No superar el 60–80% de carga</div><div class="info-desc">Dejar margen mejora la eficiencia, la vida útil y permite crecimiento futuro.</div></div>
+<div class="info-card"><div class="info-title">Ventilación</div><div class="info-desc">El UPS y las baterías generan calor; el calor excesivo acorta drásticamente la vida de la batería.</div></div>
+<div class="info-card"><div class="info-title">Revisión periódica de baterías</div><div class="info-desc">Las baterías selladas (VRLA/AGM) suelen durar 3–5 años y deben probarse bajo carga, no solo por voltaje.</div></div>
+<div class="info-card"><div class="info-title">Software de gestión</div><div class="info-desc">Permite monitorear el estado del UPS y automatizar el apagado ordenado de servidores.</div></div>
+<div class="info-card"><div class="info-title">Etiquetado</div><div class="info-desc">Identificar qué equipos están respaldados por cada UPS, siguiendo la misma lógica de documentación que TIA-606.</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo:</strong> instalar el UPS y nunca volver a revisarlo — una batería degradada puede dar una falsa sensación de protección hasta el momento exacto de un corte real.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> IEC 62040, TIA-607-E (puesta a tierra) y TIA-569-E (espacio y ventilación de la sala de equipos).</div>
+</div></div>
+
+</main>
+<footer><span style="color:var(--amber)">POWER://</span>UPS · Estabilizadores · Filtros de línea · Dimensionamiento · Simulador</footer>
+<script>
+function syncNum(rangeId,numId){document.getElementById(numId).value=document.getElementById(rangeId).value}
+function syncRange(rangeId,numId){document.getElementById(rangeId).value=document.getElementById(numId).value}
+
+function addLog(m,c='log-info'){const l=document.getElementById('sim-log');const d=document.createElement('div');d.className='log-line '+c;d.textContent=m;l.prepend(d)}
+
+const STANDARD_VA=[500,600,750,1000,1500,2200,3000,5000,6000,10000,15000,20000];
+function nextStandard(va){for(const s of STANDARD_VA){if(s>=va)return s}return Math.ceil(va/1000)*1000}
+
+function tile(k,v,u,hl){return `<div class="res-tile${hl?' highlight':''}"><div class="rk">${k}</div><div class="rv">${v}</div><div class="ru">${u}</div></div>`}
+
+function calcularUPS(){
+  const P = parseFloat(document.getElementById('pwn').value)||0;
+  const Tmin = parseFloat(document.getElementById('tmn').value)||0;
+  const FP = parseFloat(document.getElementById('fpn').value)||0.9;
+  const EF = (parseFloat(document.getElementById('efn').value)||85)/100;
+  const MG = (parseFloat(document.getElementById('mgn').value)||0)/100;
+  const bankV = parseFloat(document.getElementById('bv').value);
+  const battAh = parseFloat(document.getElementById('bah').value);
+
+  if(P<=0||Tmin<=0){addLog('Ingresá una potencia y un tiempo de autonomía válidos.','log-err');return}
+
+  const VA_carga = P/FP;
+  const VA_con_margen = VA_carga*(1+MG);
+  const VA_comercial = nextStandard(VA_con_margen);
+  const horas = Tmin/60;
+  const energia_Wh = (P*horas)/EF;
+  const energia_con_margen = energia_Wh*(1+MG);
+  const DoD = 0.8;
+  const Ah_necesarios = energia_con_margen/(bankV*DoD);
+  const baterias_paralelo = Math.ceil(Ah_necesarios/battAh);
+  const baterias_serie = bankV/12;
+  const baterias_total = baterias_paralelo*baterias_serie;
+
+  const res = document.getElementById('resultados');
+  res.innerHTML = [
+    tile('Potencia aparente requerida', VA_carga.toFixed(0), 'VA', false),
+    tile('UPS comercial sugerida', VA_comercial, 'VA (redondeado + margen)', true),
+    tile('Energía necesaria', energia_con_margen.toFixed(0), 'Wh (con margen)', false),
+    tile('Capacidad de batería', Ah_necesarios.toFixed(1), `Ah a ${bankV} V (DoD 80%)`, false),
+    tile('Baterías necesarias', baterias_total, `de ${battAh} Ah / 12 V c/u`, false),
+    tile('Config. del banco', `${baterias_serie} serie × ${baterias_paralelo} paralelo`, `para ${bankV} V`, false)
+  ].join('');
+
+  document.getElementById('sim-log').innerHTML='';
+  addLog(`[1] Potencia aparente = Potencia real / FP = ${P} W / ${FP} = ${VA_carga.toFixed(0)} VA`,'log-info');
+  addLog(`[2] Con margen de seguridad de ${(MG*100).toFixed(0)}% → ${VA_con_margen.toFixed(0)} VA → UPS comercial recomendada: ${VA_comercial} VA`,'log-ok');
+  addLog(`[3] Energía = Potencia × tiempo(h) / eficiencia = ${P} W × ${horas.toFixed(3)} h / ${EF} = ${energia_Wh.toFixed(0)} Wh (${energia_con_margen.toFixed(0)} Wh con margen)`,'log-info');
+  addLog(`[4] Batería = Energía / (Voltaje del banco × DoD 80%) = ${energia_con_margen.toFixed(0)} Wh / (${bankV} V × 0.8) = ${Ah_necesarios.toFixed(1)} Ah`,'log-info');
+  addLog(`[5] Con baterías de ${battAh} Ah: ${baterias_paralelo} en paralelo × ${baterias_serie} en serie = ${baterias_total} baterías totales`,'log-ok');
+  if(VA_con_margen/VA_comercial>0.9){addLog('[!] La carga usaría más del 90% de la UPS sugerida: considerá el siguiente tamaño comercial.','log-warn')}
+}
+function updateActiveNav(){const sections=document.querySelectorAll('[id^="s"]'),links=document.querySelectorAll('.nav-link');let a=null;sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a))}
+window.addEventListener('scroll',updateActiveNav,{passive:true});
+updateActiveNav();calcularUPS();
+</script>
+</body>
+</html>

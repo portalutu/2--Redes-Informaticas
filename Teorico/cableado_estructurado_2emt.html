@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cableado Estructurado — 2º EMT Sistemas y Redes</title>
+<meta name="description" content="Guía interactiva de cableado estructurado: subsistemas, medios, conectores, terminación, racks, distancias, PoE, normas TIA/ISO/IEEE, etiquetado, testing, diagnóstico y proyecto integrador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(251,113,133,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(251,113,133,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;left:-20vw;top:-25vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(251,113,133,.10),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--coral);background:var(--coral-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--coral);background:var(--coral-bg);border:1px solid rgba(251,113,133,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--coral);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--coral)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--coral);background:var(--coral-bg);border-color:rgba(251,113,133,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}ul,ol{color:var(--text2);padding-left:1.2rem;margin-top:.6rem;display:flex;flex-direction:column;gap:4px}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s}.info-card:hover{border-color:rgba(251,113,133,.45);transform:translateY(-2px)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.subhead{font-size:14px;font-weight:700;color:#fff;margin-top:1.4rem;margin-bottom:.3rem}.subhead:first-child{margin-top:0}
+figure{margin-top:1.25rem}figure img{width:100%;border-radius:12px;border:1px solid var(--border);display:block}figcaption{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;margin-top:8px}
+table.md-table{width:100%;border-collapse:collapse;margin-top:1.1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:12.5px}table.md-table th{background:var(--bg3);color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;font-weight:700;text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}table.md-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2)}table.md-table tr:last-child td{border-bottom:none}table.md-table td:first-child{color:#fff;font-weight:600}table.md-table td.mono{font-family:var(--mono);color:var(--coral)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.2fr 1.8fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.tag{font-family:var(--mono);font-size:10px;color:var(--coral);background:var(--coral-bg);border:1px solid rgba(251,113,133,.2);border-radius:18px;padding:3px 8px;display:inline-block;margin:2px 4px 2px 0}
+.riesgo{border-left:3px solid var(--coral);background:rgba(251,113,133,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.riesgo strong{color:var(--coral)}
+.norma{border-left:3px solid var(--blue);background:rgba(77,168,255,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:8px;font-size:12px;color:var(--text2);font-family:var(--mono)}.norma strong{color:var(--blue);font-family:var(--sans)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1rem;font-family:var(--mono);font-size:12px}.flow span.step{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:#fff}.flow span.arrow{color:var(--text3)}
+.ref-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:10px}.ref-card .rt{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}.ref-card .rd{font-size:12px;color:var(--text2);margin-bottom:6px}.ref-card a{font-family:var(--mono);font-size:11px;color:var(--coral);word-break:break-all}
+.acc{border:1px solid var(--border);border-radius:12px;margin-top:12px;overflow:hidden}.acc-head{background:var(--bg3);padding:10px 14px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}.acc-head::after{content:'+';color:var(--coral);font-size:16px}.acc.open .acc-head::after{content:'–'}.acc-body{padding:0 14px;max-height:0;overflow:hidden;transition:max-height .3s ease}.acc.open .acc-body{padding:12px 14px;max-height:1000px}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.card-body{padding:1rem}table.md-table{font-size:11px}}
+</style>
+</head>
+<body>
+<nav><a class="nav-logo" href="#">TIA://CABLEADO</a><div class="nav-links">
+<a class="nav-link" href="#s1">Intro</a>
+<a class="nav-link" href="#s2">Repaso</a>
+<a class="nav-link" href="#s3">OSI→Física</a>
+<a class="nav-link" href="#s4">Estructurado</a>
+<a class="nav-link" href="#s5">Arquitectura</a>
+<a class="nav-link" href="#s6">Cobre/Fibra</a>
+<a class="nav-link" href="#s7">Cable/RJ45</a>
+<a class="nav-link" href="#s8">Terminación</a>
+<a class="nav-link" href="#s9">Racks/Distancias</a>
+<a class="nav-link" href="#s9b">Armado de racks</a>
+<a class="nav-link" href="#s9c">Telefonía/Telecontrol</a>
+<a class="nav-link" href="#s10">PoE</a>
+<a class="nav-link" href="#s11">Normas</a>
+<a class="nav-link" href="#s12">Testing</a>
+<a class="nav-link" href="#s13">Diseño</a>
+<a class="nav-link" href="#s14">Prácticas/Seguridad</a>
+<a class="nav-link" href="#s15">Proyecto</a>
+</div></nav>
+
+<section class="hero">
+<div class="hero-tag">Redes · 2.º EMT Sistemas y Redes</div>
+<h1>Cableado <span>estructurado</span><br>de la teoría OSI a la instalación real</h1>
+<p class="hero-sub">Ya se conoce el modelo OSI completo. El objetivo ahora es llevar especialmente los conceptos de <strong>Capa 1 — Física</strong> a una instalación de red real: cables, conectores, racks, patch panels, canalizaciones, normas, pruebas y documentación.</p>
+<div class="hero-actions"><a class="btn primary" href="#s1">Comenzar</a><a class="btn" href="#s15">Ir al proyecto integrador</a></div>
+</section>
+
+<main>
+
+<div class="card" id="s1"><div class="card-header"><span class="card-num num-coral">00</span><span class="card-title">Punto de partida y criterio técnico</span></div><div class="card-body">
+<p><strong>Punto de partida:</strong> ya se conoce el modelo OSI completo. El objetivo ahora es llevar especialmente los conceptos de <strong>Capa 1 — Física</strong> a una instalación de red real: cables, conectores, racks, patch panels, canalizaciones, normas, pruebas y documentación.</p>
+<p style="margin-top:.8rem"><strong>Criterio técnico usado en este material:</strong> las distancias de la infraestructura de cableado se explican principalmente según la familia <strong>ANSI/TIA-568</strong> e <strong>ISO/IEC 11801</strong>. Las velocidades y alcances de Ethernet dependen además de la aplicación definida por <strong>IEEE 802.3</strong>. Las canalizaciones y espacios se relacionan con <strong>TIA-569</strong>, el etiquetado con <strong>TIA-606</strong> y la puesta a tierra/equipotencialidad con <strong>TIA-607</strong>.</p>
+<figure><img src="assets/guia_visual_cableado_estructurado.png" alt="Guía visual de cableado estructurado"><figcaption>Guía visual general del cableado estructurado</figcaption></figure>
+</div></div>
+
+<div class="card" id="s2"><div class="card-header"><span class="card-num num-blue">01</span><span class="card-title">Repaso: clasificación de redes y topologías</span></div><div class="card-body">
+<p class="subhead">0.1 Clasificación según extensión geográfica</p>
+<table class="md-table"><tr><th>Tipo</th><th>Significado</th><th>Alcance típico</th><th>Ejemplo</th><th>Uso habitual</th></tr>
+<tr><td>PAN</td><td>Personal Area Network</td><td>1–10 m</td><td>Celular + smartwatch</td><td>Dispositivos personales</td></tr>
+<tr><td>LAN</td><td>Local Area Network</td><td>Habitación / edificio</td><td>Red de un laboratorio</td><td>Hogares, oficinas, centros educativos</td></tr>
+<tr><td>WLAN</td><td>Wireless LAN</td><td>Similar a LAN</td><td>Wi-Fi del centro educativo</td><td>Movilidad dentro de edificios</td></tr>
+<tr><td>CAN</td><td>Campus Area Network</td><td>Varios edificios</td><td>Campus educativo</td><td>Empresas, universidades, hospitales</td></tr>
+<tr><td>MAN</td><td>Metropolitan Area Network</td><td>Ciudad</td><td>Red municipal</td><td>Organismos, ISP, empresas</td></tr>
+<tr><td>WAN</td><td>Wide Area Network</td><td>Países / continentes</td><td>Red corporativa internacional</td><td>Interconexión de sedes</td></tr>
+<tr><td>Internet</td><td>Red global</td><td>Mundial</td><td>Internet</td><td>Interconexión de redes</td></tr></table>
+<div class="riesgo"><strong>Riesgo:</strong> confundir alcance geográfico con tecnología; pensar que una WAN necesariamente usa Internet o que una LAN siempre usa UTP.</div>
+<div class="note-box"><div class="note-title">Regla para memorizar</div><div class="note-line">PAN → persona → LAN → local → CAN → campus → MAN → ciudad → WAN → mundo</div></div>
+<figure><img src="assets/repaso_redes_topologias_osi.png" alt="Repaso visual de extensión, topologías y capa física"><figcaption>Repaso visual: extensión, topologías y Capa Física</figcaption></figure>
+
+<p class="subhead">1. Repaso: topologías de red</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">1.1</div><div class="info-title">Punto a punto</div><div class="info-desc">Une directamente dos equipos. Común entre routers, switches de distribución y enlaces de fibra.</div></div>
+<div class="info-card"><div class="info-label">1.2</div><div class="info-title">Bus</div><div class="info-desc">Medio compartido, hoy en desuso; principalmente histórico o didáctico.</div></div>
+<div class="info-card"><div class="info-label">1.3</div><div class="info-title">Anillo</div><div class="info-desc">Cada equipo se conecta al siguiente hasta cerrar el circuito. Redes industriales/metropolitanas.</div></div>
+<div class="info-card"><div class="info-label">1.4</div><div class="info-title">Estrella</div><div class="info-desc">Todos los dispositivos al switch central. Base del cableado horizontal moderno: 90 m permanent link / 100 m channel.</div></div>
+<div class="info-card"><div class="info-label">1.5</div><div class="info-title">Árbol</div><div class="info-desc">Extensión jerárquica de la estrella: accesos hacia distribución/core.</div></div>
+<div class="info-card"><div class="info-label">1.6</div><div class="info-title">Malla</div><div class="info-desc">Varios caminos posibles. Backbone redundante y core de alta disponibilidad.</div></div>
+<div class="info-card"><div class="info-label">1.7</div><div class="info-title">Híbrida</div><div class="info-desc">Combina topologías: estrella por piso, árbol entre pisos, malla en el core.</div></div>
+</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.1-E, ANSI/TIA-568.2-D, ANSI/TIA-568.3, ISO/IEC 11801, TIA-569, TIA-606 e IEEE 802.3.</div>
+</div></div>
+
+<div class="card" id="s3"><div class="card-header"><span class="card-num num-teal">02</span><span class="card-title">Del modelo OSI al mundo físico</span></div><div class="card-body">
+<p>La Capa 1 se ocupa de convertir bits en señales y transportarlos por un medio físico. Incluye:</p>
+<div class="grid grid-4">
+<div class="info-card"><div class="info-desc">Bits</div></div><div class="info-card"><div class="info-desc">Señales eléctricas</div></div><div class="info-card"><div class="info-desc">Señales ópticas</div></div><div class="info-card"><div class="info-desc">Radiofrecuencia</div></div>
+<div class="info-card"><div class="info-desc">Cables</div></div><div class="info-card"><div class="info-desc">Conectores</div></div><div class="info-card"><div class="info-desc">Distancias</div></div><div class="info-card"><div class="info-desc">Velocidades</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo:</strong> un cable roto, exceso de distancia, conectores mal terminados, interferencia o pérdida óptica pueden provocar errores antes de que IP, TCP o las aplicaciones intervengan.</div>
+<div class="note-box"><div class="note-title">Idea clave</div><div class="note-line">Si la Capa 1 no funciona correctamente, las capas superiores del modelo OSI tampoco podrán comunicarse.</div></div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568 e ISO/IEC 11801 para el sistema de cableado; IEEE 802.3 para Ethernet.</div>
+</div></div>
+
+<div class="card" id="s4"><div class="card-header"><span class="card-num num-amber">03</span><span class="card-title">Qué es el cableado estructurado y sus subsistemas</span></div><div class="card-body">
+<p class="subhead">3.1 Concepto</p>
+<p>Sistema <strong>normalizado, modular y documentado</strong> de cables, conectores, canalizaciones, distribuidores y espacios de telecomunicaciones, para que la infraestructura sirva con distintos fabricantes y aplicaciones sin recablear cada vez que cambia un equipo.</p>
+<p class="subhead">3.2 Objetivos</p>
+<div class="grid grid-4"><div class="info-card"><div class="info-desc">Estandarización</div></div><div class="info-card"><div class="info-desc">Modularidad</div></div><div class="info-card"><div class="info-desc">Escalabilidad</div></div><div class="info-card"><div class="info-desc">Orden</div></div><div class="info-card"><div class="info-desc">Mantenimiento</div></div><div class="info-card"><div class="info-desc">Flexibilidad</div></div><div class="info-card"><div class="info-desc">Documentación</div></div><div class="info-card"><div class="info-desc">Crecimiento futuro</div></div></div>
+<p class="subhead">3.3 Improvisado vs. estructurado</p>
+<div class="compare-table"><div class="compare-row"><div class="compare-k">Improvisado</div><div class="compare-v">Switch a cada equipo por el piso, sin etiquetas, difícil mantenimiento, cambios sin documentación</div></div><div class="compare-row"><div class="compare-k">Estructurado</div><div class="compare-v">Rack · Patch panel · Switch · Cableado horizontal · Tomas · Patch cords · Etiquetado · Testing y documentación</div></div></div>
+<figure><img src="assets/cableado_estructurado_general.png" alt="Vista general del sistema de cableado estructurado"><figcaption>Vista general del sistema de cableado estructurado</figcaption></figure>
+
+<p class="subhead">4. Subsistemas de cableado estructurado</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">4.1</div><div class="info-title">Área de trabajo</div><div class="info-desc">Zona donde el usuario conecta PC, teléfono IP o impresora a la toma. Consume parte de los 10 m de patch cords.</div></div>
+<div class="info-card"><div class="info-label">4.2</div><div class="info-title">Cableado horizontal</div><div class="info-desc">Cuarto de telecomunicaciones ↔ tomas. Hasta 90 m permanent link, 100 m de canal.</div></div>
+<div class="info-card"><div class="info-label">4.3</div><div class="info-title">Cuarto de telecomunicaciones</div><div class="info-desc">Patch panels, switches y distribución por piso/sector.</div></div>
+<div class="info-card"><div class="info-label">4.4</div><div class="info-title">Cableado vertical / backbone</div><div class="info-desc">Interconecta cuartos, pisos y salas de equipos, normalmente en fibra.</div></div>
+<div class="info-card"><div class="info-label">4.5</div><div class="info-title">Sala de equipos</div><div class="info-desc">Routers, firewalls, core switches, servidores y distribuidores principales.</div></div>
+<div class="info-card"><div class="info-label">4.6</div><div class="info-title">Entrada de servicios</div><div class="info-desc">Ingreso de fibra del ISP y otros enlaces externos.</div></div>
+<div class="info-card"><div class="info-label">4.7</div><div class="info-title">Campus backbone</div><div class="info-desc">Interconecta edificios, normalmente en fibra óptica por aislamiento eléctrico y alcance.</div></div>
+</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.0-E, 568.1-E, 568.3, ISO/IEC 11801, TIA-569-E y TIA-607-E.</div>
+</div></div>
+
+<div class="card" id="s5"><div class="card-header"><span class="card-num num-purple">04</span><span class="card-title">Arquitectura completa de un edificio</span></div><div class="card-body">
+<p>Una arquitectura típica sigue el siguiente flujo:</p>
+<div class="flow"><span class="step">Internet</span><span class="arrow">→</span><span class="step">Router</span><span class="arrow">→</span><span class="step">Firewall</span><span class="arrow">→</span><span class="step">Switch core</span><span class="arrow">→</span><span class="step">Backbone</span><span class="arrow">→</span><span class="step">Racks de piso</span><span class="arrow">→</span><span class="step">Patch panels</span><span class="arrow">→</span><span class="step">Switches de acceso</span><span class="arrow">→</span><span class="step">Tomas</span><span class="arrow">→</span><span class="step">Dispositivos finales</span></div>
+<p style="margin-top:1rem">Cada componente debe ubicarse dentro de una estructura física planificada.</p>
+<div class="riesgo"><strong>Riesgo:</strong> mezclar funciones, colocar switches fuera de espacios adecuados, usar patch cords como cableado permanente o no dejar capacidad futura.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.1-E, TIA-569-E, TIA-606-C e ISO/IEC 11801-2.</div>
+</div></div>
+
+<div class="card" id="s6"><div class="card-header"><span class="card-num num-blue">05</span><span class="card-title">Medios físicos: cobre y fibra óptica</span></div><div class="card-body">
+<p class="subhead">6.1 Cobre balanceado de cuatro pares</p>
+<div class="grid grid-4"><div class="info-card"><div class="info-desc">U/UTP</div></div><div class="info-card"><div class="info-desc">F/UTP</div></div><div class="info-card"><div class="info-desc">U/FTP</div></div><div class="info-card"><div class="info-desc">S/FTP</div></div></div>
+<p style="margin-top:.8rem"><strong>Uso:</strong> PCs, impresoras, AP, cámaras IP, teléfonos IP y dispositivos PoE. <strong>Distancia típica:</strong> hasta 100 m de canal.</p>
+<p class="subhead">6.2 ¿Por qué trenzados?</p><p>El trenzado reduce el ruido electromagnético y la diafonía entre pares. Destrenzar demasiado al terminar puede sacar al enlace de su categoría.</p>
+<p class="subhead">6.3 Categorías</p>
+<table class="md-table"><tr><th>Categoría</th><th>Aplicación habitual</th><th>Distancia orientativa</th></tr>
+<tr><td>Cat 5e</td><td>1 GbE</td><td class="mono">hasta 100 m</td></tr>
+<tr><td>Cat 6</td><td>1 GbE; 10 GbE en recorridos reducidos</td><td class="mono">1GbE 100 m; 10GBASE-T ~55 m</td></tr>
+<tr><td>Cat 6A</td><td>10 GbE</td><td class="mono">hasta 100 m</td></tr>
+<tr><td>Cat 8</td><td>25/40 GbE en centros de datos</td><td class="mono">canal hasta 30 m</td></tr></table>
+<div class="riesgo"><strong>Riesgo:</strong> pensar que "más categoría" siempre resuelve el problema; conectores, patch panels y patch cords deben formar un canal compatible.</div>
+
+<p class="subhead">7. Fibra óptica</p>
+<p>Transporta información mediante pulsos luminosos por un núcleo de vidrio. Ideal para backbone, alta velocidad, grandes distancias y ambientes con interferencia eléctrica.</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">7.2 Multimodo</div><div class="info-title">OM1–OM5</div><div class="info-desc">10GBASE-SR: ~300 m sobre OM3 y ~400 m sobre OM4 (IEEE 802.3).</div></div>
+<div class="info-card"><div class="info-label">7.3 Monomodo</div><div class="info-title">Largas distancias</div><div class="info-desc">10GBASE-LR: hasta ~10 km sobre fibra monomodo compatible.</div></div>
+</div>
+<p style="margin-top:1rem"><strong>7.4 Conectores:</strong> <span class="tag">LC — compacto</span><span class="tag">SC — mayor tamaño</span> · el polvo o suciedad microscópica puede aumentar considerablemente la pérdida óptica.</p>
+<p style="margin-top:.6rem"><strong>7.5 Transceptores:</strong> SFP, SFP+, QSFP — deben corresponder a velocidad, longitud de onda, fibra y distancia del enlace; no todos son intercambiables.</p>
+<div class="note-box"><div class="note-title">7.6 Cuándo usar cobre y cuándo fibra</div><div class="note-line"><strong>Cobre:</strong> económico, fácil de terminar, permite PoE — ideal para los últimos metros. <strong>Fibra:</strong> mayor alcance, capacidad y aislamiento eléctrico — ideal para backbone.</div></div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.2-D, ANSI/TIA-568.3, ISO/IEC 11801 e IEEE 802.3.</div>
+</div></div>
+
+<div class="card" id="s7"><div class="card-header"><span class="card-num num-teal">06</span><span class="card-title">El cable Ethernet y conectores RJ45</span></div><div class="card-body">
+<p class="subhead">8. Anatomía del cable Ethernet</p>
+<div class="grid grid-4"><div class="info-card"><div class="info-desc">Cubierta exterior</div></div><div class="info-card"><div class="info-desc">4 pares trenzados</div></div><div class="info-card"><div class="info-desc">Conductores de cobre</div></div><div class="info-card"><div class="info-desc">Blindaje (según tipo)</div></div></div>
+<p style="margin-top:.9rem"><strong>Los cuatro pares:</strong> <span class="tag">Naranja</span><span class="tag">Verde</span><span class="tag">Azul</span><span class="tag">Marrón</span></p>
+<div class="riesgo"><strong>Riesgo — CCA:</strong> usar copper clad aluminium donde se requiere cobre puro aumenta resistencia y calentamiento, especialmente con PoE. <strong>Split pair:</strong> la continuidad parece correcta pero los conductores pertenecen a pares equivocados.</div>
+<p class="subhead">8.3–8.6 Conductores, AWG, curvatura y tensión</p>
+<p><strong>Sólido</strong> → cableado horizontal permanente. <strong>Multifilar</strong> → patch cords, más flexible. AWG menor = conductor más grueso. El cable no debe doblarse bruscamente ni tirarse con fuerza excesiva durante el tendido.</p>
+
+<p class="subhead">9. Conectores RJ45 (8P8C)</p>
+<p>En redes se usa habitualmente "RJ45" para el conector modular 8P8C de Ethernet de cobre, con ocho posiciones y ocho contactos para terminar los cuatro pares.</p>
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">T568A</div><div class="compare-v">Orden estandarizado de pares; ambos extremos deben seguir la misma convención en un cable directo</div></div>
+<div class="compare-row"><div class="compare-k">T568B</div><div class="compare-v">Otro esquema admitido por TIA-568, muy usado en instalaciones existentes</div></div>
+<div class="compare-row"><div class="compare-k">Diferencia</div><div class="compare-v">Posición de los pares verde y naranja — ninguno es "más rápido"</div></div>
+<div class="compare-row"><div class="compare-k">Cable directo</div><div class="compare-v">A-A o B-B — prácticamente todas las conexiones Ethernet modernas</div></div>
+<div class="compare-row"><div class="compare-k">Cable cruzado</div><div class="compare-v">A en un extremo, B en el otro — hoy innecesario gracias a Auto MDI-X</div></div>
+</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.2-D e IEEE 802.3 (Auto MDI-X).</div>
+</div></div>
+
+<div class="card" id="s8"><div class="card-header"><span class="card-num num-amber">07</span><span class="card-title">Terminación, Keystone y Patch Panels</span></div><div class="card-body">
+<p class="subhead">10. Terminación de cables</p>
+<div class="flow"><span class="step">1 Cortar</span><span class="arrow">→</span><span class="step">2 Pelar</span><span class="arrow">→</span><span class="step">3 Ordenar pares</span><span class="arrow">→</span><span class="step">4 Mantener trenzado</span><span class="arrow">→</span><span class="step">5 Cortar parejo</span><span class="arrow">→</span><span class="step">6 Insertar</span><span class="arrow">→</span><span class="step">7 Crimpar/ponchar</span><span class="arrow">→</span><span class="step">8 Testear</span></div>
+<p style="margin-top:1rem"><strong>Herramientas:</strong> crimpadora, pelacables, alicate, punch-down, tester.</p>
+<div class="riesgo"><strong>Errores frecuentes:</strong> pares invertidos, pares abiertos, cortocircuitos, split pair, conductores mal insertados, exceso de destrenzado — algunos pasan un tester de continuidad básico pero degradan el rendimiento.</div>
+<figure><img src="assets/armado_rj45.png" alt="Armado de un conector RJ45"><figcaption>Armado de un conector RJ45 (8P8C)</figcaption></figure>
+
+<p class="subhead">11. Keystone Jack</p>
+<p>Módulo hembra usado en tomas, patch panels modulares y cajas, terminado mediante <strong>punch-down</strong> (inserción del conductor en contactos IDC) con una herramienta de impacto.</p>
+<div class="flow"><span class="step">Cable horizontal</span><span class="arrow">→</span><span class="step">Keystone</span><span class="arrow">→</span><span class="step">Toma</span><span class="arrow">→</span><span class="step">Patch cord</span><span class="arrow">→</span><span class="step">Dispositivo</span></div>
+
+<p class="subhead">12. Patch panels</p>
+<p>Terminan y organizan el cableado permanente en el rack, facilitando cambios sin manipular directamente el cableado horizontal. Cada puerto debe corresponder claramente con una toma del edificio, identificada de forma única (ej. <span class="tag">TR1-PP01-24 → AULA203-D02</span>).</p>
+<div class="compare-table"><div class="compare-row"><div class="compare-k">Patch panel</div><div class="compare-v">Pasivo · organiza y termina cables · no procesa tramas · infraestructura física</div></div><div class="compare-row"><div class="compare-k">Switch</div><div class="compare-v">Activo · comunica dispositivos · procesa tramas Ethernet · equipo de red</div></div></div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.2-D y ANSI/TIA-606-C.</div>
+</div></div>
+
+<div class="card" id="s9"><div class="card-header"><span class="card-num num-green">08</span><span class="card-title">Racks, canalizaciones y distancias máximas</span></div><div class="card-body">
+<p class="subhead">13. Racks y gabinetes</p>
+<p>El <strong>rack de 19"</strong> es el formato estándar para montar switches, patch panels, servidores, UPS y otros equipos. <strong>1U = 1,75" / 44,45 mm</strong> de altura.</p>
+<div class="grid grid-4"><div class="info-card"><div class="info-desc">Organizadores H/V</div></div><div class="info-card"><div class="info-desc">Bandejas</div></div><div class="info-card"><div class="info-desc">PDU</div></div><div class="info-card"><div class="info-desc">UPS</div></div></div>
+<div class="riesgo"><strong>Riesgos:</strong> carga excesiva, falta de ventilación, sobrecarga eléctrica, radios de curvatura demasiado cerrados en los patch cords.</div>
+<figure><img src="assets/componentes_rack.png" alt="Componentes habituales de un rack de 19 pulgadas"><figcaption>Componentes habituales de un rack de 19"</figcaption></figure>
+
+<p class="subhead">14. Canalizaciones y recorridos</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-title">Bandejas</div><div class="info-desc">Grandes cantidades de cable en pasillos técnicos y recorridos principales.</div></div>
+<div class="info-card"><div class="info-title">Canaletas</div><div class="info-desc">Protegen y ordenan cableado en paredes y áreas visibles.</div></div>
+<div class="info-card"><div class="info-title">Caños</div><div class="info-desc">Protegen cables en recorridos cerrados.</div></div>
+<div class="info-card"><div class="info-title">Piso técnico</div><div class="info-desc">Distribución bajo piso elevado en oficinas y centros de datos.</div></div>
+<div class="info-card"><div class="info-title">Cielorraso</div><div class="info-desc">Recorridos si el edificio y las normas lo permiten; nunca apoyado sobre luminarias.</div></div>
+<div class="info-card"><div class="info-title">Separación datos/electricidad</div><div class="info-desc">Depende de tensión, potencia, canalización y blindaje — no hay un único número universal.</div></div>
+</div>
+
+<p class="subhead">15 y 27. Distancias máximas en Ethernet</p>
+<table class="md-table"><tr><th>Situación</th><th>Distancia orientativa</th><th>Referencia</th></tr>
+<tr><td>Permanent Link de cobre</td><td class="mono">90 m máx.</td><td>TIA-568 / ISO 11801</td></tr>
+<tr><td>Channel de cobre</td><td class="mono">100 m máx.</td><td>TIA-568 / ISO 11801</td></tr>
+<tr><td>Cat 5e — 1GBASE-T</td><td class="mono">100 m</td><td>TIA-568 + IEEE 802.3</td></tr>
+<tr><td>Cat 6 — 10GBASE-T</td><td class="mono">hasta ~55 m</td><td>TIA-568 + IEEE 802.3</td></tr>
+<tr><td>Cat 6A — 10GBASE-T</td><td class="mono">100 m</td><td>TIA-568 + IEEE 802.3</td></tr>
+<tr><td>Cat 8 — 25/40GBASE-T</td><td class="mono">30 m de canal</td><td>TIA-568 + IEEE 802.3</td></tr>
+<tr><td>10GBASE-SR sobre OM3</td><td class="mono">aprox. 300 m</td><td>IEEE 802.3</td></tr>
+<tr><td>10GBASE-SR sobre OM4</td><td class="mono">aprox. 400 m</td><td>IEEE 802.3</td></tr>
+<tr><td>10GBASE-LR monomodo</td><td class="mono">aprox. 10 km</td><td>IEEE 802.3</td></tr></table>
+<div class="note-box"><div class="note-title">Regla 90 + 10</div><div class="note-line">90 m de cableado permanente + hasta 10 m de patch cords = 100 m de canal. Excelente regla pedagógica, con excepciones y arquitecturas específicas.</div></div>
+<div class="norma"><strong>Importante:</strong> las distancias de fibra dependen de la aplicación Ethernet, la clase de fibra, los transceptores y el presupuesto óptico — no debe usarse una única "distancia máxima de fibra" como regla general.</div>
+</div></div>
+
+<div class="card" id="s9b"><div class="card-header"><span class="card-num num-purple">08b</span><span class="card-title">Armado de un rack de comunicaciones y de un rack de servidores</span></div><div class="card-body">
+<p>Aunque comparten el mismo gabinete de 19", un <strong>rack de comunicaciones</strong> (o de telecomunicaciones) y un <strong>rack de servidores</strong> se arman con criterios distintos porque alojan equipos de naturaleza diferente: el primero prioriza la organización del cableado horizontal, el segundo prioriza el cómputo, el almacenamiento y la redundancia eléctrica.</p>
+
+<p class="subhead">A. Rack de comunicaciones (cuarto de telecomunicaciones)</p>
+<p>Es el rack típico de un cuarto de telecomunicaciones (TR): concentra la terminación del cableado horizontal proveniente de las tomas y lo conecta a los switches de acceso.</p>
+<div class="flow">
+<span class="step">1 · Patch panel(es)</span><span class="arrow">→</span>
+<span class="step">2 · Organizador horizontal</span><span class="arrow">→</span>
+<span class="step">3 · Switch de acceso</span><span class="arrow">→</span>
+<span class="step">4 · Organizador horizontal</span><span class="arrow">→</span>
+<span class="step">5 · Siguiente patch panel/switch</span><span class="arrow">→</span>
+<span class="step">6 · PDU lateral/vertical</span><span class="arrow">→</span>
+<span class="step">7 · UPS (base del rack)</span>
+</div>
+<figure><img src="assets/armado_rack_comunicaciones.png" alt="Armado de un rack de comunicaciones"><figcaption>Armado típico de un rack de comunicaciones</figcaption></figure>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Orden de montaje</div><div class="info-title">De arriba hacia abajo</div><div class="info-desc">Patch panels arriba (cerca de la entrada de canalización/cielorraso), switches debajo, alternando con organizadores horizontales entre cada uno.</div></div>
+<div class="info-card"><div class="info-label">Patch cords</div><div class="info-title">Patch panel → switch</div><div class="info-desc">Cortos y prolijos, del puerto del panel al puerto del switch, apoyados en los organizadores para no tensar los conectores.</div></div>
+<div class="info-card"><div class="info-label">Etiquetado</div><div class="info-title">Ambos extremos</div><div class="info-desc">Cada puerto de patch panel identificado según TIA-606 y correlacionado con el puerto de switch que ocupa.</div></div>
+<div class="info-card"><div class="info-label">Energía</div><div class="info-title">PDU + UPS</div><div class="info-desc">Solo alimenta electrónica activa (switches); el patch panel es pasivo y no requiere energía.</div></div>
+<div class="info-card"><div class="info-label">Ventilación</div><div class="info-title">Flujo de aire libre</div><div class="info-desc">Espacio entre equipos y bandejas para no bloquear la circulación de aire de los switches.</div></div>
+<div class="info-card"><div class="info-label">Crecimiento</div><div class="info-title">U libres reservadas</div><div class="info-desc">Dejar unidades de rack vacías para futuros patch panels o switches adicionales.</div></div>
+</div>
+<div class="riesgo"><strong>Riesgos:</strong> mezclar patch cords de distintas categorías, exceder el radio de curvatura al bajar del organizador al switch, y saturar el rack sin dejar capacidad de crecimiento.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> TIA-569-E (espacio del TR), TIA-568 (cableado y componentes) y TIA-606-C (etiquetado).</div>
+
+<p class="subhead">B. Rack de servidores (sala de equipos / data center)</p>
+<p>Aloja equipos de cómputo y almacenamiento: su prioridad es el enfriamiento, la redundancia eléctrica y de red, y la facilidad de mantenimiento sin apagar servicios.</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Rieles</div><div class="info-title">Guías deslizables</div><div class="info-desc">Cada servidor se monta sobre rieles propios para poder extraerlo sin desmontar el resto del rack.</div></div>
+<div class="info-card"><div class="info-label">Cable management arm</div><div class="info-title">Brazo organizador</div><div class="info-desc">Acompaña los cables de red y energía cuando el servidor se desliza hacia afuera para mantenimiento.</div></div>
+<div class="info-card"><div class="info-label">Redundancia eléctrica</div><div class="info-title">Doble PDU + doble UPS</div><div class="info-desc">Cada servidor con fuentes redundantes se conecta a dos PDU distintas, alimentadas por circuitos/UPS independientes.</div></div>
+<div class="info-card"><div class="info-label">Redundancia de red</div><div class="info-title">Doble uplink</div><div class="info-desc">Cada servidor conectado a dos switches (o dos tarjetas de red) para tolerar la caída de un enlace o equipo.</div></div>
+<div class="info-card"><div class="info-label">Enfriamiento</div><div class="info-title">Pasillo frío / pasillo caliente</div><div class="info-desc">Todos los equipos orientan la entrada de aire frío al mismo pasillo y la salida de aire caliente al opuesto.</div></div>
+<div class="info-card"><div class="info-label">Gestión</div><div class="info-title">KVM / consola</div><div class="info-desc">Bandeja de KVM o acceso remoto (iLO/iDRAC) para administrar servidores sin monitor y teclado dedicados.</div></div>
+</div>
+<div class="flow">
+<span class="step">1 · Patch panel de red (arriba)</span><span class="arrow">→</span>
+<span class="step">2 · Switches ToR (top of rack)</span><span class="arrow">→</span>
+<span class="step">3 · Servidores en rieles</span><span class="arrow">→</span>
+<span class="step">4 · Storage/SAN</span><span class="arrow">→</span>
+<span class="step">5 · PDU redundantes (verticales)</span><span class="arrow">→</span>
+<span class="step">6 · UPS (base, por peso)</span>
+</div>
+<figure><img src="assets/armado_rack_servidores.png" alt="Armado de un rack de servidores"><figcaption>Armado típico de un rack de servidores</figcaption></figure>
+<div class="riesgo"><strong>Riesgos:</strong> ubicar el equipo más pesado (UPS, storage) en la parte alta del rack en vez de la base, mezclar el flujo de aire frío/caliente entre racks contiguos, y dejar cables de energía junto a los de datos sin separación dentro del propio gabinete.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> TIA-569-E (espacio y disposición de la sala de equipos) y TIA-607-E (bonding/grounding de chasis y rack).</div>
+
+<p class="subhead">Comparación rápida</p>
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">Función principal</div><div class="compare-v">Rack de comunicaciones: concentrar y distribuir cableado horizontal. Rack de servidores: alojar cómputo y almacenamiento.</div></div>
+<div class="compare-row"><div class="compare-k">Equipos típicos</div><div class="compare-v">Patch panels, switches de acceso, organizadores. — Servidores en rieles, switches ToR, storage/SAN, KVM.</div></div>
+<div class="compare-row"><div class="compare-k">Peso y montaje</div><div class="compare-v">Liviano, sin rieles especiales. — Pesado: requiere rieles deslizables y brazos de cable por el peso y mantenimiento frecuente.</div></div>
+<div class="compare-row"><div class="compare-k">Redundancia</div><div class="compare-v">Un solo switch por rack es habitual. — Doble alimentación y doble conexión de red son estándar.</div></div>
+<div class="compare-row"><div class="compare-k">Enfriamiento</div><div class="compare-v">Ventilación general del cuarto de telecomunicaciones. — Esquema de pasillo frío/caliente dedicado.</div></div>
+</div>
+</div></div>
+
+<div class="card" id="s9c"><div class="card-header"><span class="card-num num-teal">08c</span><span class="card-title">Canalizaciones, telefonía, telefonía IP y telecontrol</span></div><div class="card-body">
+<p class="subhead">Canalizaciones: cómo se integra el recorrido completo</p>
+<p>La canalización es el "esqueleto" físico que aloja todos los servicios de telecomunicaciones del edificio: datos, telefonía y telecontrol comparten los mismos caminos (bandejas, canaletas, caños, piso técnico o cielorraso), aunque cada servicio termine en su propio subsistema.</p>
+<div class="flow">
+<span class="step">Entrada de servicios</span><span class="arrow">→</span>
+<span class="step">Bandeja troncal (backbone)</span><span class="arrow">→</span>
+<span class="step">Cuarto de telecomunicaciones</span><span class="arrow">→</span>
+<span class="step">Canaleta/caño secundario</span><span class="arrow">→</span>
+<span class="step">Toma en el puesto de trabajo</span>
+</div>
+<figure><img src="assets/canalizaciones.png" alt="Esquema de canalizaciones de telecomunicaciones"><figcaption>Recorrido de canalizaciones desde la entrada de servicios hasta el puesto de trabajo</figcaption></figure>
+<div class="riesgo"><strong>Riesgo:</strong> diseñar la canalización pensando solo en datos y descubrir luego que no hay espacio para los ramales de telefonía o de cámaras de telecontrol.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> TIA-569-E (pathways and spaces) y TIA-607-E cuando existen elementos metálicos a poner a tierra.</div>
+
+<p class="subhead">Telefonía tradicional (analógica/digital)</p>
+<p>Distribuye líneas de una central telefónica (<strong>PBX</strong>) hacia extensiones fijas mediante pares de cobre, históricamente independientes del cableado de datos.</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Central</div><div class="info-title">PBX</div><div class="info-desc">Conmuta llamadas internas y hacia la línea troncal del proveedor.</div></div>
+<div class="info-card"><div class="info-label">Distribución</div><div class="info-title">Regleta / patch panel de voz</div><div class="info-desc">Concentra los pares de cobre antes de derivarlos a cada toma.</div></div>
+<div class="info-card"><div class="info-label">Toma</div><div class="info-title">Roseta RJ11 / RJ45</div><div class="info-desc">Usa 1 o 2 pares del cable, a menudo compartiendo la misma toma física que datos.</div></div>
+</div>
+<figure><img src="assets/telefonia.png" alt="Esquema de telefonía tradicional"><figcaption>Distribución de telefonía tradicional desde la central hasta las extensiones</figcaption></figure>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568 para el cableado de cobre que soporta voz y TIA-606 para su etiquetado, ya que comparte infraestructura con datos.</div>
+
+<p class="subhead">Telefonía IP</p>
+<p>Convierte la voz en paquetes y la transporta sobre la misma red Ethernet que los datos, eliminando el cableado de voz independiente.</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Terminal</div><div class="info-title">Teléfono IP</div><div class="info-desc">Se conecta al switch como cualquier equipo de red; muchos modelos incluyen un mini-switch integrado para la PC del puesto.</div></div>
+<div class="info-card"><div class="info-label">Alimentación</div><div class="info-title">PoE</div><div class="info-desc">El teléfono recibe energía por el mismo cable de datos, sin necesidad de un adaptador eléctrico local.</div></div>
+<div class="info-card"><div class="info-label">Segmentación</div><div class="info-title">VLAN de voz + QoS</div><div class="info-desc">Separa el tráfico de voz del de datos y le da prioridad para evitar cortes o eco por congestión.</div></div>
+</div>
+<figure><img src="assets/telefonia_ip.png" alt="Esquema de telefonía IP sobre la red de datos"><figcaption>Convergencia de voz y datos en telefonía IP</figcaption></figure>
+<div class="riesgo"><strong>Riesgo:</strong> compartir la misma VLAN y sin QoS entre voz y datos puede producir cortes de audio cuando la red se congestiona con tráfico de datos.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> IEEE 802.3 (PoE), IEEE 802.1Q (VLAN) e IEEE 802.1p (priorización), sobre la misma infraestructura física TIA-568.</div>
+
+<p class="subhead">Telecontrol</p>
+<p>Agrupa los sistemas de control, monitoreo y seguridad que corren sobre la misma red estructurada: videovigilancia (CCTV/IP), control de accesos, alarmas, sensores y automatización de edificios (BMS/domótica).</p>
+<div class="grid grid-4">
+<div class="info-card"><div class="info-desc">Cámaras IP (CCTV)</div></div>
+<div class="info-card"><div class="info-desc">Control de accesos</div></div>
+<div class="info-card"><div class="info-desc">Alarmas y sensores</div></div>
+<div class="info-card"><div class="info-desc">Automatización / BMS</div></div>
+</div>
+<figure><img src="assets/telecontrol.png" alt="Esquema de sistemas de telecontrol sobre la red estructurada"><figcaption>Sistemas de telecontrol integrados a la red de datos</figcaption></figure>
+<figure><img src="assets/cctv.png" alt="Ejemplo de sistema de videovigilancia CCTV sobre red IP"><figcaption>Ejemplo de videovigilancia (CCTV) como aplicación típica de telecontrol</figcaption></figure>
+<div class="riesgo"><strong>Riesgo:</strong> las cámaras y sensores de telecontrol suelen alimentarse por PoE y generar tráfico constante; sin VLAN propia y sin presupuesto de potencia adecuado pueden saturar el switch o competir con datos y voz.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> IEEE 802.3 (PoE) para la alimentación remota, ANSI/TIA-568 para el cableado horizontal que soporta las cámaras/sensores y TIA-606 para su identificación dentro del mismo esquema de etiquetado.</div>
+</div></div>
+
+<div class="card" id="s10"><div class="card-header"><span class="card-num num-purple">09</span><span class="card-title">Power over Ethernet — PoE</span></div><div class="card-body">
+<p>PoE transporta alimentación eléctrica y Ethernet por el mismo cableado balanceado, siguiendo normalmente el límite de canal de la aplicación Ethernet (frecuentemente 100 m).</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">IEEE 802.3af</div><div class="info-title">PoE</div><div class="info-desc">Menor potencia — teléfonos IP y dispositivos de bajo consumo.</div></div>
+<div class="info-card"><div class="info-label">IEEE 802.3at</div><div class="info-title">PoE+</div><div class="info-desc">Mayor potencia — cámaras PTZ, AP y dispositivos de mayor consumo.</div></div>
+<div class="info-card"><div class="info-label">IEEE 802.3bt</div><div class="info-title">PoE++</div><div class="info-desc">Potencia ampliada usando los cuatro pares — AP de alto rendimiento, iluminación, pantallas.</div></div>
+</div>
+<p style="margin-top:.9rem"><strong>Dispositivos típicos:</strong> access points, cámaras IP, teléfonos IP, sensores, IoT.</p>
+<div class="riesgo"><strong>Presupuesto de potencia:</strong> un switch PoE tiene un límite total de potencia disponible; aunque tenga 48 puertos, puede no poder suministrar potencia máxima a los 48 simultáneamente. Riesgo de calentamiento en haces de cables con alta potencia.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> IEEE 802.3 y requisitos de cableado TIA-568.</div>
+</div></div>
+
+<div class="card" id="s11"><div class="card-header"><span class="card-num num-coral">10</span><span class="card-title">Normas y estándares de referencia</span></div><div class="card-body">
+<p><strong>Idea clave:</strong> IEEE define qué necesita una aplicación Ethernet; TIA/ISO definen cómo debe ser la infraestructura capaz de soportarla.</p>
+<div class="ref-card"><div class="rt">ANSI/TIA-568</div><div class="rd">Familia principal de cableado de telecomunicaciones: topología, componentes, cobre balanceado, fibra, distancias, instalación, desempeño y pruebas. TIA-568.1-E cubre infraestructura en edificios comerciales; el addendum 568.1-E-1 agrega requisitos para access points.</div><a href="https://tiaonline.org/standard/tia-568/">tiaonline.org/standard/tia-568</a></div>
+<div class="ref-card"><div class="rt">ANSI/TIA-569-E — Pathways and Spaces</div><div class="rd">Requisitos para canalizaciones y espacios de telecomunicaciones.</div><a href="https://tiaonline.org/standard/tia-569/">tiaonline.org/standard/tia-569</a></div>
+<div class="ref-card"><div class="rt">ANSI/TIA-606-C — Administration Standard</div><div class="rd">Identificación, etiquetado y administración de la infraestructura de telecomunicaciones.</div><a href="https://standards.tiaonline.org/node/12188">standards.tiaonline.org/node/12188</a></div>
+<div class="ref-card"><div class="rt">ANSI/TIA-607-E — Bonding and Grounding</div><div class="rd">Publicada en 2024: requisitos de bonding y grounding de telecomunicaciones para customer premises.</div><a href="https://tiaonline.org/standardannouncement/tia-publishes-new-standard-ansi-tia-607-e-generic-telecommunications-bonding-and-grounding-earthing-for-customer-premises/">tiaonline.org — anuncio TIA-607-E</a></div>
+<div class="ref-card"><div class="rt">ISO/IEC 11801-1:2017 (+ Enmienda 1:2025)</div><div class="rd">Generic cabling for customer premises — requisitos generales. No debe tratarse la edición 2017 como estática.</div><a href="https://www.iso.org/standard/66182.html">iso.org/standard/66182</a></div>
+<div class="ref-card"><div class="rt">ISO/IEC 11801-2:2017 — Office premises</div><div class="rd">Parte específica útil para relacionar el estándar internacional con edificios educativos y administrativos.</div><a href="https://www.iso.org/standard/66183.html">iso.org/standard/66183</a></div>
+<div class="ref-card"><div class="rt">IEEE 802.3</div><div class="rd">Familia de estándares Ethernet: velocidades, medios físicos y Power over Ethernet.</div></div>
+</div></div>
+
+<div class="card" id="s12"><div class="card-header"><span class="card-num num-blue">11</span><span class="card-title">Etiquetado, testing y diagnóstico</span></div><div class="card-body">
+<p class="subhead">18. Etiquetado y documentación (TIA-606-C)</p>
+<p>Permite identificar rápidamente cada enlace sin seguir físicamente el cable. Debe poder identificarse: rack, patch panel, puerto, toma, sala, piso y cable. Ejemplo de convención: <span class="tag">AULA03-D12 ↔ TR1-PP01-12</span></p>
+<div class="riesgo"><strong>Riesgo:</strong> una red sin etiquetado puede funcionar técnicamente, pero su costo de mantenimiento aumenta enormemente.</div>
+
+<p class="subhead">19. Testing de cableado</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-title">Open circuit</div><div class="info-desc">Uno o más conductores sin continuidad — enlace inexistente o parcial.</div></div>
+<div class="info-card"><div class="info-title">Short circuit</div><div class="info-desc">Dos conductores unidos eléctricamente — fallo total del enlace.</div></div>
+<div class="info-card"><div class="info-title">Wire map incorrecto</div><div class="info-desc">Los pines no coinciden entre extremos.</div></div>
+<div class="info-card"><div class="info-title">Split pair</div><div class="info-desc">Parece correcto pero los conductores son de pares distintos — enorme diafonía, un tester básico puede no detectarlo.</div></div>
+<div class="info-card"><div class="info-title">Testers profesionales</div><div class="info-desc">Miden pérdida de inserción, NEXT, pérdida de retorno, longitud y delay skew.</div></div>
+<div class="info-card"><div class="info-title">Certificación</div><div class="info-desc">Comprobar que el enlace cumple los requisitos de una categoría o clase.</div></div>
+</div>
+<div class="note-box"><div class="note-line"><strong>Continuidad correcta ≠ enlace certificado.</strong></div></div>
+
+<p class="subhead">20. Diagnóstico de fallas físicas</p>
+<p>El diagnóstico debe comenzar por Capa 1 antes de investigar IP, DNS o aplicaciones.</p>
+<div class="flow"><span class="step">1 Alimentación</span><span class="arrow">→</span><span class="step">2 Link</span><span class="arrow">→</span><span class="step">3 Patch cord</span><span class="arrow">→</span><span class="step">4 Puerto</span><span class="arrow">→</span><span class="step">5 Toma</span><span class="arrow">→</span><span class="step">6 Patch panel</span><span class="arrow">→</span><span class="step">7 Cableado permanente</span><span class="arrow">→</span><span class="step">8 Distancia/categoría</span><span class="arrow">→</span><span class="step">9 EMI/daño</span><span class="arrow">→</span><span class="step">10 Capas superiores</span></div>
+<div class="riesgo"><strong>Riesgo:</strong> un LED de link encendido sólo indica negociación, no demuestra que el enlace cumpla el rendimiento esperado.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568.2-D, ISO/IEC 11801, IEEE 802.3, TIA-606-C, TIA-569 y TIA-607.</div>
+</div></div>
+
+<div class="card" id="s13"><div class="card-header"><span class="card-num num-teal">12</span><span class="card-title">Diseño de una instalación real y diagramas</span></div><div class="card-body">
+<div class="note-box"><div class="note-title">Escenario sugerido</div><div class="note-line">Una empresa ocupa un edificio de tres pisos y necesita 80 puestos de trabajo, 12 access points, 20 cámaras IP y 10 teléfonos IP.</div></div>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">21.1</div><div class="info-title">Identificar necesidades</div><div class="info-desc">Cantidad y tipo de dispositivos, velocidades, PoE y crecimiento.</div></div>
+<div class="info-card"><div class="info-label">21.2</div><div class="info-title">Crear plano</div><div class="info-desc">Ubicar puestos, AP, cámaras, racks y recorridos.</div></div>
+<div class="info-card"><div class="info-label">21.3</div><div class="info-title">Cantidad de tomas</div><div class="info-desc">Considerar equipos actuales y crecimiento futuro.</div></div>
+<div class="info-card"><div class="info-label">21.4</div><div class="info-title">Categoría de cable</div><div class="info-desc">Cat 6A permite planificar 10GBASE-T hasta 100 m.</div></div>
+<div class="info-card"><div class="info-label">21.5–21.7</div><div class="info-title">Racks y backbone</div><div class="info-desc">Calcular espacio, ubicar cuartos de telecomunicaciones y diseñar backbone cobre/fibra.</div></div>
+<div class="info-card"><div class="info-label">21.8–21.10</div><div class="info-title">Switches y PoE</div><div class="info-desc">Puertos, velocidades, uplinks, redundancia y presupuesto de potencia.</div></div>
+<div class="info-card"><div class="info-label">21.11–21.13</div><div class="info-title">Patch panels, etiquetado y documentación</div><div class="info-desc">Distribuir puertos, crear esquema de etiquetado y registrar planos, enlaces y pruebas.</div></div>
+</div>
+
+<p class="subhead">22. Del plano lógico al plano físico</p>
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">Diagrama lógico</div><div class="compare-v">Internet → router → firewall → switch → VLAN → equipos. No representa el recorrido exacto del cable.</div></div>
+<div class="compare-row"><div class="compare-k">Diagrama físico</div><div class="compare-v">Ubicación del rack, recorridos, tomas, patch panels, puertos, medios y longitudes aproximadas.</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo:</strong> un buen diagrama lógico sin plano físico no permite mantener correctamente el cableado.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> TIA-568, TIA-569 e ISO/IEC 11801.</div>
+</div></div>
+
+<div class="card" id="s14"><div class="card-header"><span class="card-num num-amber">13</span><span class="card-title">Buenas/malas prácticas y seguridad en instalaciones</span></div><div class="card-body">
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">Buenas prácticas</div><div class="compare-v">Etiquetar ambos extremos · rack ordenado · usar patch panels · respetar distancias · documentar · separar energía/datos · evitar curvas pronunciadas · testear · dejar crecimiento</div></div>
+<div class="compare-row"><div class="compare-k">Malas prácticas</div><div class="compare-v">Cableado tirado por el piso · cables aplastados · datos junto a alimentación sin evaluación · sin etiqueta · empalmes improvisados · rack desordenado · sin documentación</div></div>
+</div>
+
+<p class="subhead">24. Seguridad en instalaciones</p>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-title">Electricidad</div><div class="info-desc">Identificar líneas eléctricas y evitar trabajos inseguros.</div></div>
+<div class="info-card"><div class="info-title">Trabajo en altura</div><div class="info-desc">Cielorrasos y bandejas pueden requerir escaleras o plataformas.</div></div>
+<div class="info-card"><div class="info-title">Herramientas</div><div class="info-desc">Adecuadas y en buenas condiciones para evitar cortes o terminaciones defectuosas.</div></div>
+<div class="info-card"><div class="info-title">Canalizaciones</div><div class="info-desc">Diseñadas para telecomunicaciones y correctamente soportadas.</div></div>
+<div class="info-card"><div class="info-title">Protección personal</div><div class="info-desc">Gafas, guantes, calzado, casco según el trabajo.</div></div>
+<div class="info-card"><div class="info-title">Puesta a tierra</div><div class="info-desc">Elementos metálicos integrados al sistema de bonding/grounding (TIA-607-E).</div></div>
+<div class="info-card"><div class="info-title">Prevención de incendios</div><div class="info-desc">Cable con clasificación adecuada y respeto de barreras contra fuego.</div></div>
+</div>
+<div class="norma"><strong>Normativa relacionada:</strong> TIA-568, TIA-569, TIA-606, TIA-607 y reglamentos eléctricos/de seguridad locales.</div>
+</div></div>
+
+<div class="card" id="s15"><div class="card-header"><span class="card-num num-green">14</span><span class="card-title">Proyecto práctico integrador y mapa mental final</span></div><div class="card-body">
+<p><strong>Objetivo:</strong> diseñar e implementar una pequeña red estructurada completa.</p>
+<ol>
+<li>Interpretación de un plano</li><li>Ubicación del rack</li><li>Diseño de las canalizaciones</li><li>Cálculo de cable necesario</li><li>Selección de Cat 6/Cat 6A</li><li>Instalación de keystones</li><li>Terminación de patch panel</li><li>Fabricación de patch cords</li><li>Terminación T568A o T568B según criterio establecido</li><li>Etiquetado</li><li>Testing</li><li>Documentación final</li><li>Diagrama físico</li><li>Diagrama lógico</li><li>Diagnóstico de fallas introducidas deliberadamente</li>
+</ol>
+<div class="note-box"><div class="note-title">Restricciones técnicas sugeridas</div><div class="note-line">Ningún permanent link de cobre debe superar 90 m · diseñar pensando en un máximo de 100 m de canal · mantener coherencia T568A/B · etiquetar según TIA-606 · definir canalizaciones y espacios según TIA-569 · considerar bonding/grounding según TIA-607 · registrar los resultados de pruebas.</div></div>
+
+<p class="subhead">26. Mapa mental final</p>
+<div class="flow"><span class="step">Tipo de red</span><span class="arrow">→</span><span class="step">Topología</span><span class="arrow">→</span><span class="step">Diseño</span><span class="arrow">→</span><span class="step">Canalización</span><span class="arrow">→</span><span class="step">Cable</span><span class="arrow">→</span><span class="step">Terminación</span><span class="arrow">→</span><span class="step">Patch panel</span><span class="arrow">→</span><span class="step">Switch</span><span class="arrow">→</span><span class="step">Etiquetado</span><span class="arrow">→</span><span class="step">Testing</span><span class="arrow">→</span><span class="step">Documentación</span></div>
+<table class="md-table" style="margin-top:1.1rem"><tr><th>Etapa</th><th>Norma principal</th></tr>
+<tr><td>Diseño y cableado</td><td>ANSI/TIA-568 / ISO/IEC 11801</td></tr>
+<tr><td>Ethernet y PoE</td><td>IEEE 802.3</td></tr>
+<tr><td>Canalizaciones y espacios</td><td>TIA-569</td></tr>
+<tr><td>Etiquetado y documentación</td><td>TIA-606</td></tr>
+<tr><td>Bonding y grounding</td><td>TIA-607</td></tr>
+<tr><td>Pruebas y certificación</td><td>TIA-568 / ISO/IEC 11801</td></tr></table>
+
+<div class="note-box"><div class="note-title">Resultado esperado</div><div class="note-line">El objetivo es evitar que el tema quede reducido a "aprender a crimpar un RJ45". Al finalizar, se debería comprender cómo se <strong>diseña, construye, verifica, documenta, diagnostica y mantiene</strong> la infraestructura física de una red profesional, conectando permanentemente cada concepto con la Capa 1 del modelo OSI y con las normas técnicas que permiten que equipos y componentes de distintos fabricantes puedan interoperar de forma predecible.</div></div>
+</div></div>
+
+</main>
+<footer><span style="color:var(--coral)">TIA://</span>CABLEADO_ESTRUCTURADO · Cobre · Fibra · Racks · Patch Panels · Distancias · PoE · Normas TIA/ISO/IEEE · Testing · Documentación</footer>
+<script>
+function updateActiveNav(){const sections=document.querySelectorAll('[id^="s"]'),links=document.querySelectorAll('.nav-link');let a=null;sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a))}
+window.addEventListener('scroll',updateActiveNav,{passive:true});
+updateActiveNav();
+</script>
+</body>
+</html>
