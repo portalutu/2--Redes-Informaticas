@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cálculo y Cotización de Cableado Estructurado — 2º EMT</title>
+<meta name="description" content="Guía paso a paso para relevar un requerimiento de cliente, calcular materiales y mano de obra, y armar una cotización de cableado estructurado, con un caso práctico resuelto de punta a punta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(74,222,128,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(74,222,128,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;left:-20vw;top:-25vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(74,222,128,.10),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--green);background:var(--green-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--green)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--green);background:var(--green-bg);border-color:rgba(74,222,128,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}ul,ol{color:var(--text2);padding-left:1.2rem;margin-top:.6rem;display:flex;flex-direction:column;gap:4px}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s}.info-card:hover{border-color:rgba(74,222,128,.45);transform:translateY(-2px)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.subhead{font-size:14px;font-weight:700;color:#fff;margin-top:1.4rem;margin-bottom:.3rem}.subhead:first-child{margin-top:0}
+figure{margin-top:1.25rem}figure img{width:100%;border-radius:12px;border:1px solid var(--border);display:block}figcaption{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;margin-top:8px}
+table.md-table{width:100%;border-collapse:collapse;margin-top:1.1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:12.5px}table.md-table th{background:var(--bg3);color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;font-weight:700;text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}table.md-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2)}table.md-table tr:last-child td{border-bottom:none}table.md-table td:first-child{color:#fff;font-weight:600}table.md-table td.mono{font-family:var(--mono);color:var(--green)}table.md-table tr.total td{color:#fff;font-weight:700;background:var(--bg3)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.2fr 1.8fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.tag{font-family:var(--mono);font-size:10px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.2);border-radius:18px;padding:3px 8px;display:inline-block;margin:2px 4px 2px 0}
+.riesgo{border-left:3px solid var(--coral);background:rgba(251,113,133,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.riesgo strong{color:var(--coral)}
+.norma{border-left:3px solid var(--blue);background:rgba(77,168,255,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:8px;font-size:12px;color:var(--text2);font-family:var(--mono)}.norma strong{color:var(--blue);font-family:var(--sans)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1rem;font-family:var(--mono);font-size:12px}.flow span.step{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:#fff}.flow span.arrow{color:var(--text3)}
+.formula{background:#080a0d;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--green)}
+.qbox{background:var(--bg3);border:1px solid rgba(74,222,128,.25);border-radius:12px;padding:14px 16px;margin-top:1rem}.qbox .qk{font-family:var(--mono);font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}.qbox .qv{font-size:14px;color:#fff;margin-top:4px}
+.step-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--green);background:var(--green-bg);border:1px solid rgba(74,222,128,.25);border-radius:20px;padding:4px 10px;margin-top:1.2rem;margin-bottom:.5rem}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.card-body{padding:1rem}table.md-table{font-size:11px}}
+</style>
+</head>
+<body>
+<nav><a class="nav-logo" href="#">QUOTE://CABLEADO</a><div class="nav-links">
+<a class="nav-link" href="#s1">Intro</a>
+<a class="nav-link" href="#s2">Relevamiento</a>
+<a class="nav-link" href="#s3">Diseño</a>
+<a class="nav-link" href="#s4">Materiales</a>
+<a class="nav-link" href="#s5">Mano de obra</a>
+<a class="nav-link" href="#s6">Estructura</a>
+<a class="nav-link" href="#s7">Caso práctico</a>
+<a class="nav-link" href="#s8">Errores</a>
+</div></nav>
+
+<section class="hero">
+<div class="hero-tag">Redes · 2.º EMT Sistemas y Redes · Gestión de proyectos</div>
+<h1>Cómo calcular y <span>cotizar</span><br>un cableado estructurado</h1>
+<p class="hero-sub">Diseñar bien una red no alcanza si después no se sabe traducir ese diseño en una lista de materiales, horas de trabajo y un precio final claro para el cliente. Esta guía explica el proceso completo — desde el relevamiento hasta la cotización — con un caso práctico resuelto paso a paso.</p>
+<div class="hero-actions"><a class="btn primary" href="#s1">Comenzar</a><a class="btn" href="#s7">Ir al caso práctico</a></div>
+</section>
+
+<main>
+
+<div class="card" id="s1"><div class="card-header"><span class="card-num num-green">01</span><span class="card-title">Por qué una buena cotización importa tanto como un buen diseño</span></div><div class="card-body">
+<p>Un diseño técnicamente correcto que se cotiza mal puede hacer perder dinero al instalador (si falta material o mano de obra) o perder el cliente (si el precio queda fuera de mercado). Cotizar bien significa <strong>convertir un requerimiento en una lista de materiales precisa, horas de trabajo realistas y un precio transparente</strong>.</p>
+<div class="grid grid-4">
+<div class="info-card"><div class="info-label">1</div><div class="info-title">Relevar</div><div class="info-desc">Entender qué necesita realmente el cliente, no solo lo que pide.</div></div>
+<div class="info-card"><div class="info-label">2</div><div class="info-title">Diseñar</div><div class="info-desc">Convertir el requerimiento en un plano y una lista de puntos de red.</div></div>
+<div class="info-card"><div class="info-label">3</div><div class="info-title">Calcular</div><div class="info-desc">Traducir el diseño en cantidades de materiales y horas de trabajo.</div></div>
+<div class="info-card"><div class="info-label">4</div><div class="info-title">Cotizar</div><div class="info-desc">Sumar materiales, mano de obra, margen e impuestos en un documento claro.</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo:</strong> cotizar "a ojo" en base a proyectos anteriores sin remedir el nuevo sitio suele subestimar metros de cable, cantidad de tomas o dificultad de canalización.</div>
+</div></div>
+
+<div class="card" id="s2"><div class="card-header"><span class="card-num num-blue">02</span><span class="card-title">Relevamiento del requerimiento del cliente</span></div><div class="card-body">
+<p>Antes de calcular un solo metro de cable hay que reunir información concreta. Un buen relevamiento responde estas preguntas:</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-title">¿Cuántos puestos de trabajo?</div><div class="info-desc">Cantidad de PCs, impresoras, teléfonos IP y otros equipos fijos a conectar, por sector o piso.</div></div>
+<div class="info-card"><div class="info-title">¿Qué otros dispositivos de red?</div><div class="info-desc">Access points, cámaras IP, control de accesos: cada uno es un punto adicional, muchas veces con PoE.</div></div>
+<div class="info-card"><div class="info-title">¿Dónde estará el rack?</div><div class="info-desc">Ubicación del cuarto de telecomunicaciones y distancia aproximada a cada puesto (define metros de cable).</div></div>
+<div class="info-card"><div class="info-title">¿Qué categoría de cable?</div><div class="info-desc">Cat 5e, Cat 6 o Cat 6A, según las aplicaciones actuales y el crecimiento previsto (ver Capa 1 / cableado estructurado).</div></div>
+<div class="info-card"><div class="info-title">¿Hay crecimiento previsto?</div><div class="info-desc">Cuántos puestos o dispositivos más se esperan en 3–5 años: define el margen de puertos y espacio en rack.</div></div>
+<div class="info-card"><div class="info-title">¿Plazos y restricciones?</div><div class="info-desc">Fechas límite, horarios de trabajo permitidos, y si hay obra civil en simultáneo.</div></div>
+</div>
+<div class="note-box"><div class="note-title">Herramienta de relevamiento</div><div class="note-line">Visitar el sitio con un plano en mano (o levantarlo in situ), medir distancias reales del rack a cada puesto y fotografiar los recorridos posibles de canalización. Los relevamientos "por teléfono" son la causa más común de cotizaciones que después no cierran.</div></div>
+</div></div>
+
+<div class="card" id="s3"><div class="card-header"><span class="card-num num-teal">03</span><span class="card-title">Del requerimiento al diseño</span></div><div class="card-body">
+<p>Con la información relevada se arma un diseño mínimo, suficiente para cotizar (el proyecto ejecutivo detallado puede refinarse después de aprobado el presupuesto):</p>
+<div class="flow"><span class="step">1 · Plano con ubicación de puestos</span><span class="arrow">→</span><span class="step">2 · Ubicación del/los rack(s)</span><span class="arrow">→</span><span class="step">3 · Recorrido de canalización</span><span class="arrow">→</span><span class="step">4 · Cantidad y tipo de tomas</span><span class="arrow">→</span><span class="step">5 · Categoría de cable y equipos activos</span></div>
+<div class="riesgo"><strong>Riesgo:</strong> diseñar sin considerar recorridos reales (por ejemplo, sin ver que hay una viga o un muro que obliga a rodear varios metros extra) subestima el metraje de cable y canalización.</div>
+<div class="norma"><strong>Normativa relacionada:</strong> ANSI/TIA-568 (cableado y componentes) y TIA-569-E (espacios y canalizaciones) — ver la página de <a href="cableado_estructurado_2emt.html" style="color:var(--green)">Cableado estructurado</a> para el detalle técnico de cada subsistema.</div>
+</div></div>
+
+<div class="card" id="s4"><div class="card-header"><span class="card-num num-amber">04</span><span class="card-title">Cálculo de materiales</span></div><div class="card-body">
+<p>Cada ítem del diseño se traduce en una cantidad de material, normalmente con un <strong>margen de holgura</strong> para cubrir errores de instalación, pruebas fallidas y recortes.</p>
+
+<p class="subhead">Cable UTP horizontal</p>
+<div class="formula">metros_cable = cantidad_puntos × distancia_promedio_al_rack × (1 + margen_holgura)</div>
+<p style="margin-top:.6rem">El margen de holgura habitual es de <strong>10–15%</strong>, para cubrir subidas/bajadas por canalización, curvas y errores de corte. El cable se compra por cajas de 305 m: <span class="tag">cajas = techo(metros_cable / 305)</span></p>
+
+<p class="subhead">Conectores, keystones y patch panels</p>
+<p>Depende del sistema de terminación elegido:</p>
+<div class="compare-table">
+<div class="compare-row"><div class="compare-k">Sistema estructurado (keystone + patch panel)</div><div class="compare-v">Keystones = tomas · Puertos de patch panel = tomas · Patch cords = tomas × 2</div></div>
+<div class="compare-row"><div class="compare-k">Terminación directa (RJ45 crimpado)</div><div class="compare-v">Conectores RJ45 = tomas × 2 (un extremo en el rack, otro en la toma) · sin patch panel</div></div>
+</div>
+<div class="riesgo"><strong>Riesgo:</strong> la terminación directa es más barata en materiales pero elimina la posibilidad de reorganizar el cableado sin volver a terminar cables — no se recomienda para instalaciones permanentes de cierto tamaño.</div>
+
+<p class="subhead">Rack, organizadores y switch</p>
+<div class="formula">puertos_switch_necesarios = tomas + APs + cámaras + teléfonos_IP + margen_crecimiento</div>
+<p style="margin-top:.6rem">El resultado se redondea al tamaño comercial de switch más cercano hacia arriba (8, 16, 24, 48 puertos). El tamaño de rack (en U) depende de la cantidad de patch panels, switches, organizadores y UPS a alojar — ver la página de <a href="cableado_estructurado_2emt.html#s9b" style="color:var(--green)">armado de racks</a>.</p>
+
+<p class="subhead">Canalización</p>
+<p>Se calcula por metros lineales medidos (o estimados) en el relevamiento: canaleta/caño secundario hacia cada puesto, y bandeja o caño troncal desde la entrada de servicios hasta el/los rack(s). No existe una fórmula universal: depende del recorrido real del edificio.</p>
+
+<table class="md-table"><tr><th>Ítem</th><th>Cantidad necesaria</th><th>Margen sugerido</th></tr>
+<tr><td>Cable UTP</td><td class="mono">puntos × distancia media</td><td class="mono">+10–15%</td></tr>
+<tr><td>Keystones / conectores RJ45</td><td class="mono">tomas × 1 o × 2 según sistema</td><td class="mono">+5%</td></tr>
+<tr><td>Puertos de patch panel</td><td class="mono">= tomas</td><td class="mono">+1 panel de crecimiento</td></tr>
+<tr><td>Patch cords</td><td class="mono">tomas × 2</td><td class="mono">+5%</td></tr>
+<tr><td>Puertos de switch</td><td class="mono">tomas + PoE + crecimiento</td><td class="mono">redondeo a tamaño comercial</td></tr>
+<tr><td>Canalización</td><td class="mono">metros medidos en sitio</td><td class="mono">+10% por imprevistos</td></tr>
+</table>
+</div></div>
+
+<div class="card" id="s5"><div class="card-header"><span class="card-num num-purple">05</span><span class="card-title">Cálculo de la mano de obra</span></div><div class="card-body">
+<p>La mano de obra suele ser el ítem que más se subestima en una cotización. Se calcula en horas, separando tareas fijas (por proyecto) de tareas variables (por punto de red).</p>
+<div class="formula">horas_totales = (horas_por_punto × tomas) + (horas_fijas_por_rack × cantidad_racks) + (horas_certificación_por_punto × tomas)</div>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Variable</div><div class="info-title">Horas por punto</div><div class="info-desc">Tender el cable, terminar ambos extremos y colocar la toma: típicamente 1–2 horas por punto.</div></div>
+<div class="info-card"><div class="info-label">Fija</div><div class="info-title">Horas por rack</div><div class="info-desc">Armado del rack, organización, etiquetado general y pruebas del backbone: 4–8 horas por rack.</div></div>
+<div class="info-card"><div class="info-label">Variable</div><div class="info-title">Horas de certificación</div><div class="info-desc">Testear y certificar cada enlace con un tester profesional: 0,15–0,3 horas por punto.</div></div>
+</div>
+<div class="formula" style="margin-top:1rem">costo_mano_obra = horas_totales × tarifa_por_hora</div>
+<div class="riesgo"><strong>Riesgo:</strong> no cobrar por separado el etiquetado y la documentación final (TIA-606) suele hacer que esa tarea "se pierda" y quede sin hacer o sin cobrar.</div>
+</div></div>
+
+<div class="card" id="s6"><div class="card-header"><span class="card-num num-coral">06</span><span class="card-title">Estructura final de una cotización</span></div><div class="card-body">
+<p>Una cotización profesional no es solo un número: es un documento que el cliente pueda entender y comparar con otras propuestas.</p>
+<div class="flow"><span class="step">Subtotal materiales</span><span class="arrow">+</span><span class="step">Subtotal mano de obra</span><span class="arrow">=</span><span class="step">Subtotal general</span><span class="arrow">+</span><span class="step">Margen de utilidad</span><span class="arrow">+</span><span class="step">Impuestos</span><span class="arrow">=</span><span class="step">TOTAL</span></div>
+<div class="grid grid-2" style="margin-top:1rem">
+<div class="info-card"><div class="info-title">Margen de utilidad</div><div class="info-desc">Porcentaje sobre el costo total (materiales + mano de obra) que cubre ganancia, imprevistos y garantía. Habitual: 15–30%.</div></div>
+<div class="info-card"><div class="info-title">Impuestos</div><div class="info-desc">Se aplican sobre el subtotal con margen incluido, según la normativa fiscal vigente (por ejemplo, IVA).</div></div>
+</div>
+<div class="note-box"><div class="note-title">Debe incluir siempre</div><div class="note-line">Detalle de materiales con cantidades, mano de obra desglosada, validez de la oferta, forma de pago, plazo de entrega, y qué queda excluido (por ejemplo, obra civil, provisión de energía eléctrica al rack, o licencias de software de gestión).</div></div>
+</div></div>
+
+<div class="card" id="s7"><div class="card-header"><span class="card-num num-green">07</span><span class="card-title">Caso práctico paso a paso</span></div><div class="card-body">
+<div class="note-box"><div class="note-title">Requerimiento del cliente</div><div class="note-line">Una pequeña empresa ocupa una planta baja de oficinas y pide: <strong>18 puestos de trabajo</strong>, <strong>2 access points PoE</strong> en el techo, <strong>1 rack</strong> en una sala técnica, cable <strong>Cat 6</strong>, y sistema de <strong>keystone + patch panel</strong>. La distancia promedio medida del rack a cada puesto es de <strong>25 m</strong>. El cliente pide dejar un <strong>20% de crecimiento</strong> en puertos de switch.</div></div>
+
+<div class="step-badge">Paso 1 · Definir tomas totales</div>
+<p>18 puestos, 1 toma por puesto (el cliente no pidió doble toma) → <strong>18 tomas de datos</strong>. Los 2 AP se conectan directo a un puerto de switch cada uno, sin toma de pared adicional (se cablean hasta el cielorraso).</p>
+<div class="qbox"><div class="qk">Tomas de datos</div><div class="qv">18</div></div>
+
+<div class="step-badge">Paso 2 · Calcular metros de cable</div>
+<div class="formula">metros = (18 tomas + 2 AP) × 25 m × (1 + 0.15) = 20 × 25 × 1.15 = 575 m</div>
+<div class="qbox"><div class="qk">Cable Cat 6 necesario</div><div class="qv">575 m → 2 cajas de 305 m (610 m comprados)</div></div>
+
+<div class="step-badge">Paso 3 · Keystones, patch panel y patch cords</div>
+<p>Puntos totales a terminar en pared/techo: 18 tomas + 2 AP = <strong>20 puntos</strong>.</p>
+<table class="md-table"><tr><th>Ítem</th><th>Cálculo</th><th>Cantidad</th></tr>
+<tr><td>Keystones Cat 6</td><td class="mono">20 puntos × 1</td><td class="mono">20 u.</td></tr>
+<tr><td>Puertos de patch panel</td><td class="mono">20 puntos + 4 de crecimiento</td><td class="mono">24 puertos (1 panel de 24)</td></tr>
+<tr><td>Patch cords</td><td class="mono">20 puntos × 2</td><td class="mono">40 u.</td></tr>
+<tr><td>Organizador horizontal</td><td class="mono">1 por patch panel</td><td class="mono">1 u.</td></tr>
+</table>
+
+<div class="step-badge">Paso 4 · Switch y rack</div>
+<div class="formula">puertos_switch = 20 puntos × 1.20 (crecimiento 20%) = 24 puertos</div>
+<p style="margin-top:.6rem">Se elige un <strong>switch PoE de 24 puertos</strong> (los AP necesitan PoE). Para el rack: 1 patch panel (1U) + 1 organizador (1U) + 1 switch (1U) + espacio de ventilación y crecimiento → <strong>rack de 9U</strong> es suficiente.</p>
+<div class="qbox"><div class="qk">Equipo activo</div><div class="qv">1 switch PoE 24 puertos · 1 rack de 9U</div></div>
+
+<div class="step-badge">Paso 5 · Canalización</div>
+<p>El recorrido medido en sitio es de <strong>40 m de bandeja/canaleta troncal</strong> y <strong>90 m de canaleta secundaria</strong> hacia los puestos (varios puestos comparten tramos de canaleta, por eso es menor que la suma de distancias individuales de cable).</p>
+
+<div class="step-badge">Paso 6 · Mano de obra</div>
+<div class="formula">horas = (20 puntos × 1.5 h) + (1 rack × 6 h) + (20 puntos × 0.25 h certificación) = 30 + 6 + 5 = 41 horas</div>
+<p style="margin-top:.6rem">Con una tarifa de <strong>$1.200 por hora</strong>: costo de mano de obra = 41 × 1.200 = <strong>$49.200</strong>.</p>
+
+<div class="step-badge">Paso 7 · Cotización final</div>
+<table class="md-table">
+<tr><th>Concepto</th><th>Cantidad</th><th>Precio unit.</th><th>Subtotal</th></tr>
+<tr><td>Cable UTP Cat 6 (caja 305 m)</td><td>2</td><td class="mono">$8.500</td><td class="mono">$17.000</td></tr>
+<tr><td>Keystone Cat 6</td><td>20</td><td class="mono">$180</td><td class="mono">$3.600</td></tr>
+<tr><td>Patch panel 24p Cat 6</td><td>1</td><td class="mono">$4.200</td><td class="mono">$4.200</td></tr>
+<tr><td>Organizador horizontal</td><td>1</td><td class="mono">$900</td><td class="mono">$900</td></tr>
+<tr><td>Patch cord Cat 6</td><td>40</td><td class="mono">$220</td><td class="mono">$8.800</td></tr>
+<tr><td>Rack 9U</td><td>1</td><td class="mono">$9.500</td><td class="mono">$9.500</td></tr>
+<tr><td>Switch PoE 24 puertos</td><td>1</td><td class="mono">$32.000</td><td class="mono">$32.000</td></tr>
+<tr><td>Canaleta/bandeja (130 m)</td><td>130</td><td class="mono">$95</td><td class="mono">$12.350</td></tr>
+<tr><td>Mano de obra (41 h)</td><td>41</td><td class="mono">$1.200</td><td class="mono">$49.200</td></tr>
+<tr class="total"><td>Subtotal general</td><td></td><td></td><td class="mono">$137.550</td></tr>
+<tr><td>Margen de utilidad (20%)</td><td></td><td></td><td class="mono">$27.510</td></tr>
+<tr><td>Subtotal con margen</td><td></td><td></td><td class="mono">$165.060</td></tr>
+<tr><td>IVA (22%)</td><td></td><td></td><td class="mono">$36.313</td></tr>
+<tr class="total"><td>TOTAL A COTIZAR</td><td></td><td></td><td class="mono">$201.373</td></tr>
+</table>
+<div class="note-box"><div class="note-title">Para practicar</div><div class="note-line">Usá el <a href="../Herramientas/cotizador_cableado_interactivo.html" style="color:var(--green)">cotizador interactivo</a> cargando estos mismos datos del caso práctico y verificá que el resultado coincida. Después, probá modificar la distancia promedio, la cantidad de puestos o el margen de crecimiento y observá cómo cambia el total.</div></div>
+</div></div>
+
+<div class="card" id="s8"><div class="card-header"><span class="card-num num-blue">08</span><span class="card-title">Errores comunes al cotizar</span></div><div class="card-body">
+<div class="grid grid-2">
+<div class="info-card"><div class="info-title">No medir distancias reales</div><div class="info-desc">Estimar "a ojo" la distancia al rack subestima el cable y a veces supera el límite de 90 m sin que nadie lo note hasta la certificación.</div></div>
+<div class="info-card"><div class="info-title">Olvidar el margen de holgura</div><div class="info-desc">Comprar exactamente los metros calculados deja sin margen para errores de corte o recorridos imprevistos.</div></div>
+<div class="info-card"><div class="info-title">No dejar crecimiento en el switch</div><div class="info-desc">Dimensionar el switch exacto a la cantidad actual de puntos obliga a cambiarlo apenas se agrega un equipo.</div></div>
+<div class="info-card"><div class="info-title">No cobrar la certificación</div><div class="info-desc">Testear y documentar cada enlace lleva tiempo real; si no se cotiza, se termina haciendo gratis o no se hace.</div></div>
+<div class="info-card"><div class="info-title">Confundir precio de lista con costo</div><div class="info-desc">Cotizar sin margen de utilidad deja sin cubrir imprevistos, garantías y el tiempo de gestión del proyecto.</div></div>
+<div class="info-card"><div class="info-title">No aclarar exclusiones</div><div class="info-desc">No definir qué no incluye la cotización (obra civil, energía eléctrica, licencias) genera reclamos y trabajo no pago.</div></div>
+</div>
+<div class="norma"><strong>Ver también:</strong> <a href="cableado_estructurado_2emt.html" style="color:var(--blue)">Cableado estructurado</a> para el detalle técnico de cada componente, y el <a href="../Herramientas/cotizador_cableado_interactivo.html" style="color:var(--blue)">cotizador interactivo</a> para aplicar estos cálculos en la práctica y en el proyecto final.</div>
+</div></div>
+
+</main>
+<footer><span style="color:var(--green)">QUOTE://</span>CABLEADO_ESTRUCTURADO · Relevamiento · Diseño · Materiales · Mano de obra · Cotización</footer>
+<script>
+function updateActiveNav(){const sections=document.querySelectorAll('[id^="s"]'),links=document.querySelectorAll('.nav-link');let a=null;sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a))}
+window.addEventListener('scroll',updateActiveNav,{passive:true});
+updateActiveNav();
+</script>
+</body>
+</html>
