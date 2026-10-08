@@ -14,11 +14,11 @@ Todo el contenido de este repositorio está organizado y navegable desde **[http
 2--Redes-Informaticas/
 ├── index.html         # Portal de acceso a todos los materiales del curso
 ├── Teorico/            # Documentos y presentaciones teóricas
-├── Practicas/          # Capturas de red para practicar análisis de tráfico
+├── Practicas/          # Caso integral de cableado y red + capturas de red para analizar tráfico
 ├── Herramientas/        # Simuladores interactivos y scripts generadores de PCAP
 ├── Eval/               # Actividades de evaluación (con subcarpeta old/ de archivo docente)
 ├── Proyecto/           # Proyecto final integrador
-└── Documentos/         # Documentación adicional del curso
+└── Documentos/         # Infografías PDF de racks y backbones
 ```
 
 ---
@@ -31,6 +31,14 @@ Todo el contenido de este repositorio está organizado y navegable desde **[http
 | ------- | ----------- |
 | [modelos_osi_tcpip_interactivo.html](Teorico/modelos_osi_tcpip_interactivo.html) | Presentación interactiva de los modelos OSI y TCP/IP: historia, las 7 capas OSI (con enlace a cada presentación dedicada), las 4 capas TCP/IP, comparativa, correspondencia entre modelos y glosario |
 | [Redes-Protocolos.pdf](Teorico/Redes-Protocolos.pdf) | Presentación introductoria del curso |
+
+### Cableado estructurado y energía
+
+| Archivo | Contenido |
+| ------- | --------- |
+| [cableado_estructurado_2emt.html](Teorico/cableado_estructurado_2emt.html) | Guía de cableado estructurado: subsistemas, cobre y fibra, conectores, racks, distancias, PoE, normas TIA/ISO/IEEE, etiquetado, testing y proyecto integrador |
+| [calculo_cotizacion_cableado_2emt.html](Teorico/calculo_cotizacion_cableado_2emt.html) | Cómo pasar de un requerimiento a la lista de materiales, las horas de trabajo y el precio final, con un caso resuelto |
+| [ups_estabilizadores_interactivo.html](Teorico/ups_estabilizadores_interactivo.html) | UPS, estabilizadores y filtros: tipos, dimensionamiento y autonomía |
 
 ### Presentaciones interactivas por capa OSI (HTML)
 
@@ -89,6 +97,13 @@ Los materiales previos sobre protocolo IP y modelos de referencia (`protocolo_ip
 - Puertos y multiplexación de aplicaciones
 - Segmentación y control de flujo
 
+#### Cableado estructurado
+
+- Subsistemas TIA-568 (acometida, sala de equipos, backbone, horizontal, área de trabajo)
+- Cobre y fibra, conectores, terminación, racks y patch panels
+- Distancias (90/100 m), PoE, normas TIA/ISO/IEEE, etiquetado y testing
+- Cálculo de materiales, mano de obra y cotización
+
 #### Capas 5, 6 y 7
 
 - Sesión, Presentación y Aplicación
@@ -97,6 +112,18 @@ Los materiales previos sobre protocolo IP y modelos de referencia (`protocolo_ip
 ---
 
 ## Prácticas
+
+### Caso integral: cableado estructurado y red de una gestoría
+
+| Archivo | Descripción |
+| ------- | ----------- |
+| [caso_gestoria_triada.html](Practicas/caso_gestoria_triada.html) | Caso práctico resuelto, con el mismo estilo de la guía de cableado, para seguir paso a paso un proyecto completo. Sirve como modelo de referencia para el proyecto final |
+
+El caso (empresa ficticia **TRÍADA Gestores Asociados**, dos sedes a 13 km: una casa reciclada con centro de cómputos y una sede nueva de atención al público, 28 puestos) cubre: pliego de necesidades, relevamiento con planos SVG, requisitos verificables, arquitectura, cableado horizontal y vertical con longitudes por ruta, Wi-Fi con muros gruesos, VLAN y direccionamiento VLSM, VPN WireGuard con respaldo 4G/5G, control de tráfico (firewall, DNS y proxy con lista blanca), CCTV, seguridad de terminales, servidores y backups sin nube, centro de cómputos (UPS y climatización), cotización con el [cotizador](Herramientas/cotizador_cableado_interactivo.html), cronograma con ruta crítica, matriz de riesgos y plan de pruebas de aceptación. Los precios son de referencia en USD.
+
+La consigna con la que se generó el caso está en [Proyecto/gestoria.md](Proyecto/gestoria.md).
+
+### Capturas de red para análisis
 
 ### Capturas de red para análisis
 
@@ -114,6 +141,7 @@ Los archivos `.pcap` pueden abrirse con **Wireshark**. Los archivos `.txt` conti
 
 | Archivo | Descripción |
 | ------- | ----------- |
+| [cotizador_cableado_interactivo.html](Herramientas/cotizador_cableado_interactivo.html) | Cotizador de cableado estructurado: calcula materiales, mano de obra y precio final a partir de un requerimiento y exporta la cotización a PDF |
 | [terminal_simulador.html](Herramientas/terminal_simulador.html) | Simulador interactivo de terminal para practicar captura de red en el navegador |
 | [wireshark_simulador.html](Herramientas/wireshark_simulador.html) | Simulador interactivo de Wireshark en el navegador |
 | [generar_pcap.py](Herramientas/generar_pcap.py) / [.sh](Herramientas/generar_pcap.sh) | Scripts para generar archivos de captura PCAP de práctica |
@@ -126,6 +154,7 @@ Los archivos `.pcap` pueden abrirse con **Wireshark**. Los archivos `.txt` conti
 | Archivo | Descripción |
 | ------- | ----------- |
 | [actividad_analisis_trafico.html](Eval/actividad_analisis_trafico.html) | Actividad guiada de análisis de tráfico con preguntas y ejercicios |
+| [actividad_investigacion.md](Eval/actividad_investigacion.md) | Investigación en equipos: impacto de la IA en las comunicaciones, analizado con el modelo OSI |
 
 La evaluación de Redes Informáticas y su clave de respuestas (uso exclusivo del docente) están archivadas en [Eval/old/](Eval/old/): [evaluacion_redes_informaticas.html](Eval/old/evaluacion_redes_informaticas.html) y [evaluacion_redes_respuestas.html](Eval/old/evaluacion_redes_respuestas.html).
 
@@ -133,7 +162,9 @@ La evaluación de Redes Informáticas y su clave de respuestas (uso exclusivo de
 
 ## Proyecto Final
 
-[Idea del Proyecto Final](Proyecto/idea_proyecto.md)
+- [Presentación interactiva del proyecto final](Proyecto/idea_proyecto_interactivo.html)
+- [Idea del Proyecto Final](Proyecto/idea_proyecto.md) (documento fuente)
+- [Caso de referencia: gestoría TRÍADA](Practicas/caso_gestoria_triada.html), un proyecto completo resuelto que muestra el nivel de análisis esperado
 
 Proyecto integrador de diseño e implementación de una red para una institución real o simulada.
 
@@ -173,9 +204,16 @@ Proyecto integrador de diseño e implementación de una red para una institució
 
 ---
 
+## Documentos
+
+Infografías en PDF de apoyo al cableado estructurado, en [Documentos/](Documentos/): rack de comunicaciones zonal, rack concentrador de piso, backbone de edificio, backbone entre edificios, rack de servidores y la guía completa de infografías.
+
+---
+
 ## Herramientas utilizadas en el curso
 
 - **Wireshark** — análisis de capturas de tráfico de red
 - **Cisco Packet Tracer** — simulación de redes
 - **draw.io / diagrams.net** — diagramas de red
 - **Python** — generación de capturas PCAP para prácticas
+- **Cotizador de cableado** — cálculo de materiales, mano de obra y precio de una instalación

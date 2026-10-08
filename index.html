@@ -127,13 +127,14 @@
   <div class="hero-tag">2° EMT — Tecnologías de la Información</div>
   <h1>Redes de <span>Computadoras</span></h1>
   <p class="hero-sub">
-    Portal de acceso a todos los materiales del curso: teoría interactiva, prácticas guiadas,
-    simuladores, capturas de red y evaluaciones. Todo el contenido vive en este mismo repositorio
+    Portal de acceso a todos los materiales del curso: teoría interactiva, prácticas y casos integrales,
+    simuladores y herramientas de cálculo, capturas de red y evaluaciones. Todo el contenido vive en este mismo repositorio
     — este portal solo lo organiza.
   </p>
   <div class="hero-stats">
     <div class="stat"><div class="stat-v" id="stat-teorico">13</div><div class="stat-k">Docs teóricos</div></div>
-    <div class="stat"><div class="stat-v">3</div><div class="stat-k">Simuladores</div></div>
+    <div class="stat"><div class="stat-v">3</div><div class="stat-k">Herramientas</div></div>
+    <div class="stat"><div class="stat-v">1</div><div class="stat-k">Caso integral</div></div>
     <div class="stat"><div class="stat-v">5</div><div class="stat-k">Capturas PCAP</div></div>
     <div class="stat"><div class="stat-v" id="stat-eval">1</div><div class="stat-k">Evaluaciones</div></div>
   </div>
@@ -213,8 +214,12 @@
       <span class="card-sub">Practicas/</span>
     </div>
     <div class="card-body">
-      <p class="card-desc">Capturas de tráfico real para analizar en Wireshark o en el simulador del curso.</p>
+      <p class="card-desc">Casos prácticos integrales y capturas de tráfico real para analizar en Wireshark o en el simulador del curso.</p>
       <div class="res-grid">
+        <a class="res-card" href="Practicas/caso_gestoria_triada.html" target="_blank" rel="noopener">
+          <span class="res-title">Caso TRÍADA Gestores — cableado y red de punta a punta</span>
+          <span class="res-desc">Caso resuelto con pliego, relevamiento de dos sedes, diseño de cableado, VLAN, VPN, seguridad, CCTV, servidores, cotización con el cotizador, planificación y pruebas. Modelo de referencia para el proyecto final.</span>
+        </a>
         <a class="res-card" href="Practicas/500_practica_red_192_168_1.pcap" target="_blank" rel="noopener">
           <span class="res-title">Captura — 500 paquetes formato Wireshark</span>
           <span class="res-desc">Red 192.168.1.0/24.</span>
@@ -250,7 +255,7 @@
       <span class="card-sub">Herramientas/</span>
     </div>
     <div class="card-body">
-      <p class="card-desc">Simuladores interactivos para practicar sin depender de herramientas externas.</p>
+      <p class="card-desc">Simuladores interactivos y herramientas de cálculo para practicar sin depender de programas externos.</p>
       <div class="res-grid">
         <a class="res-card" href="Herramientas/terminal_simulador.html" target="_blank" rel="noopener">
           <span class="res-title">Terminal simulada</span>
@@ -277,6 +282,10 @@
     <div class="card-body">
       <p class="card-desc">Actividades de evaluación de análisis de tráfico. Este listado se genera automáticamente a partir del contenido HTML y PDF de la carpeta <code>Eval/</code>.</p>
       <div class="res-grid" id="eval-grid">
+        <a class="res-card" href="Eval/actividad_investigacion.md" target="_blank" rel="noopener">
+          <span class="res-title">Investigación: IA y redes de comunicaciones</span>
+          <span class="res-desc">Trabajo en equipos que vincula noticias de actualidad con el modelo OSI. Presentación oral e informe.</span>
+        </a>
         <a class="res-card" href="Eval/actividad_analisis_trafico.html" target="_blank" rel="noopener">
           <span class="res-title">Análisis de tráfico de red</span>
           <span class="res-desc">Actividad guiada con preguntas y ejercicios de análisis.</span>
@@ -313,8 +322,33 @@
       <span class="card-sub">Documentos/</span>
     </div>
     <div class="card-body">
-      <p class="card-desc">Espacio reservado para documentación adicional del curso.</p>
-      <div class="res-empty">// aún no hay archivos en esta carpeta</div>
+      <p class="card-desc">Documentación de apoyo del curso: infografías de racks y backbones del cableado estructurado.</p>
+      <div class="res-grid">
+        <a class="res-card" href="Documentos/01_rack_comunicaciones_zonal.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Rack de comunicaciones zonal</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+        <a class="res-card" href="Documentos/02_rack_concentrador_piso.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Rack concentrador de piso</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+        <a class="res-card" href="Documentos/03_backbone_edificio.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Backbone de edificio</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+        <a class="res-card" href="Documentos/04_backbone_entre_edificios.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Backbone entre edificios</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+        <a class="res-card" href="Documentos/05_rack_servidores.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Rack de servidores</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+        <a class="res-card" href="Documentos/infografias_racks_backbones_guia_completa.pdf" target="_blank" rel="noopener">
+          <span class="res-title">Infografías de racks y backbones: guía completa</span>
+          <span class="res-desc">Documento PDF de apoyo al tema de cableado estructurado.</span>
+        </a>
+      </div>
     </div>
   </section>
 

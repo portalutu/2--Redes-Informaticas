@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caso práctico — Gestoría TRÍADA · Cableado y red — 2º EMT</title>
+<meta name="description" content="Caso práctico integral resuelto: relevamiento, diseño de cableado estructurado, VLAN, VPN, seguridad, CCTV, servidores, cotización con el cotizador, planificación y pruebas para una gestoría con dos sedes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0c10;--bg2:#0f1218;--bg3:#151a22;--bg4:#1b2230;--border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--text:#e8eaf0;--text2:#8b9ab5;--text3:#566378;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--blue:#4da8ff;--teal:#2dd4bf;--amber:#f59e0b;--purple:#a78bfa;--coral:#fb7185;--green:#4ade80;--blue-bg:rgba(77,168,255,.08);--teal-bg:rgba(45,212,191,.08);--amber-bg:rgba(245,158,11,.08);--purple-bg:rgba(167,139,250,.08);--coral-bg:rgba(251,113,133,.08);--green-bg:rgba(74,222,128,.08)}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(251,113,133,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(251,113,133,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}body::after{content:'';position:fixed;left:-20vw;top:-25vh;width:55vw;height:55vw;background:radial-gradient(circle,rgba(251,113,133,.10),transparent 62%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:10;height:56px;padding:0 2rem;background:rgba(10,12,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;gap:2rem;align-items:center}.nav-logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);text-decoration:none;white-space:nowrap}.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-link{font-size:12px;color:var(--text3);text-decoration:none;padding:4px 10px;border-radius:6px;white-space:nowrap;transition:.2s}.nav-link:hover,.nav-link.active{color:var(--coral);background:var(--coral-bg)}
+.hero{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:5rem 2rem 4rem}.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--coral);background:var(--coral-bg);border:1px solid rgba(251,113,133,.2);border-radius:20px;padding:4px 12px;margin-bottom:1.5rem}.hero-tag::before{content:'';width:6px;height:6px;background:var(--coral);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}h1 span{color:var(--coral)}.hero-sub{font-size:1.05rem;color:var(--text2);max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.4rem}.btn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s;text-decoration:none}.btn:hover{transform:translateY(-2px);color:#fff}.btn.primary{color:var(--coral);background:var(--coral-bg);border-color:rgba(251,113,133,.28)}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:0 2rem 6rem;display:flex;flex-direction:column;gap:2rem}.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .5s ease both}.card:hover{border-color:var(--border2)}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--bg3)}.card-num{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.num-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,168,255,.25)}.num-teal{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(45,212,191,.25)}.num-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,.25)}.num-purple{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,.25)}.num-coral{background:var(--coral-bg);color:var(--coral);border:1px solid rgba(251,113,133,.25)}.num-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(74,222,128,.25)}.card-title{font-size:15px;font-weight:600;color:#fff}.card-body{padding:1.5rem}p{color:var(--text2)}strong{color:#fff}ul,ol{color:var(--text2);padding-left:1.2rem;margin-top:.6rem;display:flex;flex-direction:column;gap:4px}.grid{display:grid;gap:12px;margin-top:1.25rem}.grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.info-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.25s}.info-card:hover{border-color:rgba(251,113,133,.45);transform:translateY(-2px)}.info-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}.info-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}.info-desc{font-size:12px;color:var(--text2)}.note-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;margin-top:1.25rem}.note-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}.note-line{font-size:13px;color:var(--text2)}
+.subhead{font-size:14px;font-weight:700;color:#fff;margin-top:1.4rem;margin-bottom:.3rem}.subhead:first-child{margin-top:0}
+figure{margin-top:1.25rem}figure img{width:100%;border-radius:12px;border:1px solid var(--border);display:block}figcaption{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;margin-top:8px}
+table.md-table{width:100%;border-collapse:collapse;margin-top:1.1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:12.5px}table.md-table th{background:var(--bg3);color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;font-weight:700;text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}table.md-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2)}table.md-table tr:last-child td{border-bottom:none}table.md-table td:first-child{color:#fff;font-weight:600}table.md-table td.mono{font-family:var(--mono);color:var(--coral)}
+.compare-table{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.25rem}.compare-row{display:grid;grid-template-columns:1.2fr 1.8fr;gap:0;border-bottom:1px solid var(--border)}.compare-row:last-child{border-bottom:none}.compare-row>*{padding:10px 14px}.compare-k{font-size:13px;color:var(--text2);background:var(--bg3)}.compare-v{font-family:var(--mono);font-size:12px;color:#fff;border-left:1px solid var(--border)}
+.tag{font-family:var(--mono);font-size:10px;color:var(--coral);background:var(--coral-bg);border:1px solid rgba(251,113,133,.2);border-radius:18px;padding:3px 8px;display:inline-block;margin:2px 4px 2px 0}
+.riesgo{border-left:3px solid var(--coral);background:rgba(251,113,133,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.riesgo strong{color:var(--coral)}
+.norma{border-left:3px solid var(--blue);background:rgba(77,168,255,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:8px;font-size:12px;color:var(--text2);font-family:var(--mono)}.norma strong{color:var(--blue);font-family:var(--sans)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:1rem;font-family:var(--mono);font-size:12px}.flow span.step{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:#fff}.flow span.arrow{color:var(--text3)}
+.ref-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:10px}.ref-card .rt{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}.ref-card .rd{font-size:12px;color:var(--text2);margin-bottom:6px}.ref-card a{font-family:var(--mono);font-size:11px;color:var(--coral);word-break:break-all}
+.acc{border:1px solid var(--border);border-radius:12px;margin-top:12px;overflow:hidden}.acc-head{background:var(--bg3);padding:10px 14px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}.acc-head::after{content:'+';color:var(--coral);font-size:16px}.acc.open .acc-head::after{content:'–'}.acc-body{padding:0 14px;max-height:0;overflow:hidden;transition:max-height .3s ease}.acc.open .acc-body{padding:12px 14px;max-height:1000px}
+footer{position:relative;z-index:1;text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:var(--mono)}
+@media(max-width:720px){nav{padding:0 1rem;gap:1rem}.hero{padding:3rem 1rem 2.5rem}main{padding:0 1rem 4rem}.compare-row{grid-template-columns:1fr}.compare-v{border-left:none;border-top:1px solid var(--border)}.card-body{padding:1rem}table.md-table{font-size:11px}}
+/* ===== extensiones propias del caso ===== */
+pre.code{background:#080a0e;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.55;color:#cbd5e1;overflow-x:auto;margin-top:.9rem;white-space:pre}
+pre.code .c{color:#566378}pre.code .k{color:#fb7185}pre.code .v{color:#2dd4bf}
+.plan{margin-top:1.1rem}.plan svg{width:100%;height:auto;display:block;background:var(--bg3);border:1px solid var(--border);border-radius:12px}
+.plan .cap{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;margin-top:8px}
+.ok{border-left:3px solid var(--green);background:rgba(74,222,128,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.ok strong{color:var(--green)}
+.warn{border-left:3px solid var(--amber);background:rgba(245,158,11,.06);border-radius:0 10px 10px 0;padding:8px 12px;margin-top:10px;font-size:12.5px;color:var(--text2)}.warn strong{color:var(--amber)}
+.tag.b{color:var(--blue);background:var(--blue-bg);border-color:rgba(77,168,255,.25)}.tag.t{color:var(--teal);background:var(--teal-bg);border-color:rgba(45,212,191,.25)}.tag.a{color:var(--amber);background:var(--amber-bg);border-color:rgba(245,158,11,.25)}.tag.p{color:var(--purple);background:var(--purple-bg);border-color:rgba(167,139,250,.25)}.tag.g{color:var(--green);background:var(--green-bg);border-color:rgba(74,222,128,.25)}
+details.acc>summary.acc-head{list-style:none}details.acc>summary.acc-head::-webkit-details-marker{display:none}details.acc>summary.acc-head::after{content:'+';color:var(--coral);font-size:16px}details.acc[open]>summary.acc-head::after{content:'–'}details.acc .acc-in{padding:12px 14px 14px}
+table.md-table td.r,table.md-table th.r{text-align:right;font-family:var(--mono)}table.md-table tr.sub td{background:var(--bg3);color:#fff;font-weight:700}table.md-table tr.tot td{background:var(--coral-bg);color:var(--coral);font-weight:800;font-size:13px}
+.tablewrap{overflow-x:auto;margin-top:1.1rem}.tablewrap table.md-table{margin-top:0;min-width:640px}
+.calc-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:1rem}.calc-bar label{display:block;font-size:10.5px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}.calc-bar input{width:100%;background:var(--bg4);border:1px solid var(--border2);color:#fff;border-radius:8px;padding:7px 9px;font-family:var(--mono);font-size:13px}.calc-bar input:focus{outline:none;border-color:var(--coral)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:1.1rem}.kpi{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px 14px}.kpi .kl{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}.kpi .kv{font-size:20px;font-weight:700;color:#fff;margin-top:2px}.kpi .kv.c{color:var(--coral)}
+.sec-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem}
+.vlan{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:6px;border:1px solid var(--border2);color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:.8rem;font-size:11.5px;color:var(--text2)}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.rm{fill:rgba(251,113,133,.05);stroke:#8b9ab5;stroke-width:2.5}.rm.g{fill:rgba(255,255,255,.025);stroke:#566378}.rm.cpd{fill:rgba(74,222,128,.10);stroke:#4ade80;stroke-width:4}.rm.duc{fill:rgba(245,158,11,.14);stroke:#f59e0b;stroke-width:2}.rm.cor{fill:rgba(77,168,255,.06);stroke:#566378;stroke-width:1.5}.rm.pat{fill:none;stroke:#566378;stroke-dasharray:6 5;stroke-width:1.5}.rm.in{fill:rgba(167,139,250,.08);stroke:#a78bfa}
+.lb{font:600 15.5px 'Space Grotesk',sans-serif;fill:#e8eaf0}.lb2{font:13.5px 'JetBrains Mono',monospace;fill:#8b9ab5}.lb3{font:12.5px 'JetBrains Mono',monospace;fill:#566378}
+.tray{fill:none;stroke:#2dd4bf;stroke-width:2.5;stroke-dasharray:7 5}.tray.f{stroke:#f59e0b}.tray.v{stroke:#fb7185;stroke-width:3.5;stroke-dasharray:none}
+.desk{fill:#1b2230;stroke:#4da8ff;stroke-width:1.5}.ap{fill:#2dd4bf;stroke:#0a0c10;stroke-width:1.5}.cam{fill:#fb7185}.rack{fill:#f59e0b}.dim{stroke:#8b9ab5;stroke-width:1.2;fill:none}.door{stroke:#f59e0b;stroke-width:4}
+.box{fill:#1b2230;stroke:#566378;stroke-width:1.5}.box.fw{stroke:#fb7185}.box.sw{stroke:#2dd4bf}.box.sv{stroke:#4da8ff}.box.cam{stroke:#fb7185;fill:#1b2230}
+@media(max-width:720px){pre.code{font-size:10.5px}}
+</style>
+</head>
+<body>
+<nav><a class="nav-logo" href="#">TRIADA://CASO</a><div class="nav-links">
+<a class="nav-link" href="#s0">Guía</a>
+<a class="nav-link" href="#s1">Contexto</a>
+<a class="nav-link" href="#s2">Casa</a>
+<a class="nav-link" href="#s3">Nueva sede</a>
+<a class="nav-link" href="#s4">Usuarios/Apps</a>
+<a class="nav-link" href="#s5">Requisitos</a>
+<a class="nav-link" href="#s6">Arquitectura</a>
+<a class="nav-link" href="#s7">Cableado Casa</a>
+<a class="nav-link" href="#s8">Cableado Nueva</a>
+<a class="nav-link" href="#s9">Wi-Fi</a>
+<a class="nav-link" href="#s10">IP/VLAN</a>
+<a class="nav-link" href="#s11">WAN/VPN</a>
+<a class="nav-link" href="#s12">Control de tráfico</a>
+<a class="nav-link" href="#s13">CCTV</a>
+<a class="nav-link" href="#s14">Terminales</a>
+<a class="nav-link" href="#s15">Servidores/CPD</a>
+<a class="nav-link" href="#s16">Cotización</a>
+<a class="nav-link" href="#s17">Planificación</a>
+<a class="nav-link" href="#s18">Pruebas</a>
+<a class="nav-link" href="#s19">Entregables</a>
+<a class="nav-link" href="#s20">Referencias</a>
+</div></nav>
+
+<section class="hero">
+<div class="hero-tag">Práctica · 2.º EMT Sistemas y Redes · Caso integrador</div>
+<h1>Caso <span>TRÍADA Gestores</span><br>un proyecto de cableado y red, de punta a punta</h1>
+<p class="hero-sub">Tres estudios pequeños se fusionan en una gestoría con dos sedes separadas por 13 km: una <strong>casa reciclada</strong> con muros gruesos y un <strong>centro de cómputos</strong> blindado, y una <strong>sede nueva</strong> de atención al público. Este caso recorre el trabajo completo de un ingeniero de infraestructura: <strong>relevamiento → requisitos → diseño físico y lógico → seguridad → cotización → planificación → pruebas</strong>.</p>
+<div class="hero-actions"><a class="btn primary" href="#s0">Comenzar</a><a class="btn" href="../Herramientas/cotizador_cableado_interactivo.html">Abrir el cotizador</a><a class="btn" href="../Teorico/cableado_estructurado_2emt.html">Teoría de cableado</a><a class="btn" href="#s16">Ir a la cotización</a></div>
+</section>
+
+<main>
+
+<div class="card" id="s0"><div class="card-header"><span class="card-num num-coral">00</span><span class="card-title">Cómo trabajar con este caso</span></div><div class="card-body">
+<p><strong>Rol que se asume:</strong> ingeniero/a de infraestructura contratado por <strong>TRÍADA Gestores Asociados</strong> para diseñar, cotizar y planificar la red de la empresa. El caso está <strong>totalmente resuelto</strong>: cada decisión se explica y se justifica, para que sirva como <strong>modelo de referencia</strong> al armar el proyecto final (plantilla de razonamiento, no para copiar).</p>
+<div class="flow"><span class="step">1 Relevamiento</span><span class="arrow">→</span><span class="step">2 Requisitos</span><span class="arrow">→</span><span class="step">3 Arquitectura</span><span class="arrow">→</span><span class="step">4 Diseño físico</span><span class="arrow">→</span><span class="step">5 Diseño lógico + seguridad</span><span class="arrow">→</span><span class="step">6 Cotización</span><span class="arrow">→</span><span class="step">7 Planificación</span><span class="arrow">→</span><span class="step">8 Pruebas y entrega</span></div>
+<div class="grid grid-3">
+<div class="info-card"><div class="info-label">Fases 1–2</div><div class="info-title">Entender antes de diseñar</div><div class="info-desc">Secciones 01–05: contexto, relevamiento de las dos sedes, usuarios, aplicaciones y requisitos medibles.</div></div>
+<div class="info-card"><div class="info-label">Fases 3–5</div><div class="info-title">Diseñar</div><div class="info-desc">Secciones 06–15: arquitectura, cableado, Wi-Fi, VLAN/IP, enlace entre sedes, seguridad, CCTV, terminales, servidores y CPD.</div></div>
+<div class="info-card"><div class="info-label">Fases 6–8</div><div class="info-title">Cotizar, planificar, probar</div><div class="info-desc">Secciones 16–19: cotización calculada con el <a href="../Herramientas/cotizador_cableado_interactivo.html" style="color:var(--coral)">cotizador</a>, cronograma, plan de pruebas y entregables.</div></div>
+</div>
+<p class="subhead">Qué documento del proyecto final corresponde a cada sección</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Sección del caso</th><th>Entregable equivalente en un proyecto final</th></tr>
+<tr><td>01–05 Contexto, relevamiento, requisitos</td><td>Introducción, descripción de la institución, análisis de necesidades</td></tr>
+<tr><td>06–08 Arquitectura y cableado</td><td>Diagrama de red, topología, plano de puntos, memoria de cálculo de cableado</td></tr>
+<tr><td>09–11 Wi-Fi, IP/VLAN, WAN/VPN</td><td>Plan de direccionamiento, tabla de VLAN, diseño de la interconexión</td></tr>
+<tr><td>12–15 Seguridad, CCTV, terminales, servidores</td><td>Medidas de seguridad, servicios de red, dispositivos y su función</td></tr>
+<tr><td>16 Cotización</td><td>Lista de materiales, mano de obra y presupuesto</td></tr>
+<tr><td>17–19 Planificación, pruebas, entregables</td><td>Cronograma, plan de pruebas, documentación técnica final y presentación</td></tr></table></div>
+<div class="note-box"><div class="note-title">Advertencias de uso</div><div class="note-line">• Todo es <strong>ficticio</strong> (empresa, personas, direcciones). Las ciudades se nombran solo como ambientación y la distancia de 13 km es un dato del caso.<br>• Los <strong>precios son de referencia</strong> en USD (más IVA 22 %) y deben verificarse con proveedores reales; los dominios de la lista blanca (sección 12) también deben validarse antes de producción.<br>• Todo el direccionamiento usa espacio privado RFC 1918; no hay servicios publicados a Internet.</div></div>
+</div></div>
+
+<div class="card" id="s1"><div class="card-header"><span class="card-num num-blue">01</span><span class="card-title">Contexto del cliente y requerimientos de los socios</span></div><div class="card-body">
+<div class="note-box" style="margin-top:0;margin-bottom:1.6rem;border-color:rgba(251,113,133,.35)">
+<div class="note-title" style="color:var(--coral)">Antecedente · Pliego hipotético de necesidades</div>
+<p style="font-size:12.5px;margin-bottom:.8rem">Documento ficticio que la gestoría entrega a los proveedores para solicitar propuestas. Es el punto de partida del caso: de aquí surge el relevamiento y, más adelante, la tabla de requisitos verificables (1.3).</p>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem">
+<div style="text-align:center;margin-bottom:1rem"><div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.08em">TRÍADA GESTORES ASOCIADOS</div><div style="font-size:16px;font-weight:700;color:#fff;margin-top:4px">PLIEGO DE NECESIDADES<br>Llamado a presentación de propuestas N.º 01/2026</div><div style="font-size:12px;color:var(--text3);margin-top:4px">Proyecto: infraestructura de red, seguridad y servicios para dos sedes</div></div>
+
+<p class="subhead">I. Objeto del llamado</p>
+<p>Se solicitan propuestas técnicas y económicas para el <strong>diseño, provisión, instalación, puesta en marcha y documentación</strong> del cableado estructurado, la red de datos, la seguridad y los servicios informáticos de TRÍADA Gestores Asociados, en sus dos sedes.</p>
+
+<p class="subhead">II. Antecedentes</p>
+<p>Tres estudios profesionales independientes (contable-tributario, laboral y de seguridad social, y notarial-trámites-seguros) han resuelto unirse en una sola gestoría. Se encuentran en etapa de crecimiento y buscan consolidar sus recursos para posicionarse como una gestoría de primer nivel. Manejan información sensible de terceros (declaraciones, sueldos, escrituras, seguros), por lo que la confidencialidad y la continuidad del servicio son condiciones del negocio. Hoy cada estudio opera con su propia infraestructura, sin criterios comunes de seguridad ni de administración.</p>
+
+<p class="subhead">III. Sedes</p>
+<ul>
+<li><strong>Sede 1 («La Casa»):</strong> casa reciclada de dos plantas con seis habitaciones, de construcción antigua y muros gruesos. Alojará a unos 16 puestos de trabajo. Una de las habitaciones, la más protegida del edificio y con acceso únicamente por una puerta segura, se destinará a <strong>centro de cómputos</strong>: allí residirán los servidores y será el núcleo operativo de toda la empresa.</li>
+<li><strong>Sede 2 («Nueva»):</strong> edificio moderno de mampostería de dos plantas con cuatro oficinas. En planta baja, dos oficinas de atención al público y a clientes y un hall de recepción con acceso Wi-Fi libre para visitantes; en planta alta, una sala de reuniones y la oficina de trabajo de los tres socios principales y directores. Alojará a unos 12 puestos de trabajo.</li>
+<li>Las sedes están en <strong>ciudades distintas, a unos 13 km</strong> una de otra, y deben funcionar como una sola organización.</li>
+</ul>
+
+<p class="subhead">IV. Necesidades expresadas por los socios</p>
+<ol>
+<li><strong>Seguridad física.</strong> Cámaras de vigilancia en ambas sedes. Las imágenes deberán poder verse desde la recepción de la sede nueva, desde la recepción de la casa y desde la oficina de los directores.</li>
+<li><strong>Control del tráfico de Internet.</strong> Evitar la salida innecesaria de información y las distracciones del personal durante la jornada.</li>
+<li><strong>Acceso de los funcionarios.</strong> Internet restringido a páginas de entes estatales (BPS, DGI, BSE, entre otros) y al correo electrónico con dominio empresarial en Google. No se permitirá el uso de ningún servicio en la nube ni de aplicaciones de terceros.</li>
+<li><strong>Seguridad en las terminales.</strong> Medidas que reduzcan el riesgo de intrusión o de infección en los equipos de los usuarios.</li>
+<li><strong>Servicios propios.</strong> Todos los servicios y aplicaciones necesarios para la empresa deberán ser provistos por servidores de la propia gestoría, sin recurrir a servicios externos.</li>
+<li><strong>Conexión segura entre sedes.</strong> La comunicación entre ambas sucursales deberá estar protegida frente a accesos no autorizados.</li>
+<li><strong>Crecimiento.</strong> La solución deberá admitir el aumento de personal sin rehacer la infraestructura.</li>
+</ol>
+
+<p class="subhead">V. Contenido mínimo de la propuesta</p>
+<ul>
+<li>Relevamiento y análisis de las necesidades, con los supuestos adoptados.</li>
+<li>Diseño del cableado y de la red de cada sede, con planos y diagramas, y justificación de las decisiones.</li>
+<li>Descripción de las medidas de seguridad, de los servicios y de la interconexión entre sedes.</li>
+<li>Lista de materiales y equipos, mano de obra y presupuesto detallado, con costos periódicos si los hubiera y exclusiones explícitas.</li>
+<li>Plan de trabajo con plazos, hitos, riesgos y plan de pruebas de aceptación.</li>
+<li>Documentación que se entregará al finalizar y condiciones de garantía y soporte.</li>
+</ul>
+
+<p class="subhead">VI. Criterios de evaluación</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Criterio</th><th class="r">Peso</th></tr>
+<tr><td>Cumplimiento de las necesidades y calidad técnica del diseño</td><td class="r">40 %</td></tr>
+<tr><td>Seguridad de la solución</td><td class="r">25 %</td></tr>
+<tr><td>Precio total y costos periódicos</td><td class="r">20 %</td></tr>
+<tr><td>Plan de trabajo, pruebas y documentación</td><td class="r">15 %</td></tr></table></div>
+
+<p class="subhead">VII. Condiciones</p>
+<ul>
+<li>Las propuestas expresarán los precios en dólares estadounidenses, con IVA discriminado, y tendrán una validez mínima de 15 días.</li>
+<li>Los equipos informáticos de escritorio y portátiles existentes se reutilizarán y no forman parte de la provisión.</li>
+<li>La gestoría no puede quedar sin servicio por más de 4 horas continuas durante la ejecución.</li>
+<li>La gestoría podrá solicitar aclaraciones, visitar las sedes con los oferentes y adjudicar total o parcialmente.</li>
+</ul>
+</div></div>
+
+<p class="subhead">1.1 La empresa</p>
+<p><strong>TRÍADA Gestores Asociados</strong> nace de la fusión de tres estudios pequeños en crecimiento que deciden consolidar recursos para convertirse en una gestoría de primer nivel. Trabajan con documentación sensible (declaraciones tributarias, sueldos, escrituras, seguros): una filtración o una caída prolongada es un riesgo reputacional y legal.</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Estudio fundador</th><th>Especialidad</th><th>Organismos con los que opera</th><th>Se instala en</th></tr>
+<tr><td>Estudio Ferrés &amp; Asoc.</td><td>Contable y tributario</td><td>DGI, MEF, BCU</td><td>Casa · H2</td></tr>
+<tr><td>Estudio Maidana</td><td>Laboral y seguridad social</td><td>BPS, MTSS</td><td>Casa · H4</td></tr>
+<tr><td>Estudio Olmos</td><td>Notarial, trámites y seguros</td><td>BSE, registros públicos</td><td>Casa · H5</td></tr></table></div>
+<p class="subhead">1.2 Las dos sedes</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Sede 1 · «La Casa»</div><div class="info-title">Casa reciclada, 2 plantas</div><div class="info-desc">6 habitaciones, 16 puestos. Muros de ladrillo macizo de 30–40 cm, edificio alargado (26 m). Una habitación se convierte en el <strong>centro de cómputos</strong>: el «centro nervioso» de toda la empresa. Ciudad: Las Piedras (Canelones).</div></div>
+<div class="info-card"><div class="info-label">Sede 2 · «Nueva»</div><div class="info-title">Edificio moderno, 2 plantas</div><div class="info-desc">4 oficinas + hall de recepción, 12 puestos. Mampostería de bloque y losa de hormigón. Atención al público en planta baja; sala de reuniones y dirección en planta alta. Ciudad: Montevideo.</div></div>
+</div>
+<div class="note-box"><div class="note-title">Dato clave del caso</div><div class="note-line">Las sedes están a <strong>13 km</strong> y en <strong>ciudades distintas</strong>: no se pueden unir con cable propio. Cada una tiene su propio acceso a Internet y la conexión entre ellas debe ser segura (sección 11).</div></div>
+<p class="subhead">1.3 Lo que piden los socios, traducido a requisitos técnicos</p>
+<p>Un buen relevamiento convierte deseos en <strong>requisitos verificables</strong>: algo que se pueda medir o probar al final del proyecto. Esta tabla es la columna vertebral del caso: cada fila se retoma en una sección de diseño y en una prueba de aceptación (sección 18).</p>
+<div class="tablewrap"><table class="md-table"><tr><th>#</th><th>Lo que piden los socios</th><th>Requisito técnico verificable</th><th>Sección</th></tr>
+<tr><td>R1</td><td>Seguridad física con cámaras en ambas sedes</td><td>10 cámaras IP (6 Casa + 4 Nueva) con grabación local ≥ 30 días; visualización desde 3 puestos: recepción Casa, recepción Nueva y oficina de dirección</td><td>13</td></tr>
+<tr><td>R2</td><td>Control del tráfico de Internet (evitar filtraciones y distracciones)</td><td>Ningún equipo de usuario sale directo a Internet: todo pasa por firewall + proxy con registro de accesos</td><td>12</td></tr>
+<tr><td>R3</td><td>Funcionarios: solo entes estatales (BPS, DGI, BSE…) y correo del dominio empresarial en Google</td><td>Lista blanca de dominios para VLAN de funcionarios; todo lo demás bloqueado y registrado</td><td>12</td></tr>
+<tr><td>R4</td><td>Sin nubes ni aplicaciones de terceros</td><td>Sin SaaS/almacenamiento externo; única excepción documentada: correo (R3). Backups y réplicas entre sedes propias</td><td>5, 15</td></tr>
+<tr><td>R5</td><td>Seguridad en las terminales (evitar hackeos)</td><td>Dominio gestionado, sin privilegios de administrador local, cifrado de disco, control de USB, parches desde servidor interno, 802.1X en puertos</td><td>14</td></tr>
+<tr><td>R6</td><td>Todos los servicios y aplicaciones en servidores propios</td><td>Clúster de virtualización en el CPD: dominio, DHCP/DNS, archivos, aplicación de gestión, proxy, monitoreo, actualizaciones, backup</td><td>15</td></tr>
+<tr><td>R7</td><td>Conexión segura entre sucursales</td><td>Túnel VPN sitio a sitio cifrado (WireGuard) con enlace de respaldo 4G/5G y conmutación automática</td><td>11</td></tr>
+<tr><td>R8</td><td>(Casa) Una habitación como centro de cómputos blindado</td><td>CPD con puerta segura, control de acceso, UPS, climatización, sin puntos de agua y sin ventanas</td><td>2, 15</td></tr>
+<tr><td>R9</td><td>(Nueva) Hall con Wi-Fi libre para clientes</td><td>SSID de invitados aislado en su propia VLAN, sin acceso a la red interna, con límite de ancho de banda</td><td>9, 12</td></tr>
+<tr><td>R10</td><td>(Implícito) Crecer sin rehacer la red</td><td>+20 % de puertos de switch, +1 panel de patch de reserva y direccionamiento sobredimensionado ×1,5; previsión de +30 % de personal a 5 años</td><td>7, 8, 10</td></tr></table></div>
+<div class="riesgo"><strong>Riesgo frecuente:</strong> diseñar a partir de los equipos («pongamos un firewall») en vez de a partir de los requisitos. Si no se puede escribir cómo se probará un requisito, está mal formulado.</div>
+</div></div>
+
+<div class="card" id="s2"><div class="card-header"><span class="card-num num-teal">02</span><span class="card-title">Relevamiento · Sede 1 «La Casa»</span></div><div class="card-body">
+<p>El relevamiento es una visita con planos, cinta métrica, linterna y cámara de fotos. Se registra <strong>qué hay, cómo está construido, por dónde se puede pasar cable y qué restricciones existen</strong>. Los planos siguientes son el resultado del levantamiento (esquemáticos, a escala aproximada).</p>
+
+<p class="subhead">2.1 Planta baja</p>
+<div class="plan"><svg viewBox="0 0 1110 415" role="img" aria-label="Planta baja de la casa con trazado de bandeja y ubicación de MDF, AP y cámaras">
+<rect class="rm" x="30" y="36" width="234" height="324"/>
+<rect class="rm" x="264" y="36" width="234" height="259.2"/>
+<rect class="rm g" x="498" y="36" width="144" height="259.2"/>
+<rect class="rm g" x="642" y="36" width="108" height="259.2"/>
+<rect class="rm g" x="750" y="36" width="216" height="97.2"/>
+<rect class="rm duc" x="750" y="133.2" width="36" height="162"/>
+<rect class="rm cpd" x="786" y="133.2" width="180" height="162"/>
+<rect class="rm cor" x="264" y="295.2" width="702" height="64.8"/>
+<rect class="rm pat" x="966" y="36" width="108" height="324"/>
+<path d="M652 62H740M652 82H740M652 102H740M652 122H740M652 142H740M652 162H740M652 182H740M652 202H740M652 222H740M652 242H740" stroke="#566378" stroke-width="1"/>
+<text class="lb" x="40" y="76">H1 · Recepción</text><text class="lb2" x="40" y="94">58,5 m² · 3 puestos</text>
+<text class="lb" x="274" y="62">H2 · Estudio A</text><text class="lb2" x="274" y="80">46,8 m² · 4 puestos</text>
+<text class="lb2" x="508" y="58">Cocina / baño</text><text class="lb2" x="652" y="52">Escalera</text><text class="lb2" x="760" y="56">Depósito / archivo</text>
+<text class="lb" x="756" y="100" style="fill:#4ade80">▼ H3 · CENTRO DE CÓMPUTOS</text><text class="lb2" x="756" y="120">22,5 m² · sin ventanas · losa de H°</text>
+<text class="lb2" x="276" y="352">Corredor / galería (1,8 m de ancho)</text><text class="lb2" x="978" y="58">Patio</text>
+<rect class="desk" x="50" y="112" width="170" height="26" rx="3"/><text class="lb3" x="58" y="130">mostrador · 3 puestos</text><text class="lb3" x="50" y="170">sala de espera</text>
+<rect class="desk" x="284" y="90" width="46" height="26" rx="3"/><rect class="desk" x="344" y="90" width="46" height="26" rx="3"/><rect class="desk" x="284" y="150" width="46" height="26" rx="3"/><rect class="desk" x="344" y="150" width="46" height="26" rx="3"/>
+<line class="door" x1="118" y1="36" x2="168" y2="36"/><text class="lb3" x="176" y="30">← Entrada principal</text>
+<line class="door" x1="375" y1="295.2" x2="405" y2="295.2"/><line class="door" x1="264" y1="312" x2="264" y2="346"/>
+<line class="door" x1="861" y1="295.2" x2="891" y2="295.2" style="stroke:#4ade80"/><text class="lb3" x="812" y="352" style="fill:#4ade80">puerta segura (tarjeta + PIN)</text>
+<polyline class="tray" points="934,164 876,164 876,295.2"/><polyline class="tray" points="876,295.2 876,327.6 270,327.6"/><polyline class="tray" points="390,327.6 390,295.2 390,205"/><polyline class="tray" points="264,327.6 150,327.6 150,222"/>
+<polyline class="tray f" points="934,176 768,176"/><text class="lb3" x="800" y="196" style="fill:#f59e0b">fibra → IDF</text>
+<circle class="ap" cx="150" cy="215" r="9"/><text class="lb3" x="164" y="219">AP1</text><circle class="ap" cx="390" cy="198" r="9"/><text class="lb3" x="404" y="202">AP2</text>
+<polygon class="cam" points="118,40 111,54 125,54"/><polygon class="cam" points="240,48 233,62 247,62"/><polygon class="cam" points="534,334 527,348 541,348"/><polygon class="cam" points="802,150 795,164 809,164"/><polygon class="cam" points="1020,144 1013,158 1027,158"/>
+<rect class="rack" x="936" y="146" width="22" height="36" rx="2"/><text class="lb2" x="928" y="168" text-anchor="end" style="fill:#f59e0b">MDF</text>
+<text class="lb3" transform="translate(776,290) rotate(-90)" style="fill:#f59e0b">riser ↑</text>
+<line class="dim" x1="30" y1="384" x2="966" y2="384"/><line class="dim" x1="30" y1="378" x2="30" y2="390"/><line class="dim" x1="966" y1="378" x2="966" y2="390"/><text class="lb2" x="498" y="403" text-anchor="middle">26 m</text>
+</svg><div class="cap">Planta baja · bandeja principal (turquesa, discontinua), fibra al IDF (ámbar), AP (círculos), cámaras (triángulos)</div></div>
+
+<p class="subhead">2.2 Planta alta</p>
+<div class="plan"><svg viewBox="0 0 1110 415" role="img" aria-label="Planta alta de la casa con IDF, AP y cámara">
+<rect class="rm" x="30" y="36" width="252" height="259.2"/>
+<rect class="rm" x="282" y="36" width="234" height="259.2"/>
+<rect class="rm g" x="516" y="36" width="126" height="259.2"/>
+<rect class="rm g" x="642" y="36" width="108" height="259.2"/>
+<rect class="rm g" x="750" y="36" width="216" height="97.2"/>
+<rect class="rm duc" x="750" y="133.2" width="36" height="162"/>
+<rect class="rm" x="786" y="133.2" width="180" height="162"/>
+<rect class="rm cor" x="30" y="295.2" width="936" height="64.8"/>
+<text class="lb" x="40" y="62">H4 · Estudio B</text><text class="lb2" x="40" y="80">50,4 m² · 4 puestos</text>
+<text class="lb" x="292" y="62">H5 · Estudio C</text><text class="lb2" x="292" y="80">46,8 m² · 3 puestos</text>
+<text class="lb2" x="526" y="58">Baños</text><text class="lb2" x="652" y="52">Escalera</text><text class="lb2" x="760" y="58">Archivo</text>
+<text class="lb" x="796" y="158">H6 · Administración</text><text class="lb2" x="796" y="176">2 puestos + impresora</text><text class="lb3" x="796" y="192">sobre el CPD: sin agua</text>
+<text class="lb2" x="40" y="352">Corredor planta alta (1,8 m de ancho)</text>
+<rect class="desk" x="50" y="96" width="46" height="26" rx="3"/><rect class="desk" x="110" y="96" width="46" height="26" rx="3"/><rect class="desk" x="50" y="156" width="46" height="26" rx="3"/><rect class="desk" x="110" y="156" width="46" height="26" rx="3"/>
+<rect class="desk" x="300" y="96" width="46" height="26" rx="3"/><rect class="desk" x="360" y="96" width="46" height="26" rx="3"/><rect class="desk" x="300" y="156" width="46" height="26" rx="3"/>
+<rect class="desk" x="806" y="200" width="46" height="26" rx="3"/><rect class="desk" x="866" y="200" width="46" height="26" rx="3"/>
+<line class="door" x1="141" y1="295.2" x2="171" y2="295.2"/><line class="door" x1="375" y1="295.2" x2="405" y2="295.2"/><line class="door" x1="861" y1="295.2" x2="891" y2="295.2"/><line class="door" x1="753" y1="295.2" x2="783" y2="295.2" style="stroke:#fb7185"/>
+<polyline class="tray" points="768,190 768,327.6 40,327.6"/><polyline class="tray" points="768,327.6 876,327.6 876,295.2 876,215"/><polyline class="tray" points="390,327.6 390,295.2 390,215"/><polyline class="tray" points="156,327.6 156,295.2 156,230"/>
+<circle class="ap" cx="156" cy="215" r="9"/><text class="lb3" x="170" y="219">AP3</text><circle class="ap" cx="390" cy="198" r="9"/><text class="lb3" x="404" y="202">AP4</text><circle class="ap" cx="876" cy="215" r="9"/><text class="lb3" x="890" y="219">AP5</text>
+<polygon class="cam" points="420,338 413,352 427,352"/>
+<rect class="rack" x="756" y="150" width="24" height="34" rx="2"/><text class="lb3" x="738" y="170" text-anchor="end" style="fill:#f59e0b">IDF</text>
+<text class="lb3" x="700" y="205" text-anchor="end" style="fill:#f59e0b">fibra ↓ desde MDF</text>
+<line class="dim" x1="30" y1="384" x2="966" y2="384"/><line class="dim" x1="30" y1="378" x2="30" y2="390"/><line class="dim" x1="966" y1="378" x2="966" y2="390"/><text class="lb2" x="498" y="403" text-anchor="middle">26 m</text>
+</svg><div class="cap">Planta alta · IDF en el armario técnico sobre el ducto vertical; H6 queda sobre el CPD</div></div>
+
+<p class="subhead">2.3 Inventario de ambientes</p>
+<div class="tablewrap"><table class="md-table"><tr><th>ID</th><th>Planta</th><th>Ambiente</th><th class="r">m²</th><th class="r">Puestos</th><th>Construcción / observaciones</th></tr>
+<tr><td>H1</td><td>PB</td><td>Recepción y atención (acceso principal)</td><td class="r">58,5</td><td class="r">3</td><td>Muro exterior de ladrillo macizo 40 cm; cielorraso alto (3,3 m)</td></tr>
+<tr><td>H2</td><td>PB</td><td>Estudio A (contable)</td><td class="r">46,8</td><td class="r">4</td><td>Muros de 30 cm; sin canalización previa</td></tr>
+<tr><td>H3</td><td>PB</td><td><strong>Centro de cómputos</strong> (ex dormitorio interior)</td><td class="r">22,5</td><td class="r">0</td><td>Sin ventanas; losa de hormigón; única entrada por puerta segura desde el corredor; paso al ducto vertical por pasamuros cortafuego</td></tr>
+<tr><td>H4</td><td>PA</td><td>Estudio B (laboral / BPS)</td><td class="r">50,4</td><td class="r">4</td><td>Extremo oeste: es el más lejano al CPD</td></tr>
+<tr><td>H5</td><td>PA</td><td>Estudio C (notarial / seguros)</td><td class="r">46,8</td><td class="r">3</td><td>Documentación en papel (archivos); riesgo de incendio</td></tr>
+<tr><td>H6</td><td>PA</td><td>Administración y archivo/impresión</td><td class="r">22,5</td><td class="r">2</td><td>Sobre el CPD: se prohíbe instalar puntos de agua o cafetera</td></tr>
+<tr><td colspan="3">Áreas de servicio (cocina, baños, escalera, depósito, corredores)</td><td class="r">—</td><td class="r">0</td><td>Zonas de paso de canalización y de ubicación de cámaras</td></tr>
+<tr class="sub"><td colspan="4">Total sede 1</td><td class="r">16</td><td></td></tr></table></div>
+
+<p class="subhead">2.4 Dificultades detectadas (y qué se hace con cada una)</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Hallazgo</th><th>Consecuencia técnica</th><th>Decisión de diseño</th></tr>
+<tr><td>Muros macizos de 30–40 cm</td><td>El Wi-Fi no atraviesa: cada muro resta ~15–20 dB en 5 GHz. Perforar es lento y costoso (rotopercutor + pasamuros)</td><td>Un AP por habitación con cable propio; mínimo de perforaciones: pocas «vías troncales» y distribución por corredor (secciones 7 y 9)</td></tr>
+<tr><td>Edificio alargado: 26 m + corredores</td><td>Recorridos reales de 25–38 m (no 26 m en línea recta): hay que sumar subidas, bajadas y curvas</td><td>Longitud calculada por ruta real, no estimada «a ojo» (sección 7.3); todos los enlaces quedan &lt; 90 m</td></tr>
+<tr><td>Dos plantas, losa maciza</td><td>Cada paso vertical requiere perforar la losa; 43 cables por un solo ducto es poco práctico</td><td>Backbone vertical de fibra por el ducto existente + armario técnico IDF en planta alta (sección 7.4)</td></tr>
+<tr><td>Ducto vertical antiguo (chimenea/cañerías)</td><td>Es la oportunidad: ya atraviesa las dos losas junto al CPD</td><td>Se reutiliza como riser; se sella con espuma cortafuego y no abre acceso al CPD</td></tr>
+<tr><td>Casa reciclada (fachada con valor patrimonial)</td><td>No se puede abrir la fachada ni colgar canalización exterior visible</td><td>Cámaras exteriores en puntos discretos; acometida de Internet por el lugar que defina el propietario</td></tr>
+<tr><td>Humedad ascendente en muros de planta baja</td><td>Riesgo para equipos y cable en el piso</td><td>Rack sobre base de 10 cm, cableado por cielorraso, sin canalización a nivel de piso en el CPD</td></tr>
+<tr><td>Instalación eléctrica antigua y sin tierra confiable</td><td>PoE, UPS y servidores exigen alimentación limpia y puesta a tierra</td><td>Tablero dedicado para el CPD y barra equipotencial (TIA-607) incluidos en la cotización</td></tr></table></div>
+
+<details class="acc"><summary class="acc-head">Checklist de relevamiento en sitio (se usa en cualquier proyecto)</summary><div class="acc-in">
+<ul>
+<li><strong>Planos:</strong> medidas de cada ambiente, alturas, espesor y material de muros y losas, ubicación de escaleras y ductos.</li>
+<li><strong>Puestos:</strong> cantidad, ubicación exacta de cada toma, equipos a conectar (PC, impresora, teléfono).</li>
+<li><strong>Rutas:</strong> por dónde pasa el cable, qué canalizaciones existen, qué se puede perforar, qué no.</li>
+<li><strong>Sala técnica:</strong> espacio libre, ventilación, acceso, peso del rack, tablero eléctrico y toma a tierra.</li>
+<li><strong>Energía:</strong> circuitos disponibles, potencia contratada, estado del tablero.</li>
+<li><strong>Servicios existentes:</strong> proveedor de Internet, equipos instalados, cableado a reutilizar.</li>
+<li><strong>Riesgos del sitio:</strong> humedad, calor, polvo, fuentes de interferencia (motores, luminarias), riesgo de incendio e inundación.</li>
+<li><strong>Restricciones:</strong> horarios de trabajo, normas del edificio, aprobaciones del propietario, patrimonio.</li>
+<li><strong>Evidencia:</strong> fotos de cada ambiente y de cada punto de perforación; croquis firmado por el cliente.</li>
+</ul></div></details>
+</div></div>
+
+<div class="card" id="s3"><div class="card-header"><span class="card-num num-purple">03</span><span class="card-title">Relevamiento · Sede 2 «Nueva»</span></div><div class="card-body">
+<p>Edificio moderno de 14 × 10 m en dos plantas: <strong>bloques de hormigón revocados de 15 cm</strong>, losa de hormigón armado y cielorraso suspendido con espacio para bandejas. Su cuarto técnico está previsto en el proyecto de arquitectura (6 m² bajo la escalera, con ducto vertical a la planta alta).</p>
+<p class="subhead">3.1 Planta baja</p>
+<div class="plan"><svg viewBox="0 0 780 590" role="img" aria-label="Planta baja de la sede nueva">
+<rect class="rm" x="40" y="30" width="600" height="200"/><rect class="rm g" x="640" y="30" width="100" height="200"/>
+<rect class="rm" x="40" y="230" width="325" height="300"/><rect class="rm duc" x="365" y="230" width="100" height="150"/><rect class="rm g" x="365" y="380" width="100" height="150"/><rect class="rm" x="465" y="230" width="275" height="300"/>
+<path d="M650 55H730M650 80H730M650 105H730M650 130H730M650 155H730M650 180H730M650 205H730" stroke="#566378" stroke-width="1"/>
+<text class="lb" x="52" y="54">Hall de recepción · Wi-Fi libre</text><text class="lb2" x="52" y="70">56 m² · 2 puestos de recepción</text>
+<text class="lb2" x="650" y="48">Escalera</text>
+<text class="lb" x="52" y="256">Oficina 1 · Atención al público</text><text class="lb2" x="52" y="272">39 m² · 3 puestos</text>
+<text class="lb" x="477" y="256">Oficina 2 · Atención a clientes</text><text class="lb2" x="477" y="272">33 m² · 3 puestos</text>
+<text class="lb2" x="371" y="252" style="fill:#f59e0b">Cuarto</text><text class="lb2" x="371" y="266" style="fill:#f59e0b">técnico</text><text class="lb2" x="385" y="460">Baños</text>
+<rect class="desk" x="80" y="100" width="200" height="26" rx="3"/><text class="lb3" x="88" y="117">mostrador · 2 puestos</text>
+<rect class="desk" x="60" y="310" width="60" height="34" rx="3"/><rect class="desk" x="140" y="310" width="60" height="34" rx="3"/><rect class="desk" x="220" y="310" width="60" height="34" rx="3"/>
+<rect class="desk" x="490" y="310" width="60" height="34" rx="3"/><rect class="desk" x="570" y="310" width="60" height="34" rx="3"/><rect class="desk" x="650" y="310" width="60" height="34" rx="3"/>
+<line class="door" x1="290" y1="30" x2="390" y2="30"/><text class="lb3" x="296" y="22">Entrada principal</text>
+<line class="door" x1="160" y1="230" x2="220" y2="230"/><line class="door" x1="385" y1="230" x2="445" y2="230" style="stroke:#4ade80"/><line class="door" x1="560" y1="230" x2="620" y2="230"/>
+<polyline class="tray" points="415,230 415,205 80,205"/><polyline class="tray" points="415,205 620,205"/><polyline class="tray" points="190,205 190,230 190,300"/><polyline class="tray" points="590,205 590,230 590,300"/><polyline class="tray" points="150,205 150,130"/>
+<circle class="ap" cx="415" cy="190" r="9"/><text class="lb3" x="429" y="194">AP-N1</text>
+<polygon class="cam" points="340,40 333,54 347,54"/><polygon class="cam" points="700,246 693,260 707,260"/><polygon class="cam" points="600,520 593,534 607,534"/>
+<rect class="rack" x="395" y="262" width="34" height="44" rx="2"/><text class="lb3" x="440" y="296" style="fill:#f59e0b">RACK-N</text><text class="lb3" x="372" y="325" style="fill:#f59e0b" >↑ sube por el ducto</text>
+<line class="dim" x1="40" y1="552" x2="740" y2="552"/><line class="dim" x1="40" y1="546" x2="40" y2="558"/><line class="dim" x1="740" y1="546" x2="740" y2="558"/><text class="lb2" x="390" y="574" text-anchor="middle">14 m</text>
+</svg><div class="cap">Sede nueva · planta baja. El rack se ubica en el cuarto técnico, con salida al hall</div></div>
+
+<p class="subhead">3.2 Planta alta</p>
+<div class="plan"><svg viewBox="0 0 780 590" role="img" aria-label="Planta alta de la sede nueva">
+<rect class="rm cor" x="40" y="30" width="600" height="200"/><rect class="rm pat" x="640" y="30" width="100" height="200"/>
+<rect class="rm in" x="40" y="230" width="325" height="300"/><rect class="rm duc" x="365" y="230" width="100" height="150"/><rect class="rm g" x="365" y="380" width="100" height="150"/><rect class="rm in" x="465" y="230" width="275" height="300"/>
+<text class="lb2" x="52" y="54">Hall / circulación planta alta</text><text class="lb2" x="650" y="48">Vacío escalera</text>
+<text class="lb" x="52" y="256">Sala de reuniones</text><text class="lb2" x="52" y="272">39 m² · 1 puesto (PC de sala)</text>
+<text class="lb" x="477" y="256">Dirección (3 socios)</text><text class="lb2" x="477" y="272">33 m² · 3 puestos · visor CCTV</text>
+<text class="lb2" x="371" y="252" style="fill:#f59e0b">Ducto técnico</text><text class="lb2" x="385" y="460">Baños</text>
+<rect class="desk" x="90" y="340" width="240" height="90" rx="6"/><text class="lb3" x="140" y="390">mesa de reuniones</text>
+<rect class="desk" x="490" y="310" width="60" height="34" rx="3"/><rect class="desk" x="570" y="310" width="60" height="34" rx="3"/><rect class="desk" x="650" y="310" width="60" height="34" rx="3"/>
+<line class="door" x1="160" y1="230" x2="220" y2="230"/><line class="door" x1="560" y1="230" x2="620" y2="230"/>
+<polyline class="tray" points="415,250 415,205 190,205 190,230 190,360"/><polyline class="tray" points="415,205 590,205 590,230 590,380"/>
+<circle class="ap" cx="190" cy="360" r="9"/><text class="lb3" x="204" y="364">AP-N2</text><circle class="ap" cx="590" cy="380" r="9"/><text class="lb3" x="604" y="384">AP-N3</text>
+<polygon class="cam" points="300,40 293,54 307,54"/>
+<line class="dim" x1="40" y1="552" x2="740" y2="552"/><line class="dim" x1="40" y1="546" x2="40" y2="558"/><line class="dim" x1="740" y1="546" x2="740" y2="558"/><text class="lb2" x="390" y="574" text-anchor="middle">14 m</text>
+</svg><div class="cap">Sede nueva · planta alta. El ducto técnico queda justo sobre el cuarto técnico</div></div>
+<div class="tablewrap"><table class="md-table"><tr><th>ID</th><th>Planta</th><th>Ambiente</th><th class="r">m²</th><th class="r">Puestos</th><th>Observaciones</th></tr>
+<tr><td>N0</td><td>PB</td><td>Hall de recepción (Wi-Fi libre)</td><td class="r">56</td><td class="r">2</td><td>Zona pública: sin tomas de la red interna accesibles al cliente</td></tr>
+<tr><td>N1</td><td>PB</td><td>Oficina 1 · atención al público</td><td class="r">39</td><td class="r">3</td><td>Bloque 15 cm con puerta al hall</td></tr>
+<tr><td>N2</td><td>PB</td><td>Oficina 2 · atención a clientes</td><td class="r">33</td><td class="r">3</td><td>Reuniones con clientes: privacidad visual y acústica</td></tr>
+<tr><td>N3</td><td>PA</td><td>Sala de reuniones</td><td class="r">39</td><td class="r">1</td><td>Pantalla + PC de sala; invitados puntuales por red de invitados</td></tr>
+<tr><td>N4</td><td>PA</td><td>Dirección (3 socios)</td><td class="r">33</td><td class="r">3</td><td>Monitor dedicado de CCTV con mosaico de las 10 cámaras</td></tr>
+<tr class="sub"><td colspan="4">Total sede 2</td><td class="r">12</td><td></td></tr></table></div>
+<div class="ok"><strong>Ventaja respecto a la Casa:</strong> distancias cortas (10–22 m) y un solo rack bajo escalera. El desafío aquí no es el cable sino la <strong>separación lógica</strong>: clientes que entran al hall con celular no deben acercarse a la red interna.</div>
+</div></div>
+
+<div class="card" id="s4"><div class="card-header"><span class="card-num num-amber">04</span><span class="card-title">Relevamiento · Usuarios, aplicaciones y volumen de tráfico</span></div><div class="card-body">
+<p>La red existe para que alguien haga un trabajo. Antes de elegir equipos hay que saber <strong>quién la usa, con qué aplicaciones y cuánto tráfico genera</strong>: de ahí salen la velocidad del enlace entre sedes, el tamaño de los servidores y las reglas del firewall.</p>
+<p class="subhead">4.1 Perfiles de usuario</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Perfil</th><th class="r">Casa</th><th class="r">Nueva</th><th>Internet</th><th>CCTV</th><th>VLAN</th></tr>
+<tr><td>Funcionario (gestores, contadores, administrativos)</td><td class="r">16</td><td class="r">8</td><td>Solo entes estatales + correo corporativo</td><td>Sin acceso (salvo los 2 puestos de recepción)</td><td><span class="vlan" style="background:rgba(45,212,191,.15)">10</span></td></tr>
+<tr><td>Dirección (3 socios) y PC de la sala de reuniones</td><td class="r">0</td><td class="r">4</td><td>Lista de funcionarios + categorías aprobadas por socios</td><td>Visor en la oficina de dirección</td><td><span class="vlan" style="background:rgba(167,139,250,.18)">20</span></td></tr>
+<tr><td>Cliente / visitante (Wi-Fi libre del hall)</td><td class="r">—</td><td class="r">~30 simultáneos</td><td>Internet libre, aislado de la red interna</td><td>Ninguno</td><td><span class="vlan" style="background:rgba(74,222,128,.15)">60</span></td></tr>
+<tr class="sub"><td>Total puestos fijos</td><td class="r">16</td><td class="r">12</td><td colspan="3">28 puestos (crecimiento previsto +30 % a 5 años ≈ 36)</td></tr></table></div>
+<p class="subhead">4.2 Aplicaciones y dispositivos que deben convivir</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Aplicación de gestión</div><div class="info-title">Sistema contable / liquidaciones</div><div class="info-desc">Cliente en cada PC, base de datos en el servidor del CPD. Sensible a latencia: desde la sede nueva funciona bien con RTT &lt; 20 ms por la VPN.</div></div>
+<div class="info-card"><div class="info-label">Trámites</div><div class="info-title">Portales del Estado + firma digital</div><div class="info-desc">BPS, DGI, BSE, MTSS. Usan cédula con lector o token USB: se debe permitir la clase «smart card» y bloquear el almacenamiento USB (sección 14).</div></div>
+<div class="info-card"><div class="info-label">Archivo</div><div class="info-title">Servidor de archivos + escaneo</div><div class="info-desc">Expedientes digitalizados. Los escáneres guardan en carpeta de red (SMB), nunca por correo externo.</div></div>
+<div class="info-card"><div class="info-label">Correo</div><div class="info-title">Dominio propio en Google (Workspace)</div><div class="info-desc">Única excepción aceptada a «sin nube». Solo por navegador; el resto de servicios de Google se desactiva (sección 12).</div></div>
+<div class="info-card"><div class="info-label">Periféricos</div><div class="info-title">5 impresoras multifunción</div><div class="info-desc">3 en la Casa (H1, H4, H6) y 2 en la sede nueva. VLAN propia, acceso solo desde usuarios.</div></div>
+<div class="info-card"><div class="info-label">Seguridad física</div><div class="info-title">CCTV + control de acceso</div><div class="info-desc">10 cámaras IP, 2 NVR, lector de tarjeta + teclado en la puerta del CPD.</div></div>
+</div>
+<p class="subhead">4.3 Dimensionamiento del tráfico entre sedes y hacia Internet</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Flujo</th><th>Cálculo</th><th class="r">Pico</th></tr>
+<tr><td>Navegación de funcionarios (entes estatales)</td><td>24 usuarios × 30 % concurrentes × 3 Mbps</td><td class="r">≈ 22 Mbps</td></tr>
+<tr><td>Wi-Fi de invitados (Nueva)</td><td>Tope de política: 15 Mbps totales, 2 Mbps por cliente</td><td class="r">15 Mbps</td></tr>
+<tr><td>Archivos y aplicación Nueva → Casa (por VPN)</td><td>12 usuarios × 40 % × 5 Mbps</td><td class="r">≈ 24 Mbps</td></tr>
+<tr><td>CCTV remoto (sub-stream de 0,5 Mbps por cámara)</td><td>Visor Casa ← 4 cám + visor Nueva ← 6 cám + visor Dirección ← 10 cám = 20 × 0,5</td><td class="r">≈ 10 Mbps</td></tr>
+<tr><td>Réplica nocturna de backup Casa → Nueva</td><td>25 GB incrementales en ventana de 4 h: 25 × 8 × 1000 Mb ÷ 14 400 s</td><td class="r">≈ 14 Mbps</td></tr>
+<tr><td>AD, DNS, monitoreo, NTP</td><td>Despreciable</td><td class="r">&lt; 1 Mbps</td></tr>
+<tr class="sub"><td colspan="2">Pico simultáneo sobre la VPN en horario laboral (archivos + CCTV + control)</td><td class="r">≈ 35 Mbps</td></tr></table></div>
+<div class="ok"><strong>Conclusión:</strong> se contrata fibra <strong>300/100 Mbps</strong> en cada sede (la subida de 100 Mbps cubre 35 Mbps con holgura ×2,8). El respaldo 4G/5G (~20 Mbps) sostiene solo lo esencial: al conmutar se suspenden CCTV remoto y réplica con una regla de QoS.</div>
+<p class="subhead">4.4 Almacenamiento: de hoy a 5 años</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Conjunto de datos</th><th class="r">Hoy</th><th class="r">Crecimiento anual</th><th class="r">A 5 años</th></tr>
+<tr><td>Archivos y expedientes digitalizados</td><td class="r">1,20 TB</td><td class="r">25 %</td><td class="r">3,66 TB</td></tr>
+<tr><td>Base de datos de la aplicación de gestión</td><td class="r">0,12 TB</td><td class="r">30 %</td><td class="r">0,45 TB</td></tr>
+<tr><td>Actualizaciones (WSUS)</td><td class="r">0,30 TB</td><td class="r">estable</td><td class="r">0,30 TB</td></tr>
+<tr><td>Máquinas virtuales (SO y servicios)</td><td class="r">0,40 TB</td><td class="r">estable</td><td class="r">0,40 TB</td></tr>
+<tr><td>Registros (proxy, firewall, Wazuh; 12 meses)</td><td class="r">0,30 TB</td><td class="r">~ 10 %</td><td class="r">0,40 TB</td></tr>
+<tr class="sub"><td>Total</td><td class="r">2,32 TB</td><td></td><td class="r">5,21 TB</td></tr></table></div>
+<p style="margin-top:.7rem">Cada servidor tendrá 4 SSD de 3,84 TB en <strong>RAID 10 (7,68 TB útiles)</strong>. Regla de oro: no pasar del 80 % de ocupación (6,1 TB), y 5,21 TB queda por debajo ⇒ la capacidad alcanza para los 5 años previstos.</p>
+</div></div>
+
+<div class="card" id="s5"><div class="card-header"><span class="card-num num-green">05</span><span class="card-title">Análisis de requisitos, contradicciones y supuestos</span></div><div class="card-body">
+<p>Un pedido de cliente casi nunca es consistente. El trabajo del ingeniero es <strong>detectar las tensiones, decidir una salida razonable y dejarla documentada</strong> para que el cliente la apruebe por escrito. Estas son las del caso.</p>
+<details class="acc" open><summary class="acc-head">① «Correo en Google» vs. «ningún servicio externo»</summary><div class="acc-in">
+<p>Los socios piden a la vez correo en un dominio empresarial de Google y que <strong>todo</strong> corra en servidores propios. Son incompatibles si se leen al pie de la letra.</p>
+<p style="margin-top:.5rem"><strong>Decisión:</strong> el correo es la <strong>única excepción</strong>, aprobada explícitamente y limitada así:</p>
+<ul><li>Solo se usa el correo (Gmail por navegador). El resto de servicios de Workspace (Drive, Docs, Meet, Chat…) se desactiva para los usuarios en la consola de administración.</li>
+<li>El proxy solo permite iniciar sesión con cuentas del dominio de la empresa (sección 12.4), para evitar el correo personal como vía de fuga.</li>
+<li>Alternativa documentada: servidor de correo propio (Postfix/Dovecot + antispam). Se descarta por costo operativo y de entregabilidad (listas negras, SPF/DKIM/DMARC), pero queda como plan B si los socios deciden eliminar la excepción.</li></ul>
+</div></details>
+<details class="acc"><summary class="acc-head">② «Wi-Fi libre» vs. seguridad</summary><div class="acc-in"><p>Libre significa <strong>sin contraseña compartida compleja</strong>, no «dentro de la red». El invitado entra por un SSID propio que termina en una VLAN sin ninguna ruta hacia la red interna, con aislamiento de clientes, límite de ancho de banda y portal de aceptación de condiciones alojado en el propio firewall (sin servicios de terceros).</p></div></details>
+<details class="acc"><summary class="acc-head">③ «Ver las cámaras desde tres lugares» vs. «sin nube»</summary><div class="acc-in"><p>Las cámaras modernas ofrecen «acceso remoto fácil» a través de servidores del fabricante (P2P/cloud). Eso <strong>viola R4</strong>. Decisión: se desactiva toda función cloud/P2P en cámaras y NVR, las cámaras no tienen ruta a Internet, y el acceso remoto se hace <strong>solo a través de la VPN interna</strong>, desde tres puestos autorizados.</p></div></details>
+<details class="acc"><summary class="acc-head">④ «Los funcionarios solo ven entes estatales»: ¿y los socios?</summary><div class="acc-in"><p>El pedido define el acceso de los <em>funcionarios</em>. Se asume un perfil de <strong>Dirección</strong> con la misma lista más categorías ampliables con aprobación de los socios (por ejemplo, bancos), registrado y revisado mensualmente. Es un supuesto que se confirma con el cliente.</p></div></details>
+<details class="acc"><summary class="acc-head">⑤ «Servicios propios» y actualizaciones/antivirus</summary><div class="acc-in"><p>Los equipos necesitan parches y firmas de antivirus, que normalmente vienen de Internet. Decisión: un servidor interno (<strong>WSUS</strong>) descarga lo necesario desde las direcciones de Microsoft, con permiso solo para ese servidor; los clientes obtienen las actualizaciones del servidor interno y nunca salen a Internet.</p></div></details>
+<details class="acc"><summary class="acc-head">⑥ Firma digital y cédula: lectores USB</summary><div class="acc-in"><p>El trámite con cédula electrónica o token exige un dispositivo USB. Se resuelve con política de dispositivos por <strong>clase</strong>: se permiten lectores de tarjeta inteligente y se bloquea el almacenamiento masivo (pendrives).</p></div></details>
+<p class="subhead">5.1 Supuestos del proyecto</p>
+<ul><li>Los 28 equipos de escritorio y unos 8 portátiles ya existen (Windows 11 Pro, licencias propias): <strong>no se cotizan</strong>, pero se reconfiguran y se inscriben al dominio.</li>
+<li>Horario laboral 8:00–18:00 de lunes a viernes; mantenimientos programados en fines de semana.</li>
+<li>Se contrata fibra empresarial con IP pública fija en la Casa; la sede nueva puede tener IP dinámica (el túnel lo inicia ella).</li>
+<li>La propiedad autoriza obras interiores en la Casa; la fachada queda intacta.</li>
+<li>Precios en USD de referencia, IVA 22 %, margen de utilidad 20 %.</li></ul>
+<p class="subhead">5.2 Restricciones</p>
+<ul><li><strong>Técnicas:</strong> cableado UTP ≤ 90 m por enlace permanente; PoE 802.3af/at; Wi-Fi 2,4/5 GHz con muros de 30–40 cm.</li>
+<li><strong>Normativas:</strong> videovigilancia sujeta a la ley de protección de datos personales (Ley 18.331 y su regulación): cartelería, finalidad, plazo de conservación y registro de la base de datos. Verificar con el asesor legal de la empresa.</li>
+<li><strong>De negocio:</strong> continuidad de la operación durante el traslado de los tres estudios; el proyecto no puede dejar a los usuarios sin red más de 4 horas.</li></ul>
+</div></div>
+
+<div class="card" id="s6"><div class="card-header"><span class="card-num num-coral">06</span><span class="card-title">Arquitectura general de la solución</span></div><div class="card-body">
+<p class="subhead">6.1 Topología elegida</p>
+<p>En cada sede, una <strong>estrella jerárquica</strong> (árbol de dos niveles): los puestos van en estrella al switch de su rack; en la Casa, el switch del IDF se conecta al del MDF mediante fibra. Entre sedes, un <strong>enlace punto a punto lógico</strong> (túnel VPN) sobre Internet, con una segunda ruta de respaldo por red móvil. Se evita el anillo y la malla porque el tamaño no lo justifica y complican el mantenimiento.</p>
+<div class="plan"><svg viewBox="0 0 1100 560" role="img" aria-label="Diagrama lógico de las dos sedes, Internet y túnel VPN">
+<ellipse cx="550" cy="52" rx="150" ry="34" fill="#1b2230" stroke="#566378" stroke-width="1.5"/><text class="lb" x="550" y="50" text-anchor="middle">Internet</text><text class="lb3" x="550" y="66" text-anchor="middle">ISP-A fibra · ISP-B 4G/5G</text>
+<rect x="20" y="120" width="520" height="420" rx="14" fill="none" stroke="#566378" stroke-width="1.5" stroke-dasharray="4 4"/><text class="lb" x="36" y="526">SEDE 1 · LA CASA (CPD) · 10.10.0.0/24</text>
+<rect x="620" y="120" width="460" height="420" rx="14" fill="none" stroke="#566378" stroke-width="1.5" stroke-dasharray="4 4"/><text class="lb" x="636" y="526">SEDE 2 · NUEVA · 10.20.0.0/23</text>
+<line x1="275" y1="165" x2="440" y2="72" stroke="#2dd4bf" stroke-width="2"/><line x1="300" y1="165" x2="455" y2="82" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="815" y1="165" x2="660" y2="72" stroke="#2dd4bf" stroke-width="2"/><line x1="790" y1="165" x2="645" y2="82" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+<text class="lb3" x="140" y="118" fill="#2dd4bf" style="fill:#2dd4bf">WAN1 fibra</text><text class="lb3" x="240" y="128" style="fill:#f59e0b">WAN2 4G/5G</text>
+<rect class="box fw" x="210" y="165" width="130" height="46" rx="8"/><text class="lb" x="275" y="186" text-anchor="middle">FW-CASA</text><text class="lb3" x="275" y="201" text-anchor="middle">gateway VLAN</text>
+<rect class="box fw" x="750" y="165" width="130" height="46" rx="8"/><text class="lb" x="815" y="186" text-anchor="middle">FW-NUEVA</text><text class="lb3" x="815" y="201" text-anchor="middle">gateway VLAN</text>
+<line class="tray v" x1="340" y1="188" x2="750" y2="188"/><text class="lb2" x="545" y="176" text-anchor="middle" style="fill:#fb7185">VPN WireGuard</text><text class="lb3" x="545" y="208" text-anchor="middle">≈ 13 km · cifrado</text>
+<line x1="275" y1="211" x2="275" y2="265" stroke="#e8eaf0" stroke-width="1.5"/><line x1="815" y1="211" x2="815" y2="265" stroke="#e8eaf0" stroke-width="1.5"/>
+<rect class="box sw" x="210" y="265" width="130" height="46" rx="8"/><text class="lb" x="275" y="286" text-anchor="middle">SW-MDF</text><text class="lb3" x="275" y="301" text-anchor="middle">48p PoE</text>
+<rect class="box sw" x="380" y="265" width="130" height="46" rx="8"/><text class="lb" x="445" y="286" text-anchor="middle">SW-IDF</text><text class="lb3" x="445" y="301" text-anchor="middle">48p PoE</text>
+<line x1="340" y1="288" x2="380" y2="288" stroke="#f59e0b" stroke-width="3"/><text class="lb3" x="360" y="258" text-anchor="middle" style="fill:#f59e0b">fibra</text>
+<rect class="box" x="40" y="265" width="130" height="46" rx="8"/><text class="lb2" x="105" y="285" text-anchor="middle">PB · 14 tomas</text><text class="lb3" x="105" y="300" text-anchor="middle">2 AP · 5 cámaras</text><line x1="170" y1="288" x2="210" y2="288" stroke="#e8eaf0" stroke-width="1.5"/>
+<rect class="box" x="380" y="345" width="130" height="46" rx="8"/><text class="lb2" x="445" y="365" text-anchor="middle">PA · 18 tomas</text><text class="lb3" x="445" y="380" text-anchor="middle">3 AP · 1 cámara</text><line x1="445" y1="311" x2="445" y2="345" stroke="#e8eaf0" stroke-width="1.5"/>
+<path d="M275 311V400M87 400H420M87 400V430M192 400V430M290 400V430M380 400V430" stroke="#e8eaf0" stroke-width="1.5" fill="none"/>
+<rect class="box sv" x="40" y="430" width="95" height="42" rx="8"/><text class="lb2" x="87" y="448" text-anchor="middle">PVE1</text><text class="lb3" x="87" y="462" text-anchor="middle">servidor</text>
+<rect class="box sv" x="145" y="430" width="95" height="42" rx="8"/><text class="lb2" x="192" y="448" text-anchor="middle">PVE2</text><text class="lb3" x="192" y="462" text-anchor="middle">servidor</text>
+<rect class="box sv" x="250" y="430" width="80" height="42" rx="8"/><text class="lb2" x="290" y="448" text-anchor="middle">NAS</text><text class="lb3" x="290" y="462" text-anchor="middle">backup</text>
+<rect class="box cam" x="340" y="430" width="80" height="42" rx="8"/><text class="lb2" x="380" y="448" text-anchor="middle">NVR-C</text><text class="lb3" x="380" y="462" text-anchor="middle">cámaras</text>
+<rect class="box sw" x="750" y="265" width="130" height="46" rx="8"/><text class="lb" x="815" y="286" text-anchor="middle">SW-N</text><text class="lb3" x="815" y="301" text-anchor="middle">48p PoE</text>
+<rect class="box" x="910" y="265" width="150" height="46" rx="8"/><text class="lb2" x="985" y="285" text-anchor="middle">24 tomas</text><text class="lb3" x="985" y="300" text-anchor="middle">3 AP · 4 cámaras</text><line x1="880" y1="288" x2="910" y2="288" stroke="#e8eaf0" stroke-width="1.5"/>
+<path d="M815 311V400M765 400H940M765 400V430M940 400V430" stroke="#e8eaf0" stroke-width="1.5" fill="none"/>
+<rect class="box sv" x="700" y="430" width="130" height="42" rx="8"/><text class="lb2" x="765" y="448" text-anchor="middle">PVE-N1</text><text class="lb3" x="765" y="462" text-anchor="middle">DC2 + réplica</text>
+<rect class="box cam" x="890" y="430" width="100" height="42" rx="8"/><text class="lb2" x="940" y="448" text-anchor="middle">NVR-N</text><text class="lb3" x="940" y="462" text-anchor="middle">cámaras</text>
+<circle cx="150" cy="256" r="9" fill="#fb7185"/><text class="lb3" x="150" y="260" text-anchor="middle" style="fill:#0a0c10;font-weight:700">V</text>
+<circle cx="1018" cy="256" r="9" fill="#fb7185"/><text class="lb3" x="1018" y="260" text-anchor="middle" style="fill:#0a0c10;font-weight:700">V</text><circle cx="1042" cy="256" r="9" fill="#fb7185"/><text class="lb3" x="1042" y="260" text-anchor="middle" style="fill:#0a0c10;font-weight:700">V</text>
+</svg><div class="cap">Diagrama lógico general. Todo el control de tráfico entre VLAN ocurre en los firewalls; los switches solo conmutan.</div></div>
+<div class="legend"><span><i style="background:#2dd4bf"></i>Enlace a Internet (fibra)</span><span><i style="background:#f59e0b"></i>Respaldo 4G/5G / fibra óptica interna</span><span><i style="background:#fb7185"></i>Túnel VPN · cámaras</span><span><i style="background:#fb7185;border-radius:50%"></i>V = puesto visor de CCTV (recepción Casa, recepción Nueva, Dirección)</span></div>
+
+<p class="subhead">6.2 Subsistemas TIA-568 aplicados al caso</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Subsistema</th><th>En la Casa</th><th>En la sede nueva</th></tr>
+<tr><td>Acometida (entrance facility)</td><td>Entrada de la fibra del ISP al CPD; ONT y router 4G en el rack</td><td>Entrada del ISP al cuarto técnico</td></tr>
+<tr><td>Sala de equipos (ER / MDF)</td><td><strong>CPD (H3)</strong>: servidores, firewall, switch núcleo, NAS, NVR</td><td>Cuarto técnico (rack de 12U)</td></tr>
+<tr><td>Cuarto de telecomunicaciones (TR / IDF)</td><td>Armario técnico de planta alta (rack mural 9U)</td><td>No hay: un solo rack alcanza para todo</td></tr>
+<tr><td>Cableado troncal (backbone)</td><td><strong>Vertical:</strong> fibra OM3 MDF → IDF por el ducto</td><td>No aplica; solo el ducto para subir cables horizontales</td></tr>
+<tr><td>Cableado horizontal</td><td>Cat 6 desde MDF (PB) e IDF (PA) a cada toma, AP y cámara</td><td>Cat 6 desde el rack a todos los puntos</td></tr>
+<tr><td>Área de trabajo</td><td>2 tomas por puesto (datos + reserva/impresora)</td><td>2 tomas por puesto</td></tr></table></div>
+
+<p class="subhead">6.3 Dispositivos y su función</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Dispositivo</th><th>Cant.</th><th>Función en este diseño</th></tr>
+<tr><td>Firewall / UTM (OPNsense)</td><td>2</td><td>Gateway de todas las VLAN, filtrado entre VLAN, NAT, VPN, portal cautivo de invitados, balanceo/failover entre WAN1 y WAN2</td></tr>
+<tr><td>Switch gestionable 48p PoE</td><td>3</td><td>Conmutación L2, VLAN 802.1Q, PoE para AP y cámaras, 802.1X, port-security, DHCP snooping</td></tr>
+<tr><td>Access point Wi-Fi 6 PoE</td><td>8</td><td>Un AP por ambiente en la Casa (muros gruesos) y por zona en la sede nueva; SSID corporativo 802.1X (+ invitados en Nueva)</td></tr>
+<tr><td>Servidores de virtualización</td><td>3</td><td>2 en el CPD (alta disponibilidad) + 1 en la sede nueva (controlador de dominio secundario y réplica de backup)</td></tr>
+<tr><td>NAS de backup</td><td>1</td><td>Copias locales de las VM y de los archivos</td></tr>
+<tr><td>NVR + cámaras IP PoE</td><td>2 + 10</td><td>Grabación local en cada sede; visualización cruzada por VPN</td></tr>
+<tr><td>UPS online</td><td>3</td><td>Energía limpia y autonomía para apagado ordenado: CPD (3 kVA), IDF (1 kVA), sede nueva (1,5 kVA)</td></tr>
+<tr><td>Router 4G/5G</td><td>2</td><td>WAN2 de respaldo para cada firewall</td></tr></table></div>
+<div class="norma"><strong>Por qué el firewall y no un switch L3 para enrutar entre VLAN:</strong> con 28 usuarios no hay carga que justifique un núcleo L3, y concentrar el enrutamiento en el firewall permite aplicar, registrar y auditar todas las reglas en un solo lugar (R2, R3).</div>
+</div></div>
+
+<div class="card" id="s7"><div class="card-header"><span class="card-num num-blue">07</span><span class="card-title">Diseño del cableado · Casa (horizontal + vertical)</span></div><div class="card-body">
+<p class="subhead">7.1 Criterios de diseño</p>
+<ul><li><strong>Medio:</strong> UTP <strong>Cat 6</strong> para el horizontal (soporta 1 GbE con holgura, PoE y 10 GbE hasta ~55 m); fibra multimodo OM3 para el troncal vertical.</li>
+<li><strong>Dos tomas por puesto</strong> (recomendación TIA-568 de mínimo 2 salidas por área de trabajo): una para el PC y otra de reserva o para impresora/portátil.</li>
+<li><strong>Un punto por AP y por cámara</strong> (PoE desde el switch). Los AP van en cielorraso, las cámaras en el punto de vigilancia.</li>
+<li><strong>Topología en estrella</strong> desde dos cuartos: MDF (PB) e IDF (PA). Todo enlace permanente &lt; 90 m.</li>
+<li><strong>Reserva:</strong> +20 % de puertos de switch y 3 puertos libres en cada patch panel.</li></ul>
+
+<p class="subhead">7.2 ¿Con IDF o sin IDF? La decisión central del cableado</p>
+<p>Con 43 puntos y 26 m de largo, un solo rack en el CPD alcanzaría con el cable (todos los enlaces quedarían bajo 90 m). La pregunta no es «¿llega?», sino <strong>«¿conviene?»</strong>. Se comparó:</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Criterio</th><th>A · Todo desde el MDF</th><th>B · MDF + IDF con fibra (elegida)</th></tr>
+<tr><td>Cables que suben por el ducto</td><td>22 UTP + sus 22 PoE</td><td>1 fibra de 4 hilos</td></tr>
+<tr><td>Cable UTP total</td><td>+ ~260 m (≈ 1 caja más)</td><td>Menos recorrido en planta alta</td></tr>
+<tr><td>Acceso al CPD para cambios de patch en PA</td><td>Cada movimiento obliga a entrar al CPD</td><td>Los cambios de PA se hacen en el IDF, sin abrir el CPD</td></tr>
+<tr><td>Falla de una subida</td><td>Pierde puntos individuales</td><td>El IDF funciona de forma autónoma entre sus propios puertos (el enlace troncal tiene hilos de reserva)</td></tr>
+<tr><td>Costo adicional</td><td>—</td><td>Rack mural 9U + UPS 1 kVA + fibra + 2 SFP ≈ USD 900–1000 netos</td></tr>
+<tr><td>Crecimiento (+30 %)</td><td>Hay que pasar más cables por el ducto</td><td>Se agregan puertos en el IDF sin tocar la losa</td></tr></table></div>
+<div class="ok"><strong>Conclusión:</strong> se elige B. El factor decisivo no es la distancia sino la <strong>seguridad operativa</strong> (el CPD queda cerrado: «centro nervioso» sin tránsito de técnicos) y la <strong>cantidad de perforaciones</strong> en una losa maciza. Es una decisión típica de ingeniería: cumplir la norma es el mínimo, no el criterio.</div>
+<div class="warn"><strong>Compromiso aceptado:</strong> los 21 puntos de planta baja también terminan en el MDF, dentro del CPD. Si el movimiento de puestos en PB fuera frecuente, la mejora sería un gabinete cerrado en el corredor, fuera del CPD (queda como alternativa de ampliación).</div>
+
+<p class="subhead">7.3 Longitudes reales de cada ruta</p>
+<p>La longitud no se mide en línea recta: se suma <strong>CPD o IDF → bandeja del corredor → entrada al ambiente → descenso y recorrido hasta la toma</strong>. La columna «Total» es lo que se usa para verificar los 90 m y para calcular el cable.</p>
+<div class="plan"><svg viewBox="0 0 800 300" role="img" aria-label="Corte esquemático de la casa con el ducto vertical, el MDF, el IDF y la fibra">
+<rect x="60" y="30" width="680" height="100" fill="rgba(251,113,133,.05)" stroke="#8b9ab5" stroke-width="2"/><rect x="60" y="150" width="680" height="130" fill="rgba(251,113,133,.05)" stroke="#8b9ab5" stroke-width="2"/>
+<rect x="60" y="130" width="680" height="20" fill="#1b2230" stroke="#566378"/><text class="lb3" x="70" y="144">losa de hormigón 20 cm</text>
+<rect x="520" y="30" width="40" height="250" fill="rgba(245,158,11,.14)" stroke="#f59e0b" stroke-width="2"/><text class="lb3" x="500" y="22" text-anchor="end" style="fill:#f59e0b">ducto vertical (riser)</text>
+<rect x="560" y="150" width="180" height="130" fill="rgba(74,222,128,.10)" stroke="#4ade80" stroke-width="3"/><text class="lb" x="570" y="172" style="fill:#4ade80">CPD · MDF</text>
+<rect x="690" y="200" width="26" height="60" rx="2" class="rack"/><text class="lb3" x="684" y="236" text-anchor="end" style="fill:#f59e0b">rack 24U</text>
+<rect x="530" y="55" width="20" height="46" rx="2" class="rack"/><text class="lb3" x="512" y="82" text-anchor="end" style="fill:#f59e0b">IDF</text>
+<text class="lb" x="70" y="52">Planta alta · H4, H5, H6 (IDF en el ducto)</text><text class="lb" x="70" y="172">Planta baja · H1, H2, corredor, CPD</text>
+<polyline class="tray f" points="690,222 540,222 540,90 548,90"/><text class="lb3" x="600" y="214" style="fill:#f59e0b">fibra OM3 ≈ 11 m + reservas</text>
+<line class="door" x1="520" y1="150" x2="560" y2="150" style="stroke:#4ade80;opacity:.0"/>
+<text class="lb3" x="70" y="262">tendido horizontal desde el IDF (PA) y el MDF (PB) por bandejas en los corredores</text>
+<rect x="60" y="238" width="440" height="3" fill="#2dd4bf" opacity=".6"/><rect x="60" y="98" width="440" height="3" fill="#2dd4bf" opacity=".6"/>
+</svg><div class="cap">Corte esquemático: el ducto vertical atraviesa la losa junto al CPD; sellado cortafuego en cada paso</div></div>
+
+<p class="subhead">MDF (planta baja) · puntos y longitudes</p>
+<div class="tablewrap"><div id="tbl-casa-mdf"></div></div>
+<p class="subhead">IDF (planta alta) · puntos y longitudes</p>
+<div class="tablewrap"><div id="tbl-casa-idf"></div></div>
+<div class="kpis"><div class="kpi"><div class="kl">Distancia media MDF</div><div class="kv c"><span id="avg-casa-mdf">–</span> m</div></div><div class="kpi"><div class="kl">Distancia media IDF</div><div class="kv c"><span id="avg-casa-idf">–</span> m</div></div><div class="kpi"><div class="kl">Enlace más largo</div><div class="kv"><span id="max-casa">–</span> m</div></div><div class="kpi"><div class="kl">Límite permanent link</div><div class="kv">90 m</div></div></div>
+<div class="note-box"><div class="note-title">Cómo se usan estos números</div><div class="note-line">La <strong>distancia media</strong> de cada tabla es el valor que se carga en el campo «Distancia promedio al rack» del <a href="../Herramientas/cotizador_cableado_interactivo.html" style="color:var(--coral)">cotizador</a> (una cotización por rack, sección 16). El enlace más largo se usa para verificar el límite de 90 m: queda en el 43 % del máximo.</div></div>
+
+<p class="subhead">7.4 Troncal vertical de fibra</p>
+<ul><li><strong>Medio:</strong> fibra multimodo OM3 de 4 hilos con conectores LC (2 hilos activos + 2 de reserva), transceptores 10GBASE-SR.</li>
+<li><strong>Ruta:</strong> MDF → pasamuros cortafuego en el muro del CPD → ducto vertical → IDF ≈ 11 m, más 5 m de reserva en cada extremo para reparar sin reemplazar el tramo: ≈ 21 m. Se cotizan <strong>40 m</strong> por tramo comercial y holgura de instalación.</li>
+<li><strong>Por qué fibra y no UTP:</strong> el ducto comparte recorrido con cañerías y un cable eléctrico antiguo (interferencia y diferencia de potencial entre tableros); la fibra es inmune y aísla eléctricamente un tablero del otro.</li></ul>
+<div class="norma"><strong>Presupuesto de pérdida (10GBASE-SR, OM3):</strong> límite del canal 2,6 dB. Pérdida estimada = 21 m × 3,5 dB/km (≈ 0,07 dB) + 2 pares de conectores × 0,5 dB = <strong>≈ 1,1 dB</strong> ⇒ margen de 1,5 dB. Se verifica con medidor de pérdida (OLTS) en la prueba de aceptación.</div>
+
+<p class="subhead">7.5 Canalización y llenado</p>
+<ul><li><strong>Principal:</strong> bandeja perforada 100×50 mm en los corredores y en el CPD (≈ 55 m en total), colgada del cielorraso.</li>
+<li><strong>Secundaria:</strong> caño embutido o canaleta en cada ambiente, con una sola perforación por habitación (por el muro del corredor).</li>
+<li><strong>Llenado:</strong> un cable Cat 6 ocupa ≈ 28 mm². La bandeja de 100×50 (5000 mm²) al 40 % admite ≈ 70 cables; la de planta baja lleva 21 ⇒ <strong>llenado del 12 %</strong>, sobra para el crecimiento previsto.</li>
+<li><strong>Separación de energía:</strong> cables de datos a ≥ 30 cm de conductores eléctricos paralelos, y cruces a 90°.</li>
+<li><strong>Cortafuego:</strong> toda perforación de muro o losa se sella con material cortafuego (TIA-569).</li></ul>
+
+<p class="subhead">7.6 Armado de racks</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">MDF · 24U</div><div class="info-title">Rack del CPD</div><div class="info-desc"><div id="rack-mdf"></div></div></div>
+<div class="info-card"><div class="info-label">IDF · 9U mural</div><div class="info-title">Rack de planta alta</div><div class="info-desc"><div id="rack-idf"></div></div></div>
+</div>
+<div class="note-box"><div class="note-title">Reglas aplicadas</div><div class="note-line">Lo más pesado abajo (UPS, servidores); patch panel y switch arriba, separados por organizadores; ≥ 20 % de U libres; fuentes de los equipos conectadas a la PDU/UPS; cableado de datos y de energía por lados opuestos del rack.</div></div>
+
+<p class="subhead">7.7 Etiquetado (TIA-606) y mapa del patch panel</p>
+<p>Cada cable lleva la <strong>misma etiqueta en ambos extremos</strong> y se registra en una planilla. Formato: <code style="color:var(--coral)">SEDE-AMBIENTE-N</code> en la toma y <code style="color:var(--coral)">PPn-NN</code> en el panel.</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Puertos PP1</th><th>Destino</th><th>Etiqueta en la toma</th><th>Cant.</th></tr>
+<tr><td>01–06</td><td>H1 Recepción (tomas)</td><td>CAS-H1-01 … 06</td><td class="r">6</td></tr>
+<tr><td>07–14</td><td>H2 Estudio A (tomas)</td><td>CAS-H2-01 … 08</td><td class="r">8</td></tr>
+<tr><td>15–16</td><td>AP1 (H1), AP2 (H2)</td><td>CAS-AP-01 … 02</td><td class="r">2</td></tr>
+<tr><td>17–21</td><td>Cámaras: fachada, recepción, corredor, CPD, patio</td><td>CAS-CAM-01 … 05</td><td class="r">5</td></tr>
+<tr><td>22–24</td><td>Reserva</td><td>—</td><td class="r">3</td></tr></table></div>
+
+<p class="subhead">7.8 Puesta a tierra y equipotencialidad</p>
+<p>Se instala una <strong>barra de tierra (TMGB)</strong> en el CPD conectada a la tierra del tablero dedicado, y una barra secundaria en el IDF unida con conductor de cobre. Racks, bandejas metálicas y blindajes se unen a la barra (TIA-607). Es un ítem que se omite con frecuencia y que explica fallas «misteriosas» de PoE y de equipos.</p>
+</div></div>
+
+<div class="card" id="s8"><div class="card-header"><span class="card-num num-teal">08</span><span class="card-title">Diseño del cableado · Sede nueva</span></div><div class="card-body">
+<p>Con 14 × 10 m y distancias de 10–22 m, el diseño es una <strong>estrella simple desde un único rack</strong> en el cuarto técnico. No se justifica un segundo cuarto: se prevé solo el <strong>ducto técnico</strong> sobre el rack, que ya tiene perforada la losa en el proyecto de arquitectura.</p>
+<div class="tablewrap"><div id="tbl-nueva"></div></div>
+<div class="kpis"><div class="kpi"><div class="kl">Distancia media</div><div class="kv c"><span id="avg-nueva">–</span> m</div></div><div class="kpi"><div class="kl">Enlace más largo</div><div class="kv"><span id="max-nueva">–</span> m</div></div><div class="kpi"><div class="kl">Puntos totales</div><div class="kv">31</div></div><div class="kpi"><div class="kl">Switch</div><div class="kv">48p PoE</div></div></div>
+<p class="subhead">8.1 Presupuesto de puertos del switch</p>
+<p>Un error clásico es dimensionar el switch solo por los puntos de red. También hay que contar los <strong>equipos activos</strong> que se conectan al mismo switch:</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Concepto</th><th class="r">Casa MDF</th><th class="r">Casa IDF</th><th class="r">Nueva</th></tr>
+<tr><td>Puntos (tomas + AP + cámaras)</td><td class="r">21</td><td class="r">22</td><td class="r">31</td></tr>
+<tr><td>Equipos activos en el mismo switch (firewall, servidores, iDRAC, NAS, NVR, UPS)</td><td class="r">+ 12</td><td class="r">+ 1</td><td class="r">+ 6</td></tr>
+<tr class="sub"><td>Subtotal de puertos en uso</td><td class="r">33</td><td class="r">23</td><td class="r">37</td></tr>
+<tr><td>Necesarios con 20 % de crecimiento</td><td class="r">40</td><td class="r">28</td><td class="r">45</td></tr>
+<tr><td>Switch adoptado</td><td class="r">48 p</td><td class="r">48 p</td><td class="r">48 p</td></tr>
+<tr class="sub"><td>Margen sobre lo necesario</td><td class="r">8</td><td class="r">20</td><td class="r">3</td></tr>
+</table></div>
+<div class="warn"><strong>Observación:</strong> en la sede nueva el margen es de solo 3 puertos. Si el personal creciera más de lo previsto se agrega un segundo switch (reserva de 2U en el rack). Esto se dice al cliente de forma explícita en la propuesta.</div>
+<p class="subhead">8.2 Presupuesto de PoE</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Switch</th><th>Dispositivos PoE</th><th class="r">Consumo estimado</th><th class="r">Presupuesto del switch</th><th>Estado</th></tr>
+<tr><td>SW-MDF</td><td>2 AP (20 W) + 5 cámaras (10 W)</td><td class="r">90 W</td><td class="r">370 W</td><td>OK (24 %)</td></tr>
+<tr><td>SW-IDF</td><td>3 AP + 1 cámara</td><td class="r">70 W</td><td class="r">370 W</td><td>OK (19 %)</td></tr>
+<tr><td>SW-N</td><td>3 AP + 4 cámaras</td><td class="r">100 W</td><td class="r">370 W</td><td>OK (27 %)</td></tr></table></div>
+<p style="margin-top:.6rem">Se eligen switches con al menos <strong>370 W de presupuesto PoE+</strong> (802.3at, hasta 30 W por puerto); se verifica en la hoja de datos, no solo la cantidad de puertos.</p>
+<p class="subhead">8.3 Particularidades de la sede nueva</p>
+<ul><li>El hall es zona pública: <strong>no se instalan tomas de la red interna</strong> accesibles al público; las dos del mostrador van por debajo de la mesa y los puertos no usados se deshabilitan.</li>
+<li>La cámara de fachada y la del estacionamiento son exteriores: carcasa IP66 y protección contra sobretensión en el cable (los exteriores atraen descargas).</li>
+<li>El rack está bajo escalera: se verifica ventilación (rejilla) y distancia al tablero; sin cañerías de agua en el techo del cuarto.</li></ul>
+</div></div>
+
+<div class="card" id="s9"><div class="card-header"><span class="card-num num-purple">09</span><span class="card-title">Diseño inalámbrico (Wi-Fi) con muros gruesos</span></div><div class="card-body">
+<p>El Wi-Fi no se «pone donde alcance»: se <strong>calcula</strong>. En la Casa, los muros de 30–40 cm pasan de ser un detalle de obra a ser el principal dato de diseño inalámbrico.</p>
+<p class="subhead">9.1 Atenuación típica de los materiales</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Obstáculo</th><th class="r">2,4 GHz</th><th class="r">5 GHz</th><th>Dónde aparece</th></tr>
+<tr><td>Muro de ladrillo macizo 30 cm revocado</td><td class="r">≈ 10 dB</td><td class="r">≈ 16 dB</td><td>Casa: entre ambientes</td></tr>
+<tr><td>Muro exterior 40 cm ladrillo/piedra</td><td class="r">≈ 12 dB</td><td class="r">≈ 20 dB</td><td>Casa: fachada</td></tr>
+<tr><td>Losa de hormigón 20 cm</td><td class="r">≈ 12 dB</td><td class="r">≈ 18 dB</td><td>Entre plantas</td></tr>
+<tr><td>Bloque de hormigón revocado 15 cm</td><td class="r">≈ 6 dB</td><td class="r">≈ 9 dB</td><td>Sede nueva</td></tr>
+<tr><td>Puerta de madera / vidrio simple</td><td class="r">3 / 2 dB</td><td class="r">4 / 3 dB</td><td>Ambas</td></tr></table></div>
+<p style="font-size:12px;margin-top:.5rem">Valores típicos de referencia: se confirman con una medición en sitio (site survey) antes de instalar.</p>
+
+<p class="subhead">9.2 Ejemplo de cálculo (presupuesto de enlace a 5 GHz)</p>
+<p>Datos: potencia de transmisión del AP 17 dBm + antena 4 dBi ⇒ <strong>21 dBm</strong> de potencia efectiva. Objetivo en el cliente: <strong>−65 dBm</strong> más un margen de desvanecimiento de 10 dB (cuerpos, muebles, puertas cerradas) ⇒ se exige <strong>≥ −55 dBm</strong> calculado.</p>
+<pre class="code"><span class="c">// pérdida en espacio libre</span>
+FSPL(dB) = 20·log10(d en m) + 20·log10(f en MHz) − 27,55
+<span class="c">// RSSI esperado</span>
+RSSI = 21 dBm − FSPL − Σ(atenuación de obstáculos)</pre>
+<div class="tablewrap"><table class="md-table"><tr><th>Opción</th><th>Caso evaluado</th><th class="r">Distancia</th><th class="r">FSPL</th><th class="r">Obstáculos</th><th class="r">RSSI calculado</th><th>¿Cumple ≥ −55?</th></tr>
+<tr><td>1 · AP dentro de cada ambiente</td><td>Rincón más lejano, misma habitación</td><td class="r">6 m</td><td class="r">62,8 dB</td><td class="r">0</td><td class="r">−41,8 dBm</td><td><span class="tag g">Sí</span></td></tr>
+<tr><td>2 · AP en el corredor (3 AP para toda la casa)</td><td>Cliente en H4 a través de 1 muro</td><td class="r">8,5 m</td><td class="r">65,9 dB</td><td class="r">16 dB</td><td class="r">−60,9 dBm</td><td><span class="tag a">No</span></td></tr>
+<tr><td>2 · AP en el corredor</td><td>Rincón lejano de H4</td><td class="r">12 m</td><td class="r">68,8 dB</td><td class="r">16 dB</td><td class="r">−63,8 dBm</td><td><span class="tag a">No</span></td></tr>
+<tr><td>3 · AP único por planta</td><td>A través de 2 muros</td><td class="r">10 m</td><td class="r">67,3 dB</td><td class="r">32 dB</td><td class="r">−78,3 dBm</td><td><span class="tag a">No</span></td></tr></table></div>
+<div class="ok"><strong>Decisión:</strong> un AP por ambiente (opción 1) con 5 AP en la Casa. La opción 2 ahorra 2 AP (≈ USD 320) pero no cumple el margen de calidad. Un enlace inalámbrico entre AP (mesh) tampoco serviría: su propio enlace de retorno atravesaría los muros. Cada AP queda <strong>cableado por Cat 6 con PoE</strong> (ya incluido en la cotización).</div>
+
+<p class="subhead">9.3 Redes inalámbricas (SSID) y su VLAN</p>
+<div class="tablewrap"><table class="md-table"><tr><th>SSID</th><th>Seguridad</th><th>VLAN</th><th>Dónde se emite</th><th>Notas</th></tr>
+<tr><td>TRIADA-CORP</td><td>WPA2/WPA3-Enterprise · 802.1X (EAP-TLS con certificados del dominio)</td><td><span class="vlan" style="background:rgba(45,212,191,.15)">10</span> / <span class="vlan" style="background:rgba(167,139,250,.18)">20</span> según grupo</td><td>Todos los AP</td><td>La VLAN se asigna <strong>dinámicamente</strong> por el servidor RADIUS (NPS) según el grupo de AD: dirección → 20, el resto → 10</td></tr>
+<tr><td>TRIADA-INVITADOS</td><td>Abierta + portal cautivo (aceptación de condiciones), aislamiento de clientes</td><td><span class="vlan" style="background:rgba(74,222,128,.15)">60</span></td><td>AP-N1 (hall) y AP-N2 (sala de reuniones)</td><td>Sin acceso a la red interna; 2 Mbps por cliente, 15 Mbps totales</td></tr></table></div>
+<p style="margin-top:.6rem"><strong>Controlador de AP:</strong> software del fabricante instalado en una VM propia, sin portal en la nube del proveedor (R4). Los AP y el controlador viven en la VLAN de gestión.</p>
+
+<p class="subhead">9.4 Plan de canales</p>
+<div class="tablewrap"><table class="md-table"><tr><th>AP</th><th>Ambiente</th><th>2,4 GHz (potencia reducida)</th><th>5 GHz (40 MHz)</th></tr>
+<tr><td>AP1</td><td>Casa · H1</td><td>Canal 1</td><td>36+40</td></tr>
+<tr><td>AP2</td><td>Casa · H2</td><td>Canal 6</td><td>44+48</td></tr>
+<tr><td>AP3</td><td>Casa · H4</td><td>Canal 11</td><td>149+153</td></tr>
+<tr><td>AP4</td><td>Casa · H5</td><td>Canal 1</td><td>157+161</td></tr>
+<tr><td>AP5</td><td>Casa · H6</td><td>Canal 6</td><td>36+40 (reutilizado: está a 22 m y detrás de muros)</td></tr>
+<tr><td>AP-N1</td><td>Nueva · hall / PB</td><td>Canal 1</td><td>36+40</td></tr>
+<tr><td>AP-N2</td><td>Nueva · sala de reuniones</td><td>Canal 6</td><td>44+48</td></tr>
+<tr><td>AP-N3</td><td>Nueva · dirección</td><td>Canal 11</td><td>149+153</td></tr></table></div>
+<p style="font-size:12px;margin-top:.5rem">Las bandas y canales permitidos dependen de la regulación local: se verifican antes de configurar. En la Casa, los muros permiten reutilizar canales entre ambientes lejanos sin interferencia significativa.</p>
+
+<p class="subhead">9.5 Validación después de instalar</p>
+<div class="flow"><span class="step">Site survey con heatmap</span><span class="arrow">→</span><span class="step">RSSI ≥ −65 dBm</span><span class="arrow">→</span><span class="step">SNR ≥ 25 dB</span><span class="arrow">→</span><span class="step">Roaming &lt; 50 ms (802.11r/k/v)</span><span class="arrow">→</span><span class="step">Prueba de caudal</span></div>
+</div></div>
+
+<div class="card" id="s10"><div class="card-header"><span class="card-num num-amber">10</span><span class="card-title">Diseño lógico · VLAN y plan de direccionamiento IP</span></div><div class="card-body">
+<p class="subhead">10.1 Segmentación: por qué y cuántas VLAN</p>
+<p>Cada tipo de dispositivo tiene un riesgo y una política distintos. Separarlos en VLAN permite que el firewall decida <strong>quién habla con quién</strong>. Los números de VLAN son iguales en ambas sedes para facilitar la administración (VLAN 20 existe solo en la sede nueva y la 60 también).</p>
+<div class="tablewrap"><table class="md-table"><tr><th>VLAN</th><th>Nombre</th><th>Contenido</th><th>Política</th></tr>
+<tr><td>10</td><td>FUNCIONARIOS</td><td>PC y portátiles de los 24 funcionarios, Wi-Fi corporativo</td><td>Internet solo por proxy y lista blanca</td></tr>
+<tr><td>20</td><td>DIRECCION</td><td>3 socios + PC de la sala de reuniones (solo en Nueva)</td><td>Como VLAN 10, más categorías aprobadas y acceso al visor CCTV</td></tr>
+<tr><td>30</td><td>SERVIDORES</td><td>Hosts de virtualización, NAS, VM de servicios, DC2</td><td>Nadie inicia conexiones hacia afuera, salvo actualizaciones permitidas</td></tr>
+<tr><td>40</td><td>CCTV</td><td>Cámaras IP y NVR</td><td>Sin Internet; solo los visores autorizados hablan con el NVR</td></tr>
+<tr><td>50</td><td>PERIFERICOS</td><td>Impresoras, escáneres, controlador de acceso del CPD</td><td>Solo aceptan conexiones desde usuarios; no inician</td></tr>
+<tr><td>60</td><td>INVITADOS</td><td>Clientes en el hall (solo Nueva)</td><td>Internet libre con límites; bloqueo total hacia redes privadas</td></tr>
+<tr><td>99</td><td>GESTION</td><td>Interfaces de administración de switches, AP, UPS, iDRAC</td><td>Accesible solo desde las PC de administración y por VPN</td></tr></table></div>
+<div class="norma"><strong>VLAN de bloqueo (blackhole) 999:</strong> los puertos sin uso se asignan a la VLAN 999, sin gateway y apagados. Un cable enchufado en una pared libre no da acceso a nada.</div>
+
+<p class="subhead">10.2 Direccionamiento con VLSM</p>
+<p>Se asigna <strong>10.10.0.0/24</strong> a la Casa y <strong>10.20.0.0/23</strong> a la sede nueva. Dentro de cada una se reparten subredes de tamaño decreciente (VLSM), dimensionadas por <em>hosts reales × 1,5</em> (crecimiento). Cada /24 deja espacio libre para nuevas VLAN. El túnel VPN usa <strong>10.255.255.0/30</strong>.</p>
+<p class="subhead">Casa · 10.10.0.0/24</p>
+<div class="tablewrap"><table class="md-table"><tr><th>VLAN</th><th class="r">Hosts hoy</th><th class="r">×1,5</th><th>Prefijo</th><th>Red</th><th>Gateway</th><th>Rango utilizable</th><th>Broadcast</th></tr>
+<tr><td>10 FUNC.</td><td class="r">24</td><td class="r">36</td><td>/26 (62)</td><td>10.10.0.0</td><td>.1</td><td>.1 – .62</td><td>.63</td></tr>
+<tr><td>30 SERV.</td><td class="r">12</td><td class="r">18</td><td>/27 (30)</td><td>10.10.0.64</td><td>.65</td><td>.65 – .94</td><td>.95</td></tr>
+<tr><td>99 GEST.</td><td class="r">12</td><td class="r">18</td><td>/27 (30)</td><td>10.10.0.96</td><td>.97</td><td>.97 – .126</td><td>.127</td></tr>
+<tr><td>40 CCTV</td><td class="r">7</td><td class="r">10</td><td>/28 (14)</td><td>10.10.0.128</td><td>.129</td><td>.129 – .142</td><td>.143</td></tr>
+<tr><td>50 PERIF.</td><td class="r">4</td><td class="r">6</td><td>/28 (14)</td><td>10.10.0.144</td><td>.145</td><td>.145 – .158</td><td>.159</td></tr>
+<tr><td>—</td><td colspan="7">Libre: 10.10.0.160/27 y 10.10.0.192/26 (96 direcciones para nuevas VLAN)</td></tr></table></div>
+<p class="subhead">Sede nueva · 10.20.0.0/23</p>
+<div class="tablewrap"><table class="md-table"><tr><th>VLAN</th><th class="r">Hosts hoy</th><th class="r">×1,5</th><th>Prefijo</th><th>Red</th><th>Gateway</th><th>Rango utilizable</th><th>Broadcast</th></tr>
+<tr><td>10 FUNC.</td><td class="r">15</td><td class="r">23</td><td>/27 (30)</td><td>10.20.0.0</td><td>.1</td><td>.1 – .30</td><td>.31</td></tr>
+<tr><td>20 DIREC.</td><td class="r">10</td><td class="r">15</td><td>/27 (30)</td><td>10.20.0.32</td><td>.33</td><td>.33 – .62</td><td>.63</td></tr>
+<tr><td>30 SERV.</td><td class="r">4</td><td class="r">6</td><td>/28 (14)</td><td>10.20.0.64</td><td>.65</td><td>.65 – .78</td><td>.79</td></tr>
+<tr><td>40 CCTV</td><td class="r">5</td><td class="r">8</td><td>/28 (14)</td><td>10.20.0.80</td><td>.81</td><td>.81 – .94</td><td>.95</td></tr>
+<tr><td>50 PERIF.</td><td class="r">2</td><td class="r">3</td><td>/28 (14)</td><td>10.20.0.96</td><td>.97</td><td>.97 – .110</td><td>.111</td></tr>
+<tr><td>99 GEST.</td><td class="r">6</td><td class="r">9</td><td>/28 (14)</td><td>10.20.0.112</td><td>.113</td><td>.113 – .126</td><td>.127</td></tr>
+<tr><td>60 INVIT.</td><td class="r">~30 simult.</td><td class="r">45</td><td>/25 (126)</td><td>10.20.1.0</td><td>.1</td><td>.1 – .126</td><td>.127</td></tr>
+<tr><td>—</td><td colspan="7">Libre: 10.20.0.128/25 y 10.20.1.128/25</td></tr></table></div>
+<div class="note-box"><div class="note-title">Cómo se verifica un cálculo VLSM</div><div class="note-line">Para /27: 2<sup>5</sup> = 32 direcciones por bloque ⇒ 30 hosts. Cada bloque comienza en un múltiplo de su tamaño (0, 32, 64, 96…). Se asigna de mayor a menor para no dejar huecos. <strong>Resumen de rutas:</strong> la sede nueva se anuncia al túnel como un único bloque /23; la Casa, como un /24.</div></div>
+
+<p class="subhead">10.3 Equipos con IP fija (reservas)</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Equipo</th><th>Sede / VLAN</th><th>IP</th><th>Función</th></tr>
+<tr><td>FW-CASA</td><td>Casa · todas</td><td>.1, .65, .97, .129, .145</td><td>Gateway de cada VLAN; IP de gestión 10.10.0.97</td></tr>
+<tr><td>PVE1 / PVE2</td><td>Casa · 30</td><td>10.10.0.66 / .67</td><td>Hosts de virtualización</td></tr>
+<tr><td>NAS-C</td><td>Casa · 30</td><td>10.10.0.68</td><td>Backup local</td></tr>
+<tr><td>DC1 (VM)</td><td>Casa · 30</td><td>10.10.0.70</td><td>AD DS, DNS, DHCP, RADIUS (NPS)</td></tr>
+<tr><td>FS1 (VM)</td><td>Casa · 30</td><td>10.10.0.71</td><td>Archivos e impresión</td></tr>
+<tr><td>APP1 (VM)</td><td>Casa · 30</td><td>10.10.0.72</td><td>Aplicación de gestión + base de datos</td></tr>
+<tr><td>PRX1 (VM)</td><td>Casa · 30</td><td>10.10.0.73</td><td>Proxy Squid + DNS filtrado (Unbound)</td></tr>
+<tr><td>MON1 (VM)</td><td>Casa · 30</td><td>10.10.0.74</td><td>Wazuh + Zabbix + controlador de AP</td></tr>
+<tr><td>WSUS1 / BKP1 (VM)</td><td>Casa · 30</td><td>10.10.0.75 / .76</td><td>Actualizaciones / Proxmox Backup Server</td></tr>
+<tr><td>NVR-C</td><td>Casa · 40</td><td>10.10.0.130</td><td>Grabador; cámaras 10.10.0.131–.136</td></tr>
+<tr><td>SW-MDF / SW-IDF</td><td>Casa · 99</td><td>10.10.0.98 / .99</td><td>AP 10.10.0.100–.104; UPS .105–.106</td></tr>
+<tr><td>FW-NUEVA</td><td>Nueva · todas</td><td>.1, .33, .65, .81, .97, .113, 10.20.1.1</td><td>Gateway de cada VLAN</td></tr>
+<tr><td>PVE-N1 / DC2 (VM)</td><td>Nueva · 30</td><td>10.20.0.66 / .67</td><td>Host + controlador de dominio secundario con DHCP y DNS locales</td></tr>
+<tr><td>NVR-N</td><td>Nueva · 40</td><td>10.20.0.82</td><td>Cámaras 10.20.0.83–.86</td></tr>
+<tr><td>SW-N</td><td>Nueva · 99</td><td>10.20.0.114</td><td>AP 10.20.0.115–.117; UPS .118</td></tr>
+<tr><td>Túnel WireGuard</td><td>WAN</td><td>10.255.255.1 (Casa) / .2 (Nueva)</td><td>Red /30 punto a punto</td></tr></table></div>
+
+<p class="subhead">10.4 Configuración de referencia de un switch (sintaxis genérica estilo CLI)</p>
+<pre class="code"><span class="k">vlan</span> 10 <span class="v">name FUNCIONARIOS</span>      <span class="c">! se repite para 30, 40, 50, 99, 999</span>
+
+<span class="k">interface</span> GigabitEthernet1/0/49         <span class="c">! troncal hacia el firewall (LAG)</span>
+ switchport mode trunk
+ switchport trunk allowed vlan 10,30,40,50,99
+ switchport trunk native vlan 999       <span class="c">! la VLAN nativa nunca es una VLAN de datos</span>
+
+<span class="k">interface range</span> GigabitEthernet1/0/1-14      <span class="c">! tomas de usuarios</span>
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable         <span class="c">! evita switches no autorizados</span>
+ switchport port-security maximum 2     <span class="c">! máximo 2 MAC por boca</span>
+ authentication port-control auto       <span class="c">! 802.1X: el puerto solo abre con credenciales</span>
+
+<span class="k">interface range</span> GigabitEthernet1/0/40-48     <span class="c">! bocas sin uso</span>
+ switchport access vlan 999
+ shutdown
+<span class="k">ip dhcp snooping vlan</span> 10,20,50                <span class="c">! solo el servidor autorizado entrega DHCP</span></pre>
+<div class="tablewrap" style="margin-top:.8rem"><table class="md-table"><tr><th>Convención</th><th>Ejemplo</th></tr>
+<tr><td>Nombres de equipo: SEDE-TIPO-NN</td><td>CAS-PC-014, NUE-SW-01, CAS-AP-03</td></tr>
+<tr><td>Dominio interno</td><td>ad.triada.com.uy (subdominio del dominio de la empresa; nunca un dominio inventado)</td></tr>
+<tr><td>Servidores DHCP</td><td>DC1 (Casa) y DC2 (Nueva); cada sede entrega sus propios rangos</td></tr></table></div>
+</div></div>
+
+<div class="card" id="s11"><div class="card-header"><span class="card-num num-green">11</span><span class="card-title">Enlace seguro entre las dos sedes (13 km)</span></div><div class="card-body">
+<p class="subhead">11.1 Alternativas evaluadas</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Alternativa</th><th>Cómo funciona</th><th>Ventajas</th><th>Desventajas</th><th>Decisión</th></tr>
+<tr><td>A · Internet + VPN sitio a sitio</td><td>Cada sede con su fibra; túnel cifrado entre firewalls</td><td>Costo bajo, instalación rápida, ancho de banda alto, respaldo 4G posible</td><td>Latencia y disponibilidad dependen de los ISP; hay que gestionar claves</td><td><span class="tag g">Elegida</span></td></tr>
+<tr><td>B · Circuito dedicado del operador (L2/MPLS)</td><td>El operador entrega un enlace privado</td><td>Calidad garantizada (SLA)</td><td>Costo mensual 4–8 veces mayor; contrato largo; sigue conviniendo cifrar</td><td><span class="tag a">Alternativa futura</span></td></tr>
+<tr><td>C · Fibra óptica propia</td><td>Tender 13 km entre ciudades</td><td>Control total</td><td>Permisos, postes/canalización de terceros, costo de decenas de miles de USD</td><td><span class="tag a">Descartada</span></td></tr>
+<tr><td>D · Radioenlace punto a punto</td><td>Antenas con línea de vista</td><td>Sin cuota mensual</td><td>Exige línea de vista a 13 km entre ciudades, torres, permisos, afectado por clima e interferencia</td><td><span class="tag a">Descartada</span></td></tr></table></div>
+
+<p class="subhead">11.2 Diseño elegido</p>
+<ul><li><strong>WAN1:</strong> fibra empresarial 300/100 Mbps en cada sede. La Casa contrata <strong>IP pública fija</strong>.</li>
+<li><strong>WAN2:</strong> router 4G/5G conectado al firewall, en modo respaldo. Conmutación automática si falla WAN1 (monitoreo del gateway del ISP cada 5 s, 3 fallos consecutivos).</li>
+<li><strong>VPN:</strong> WireGuard entre FW-CASA y FW-NUEVA. Cifrado moderno (ChaCha20-Poly1305), claves públicas por pareja, sin certificados ni autoridades externas. IPsec/IKEv2 con certificados es la alternativa equivalente si se necesita interoperar con otra marca.</li>
+<li><strong>Quién inicia el túnel:</strong> la sede nueva (cliente) llama a la Casa (que tiene IP fija). Con <em>PersistentKeepalive = 25 s</em> el túnel se mantiene aun detrás de NAT del operador móvil.</li></ul>
+<pre class="code"><span class="c"># FW-CASA · /etc/wireguard/wg0.conf  (las claves son marcadores de lugar)</span>
+[Interface]
+Address    = 10.255.255.1/30
+ListenPort = 51820
+PrivateKey = &lt;clave-privada-CASA&gt;
+MTU        = 1420
+
+[Peer]    <span class="c"># FW-NUEVA</span>
+PublicKey  = &lt;clave-publica-NUEVA&gt;
+AllowedIPs = 10.20.0.0/23, 10.255.255.2/32
+
+<span class="c"># FW-NUEVA · wg0.conf</span>
+[Interface]
+Address    = 10.255.255.2/30
+PrivateKey = &lt;clave-privada-NUEVA&gt;
+MTU        = 1420
+
+[Peer]    <span class="c"># FW-CASA</span>
+PublicKey  = &lt;clave-publica-CASA&gt;
+Endpoint   = &lt;IP-fija-Casa&gt;:51820
+AllowedIPs = 10.10.0.0/24, 10.255.255.1/32
+PersistentKeepalive = 25</pre>
+<div class="norma"><strong>MTU:</strong> WireGuard agrega ≈ 60 bytes (IPv4). Sobre un enlace de 1500 bytes el MTU del túnel sería 1440; si el ISP usa PPPoE (1492) baja a 1432. Se adopta <strong>1420</strong> y se limita el MSS de TCP a 1380 en el firewall para evitar fragmentación.</div>
+
+<p class="subhead">11.3 Qué puede cruzar el túnel (principio de mínimo privilegio)</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Origen</th><th>Destino</th><th>Servicio</th><th>Motivo</th></tr>
+<tr><td>VLAN 10 y 20 Nueva</td><td>Servidores Casa (VLAN 30)</td><td>SMB, aplicación de gestión, Kerberos/LDAP, DNS</td><td>Trabajo diario de los usuarios de la sede nueva</td></tr>
+<tr><td>DC1 ↔ DC2</td><td>VLAN 30 ambas</td><td>Replicación de AD (RPC, 389/636)</td><td>Autenticación aunque caiga el enlace</td></tr>
+<tr><td>BKP1 → PVE-N1</td><td>VLAN 30</td><td>Réplica de backup cifrada (nocturna)</td><td>Copia fuera de sitio (3-2-1)</td></tr>
+<tr><td>Visores CCTV (3 hosts)</td><td>NVR de la otra sede</td><td>HTTPS 443, RTSP</td><td>Ver cámaras de la otra sede (R1)</td></tr>
+<tr><td>Puestos de administración</td><td>VLAN 99 de ambas sedes</td><td>SSH, HTTPS</td><td>Mantenimiento remoto</td></tr>
+<tr><td colspan="4"><strong>Todo lo demás se bloquea y se registra</strong>: que el túnel sea seguro no implica que la red de la sede remota sea de confianza.</td></tr></table></div>
+
+<p class="subhead">11.4 Escenarios de falla y comportamiento esperado</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Falla</th><th>Efecto</th><th>Respuesta del diseño</th><th>Tiempo</th></tr>
+<tr><td>Cae la fibra de la sede nueva</td><td>Sin Internet local</td><td>Failover a 4G/5G; el túnel se restablece desde Nueva</td><td>≈ 20–30 s</td></tr>
+<tr><td>Cae la fibra de la Casa</td><td>Sin Internet en la Casa; el túnel con la sede nueva se corta</td><td>Failover a 4G/5G para que la Casa conserve Internet. Los operadores móviles suelen usar CGNAT (sin IP pública): el túnel <strong>no se restablece</strong> hasta volver la fibra. <strong>Riesgo residual documentado</strong>: contratar IP pública en el plan móvil si el cliente exige continuidad total</td><td>Internet: ≈ 30 s · túnel: hasta reparar</td></tr>
+<tr><td>Caen ambos enlaces de la Casa</td><td>Nueva queda sin aplicación de gestión</td><td>Modo degradado: DC2 autentica y entrega DHCP/DNS; los archivos críticos están replicados en PVE-N1 en solo lectura</td><td>Operación limitada</td></tr>
+<tr><td>Corte de energía</td><td>Equipos sin alimentación</td><td>UPS: 10–15 min para apagado ordenado de servidores</td><td>Inmediato</td></tr></table></div>
+<div class="warn"><strong>Lección:</strong> cada punto de falla que se deja sin resolver debe figurar en el informe al cliente con su costo de eliminarlo. Un diseño honesto muestra qué cubre y qué no.</div>
+</div></div>
+
+<div class="card" id="s12"><div class="card-header"><span class="card-num num-coral">12</span><span class="card-title">Seguridad de red y control del tráfico de Internet</span></div><div class="card-body">
+<p>Para cumplir R2 y R3 (nada de filtraciones ni distracciones; solo entes estatales y correo) no alcanza con una sola herramienta. Se aplica <strong>defensa en profundidad</strong>: cada capa bloquea por su cuenta y deja registro, de modo que si una falla, la siguiente contiene el problema.</p>
+<div class="flow"><span class="step">1 Firewall: sin salida directa</span><span class="arrow">→</span><span class="step">2 DNS: solo nombres permitidos</span><span class="arrow">→</span><span class="step">3 Proxy: lista blanca + usuario</span><span class="arrow">→</span><span class="step">4 Terminal: navegador y proxy forzados</span><span class="arrow">→</span><span class="step">5 Registro y alertas</span></div>
+
+<p class="subhead">12.1 Políticas por perfil</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Perfil</th><th>Internet</th><th>Cómo se aplica</th></tr>
+<tr><td>Funcionarios (VLAN 10)</td><td>Entes estatales + correo corporativo</td><td>Sin ruta directa a Internet; salen por el proxy PRX1 autenticado con su usuario de dominio</td></tr>
+<tr><td>Dirección (VLAN 20)</td><td>Lo anterior + categorías aprobadas por los socios</td><td>Lista adicional editable <em>solo</em> por los socios; revisión mensual de accesos</td></tr>
+<tr><td>Servidores (VLAN 30)</td><td>Solo direcciones de actualización</td><td>WSUS1 hacia los servidores de actualizaciones de Microsoft; PRX1 hacia DNS raíz y repositorios del sistema operativo</td></tr>
+<tr><td>Cámaras y periféricos</td><td>Ninguno</td><td>Regla explícita de bloqueo hacia Internet; sin DNS externo</td></tr>
+<tr><td>Invitados (VLAN 60)</td><td>Libre, con límites</td><td>Salida directa por NAT; bloqueado hacia cualquier red privada</td></tr></table></div>
+
+<p class="subhead">12.2 Lista blanca de destinos para funcionarios</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Categoría</th><th>Dominios (ejemplos)</th><th>Perfiles</th></tr>
+<tr><td>Entes estatales</td><td>.gub.uy (bps.gub.uy, dgi.gub.uy, mef.gub.uy, mtss.gub.uy, bcu.gub.uy, dgr.gub.uy, id.gub.uy …)</td><td>Funcionarios, Dirección</td></tr>
+<tr><td>Seguros del Estado</td><td>.bse.com.uy</td><td>Funcionarios, Dirección</td></tr>
+<tr><td>Normativa oficial</td><td>.impo.com.uy</td><td>Funcionarios, Dirección</td></tr>
+<tr><td>Correo corporativo</td><td>mail.google.com, accounts.google.com, .gstatic.com, .googleusercontent.com (con restricción de cuenta, ver 12.4)</td><td>Funcionarios, Dirección</td></tr>
+<tr><td>Validación de certificados</td><td>CRL y OCSP de las autoridades que usan los sitios anteriores (se identifican en el piloto)</td><td>Funcionarios, Dirección</td></tr>
+<tr><td>Ampliaciones aprobadas</td><td>Por ejemplo, banca (.brou.com.uy), a criterio de los socios</td><td>Solo Dirección</td></tr>
+<tr><td>Todo lo demás</td><td>Redes sociales, almacenamiento en la nube, mensajería web, buscadores, streaming, VPN y proxies anónimos</td><td><span class="tag a">Bloqueado y registrado</span></td></tr></table></div>
+<div class="warn"><strong>Validar antes de poner en producción:</strong> los sitios usan dependencias que no son obvias (CDN, autenticación federada, certificados). Se activa una semana en <em>modo observación</em> (permite todo y registra), se revisa el registro de accesos con los usuarios y recién entonces se pasa a bloqueo. Los dominios de este cuadro son ejemplos a confirmar.</div>
+
+<p class="subhead">12.3 Implementación: DNS filtrado + proxy</p>
+<p>Los puestos consultan a <strong>DC1</strong> (DNS de AD), que reenvía las consultas externas a <strong>PRX1</strong> (Unbound). Allí solo se resuelven los dominios permitidos; todo lo demás recibe NXDOMAIN. El proxy repite el control por nombre y por usuario.</p>
+<pre class="code"><span class="c"># Unbound (PRX1) — lista blanca de resolución</span>
+server:
+  local-zone: "." always_nxdomain               <span class="c"># por defecto, nada existe</span>
+  local-zone: "gub.uy." transparent             <span class="c"># los permitidos resuelven normal</span>
+  local-zone: "bse.com.uy." transparent
+  local-zone: "impo.com.uy." transparent
+  local-zone: "mail.google.com." transparent
+  local-zone: "accounts.google.com." transparent
+  local-zone: "gstatic.com." transparent
+
+<span class="c"># Squid (PRX1) — control por destino y por red</span>
+acl func_net  src 10.10.0.0/26 10.20.0.0/27
+acl dir_net   src 10.20.0.32/27
+acl entes     dstdomain .gub.uy .bse.com.uy .impo.com.uy
+acl gmail     dstdomain mail.google.com accounts.google.com .gstatic.com .googleusercontent.com
+acl dir_extra dstdomain "/etc/squid/dir_extra.txt"   <span class="c"># editado solo por Dirección</span>
+http_access allow func_net entes
+http_access allow func_net gmail
+http_access allow dir_net  entes
+http_access allow dir_net  gmail
+http_access allow dir_net  dir_extra
+http_access deny  all                                 <span class="c"># todo lo demás, bloqueado y registrado</span></pre>
+<div class="norma"><strong>Por qué el firewall bloquea además el DNS-sobre-HTTPS y el puerto 853:</strong> un navegador con «DNS seguro» podría saltarse el filtrado DNS. Como las VLAN de usuarios no tienen ruta directa a Internet, DoH ni DoT pueden salir.</div>
+
+<p class="subhead">12.4 Excepción del correo: cómo se limita</p>
+<ul><li><strong>Solo cuentas de la empresa:</strong> el proxy inspecciona (descifra) únicamente las conexiones a Google e inserta la cabecera <code style="color:var(--coral)">X-GoogApps-Allowed-Domains: triada.com.uy</code>, que impide iniciar sesión con cuentas personales (Gmail común). El resto del tráfico pasa sin descifrar.</li>
+<li>El certificado de la autoridad interna se distribuye a las PC por GPO para que el navegador confíe en esta inspección.</li>
+<li><strong>Consola de administración de Workspace:</strong> desactivar Drive, Documentos, Meet, Chat y cualquier otro servicio que no sea Gmail; deshabilitar POP/IMAP (solo web); exigir verificación en dos pasos.</li>
+<li>Registros SPF, DKIM y DMARC del dominio publicados en el DNS público del registrador.</li></ul>
+<pre class="code"><span class="c"># Squid — inspección TLS selectiva (solo Google)</span>
+acl step1 at_step SslBump1
+ssl_bump peek step1
+ssl_bump bump gmail
+ssl_bump splice all
+request_header_add X-GoogApps-Allowed-Domains "triada.com.uy" gmail</pre>
+
+<p class="subhead">12.5 Matriz de reglas del firewall (política «denegar por defecto»)</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Origen</th><th>Destino</th><th>Servicio</th><th>Acción</th></tr>
+<tr><td>VLAN 10 / 20</td><td>DC1 / DC2 (VLAN 30)</td><td>DNS, DHCP, Kerberos, LDAP, RADIUS</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>VLAN 10 / 20</td><td>FS1, APP1 (VLAN 30)</td><td>SMB 445, puertos de la aplicación</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>VLAN 10 / 20</td><td>PRX1 (VLAN 30)</td><td>TCP 3128</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>VLAN 10 / 20</td><td>Internet (cualquiera)</td><td>—</td><td><span class="tag a">Bloquear + registrar</span></td></tr>
+<tr><td>VLAN 10 / 20</td><td>VLAN 50 (impresoras)</td><td>9100, 631, 443</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>VISORES_CCTV (3 hosts)</td><td>NVR de ambas sedes (VLAN 40)</td><td>HTTPS 443, RTSP 554</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>Resto de VLAN 10 / 20</td><td>VLAN 40 (CCTV)</td><td>—</td><td><span class="tag a">Bloquear</span></td></tr>
+<tr><td>VLAN 30</td><td>Direcciones de actualización (WSUS1, PRX1)</td><td>HTTPS, DNS</td><td><span class="tag g">Permitir (lista cerrada)</span></td></tr>
+<tr><td>VLAN 40 y 50</td><td>Cualquier destino fuera de su VLAN</td><td>—</td><td><span class="tag a">Bloquear</span></td></tr>
+<tr><td>VLAN 60</td><td>Internet</td><td>HTTP/HTTPS, DNS (al firewall)</td><td><span class="tag g">Permitir + límite de caudal</span></td></tr>
+<tr><td>VLAN 60</td><td>Redes 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16; puerto 25</td><td>—</td><td><span class="tag a">Bloquear</span></td></tr>
+<tr><td>PCs de administración</td><td>VLAN 99</td><td>SSH, HTTPS</td><td><span class="tag g">Permitir</span></td></tr>
+<tr><td>Cualquier otro</td><td>Cualquier otro</td><td>—</td><td><span class="tag a">Bloquear + registrar</span></td></tr></table></div>
+
+<p class="subhead">12.6 Red de invitados</p>
+<ul><li>Portal cautivo alojado en el propio firewall (términos y condiciones; sin registro en servicios externos).</li>
+<li>Aislamiento entre clientes del mismo SSID y límites de 2 Mbps por cliente y 15 Mbps totales.</li>
+<li>Bloqueo de destinos privados (nunca ven la red interna) y del puerto 25 (evita que un equipo infectado envíe spam).</li>
+<li>Registro de conexiones conservado según el criterio que fije el asesor legal.</li></ul>
+
+<p class="subhead">12.7 Visibilidad: registros y alertas</p>
+<p>Los registros de proxy, firewall y DNS se envían a MON1 (Wazuh). Se definen alertas por: intentos repetidos de acceder a destinos bloqueados desde un mismo equipo, tráfico DoH/DoT, accesos 802.1X fallidos, MAC no autorizada, y cambios en las listas de la Dirección. Un informe mensual de uso va a los socios.</p>
+</div></div>
+
+<div class="card" id="s13"><div class="card-header"><span class="card-num num-blue">13</span><span class="card-title">Seguridad física: videovigilancia (CCTV)</span></div><div class="card-body">
+<p class="subhead">13.1 Ubicación de las cámaras</p>
+<div class="tablewrap"><table class="md-table"><tr><th>ID</th><th>Sede</th><th>Ubicación</th><th>Tipo</th><th>Objetivo</th><th>IP</th></tr>
+<tr><td>C1</td><td>Casa</td><td>Fachada · entrada principal</td><td>Bullet exterior IP66, infrarrojo</td><td>Identificar quién entra</td><td>10.10.0.131</td></tr>
+<tr><td>C2</td><td>Casa</td><td>Recepción (H1)</td><td>Domo 4 MP</td><td>Atención y mostrador</td><td>.132</td></tr>
+<tr><td>C3</td><td>Casa</td><td>Corredor PB</td><td>Domo 4 MP</td><td>Tránsito hacia el CPD</td><td>.133</td></tr>
+<tr><td>C4</td><td>Casa</td><td>Interior del CPD</td><td>Domo 4 MP</td><td>Registro de toda presencia en la sala</td><td>.134</td></tr>
+<tr><td>C5</td><td>Casa</td><td>Patio posterior</td><td>Bullet exterior IP66</td><td>Acceso trasero</td><td>.135</td></tr>
+<tr><td>C6</td><td>Casa</td><td>Corredor planta alta</td><td>Domo 4 MP</td><td>Acceso a estudios B y C</td><td>.136</td></tr>
+<tr><td>N1</td><td>Nueva</td><td>Fachada · ingreso</td><td>Bullet exterior IP66</td><td>Acceso principal</td><td>10.20.0.83</td></tr>
+<tr><td>N2</td><td>Nueva</td><td>Hall de recepción</td><td>Domo 4 MP</td><td>Clientes y mostrador</td><td>.84</td></tr>
+<tr><td>N3</td><td>Nueva</td><td>Pasillo planta alta</td><td>Domo 4 MP</td><td>Acceso a sala y dirección</td><td>.85</td></tr>
+<tr><td>N4</td><td>Nueva</td><td>Estacionamiento / fondo</td><td>Bullet exterior IP66</td><td>Perímetro</td><td>.86</td></tr></table></div>
+
+<p class="subhead">13.2 Almacenamiento: cómo se calcula</p>
+<pre class="code">1 Mbps  →  1 · 86 400 s ÷ 8 ÷ 1000  =  10,8 GB por día
+Cámara 4 MP H.265, 15 fps ≈ 2 Mbps  →  21,6 GB/día
+<span class="c"># Casa</span>   6 cámaras × 21,6 = 129,6 GB/día  →  × 30 días = 3,89 TB  →  + 20 % = 4,67 TB  →  2 × 6 TB en RAID 1 (6 TB útiles)
+<span class="c"># Nueva</span>  4 cámaras × 21,6 =  86,4 GB/día  →  × 30 días = 2,59 TB  →  + 20 % = 3,11 TB  →  2 × 4 TB en RAID 1 (4 TB útiles)</pre>
+<p style="margin-top:.6rem">Cada cámara emite dos flujos: el principal (2 Mbps) que graba el NVR y un <em>sub-stream</em> de 0,5 Mbps para la visualización remota por la VPN (sección 4.3).</p>
+
+<p class="subhead">13.3 Quién puede ver qué (requisito R1)</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Puesto visor</th><th>Ubicación</th><th>IP reservada</th><th>Ve</th></tr>
+<tr><td>PC-REC-C</td><td>Recepción de la Casa (H1)</td><td>10.10.0.10</td><td>Las 10 cámaras (6 locales + 4 por VPN)</td></tr>
+<tr><td>PC-REC-N</td><td>Recepción de la sede nueva</td><td>10.20.0.10</td><td>Las 10 cámaras (4 locales + 6 por VPN)</td></tr>
+<tr><td>PC-DIR</td><td>Oficina de dirección (monitor dedicado)</td><td>10.20.0.37</td><td>Mosaico de las 10 cámaras, con acceso a la grabación</td></tr></table></div>
+<p style="margin-top:.6rem">Los tres hosts forman el alias <strong>VISORES_CCTV</strong> del firewall; solo ellos pueden llegar a los NVR. Cada persona usa una cuenta propia de <em>solo lectura</em>; solo los socios pueden exportar video.</p>
+
+<p class="subhead">13.4 Endurecimiento del sistema de video</p>
+<ul><li>Cambiar contraseñas de fábrica y deshabilitar cuentas por defecto; contraseñas únicas por equipo.</li>
+<li><strong>Desactivar P2P, UPnP y toda función de nube</strong> del fabricante en cámaras y NVR.</li>
+<li>VLAN 40 sin ruta a Internet; NTP interno para que las marcas de tiempo sean válidas como evidencia.</li>
+<li>HTTPS en el NVR, firmware actualizado desde el sitio del fabricante en una PC de administración (no desde la cámara).</li>
+<li>Cada NVR graba localmente: si cae la VPN, <strong>no se pierde ni un segundo de video</strong>.</li></ul>
+<div class="norma"><strong>Aspecto legal (Uruguay):</strong> el video de personas es un dato personal. Corresponde colocar cartelería informativa, definir la finalidad y el plazo de conservación (30 días), restringir y auditar el acceso, no grabar audio ni zonas de intimidad (baños) y registrar la base ante el organismo de control de datos personales. Se consulta con el asesor legal de la empresa.</div>
+</div></div>
+
+<div class="card" id="s14"><div class="card-header"><span class="card-num num-purple">14</span><span class="card-title">Seguridad en las terminales (endpoints)</span></div><div class="card-body">
+<p>La mayoría de los incidentes empiezan en un puesto de trabajo: un correo engañoso, un USB, una contraseña débil. Por eso cada PC se trata como un <strong>dispositivo no confiable que se controla de forma central</strong> desde el dominio (GPO), sin depender de herramientas externas.</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Amenaza</th><th>Control</th><th>Herramienta / dónde</th></tr>
+<tr><td>Robo o pérdida de equipo</td><td>Cifrado de disco; clave de recuperación en el dominio</td><td>BitLocker (TPM + PIN en portátiles); claves guardadas en AD</td></tr>
+<tr><td>Contraseñas débiles o reutilizadas</td><td>Política de contraseñas ≥ 12 caracteres, bloqueo tras 5 intentos; contraseña de administrador local única por equipo</td><td>GPO + Windows LAPS</td></tr>
+<tr><td>Un virus se ejecuta con permisos totales</td><td>Los usuarios <strong>no son administradores</strong>; cuentas de administración separadas</td><td>Grupos de AD, GPO</td></tr>
+<tr><td>Software malicioso o no autorizado</td><td>Antivirus central y lista de aplicaciones permitidas</td><td>Microsoft Defender gestionado por GPO + AppLocker; firmas distribuidas por WSUS1</td></tr>
+<tr><td>Vulnerabilidades sin parchear</td><td>Actualizaciones controladas por anillos (piloto 5 % → todos)</td><td>WSUS1; ventana semanal</td></tr>
+<tr><td>Fuga de datos o malware por USB</td><td>Bloqueo de almacenamiento extraíble; se permite la clase «lector de tarjeta» para la cédula y los tokens</td><td>GPO de restricción de dispositivos</td></tr>
+<tr><td>Conexión de equipos intrusos a la red</td><td>802.1X en cable y Wi-Fi; los equipos se autentican con certificado</td><td>NPS (RADIUS) + autoridad de certificados interna</td></tr>
+<tr><td>Navegación fuera de política</td><td>Proxy forzado, DNS seguro del navegador desactivado, extensiones bloqueadas</td><td>GPO / plantilla administrativa del navegador</td></tr>
+<tr><td>Propagación interna de malware</td><td>Firewall de Windows activo, SMBv1/LLMNR/NetBIOS desactivados</td><td>GPO</td></tr>
+<tr><td>Datos solo en la PC</td><td>Documentos y escritorio redirigidos al servidor de archivos (con copia de seguridad)</td><td>GPO de redirección de carpetas</td></tr>
+<tr><td>Incidente no detectado</td><td>Agente de monitoreo con integridad de archivos y alertas de vulnerabilidades</td><td>Agente Wazuh → MON1</td></tr>
+<tr><td>Ingeniería social</td><td>Capacitación inicial de 2 h y simulacro trimestral de correo engañoso</td><td>Plan de concientización</td></tr></table></div>
+<div class="ok"><strong>Criterio de aceptación (R5):</strong> una PC de prueba nueva no puede unirse a la red sin certificado, el usuario común no puede instalar programas ni leer un pendrive, y un archivo de prueba inofensivo de detección (EICAR) es bloqueado y aparece en el panel central.</div>
+</div></div>
+
+<div class="card" id="s15"><div class="card-header"><span class="card-num num-amber">15</span><span class="card-title">Servidores propios, copias de seguridad y centro de cómputos</span></div><div class="card-body">
+<p class="subhead">15.1 Plataforma de virtualización</p>
+<p>Dos servidores idénticos en el CPD forman un <strong>clúster de virtualización Proxmox VE</strong>. Un tercer servidor (sede nueva) actúa de tercer voto de quórum y de sitio de réplica. Los discos usan <strong>ZFS en RAID 10</strong> y las VM críticas se replican cada 15 minutos al otro nodo: si un servidor falla, las máquinas virtuales se reinician solas en el otro (alta disponibilidad).</p>
+<div class="tablewrap"><table class="md-table"><tr><th>VM</th><th>Sistema</th><th class="r">vCPU</th><th class="r">RAM</th><th class="r">Disco</th><th>IP</th><th>Función</th></tr>
+<tr><td>DC1</td><td>Windows Server</td><td class="r">2</td><td class="r">4 GB</td><td class="r">100 GB</td><td>10.10.0.70</td><td>AD DS, DNS, DHCP, RADIUS (NPS), autoridad de certificados</td></tr>
+<tr><td>FS1</td><td>Windows Server</td><td class="r">4</td><td class="r">8 GB</td><td class="r">2 TB</td><td>.71</td><td>Archivos, carpetas redirigidas, impresión</td></tr>
+<tr><td>APP1</td><td>Windows Server</td><td class="r">4</td><td class="r">16 GB</td><td class="r">300 GB</td><td>.72</td><td>Aplicación de gestión y su base de datos</td></tr>
+<tr><td>PRX1</td><td>Debian Linux</td><td class="r">2</td><td class="r">4 GB</td><td class="r">120 GB</td><td>.73</td><td>Squid + Unbound</td></tr>
+<tr><td>MON1</td><td>Debian Linux</td><td class="r">4</td><td class="r">16 GB</td><td class="r">600 GB</td><td>.74</td><td>Wazuh, Zabbix, controlador de AP</td></tr>
+<tr><td>WSUS1</td><td>Windows Server</td><td class="r">2</td><td class="r">8 GB</td><td class="r">400 GB</td><td>.75</td><td>Actualizaciones de Windows y Defender</td></tr>
+<tr><td>BKP1</td><td>Proxmox Backup Server</td><td class="r">2</td><td class="r">8 GB</td><td class="r">200 GB</td><td>.76</td><td>Copias de las VM (repositorio en el NAS)</td></tr>
+<tr class="sub"><td colspan="2">Totales</td><td class="r">20</td><td class="r">64 GB</td><td class="r">3,7 TB</td><td colspan="2">Cada servidor: 24 núcleos, 128 GB, 7,68 TB útiles ⇒ <strong>un solo servidor puede correr todo</strong> (regla N+1)</td></tr></table></div>
+<p style="font-size:12px;margin-top:.5rem">En la sede nueva, PVE-N1 aloja DC2 (controlador de dominio secundario con DHCP y DNS) y una réplica de los datos críticos. Todo el software es de código abierto salvo Windows Server (licencias incluidas en la cotización) y la aplicación de gestión.</p>
+
+<p class="subhead">15.2 Copias de seguridad: regla 3-2-1 sin nube</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Copia</th><th>Dónde</th><th>Frecuencia</th><th>Retención</th></tr>
+<tr><td>1 · Producción</td><td>SSD en ZFS RAID 10 + réplica al otro nodo</td><td>Cada 15 min</td><td>Última réplica</td></tr>
+<tr><td>2 · Copia local</td><td>NAS-C (otro medio: discos mecánicos), mediante BKP1</td><td>Diaria 22:00</td><td>7 diarias, 4 semanales, 6 mensuales</td></tr>
+<tr><td>3 · Fuera de sitio</td><td>PVE-N1 en la sede nueva (a 13 km), enviada cifrada por la VPN</td><td>Diaria 02:00 (solo datos críticos: DC, FS, APP)</td><td>7 diarias, 4 semanales</td></tr>
+<tr><td>Prueba</td><td>Restauración de una VM al azar en un entorno aislado</td><td>Mensual</td><td>Se documenta el resultado</td></tr></table></div>
+<div class="tablewrap" style="margin-top:.8rem"><table class="md-table"><tr><th>Escenario</th><th>Datos perdidos (RPO)</th><th>Tiempo de recuperación (RTO)</th></tr>
+<tr><td>Falla de un disco</td><td>0</td><td>0 (RAID)</td></tr>
+<tr><td>Falla de un servidor</td><td>≤ 15 min</td><td>≤ 10 min (arranque automático en el otro nodo)</td></tr>
+<tr><td>Borrado accidental o ransomware</td><td>≤ 24 h</td><td>≈ 4 h (restauración desde el NAS)</td></tr>
+<tr><td>Pérdida total del CPD (incendio)</td><td>≤ 24 h</td><td>48–72 h (servicios críticos sobre PVE-N1, compra de hardware)</td></tr></table></div>
+
+<p class="subhead">15.3 Diseño físico del centro de cómputos (H3)</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Seguridad física</div><div class="info-title">Un solo acceso</div><div class="info-desc">Puerta cortafuego reforzada con lector de tarjeta + teclado y cerradura electromagnética, registro de cada ingreso, cámara interior. Sin ventanas. El pasamuros hacia el ducto vertical se sella con material cortafuego.</div></div>
+<div class="info-card"><div class="info-label">Quién entra</div><div class="info-title">Lista cerrada</div><div class="info-desc">2 responsables de TI y 3 socios. Visitas acompañadas y anotadas. Revisión trimestral del registro de accesos.</div></div>
+<div class="info-card"><div class="info-label">Ambiente</div><div class="info-title">Sin agua, sin humedad</div><div class="info-desc">Sin cañerías en la sala ni en el techo, nada de agua en la planta alta sobre el CPD, rack elevado 10 cm, sensor de temperatura y humedad.</div></div>
+<div class="info-card"><div class="info-label">Incendio</div><div class="info-title">Detección y extinción</div><div class="info-desc">Detector de humo conectado a alarma y extintor de CO₂ (agente limpio) a la entrada. Prohibido almacenar papel o cajas en la sala.</div></div>
+</div>
+<p class="subhead">Cálculo eléctrico y de climatización</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Equipo</th><th class="r">Cant.</th><th class="r">Potencia</th><th class="r">Subtotal</th></tr>
+<tr><td>Servidores de virtualización</td><td class="r">2</td><td class="r">350 W</td><td class="r">700 W</td></tr>
+<tr><td>NAS de backup</td><td class="r">1</td><td class="r">80 W</td><td class="r">80 W</td></tr>
+<tr><td>NVR de la Casa</td><td class="r">1</td><td class="r">60 W</td><td class="r">60 W</td></tr>
+<tr><td>Firewall</td><td class="r">1</td><td class="r">30 W</td><td class="r">30 W</td></tr>
+<tr><td>Switch SW-MDF 48p (150 W propios + 90 W de PoE)</td><td class="r">1</td><td class="r">240 W</td><td class="r">240 W</td></tr>
+<tr><td>ONT, router 4G/5G</td><td class="r">2</td><td class="r">12 W</td><td class="r">25 W</td></tr>
+<tr class="sub"><td colspan="3">Carga total</td><td class="r">1 135 W</td></tr></table></div>
+<pre class="code"><span class="c">// UPS</span>   VA = W ÷ factor de potencia = 1 135 ÷ 0,9 = 1 261 VA  →  × 1,3 (crecimiento) = 1 640 VA  →  mínimo 2 kVA
+         <span class="c">se adopta UPS online 3 kVA con módulo de batería extendida (≈ 15 min de autonomía a 1,1 kW)</span>
+<span class="c">// Enfriamiento</span>  1 135 W × 3,412 = 3 873 BTU/h  →  + 15 % (envolvente, luz) = 4 454 BTU/h
+         <span class="c">se adopta split inverter de 12 000 BTU/h (menor tamaño comercial razonable; trabaja al 40 % y se desgasta menos)</span></pre>
+<p>Para profundizar en el cálculo de autonomía y la selección de UPS y estabilizadores, ver la guía <a href="../Teorico/ups_estabilizadores_interactivo.html" style="color:var(--coral)">UPS y estabilizadores</a>.</p>
+
+<p class="subhead">15.4 Monitoreo</p>
+<p>Zabbix vigila: estado de la fibra y del respaldo 4G, túnel VPN activo, temperatura y humedad del CPD, batería y carga del UPS, espacio de disco ZFS, éxito de los backups, vencimiento de certificados y carga de CPU/RAM. Las alertas llegan por correo corporativo y por SMS desde el módem 4G local a los dos responsables de TI.</p>
+</div></div>
+
+<div class="card" id="s16"><div class="card-header"><span class="card-num num-green">16</span><span class="card-title">Cotización del proyecto (con el cotizador)</span></div><div class="card-body">
+<p>El <a href="../Herramientas/cotizador_cableado_interactivo.html" style="color:var(--coral)">cotizador interactivo</a> calcula cable, terminaciones, panel de parcheo, switch, rack, canalización, equipos PoE y mano de obra para <strong>un rack</strong>. Este proyecto tiene tres: el MDF de la Casa, el IDF de la Casa y el rack de la sede nueva. Por eso se hacen <strong>tres cotizaciones</strong> con la herramienta y se suman. Lo que el cotizador no contempla (servidores, firewall, UPS, climatización, licencias, servicios de configuración) se agrega aparte.</p>
+<div class="flow"><span class="step">1 Cotizar cada rack</span><span class="arrow">→</span><span class="step">2 Sumar equipos fuera del cotizador</span><span class="arrow">→</span><span class="step">3 Servicios profesionales</span><span class="arrow">→</span><span class="step">4 Margen + IVA</span><span class="arrow">→</span><span class="step">5 Costos recurrentes</span></div>
+
+<p class="subhead">16.1 Parámetros para cargar en el cotizador</p>
+<p>Los valores salen del relevamiento y del diseño. Los estudiantes pueden cargarlos en la herramienta (con moneda «USD») y comprobar que obtienen las mismas cifras que aparecen más abajo.</p>
+<div class="tablewrap"><div id="tbl-params"></div></div>
+<details class="acc"><summary class="acc-head">Precios unitarios de referencia usados (USD, sin IVA)</summary><div class="acc-in"><div id="tbl-prices"></div></div></details>
+
+<p class="subhead">16.2 Variables del escenario (editables)</p>
+<div class="calc-bar">
+<div><label>Tarifa técnica (USD/h)</label><input type="number" id="in-tarifa" value="30" min="0"></div>
+<div><label>Margen de utilidad (%)</label><input type="number" id="in-margen" value="20" min="0"></div>
+<div><label>IVA (%)</label><input type="number" id="in-iva" value="22" min="0"></div>
+<div><label>Tarifa servicios de TI (USD/h)</label><input type="number" id="in-tarifati" value="35" min="0"></div>
+</div>
+
+<p class="subhead">16.3 Resultado por rack (modelo del cotizador)</p>
+<div id="quotes"></div>
+
+<p class="subhead">16.4 Equipos, obras y licencias que el cotizador no cubre</p>
+<div class="tablewrap"><div id="tbl-extras"></div></div>
+
+<p class="subhead">16.5 Servicios profesionales</p>
+<div class="tablewrap"><div id="tbl-serv"></div></div>
+
+<p class="subhead">16.6 Presupuesto consolidado</p>
+<div class="tablewrap"><div id="tbl-total"></div></div>
+<div class="kpis" id="kpis"></div>
+
+<p class="subhead">16.7 Costos recurrentes (mensuales, referencia)</p>
+<div class="tablewrap"><div id="tbl-rec"></div></div>
+
+<p class="subhead">16.8 Lectura crítica del presupuesto</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Qué pesa más</div><div class="info-title">Servidores y seguridad, no el cable</div><div class="info-desc">El cableado y los activos de red son una parte minoritaria del total. La decisión de «sin nube» desplaza el gasto hacia servidores, licencias y horas de configuración. Es un dato que el cliente debe conocer al aprobar R4.</div></div>
+<div class="info-card"><div class="info-label">Qué se puede ajustar</div><div class="info-title">Opciones para reducir el costo</div><div class="info-desc">Menos AP (pero se pierde margen de señal, ver 9.2), un solo servidor (se pierde la alta disponibilidad), NVR más chico (menos retención). Cada recorte debe presentarse con su riesgo.</div></div>
+<div class="info-card"><div class="info-label">Qué NO incluye</div><div class="info-title">Exclusiones explícitas</div><div class="info-desc">PC y portátiles existentes, obra civil mayor (revoques, pintura), la aplicación de gestión y su licencia, mobiliario, pantallas y todos los costos de la sección 16.7 (que son periódicos).</div></div>
+<div class="info-card"><div class="info-label">Contingencia</div><div class="info-title">Reserva recomendada del 10 %</div><div class="info-desc">No está sumada: cubre imprevistos de obra en muros macizos y variación del dólar. En una propuesta real se indica por separado.</div></div>
+</div>
+</div></div>
+
+<div class="card" id="s17"><div class="card-header"><span class="card-num num-blue">17</span><span class="card-title">Planificación del trabajo</span></div><div class="card-body">
+<p>Un proyecto se planifica <strong>hacia atrás desde sus dependencias</strong>: primero se identifican las tareas con tiempos de espera que no controla el instalador (instalación de la fibra por el operador, entrega de equipos), y alrededor de ellas se ordena el resto.</p>
+<p class="subhead">17.1 Cronograma (12 semanas)</p>
+<div class="plan"><div id="gantt"></div><div class="cap">Diagrama de Gantt. En coral, la ruta crítica; en turquesa, tareas con holgura</div></div>
+<p class="subhead">17.2 Tareas, dependencias y responsables</p>
+<div class="tablewrap"><div id="tbl-tareas"></div></div>
+<div class="note-box"><div class="note-title">Ruta crítica</div><div class="note-line">Relevamiento → diseño → aprobación → <strong>enlaces del operador (4 semanas)</strong> → firewall/VPN → dominio y terminales → aceptación → puesta en producción. Todo atraso en esa cadena mueve la fecha final; las tareas turquesa pueden demorarse hasta su holgura sin afectarla.</div></div>
+<p class="subhead">17.3 Hitos</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Hito</th><th>Semana</th><th>Evidencia</th></tr>
+<tr><td>H1 · Propuesta aprobada</td><td>4</td><td>Firma del cliente sobre diseño y presupuesto</td></tr>
+<tr><td>H2 · Enlaces activos</td><td>8</td><td>Fibra y 4G funcionando en ambas sedes</td></tr>
+<tr><td>H3 · Cableado certificado</td><td>9</td><td>Informes del certificador con 100 % aprobado</td></tr>
+<tr><td>H4 · Red y servidores operativos</td><td>10</td><td>VPN arriba, VLAN y servicios activos</td></tr>
+<tr><td>H5 · Aceptación</td><td>11</td><td>Acta de pruebas (sección 18) firmada</td></tr>
+<tr><td>H6 · Puesta en producción</td><td>12</td><td>Los 28 puestos migrados y trabajando</td></tr></table></div>
+<p class="subhead">17.4 Migración de los tres estudios (puesta en producción)</p>
+<div class="flow"><span class="step">Backup completo previo</span><span class="arrow">→</span><span class="step">Ola 1: Estudio Ferrés</span><span class="arrow">→</span><span class="step">Ola 2: Estudio Maidana</span><span class="arrow">→</span><span class="step">Ola 3: Estudio Olmos + sede nueva</span><span class="arrow">→</span><span class="step">Soporte reforzado 1 semana</span></div>
+<p style="margin-top:.6rem">Cada ola se hace en un fin de semana, con verificación de copias por suma de control y un plan de retroceso. Si una ola falla, el estudio vuelve a su sistema anterior sin afectar a los demás.</p>
+<p class="subhead">17.5 Matriz de riesgos</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Riesgo</th><th>Prob.</th><th>Impacto</th><th>Mitigación</th></tr>
+<tr><td>El operador demora la instalación de la fibra</td><td>Media</td><td>Alto</td><td>Contratar al aprobar la propuesta (semana 4); usar 4G como enlace transitorio</td></tr>
+<tr><td>Muros o ductos distintos a lo relevado</td><td>Media</td><td>Medio</td><td>Calas de verificación previas; horas de contingencia en mano de obra</td></tr>
+<tr><td>Demora en la entrega de servidores</td><td>Media</td><td>Alto</td><td>Pedir en la semana 5; confirmar stock local; priorizar los de la Casa</td></tr>
+<tr><td>Lista blanca incompleta: se bloquea un trámite urgente</td><td>Alta</td><td>Alto</td><td>Una semana en modo observación antes del bloqueo; canal rápido para alta de dominios</td></tr>
+<tr><td>Resistencia de los usuarios a las restricciones</td><td>Alta</td><td>Medio</td><td>Capacitación, explicación de motivos, procedimiento formal de excepciones</td></tr>
+<tr><td>Pérdida de datos en la migración</td><td>Baja</td><td>Alto</td><td>Backup previo, verificación por suma de control, olas por estudio</td></tr>
+<tr><td>Objeciones legales por las cámaras</td><td>Baja</td><td>Medio</td><td>Cartelería, política de privacidad y consulta al asesor legal antes de grabar</td></tr>
+<tr><td>Variación del dólar</td><td>Media</td><td>Medio</td><td>Validez de la cotización de 15 días; reserva de contingencia</td></tr></table></div>
+</div></div>
+
+<div class="card" id="s18"><div class="card-header"><span class="card-num num-teal">18</span><span class="card-title">Plan de pruebas y aceptación</span></div><div class="card-body">
+<p>Un trabajo no está terminado cuando se instala, sino cuando <strong>se demuestra que cumple los requisitos</strong>. Cada requisito de la sección 1.3 tiene al menos una prueba con criterio de aprobación.</p>
+<p class="subhead">18.1 Pruebas de cableado</p>
+<div class="tablewrap"><table class="md-table"><tr><th>Medio</th><th>Prueba</th><th>Criterio</th></tr>
+<tr><td>UTP Cat 6 (43 + 31 enlaces)</td><td>Certificación con instrumento de campo: mapa de cableado, longitud, pérdida de inserción, NEXT, pérdida de retorno, retardo</td><td>100 % PASS para Cat 6 permanent link; longitud &lt; 90 m</td></tr>
+<tr><td>Fibra OM3 MDF–IDF</td><td>Medición de pérdida con fuente y medidor (OLTS) en ambos sentidos</td><td>≤ 2,6 dB (esperado ≈ 1,1 dB)</td></tr>
+<tr><td>PoE</td><td>Carga real de AP y cámaras al mismo tiempo</td><td>Sin reinicios; presupuesto consumido &lt; 50 %</td></tr>
+<tr><td>Tierra</td><td>Medición de resistencia de la barra</td><td>≤ 5 Ω (valor a confirmar según normativa local)</td></tr></table></div>
+<p class="subhead">18.2 Pruebas funcionales</p>
+<div class="tablewrap"><table class="md-table"><tr><th>ID</th><th>Req.</th><th>Procedimiento</th><th>Resultado esperado</th></tr>
+<tr><td>P1</td><td>R1</td><td>Abrir las 10 cámaras desde PC-REC-C, PC-REC-N y PC-DIR</td><td>Las 10 se ven en cada visor; una PC común no logra conexión</td></tr>
+<tr><td>P2</td><td>R1</td><td>Cortar la VPN 10 min con cámaras grabando; luego restablecer</td><td>Cada NVR conserva la grabación continua; vuelve la visualización cruzada</td></tr>
+<tr><td>P3</td><td>R2 R3</td><td>En una PC de funcionario: abrir bps.gub.uy, dgi.gub.uy, bse.com.uy; luego youtube.com, facebook.com, drive.google.com</td><td>Los tres primeros cargan; los otros quedan bloqueados y registrados en el proxy</td></tr>
+<tr><td>P4</td><td>R3</td><td>Iniciar sesión de correo con una cuenta @triada.com.uy y con una cuenta personal</td><td>La corporativa entra; la personal es rechazada</td></tr>
+<tr><td>P5</td><td>R2</td><td>Activar «DNS seguro» (DoH) en el navegador y navegar</td><td>Sin salida; evento registrado</td></tr>
+<tr><td>P6</td><td>R7</td><td>Ping entre sedes; desconectar la fibra de la sede nueva</td><td>RTT &lt; 20 ms; conmutación a 4G en &lt; 60 s y túnel restablecido</td></tr>
+<tr><td>P7</td><td>R9</td><td>Conectar un celular al Wi-Fi libre; medir caudal; intentar acceder a 10.10.0.70</td><td>Internet funciona, ≈ 2 Mbps, acceso a la red interna bloqueado</td></tr>
+<tr><td>P8</td><td>R5</td><td>Conectar un pendrive, un lector de cédula y un archivo de prueba EICAR; intentar instalar un programa</td><td>Pendrive bloqueado, lector funciona, EICAR detectado, instalación denegada</td></tr>
+<tr><td>P9</td><td>R5</td><td>Enchufar un portátil desconocido en una toma de pared</td><td>No obtiene red de usuarios (queda sin acceso)</td></tr>
+<tr><td>P10</td><td>R6</td><td>Apagar PVE1 en caliente</td><td>Las VM reinician en PVE2 en &lt; 10 min</td></tr>
+<tr><td>P11</td><td>R6</td><td>Restaurar la VM FS1 desde el NAS y desde la sede nueva</td><td>Datos íntegros; tiempo dentro del RTO</td></tr>
+<tr><td>P12</td><td>R8</td><td>Intentar entrar al CPD sin tarjeta; revisar el registro; simular temperatura alta</td><td>Acceso denegado, ingreso registrado, alarma enviada</td></tr>
+<tr><td>P13</td><td>—</td><td>Cortar la energía en el CPD</td><td>El UPS sostiene la carga; apagado ordenado a los 10 min</td></tr>
+<tr><td>P14</td><td>R9</td><td>Recorrido con medidor de señal en cada ambiente</td><td>RSSI ≥ −65 dBm y SNR ≥ 25 dB en todos los puestos</td></tr></table></div>
+<p class="subhead">18.3 Acta de aceptación</p>
+<p>Se firma un acta con el listado de pruebas, el resultado (aprobado / observado), las observaciones a resolver y los plazos, firmada por el responsable del cliente y por el responsable técnico. La firma del acta inicia el período de garantía y de soporte reforzado.</p>
+</div></div>
+
+<div class="card" id="s19"><div class="card-header"><span class="card-num num-purple">19</span><span class="card-title">Entregables, cierre y uso en el proyecto final</span></div><div class="card-body">
+<p class="subhead">19.1 Documentación que se entrega al cliente</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Planos y diagramas</div><div class="info-title">Como construido (as-built)</div><div class="info-desc">Planos con ubicación real de puntos, recorrido de bandejas, diagrama lógico, diagrama de racks y diagrama del enlace entre sedes.</div></div>
+<div class="info-card"><div class="info-label">Registros</div><div class="info-title">Planilla de cables y etiquetas</div><div class="info-desc">Cada punto con etiqueta, puerto de patch, puerto de switch, VLAN y resultado de certificación.</div></div>
+<div class="info-card"><div class="info-label">Configuración</div><div class="info-title">Copias de todas las configuraciones</div><div class="info-desc">Firewall, switches, AP, Proxmox, GPO, proxy, DNS, NVR. Resguardadas fuera del equipo que configuran.</div></div>
+<div class="info-card"><div class="info-label">Operación</div><div class="info-title">Manual y procedimientos</div><div class="info-desc">Altas y bajas de usuario, alta de dominios en la lista blanca, restauración de backups, qué hacer si cae un enlace.</div></div>
+<div class="info-card"><div class="info-label">Seguridad</div><div class="info-title">Credenciales en custodia</div><div class="info-desc">Claves de administración en sobre sellado en caja fuerte (dos personas), claves de recuperación de BitLocker, claves de la VPN.</div></div>
+<div class="info-card"><div class="info-label">Inventario</div><div class="info-title">Equipos, series y garantías</div><div class="info-desc">Con fechas de vencimiento de garantías, licencias y certificados.</div></div>
+</div>
+
+<p class="subhead">19.2 Preguntas de reflexión (con respuesta)</p>
+<details class="acc"><summary class="acc-head">¿Qué cambiaría si los socios decidieran eliminar la excepción de Google y alojar el correo en servidores propios?</summary><div class="acc-in"><p>Se elimina la inspección TLS selectiva y las reglas de Google en el proxy, y se agrega una VM de correo (por ejemplo, Postfix + Dovecot + antispam). Pero el correo propio <strong>necesita recibir mensajes desde Internet</strong>: hay que abrir el puerto 25 hacia una DMZ nueva, publicar los registros MX y SPF/DKIM/DMARC, y mantener la reputación de la IP para que los mensajes no caigan en spam. Se pasa de una excepción de «nube» a una <strong>superficie de ataque expuesta</strong>, lo que contradice el espíritu de R2. Es una decisión de riesgo, no solo de técnica.</p></div></details>
+<details class="acc"><summary class="acc-head">Si se cae la VPN un lunes a las 9:00, ¿qué pasa en la sede nueva?</summary><div class="acc-in"><p>El firewall conmuta a 4G (≈ 30 s) y el túnel se restablece desde la sede nueva. Si la falla es de la fibra de la Casa, el túnel no vuelve hasta repararla. Durante ese lapso, DC2 mantiene la autenticación, el DHCP y el DNS; los datos críticos están replicados en solo lectura, pero la aplicación de gestión no está disponible. Las cámaras siguen grabando localmente. Es el riesgo residual explicado en 11.4.</p></div></details>
+<details class="acc"><summary class="acc-head">¿Cómo cambiaría el diseño de cableado si la casa fuera 2,5 veces más larga (65 m)?</summary><div class="acc-in"><p>Con 65 m de edificio y recorridos por corredor de más de 90 m, el IDF dejaría de ser una opción: sería obligatorio para respetar el límite de 90 m del enlace permanente. Habría que pensar también en un IDF por zona o por planta, con un troncal de fibra más largo (y reevaluar el tipo de fibra: OM3 sigue sirviendo hasta 300 m a 10 Gbps).</p></div></details>
+<details class="acc"><summary class="acc-head">¿Por qué la longitud de cable se calcula con la media y un 15 % de holgura, si se conoce cada ruta?</summary><div class="acc-in"><p>Porque se cotiza <em>material</em>, que se compra por caja de 305 m. La media sirve para estimar el consumo total; la holgura cubre errores de corte, reservas en los extremos y recortes. La longitud exacta de cada ruta se usa para otra cosa: <strong>verificar que ningún enlace supere los 90 m</strong>.</p></div></details>
+<details class="acc"><summary class="acc-head">¿Qué se perdería si se elimina el IDF y se manda todo desde el MDF?</summary><div class="acc-in"><p>El requisito de distancia se seguiría cumpliendo. Se perdería seguridad operativa (cada cambio en planta alta obligaría a abrir el CPD), se concentrarían 22 cables más en un ducto de la losa y se encarecería el crecimiento. Ahorraría ≈ USD 900. Esta comparación está en 7.2.</p></div></details>
+
+<p class="subhead">19.3 Cómo usar este caso en el proyecto final</p>
+<ol>
+<li>Empezar por el <strong>relevamiento</strong>: planos, ambientes, puestos, restricciones. Sin esto, nada de lo siguiente es defendible.</li>
+<li>Escribir los <strong>requisitos como una tabla verificable</strong> (sección 1.3) y asignar una prueba a cada uno.</li>
+<li>Registrar toda decisión con sus <strong>alternativas descartadas</strong> y la razón (secciones 7.2, 9.2, 11.1).</li>
+<li>Calcular, no estimar: longitudes por ruta, puertos de switch, PoE, UPS, almacenamiento (secciones 7.3, 8, 13.2, 15.3).</li>
+<li>Diseñar el <strong>direccionamiento con VLSM</strong> y dejar espacio libre (sección 10).</li>
+<li>Cotizar por rack con el cotizador y agregar lo que la herramienta no cubre (sección 16).</li>
+<li>Planificar con <strong>ruta crítica</strong>, hitos y riesgos (sección 17).</li>
+<li>Definir <strong>cómo se probará</strong> que todo funciona (sección 18).</li>
+<li>Declarar <strong>supuestos, exclusiones y riesgos residuales</strong> con honestidad.</li>
+</ol>
+<details class="acc"><summary class="acc-head">Errores frecuentes que este caso evita</summary><div class="acc-in">
+<ul>
+<li>Medir distancias en línea recta en lugar de por la ruta real del cable.</li>
+<li>Dimensionar el switch solo con los puntos de red, sin contar firewall, servidores, NAS y NVR.</li>
+<li>Poner cámaras y periféricos en la misma red que los usuarios.</li>
+<li>Dar acceso remoto a las cámaras con la «nube» del fabricante.</li>
+<li>Cotizar solo el cable y olvidar mano de obra, servidores, licencias, UPS, climatización y puesta a tierra.</li>
+<li>Diseñar un backup sin probar jamás una restauración.</li>
+<li>Poner el centro de cómputos en un lugar con cañerías de agua arriba.</li>
+<li>No decirle al cliente cuáles son los riesgos que el diseño deja sin cubrir.</li>
+</ul></div></details>
+</div></div>
+
+<div class="card" id="s20"><div class="card-header"><span class="card-num num-coral">20</span><span class="card-title">Referencias</span></div><div class="card-body">
+<p class="subhead">Normas y estándares citados</p>
+<div class="grid grid-2">
+<div class="info-card"><div class="info-label">Cableado</div><div class="info-title">ANSI/TIA-568 · ISO/IEC 11801</div><div class="info-desc">Cableado estructurado: subsistemas, categorías, distancias de 90/100 m.</div></div>
+<div class="info-card"><div class="info-label">Espacios</div><div class="info-title">ANSI/TIA-569</div><div class="info-desc">Canalizaciones, bandejas, salas técnicas, cortafuegos.</div></div>
+<div class="info-card"><div class="info-label">Administración</div><div class="info-title">ANSI/TIA-606</div><div class="info-desc">Etiquetado y documentación.</div></div>
+<div class="info-card"><div class="info-label">Tierra</div><div class="info-title">ANSI/TIA-607</div><div class="info-desc">Puesta a tierra y equipotencialidad para telecomunicaciones.</div></div>
+<div class="info-card"><div class="info-label">Ethernet y PoE</div><div class="info-title">IEEE 802.3 (af/at/bt), 802.1Q, 802.1X</div><div class="info-desc">Ethernet, alimentación por cable, VLAN y control de acceso por puerto.</div></div>
+<div class="info-card"><div class="info-label">Wi-Fi</div><div class="info-title">IEEE 802.11ax y 802.11r/k/v</div><div class="info-desc">Wi-Fi 6 y roaming rápido.</div></div>
+</div>
+<p class="subhead">Documentación de las herramientas usadas</p>
+<div class="ref-card"><div class="rt">WireGuard</div><div class="rd">Protocolo de VPN moderno.</div><a href="https://www.wireguard.com/" target="_blank" rel="noopener">https://www.wireguard.com/</a></div>
+<div class="ref-card"><div class="rt">OPNsense</div><div class="rd">Firewall de código abierto: reglas, VPN, portal cautivo, limitadores.</div><a href="https://docs.opnsense.org/" target="_blank" rel="noopener">https://docs.opnsense.org/</a></div>
+<div class="ref-card"><div class="rt">Squid</div><div class="rd">Proxy de caché y control de acceso.</div><a href="http://www.squid-cache.org/" target="_blank" rel="noopener">http://www.squid-cache.org/</a></div>
+<div class="ref-card"><div class="rt">Unbound</div><div class="rd">Resolvedor DNS con zonas locales.</div><a href="https://unbound.docs.nlnetlabs.nl/" target="_blank" rel="noopener">https://unbound.docs.nlnetlabs.nl/</a></div>
+<div class="ref-card"><div class="rt">Proxmox VE y Proxmox Backup Server</div><div class="rd">Virtualización, alta disponibilidad y copias de seguridad.</div><a href="https://pve.proxmox.com/pve-docs/" target="_blank" rel="noopener">https://pve.proxmox.com/pve-docs/</a></div>
+<div class="ref-card"><div class="rt">Wazuh y Zabbix</div><div class="rd">Monitoreo de seguridad y de infraestructura.</div><a href="https://documentation.wazuh.com/" target="_blank" rel="noopener">https://documentation.wazuh.com/</a></div>
+<p class="subhead">Material del curso relacionado</p>
+<div class="sec-links"><a class="btn primary" href="../Herramientas/cotizador_cableado_interactivo.html">Cotizador interactivo</a><a class="btn" href="../Teorico/calculo_cotizacion_cableado_2emt.html">Guía de cálculo y cotización</a><a class="btn" href="../Teorico/cableado_estructurado_2emt.html">Teoría de cableado estructurado</a><a class="btn" href="../Teorico/ups_estabilizadores_interactivo.html">UPS y estabilizadores</a></div>
+</div></div>
+
+</main>
+<footer><span style="color:var(--coral)">TRIADA://</span>CASO_CABLEADO · Relevamiento · Requisitos · Cableado · VLAN · VPN · Seguridad · CCTV · Servidores · Cotización · Planificación · Pruebas</footer>
+<script>
+/* ================= utilidades ================= */
+const $=id=>document.getElementById(id);
+const fmt=(v,d=0)=>Number(v).toLocaleString('es-UY',{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=v=>'USD '+fmt(v);
+const r1=v=>Math.round(v*10)/10;
+
+/* ================= 1. rutas de cableado (secciones 7 y 8) ================= */
+/* [grupo, puntos, salida del rack/ducto, corredor/hall, dentro del ambiente] en metros */
+const RUTAS={
+ casaMDF:[
+  ['H1 Recepción · tomas',6,6.5,17.9,7.3],['H2 Estudio A · tomas',8,6.5,14.4,6.3],
+  ['AP1 (H1)',1,6.5,17.9,5.6],['AP2 (H2)',1,6.5,14.4,4.6],
+  ['C1 Cámara fachada',1,6.5,17.9,14.0],['C2 Cámara recepción',1,6.5,17.9,8.0],['C3 Cámara corredor PB',1,6.5,10.4,0.6],
+  ['C4 Cámara interior CPD',1,0,0,6.0],['C5 Cámara patio',1,6.5,2.5,5.0]],
+ casaIDF:[
+  ['H4 Estudio B · tomas',8,4.8,17.9,7.0],['H5 Estudio C · tomas',6,4.8,11.4,6.0],['H6 Administración · tomas',4,4.8,3.9,6.0],
+  ['AP3 (H4)',1,4.8,17.9,5.5],['AP4 (H5)',1,4.8,11.4,4.5],['AP5 (H6)',1,4.8,3.9,4.5],['C6 Cámara corredor PA',1,4.8,9.4,0.5]],
+ nueva:[
+  ['Hall recepción · tomas',4,2.0,4.0,5.4],['Oficina 1 público · tomas',6,2.0,4.5,7.5],['Oficina 2 clientes · tomas',6,2.0,3.5,8.5],
+  ['Sala de reuniones · tomas',2,4.3,4.8,8.4],['Dirección · tomas',6,4.3,4.0,8.4],
+  ['AP-N1 (hall)',1,2.0,3.0,3.0],['AP-N2 (sala)',1,4.3,4.8,5.6],['AP-N3 (dirección)',1,4.3,4.0,5.6],
+  ['N1 Cámara fachada',1,2.0,6.0,8.0],['N2 Cámara hall',1,2.0,6.0,2.0],['N3 Cámara pasillo PA',1,4.3,5.0,0.8],['N4 Cámara estacionamiento',1,2.0,6.0,14.0]]
+};
+function statsRuta(g){
+  let n=0,suma=0,max=0;
+  g.forEach(r=>{const L=r[2]+r[3]+r[4];n+=r[1];suma+=r[1]*L;if(L>max)max=L});
+  return {n,suma,avg:r1(suma/n),max:r1(max)};
+}
+function tablaRuta(g){
+  const st=statsRuta(g);
+  const rows=g.map(r=>{const L=r[2]+r[3]+r[4];return `<tr><td>${r[0]}</td><td class="r">${r[1]}</td><td class="r">${fmt(r[2],1)}</td><td class="r">${fmt(r[3],1)}</td><td class="r">${fmt(r[4],1)}</td><td class="r">${fmt(L,1)}</td><td class="r">${fmt(L*r[1],1)}</td></tr>`}).join('');
+  return `<table class="md-table"><tr><th>Grupo de puntos</th><th class="r">Puntos</th><th class="r">Salida rack / ducto (m)</th><th class="r">Corredor / hall (m)</th><th class="r">Dentro del ambiente (m)</th><th class="r">Total (m)</th><th class="r">Total grupo (m)</th></tr>${rows}
+  <tr class="sub"><td>Total</td><td class="r">${st.n}</td><td></td><td></td><td></td><td class="r">máx ${fmt(st.max,1)}</td><td class="r">${fmt(st.suma,1)}</td></tr>
+  <tr class="tot"><td colspan="5">Distancia promedio al rack (valor para el cotizador)</td><td colspan="2" class="r">${fmt(st.avg,1)} m</td></tr></table>`;
+}
+const ST={mdf:statsRuta(RUTAS.casaMDF),idf:statsRuta(RUTAS.casaIDF),nue:statsRuta(RUTAS.nueva)};
+$('tbl-casa-mdf').innerHTML=tablaRuta(RUTAS.casaMDF);
+$('tbl-casa-idf').innerHTML=tablaRuta(RUTAS.casaIDF);
+$('tbl-nueva').innerHTML=tablaRuta(RUTAS.nueva);
+$('avg-casa-mdf').textContent=fmt(ST.mdf.avg,1);$('avg-casa-idf').textContent=fmt(ST.idf.avg,1);
+$('max-casa').textContent=fmt(Math.max(ST.mdf.max,ST.idf.max),1);
+$('avg-nueva').textContent=fmt(ST.nue.avg,1);$('max-nueva').textContent=fmt(ST.nue.max,1);
+
+/* ================= 2. dibujo de racks ================= */
+const RC={ups:'#f59e0b',srv:'#4da8ff',nas:'#a78bfa',nvr:'#fb7185',net:'#2dd4bf',pas:'#566378',blank:'none'};
+function dibujarRack(id,U,items){ // items: {u:inicio desde abajo,h,label,c}
+  const uh=17,w=250,top=14,bot=14,H=U*uh+top+bot;
+  let s=`<svg viewBox="0 0 ${w} ${H}" style="width:100%;max-width:320px;height:auto;display:block;margin:6px auto 0;background:var(--bg3);border:1px solid var(--border);border-radius:10px"><rect x="22" y="${top-4}" width="${w-44}" height="${U*uh+8}" fill="none" stroke="#8b9ab5" stroke-width="2" rx="3"/>`;
+  for(let i=1;i<=U;i++){const y=top+(U-i)*uh;s+=`<text x="${w-20}" y="${y+12}" font-size="8.5" fill="#566378" font-family="JetBrains Mono,monospace">${i}</text>`;}
+  items.forEach(it=>{const y=top+(U-it.u-it.h+1)*uh+1,h=it.h*uh-2;
+    const dash=it.c==='blank'?' stroke-dasharray="4 3" fill="none" stroke="#566378"':` fill="${RC[it.c]}" fill-opacity=".22" stroke="${RC[it.c]}"`;
+    s+=`<rect x="26" y="${y}" width="${w-52}" height="${h}" rx="3"${dash} stroke-width="1.2"/><text x="${w/2}" y="${y+h/2+3.5}" text-anchor="middle" font-size="9.5" fill="#e8eaf0" font-family="Space Grotesk,sans-serif">${it.l}</text>`});
+  $(id).innerHTML=s+'</svg>';
+}
+dibujarRack('rack-mdf',24,[
+ {u:1,h:2,l:'UPS online 3 kVA',c:'ups'},{u:3,h:2,l:'Batería extendida',c:'ups'},{u:5,h:2,l:'PVE1 · servidor',c:'srv'},{u:7,h:2,l:'PVE2 · servidor',c:'srv'},
+ {u:9,h:2,l:'NAS-C · backup',c:'nas'},{u:11,h:2,l:'NVR-C · cámaras',c:'nvr'},{u:13,h:1,l:'Panel ciego',c:'pas'},{u:14,h:1,l:'Bandeja: ONT + router 4G',c:'net'},
+ {u:15,h:1,l:'FW-CASA',c:'net'},{u:16,h:1,l:'ODF fibra',c:'pas'},{u:17,h:1,l:'Organizador',c:'pas'},{u:18,h:1,l:'SW-MDF 48p PoE',c:'net'},
+ {u:19,h:1,l:'Organizador',c:'pas'},{u:20,h:1,l:'Patch panel PP1 · 24p',c:'pas'},{u:21,h:4,l:'Reserva (4U libres)',c:'blank'}]);
+dibujarRack('rack-idf',9,[
+ {u:1,h:2,l:'UPS 1 kVA',c:'ups'},{u:3,h:1,l:'ODF fibra',c:'pas'},{u:4,h:1,l:'SW-IDF 48p PoE',c:'net'},{u:5,h:1,l:'Organizador',c:'pas'},
+ {u:6,h:1,l:'Patch panel PP2 · 24p',c:'pas'},{u:7,h:1,l:'Organizador',c:'pas'},{u:8,h:2,l:'Reserva (2U libres)',c:'blank'}]);
+
+/* ================= 3. motor de cotización (misma lógica que el cotizador) ================= */
+const PR={cableCaja:190,keystone:5,rj45:1.5,roseta:8,pp:{12:70,24:105,48:180},org:22,patch:6,
+ rack:{6:150,9:240,12:300,24:450,42:700},sw:{8:225,16:375,24:525,48:950},swPoe:{8:400,16:650,24:800,48:1450},
+ canal:2.4,fibra:1.1,sfp:45,ap:160,cam:130,tel:80};
+const NOMBRES_PRECIO=[['Caja de cable UTP Cat 6 (305 m)',PR.cableCaja],['Keystone',PR.keystone],['Conector RJ45',PR.rj45],['Roseta / placa de pared',PR.roseta],
+ ['Patch panel 12 / 24 / 48 puertos',`${PR.pp[12]} / ${PR.pp[24]} / ${PR.pp[48]}`],['Organizador horizontal',PR.org],['Patch cord',PR.patch],
+ ['Rack 6U / 9U / 12U / 24U / 42U',Object.values(PR.rack).join(' / ')],['Switch 8 / 16 / 24 / 48 p (sin PoE)',Object.values(PR.sw).join(' / ')],
+ ['Switch 8 / 16 / 24 / 48 p PoE',Object.values(PR.swPoe).join(' / ')],['Canalización (por metro)',PR.canal],['Fibra óptica (por metro)',PR.fibra],
+ ['Transceptor SFP',PR.sfp],['Access point PoE',PR.ap],['Cámara IP',PR.cam],['Teléfono IP',PR.tel]];
+$('tbl-prices').innerHTML='<table class="md-table"><tr><th>Ítem</th><th class="r">Precio unitario (USD)</th></tr>'+NOMBRES_PRECIO.map(p=>`<tr><td>${p[0]}</td><td class="r">${p[1]}</td></tr>`).join('')+'</table>';
+
+const RUNS=[
+ {id:'A',nombre:'A · Casa · MDF (planta baja + CPD)',puestos:7,tomas:2,dist:ST.mdf.avg,hol:15,aps:2,cams:5,tel:0,crec:20,racks:1,rackU:24,poe:true,canP:30,canS:80,fibra:40,sfp:2,hP:2.0,hR:12,hC:0.25},
+ {id:'B',nombre:'B · Casa · IDF (planta alta)',puestos:9,tomas:2,dist:ST.idf.avg,hol:15,aps:3,cams:1,tel:0,crec:20,racks:1,rackU:9,poe:true,canP:25,canS:60,fibra:0,sfp:0,hP:2.0,hR:6,hC:0.25},
+ {id:'C',nombre:'C · Sede nueva · rack único',puestos:12,tomas:2,dist:ST.nue.avg,hol:15,aps:3,cams:4,tel:0,crec:20,racks:1,rackU:12,poe:true,canP:25,canS:70,fibra:0,sfp:0,hP:1.5,hR:8,hC:0.25}
+];
+function pickSwitch(q){for(const s of [8,16,24,48]){if(q<=s)return{n:1,size:s}}return{n:Math.ceil(q/48),size:48}}
+function pickPP(p){for(const s of [12,24,48]){if(p<=s)return{n:1,size:s}}return{n:Math.ceil(p/48),size:48}}
+function cotizarRack(R,tarifa){
+  const tomas=R.puestos*R.tomas, pts=tomas+R.aps+R.cams+R.tel;
+  const metros=pts*R.dist*(1+R.hol/100), cajas=Math.ceil(metros/305);
+  const pp=pickPP(pts), sw=pickSwitch(Math.ceil(pts*(1+R.crec/100)));
+  const items=[];const add=(n,c,p,u)=>{if(c>0)items.push({n,c,p,u:u||'u.',s:c*p})};
+  add('Cable UTP Cat 6 (caja 305 m)',cajas,PR.cableCaja,'cajas');
+  add('Keystone Cat 6',pts,PR.keystone);
+  add('Roseta / placa de pared',tomas,PR.roseta);
+  add(`Patch panel ${pp.size} puertos`,pp.n,PR.pp[pp.size]);
+  add('Organizador horizontal',pp.n,PR.org);
+  add('Patch cord Cat 6',pts*2,PR.patch);
+  add(`Rack ${R.rackU}U`,R.racks,PR.rack[R.rackU]);
+  add(`Switch ${sw.size}p PoE`,sw.n,R.poe?PR.swPoe[sw.size]:PR.sw[sw.size]);
+  add('Canalización (principal + secundaria)',R.canP+R.canS,PR.canal,'m');
+  add('Fibra óptica backbone',R.fibra,PR.fibra,'m');
+  add('Transceptor SFP+',R.sfp,PR.sfp);
+  add('Access point PoE',R.aps,PR.ap);
+  add('Cámara IP',R.cams,PR.cam);
+  const mat=items.reduce((a,i)=>a+i.s,0);
+  const horas=pts*R.hP+R.racks*R.hR+pts*R.hC, mo=horas*tarifa;
+  return {R,tomas,pts,metros,cajas,pp,sw,items,mat,horas,mo,costo:mat+mo};
+}
+const EXTRAS=[
+ ['Casa','Servidor de virtualización 2U (2×12 núcleos, 128 GB, 4×3,84 TB SSD)',2,6000],
+ ['Casa','NAS de backup 4 bahías con 4×8 TB',1,1900],
+ ['Casa','Firewall / UTM OPNsense (4×2,5 GbE + 2 SFP+)',1,900],
+ ['Casa','Router 4G/5G (WAN2)',1,250],
+ ['Casa','UPS online 3 kVA rack con batería extendida (CPD)',1,1500],
+ ['Casa','UPS 1 kVA rack/mural (IDF)',1,380],
+ ['Casa','NVR 8 canales + 2×6 TB',1,900],
+ ['Casa','Split inverter 12 000 BTU/h instalado (CPD)',1,750],
+ ['Casa','Control de acceso del CPD: lector + teclado + cerradura electromagnética',1,500],
+ ['Casa','Adecuación de puerta y sellado cortafuego de pasamuros',1,450],
+ ['Casa','Detector de humo con alarma + extintor de CO₂',1,350],
+ ['Casa','Tablero eléctrico dedicado + 2 PDU',1,600],
+ ['Casa','Puesta a tierra y barra equipotencial (TIA-607)',1,450],
+ ['Casa','Licencias Windows Server (3 hosts) + 28 CAL de usuario',1,4400],
+ ['Nueva','Mini servidor (DC2 + réplica; 32 GB, 2×12 TB)',1,2300],
+ ['Nueva','Firewall / UTM OPNsense',1,900],
+ ['Nueva','Router 4G/5G (WAN2)',1,250],
+ ['Nueva','UPS online 1,5 kVA torre',1,650],
+ ['Nueva','NVR 8 canales + 2×4 TB',1,750],
+ ['Nueva','Tablero y PDU',1,250],
+ ['Nueva','Puesta a tierra y barra equipotencial',1,300]];
+const SERV=[['Gestión del proyecto y relevamiento',30],['Configuración y puesta en marcha (servidores, firewall, VPN, AD/GPO, proxy, NVR)',140],['Pruebas, documentación y capacitación',24]];
+const RECURRENTE=[['Fibra empresarial 300/100 con IP fija (Casa)',90],['Fibra empresarial 300/100 (Nueva)',70],['Planes 4G/5G de respaldo (2)',50],['Correo corporativo en Google Workspace (28 usuarios × USD 7)',196],['Dominio y DNS público',3],['Mantenimiento preventivo (4 h/mes)',140]];
+
+function renderQuote(c,m){
+  const rows=c.items.map(i=>`<tr><td>${i.n}</td><td class="r">${fmt(i.c)} ${i.u}</td><td class="r">${fmt(i.p,i.p%1?2:0)}</td><td class="r">${fmt(i.s)}</td></tr>`).join('');
+  const sub=c.costo, mg=sub*m.mg/100, s2=sub+mg, iva=s2*m.iva/100;
+  return `<details class="acc"${c.R.id==='A'?' open':''}><summary class="acc-head">${c.R.nombre} — ${c.pts} puntos · ${fmt(c.R.dist,1)} m promedio · ${fmt(c.cajas)} cajas · total con IVA ${usd(s2+iva)}</summary><div class="acc-in"><div class="tablewrap"><table class="md-table"><tr><th>Ítem</th><th class="r">Cantidad</th><th class="r">Precio unit.</th><th class="r">Subtotal</th></tr>${rows}
+  <tr class="sub"><td colspan="3">Subtotal materiales</td><td class="r">${fmt(c.mat)}</td></tr>
+  <tr><td>Mano de obra (${fmt(c.horas,1)} h × ${m.tarifa})</td><td class="r">${fmt(c.horas,1)} h</td><td class="r">${fmt(m.tarifa)}</td><td class="r">${fmt(c.mo)}</td></tr>
+  <tr class="sub"><td colspan="3">Subtotal materiales + mano de obra</td><td class="r">${fmt(sub)}</td></tr>
+  <tr><td colspan="3">Margen de utilidad (${m.mg} %)</td><td class="r">${fmt(mg)}</td></tr>
+  <tr><td colspan="3">IVA (${m.iva} %)</td><td class="r">${fmt(iva)}</td></tr>
+  <tr class="tot"><td colspan="3">TOTAL (USD)</td><td class="r">${fmt(s2+iva)}</td></tr></table></div>
+  <div class="note-box"><div class="note-title">Cómo se obtuvo</div><div class="note-line">Puntos = ${c.R.puestos} puestos × ${c.R.tomas} tomas + ${c.R.aps} AP + ${c.R.cams} cámaras = ${c.pts}. Cable = ${c.pts} × ${fmt(c.R.dist,1)} m × 1,15 = ${fmt(c.metros)} m ⇒ ${c.cajas} cajas. Puertos de switch = ${c.pts} × 1,20 = ${Math.ceil(c.pts*1.2)} ⇒ switch de ${c.sw.size} puertos. Horas = ${c.pts} × (${c.R.hP} + ${c.R.hC}) + ${c.R.racks} × ${c.R.hR} = ${fmt(c.horas,1)} h.</div></div></div></details>`;
+}
+function renderParams(){
+  const f=[['Puestos de trabajo',r=>r.puestos],['Tomas por puesto',r=>r.tomas+' (doble)'],['Distancia promedio al rack (m)',r=>fmt(r.dist,1)],['Margen de holgura de cable (%)',r=>r.hol],
+   ['Categoría de cable',r=>'Cat 6'],['Sistema de terminación',r=>'Keystone + patch panel'],['Access points PoE',r=>r.aps],['Cámaras IP PoE',r=>r.cams],['Teléfonos IP',r=>r.tel],
+   ['Crecimiento de puertos (%)',r=>r.crec],['Cantidad de racks',r=>r.racks],['Tamaño de rack',r=>r.rackU+' U'],['Switch con PoE',r=>'Sí'],
+   ['Canalización principal (m)',r=>r.canP],['Canalización secundaria (m)',r=>r.canS],['Fibra óptica backbone (m)',r=>r.fibra],['Transceptores SFP',r=>r.sfp],
+   ['Horas por punto',r=>fmt(r.hP,1)],['Horas fijas por rack',r=>r.hR],['Horas de certificación por punto',r=>fmt(r.hC,2)]];
+  return `<table class="md-table"><tr><th>Campo del cotizador</th>${RUNS.map(r=>`<th class="r">${r.nombre.split(' · ').slice(0,2).join(' · ')}</th>`).join('')}</tr>${f.map(x=>`<tr><td>${x[0]}</td>${RUNS.map(r=>`<td class="r">${x[1](r)}</td>`).join('')}</tr>`).join('')}
+  <tr class="sub"><td colspan="4">Comunes: moneda USD · tarifa por hora 30 · margen de utilidad 20 % · impuesto 22 % · precios de la tabla anterior</td></tr></table>`;
+}
+$('tbl-params').innerHTML=renderParams();
+
+function calcularTodo(){
+  const m={tarifa:+$('in-tarifa').value||0,mg:+$('in-margen').value||0,iva:+$('in-iva').value||0,tarifaTI:+$('in-tarifati').value||0};
+  const Q=RUNS.map(r=>cotizarRack(r,m.tarifa));
+  $('quotes').innerHTML=Q.map(c=>renderQuote(c,m)).join('');
+  // extras
+  const exCasa=EXTRAS.filter(e=>e[0]==='Casa'), exNue=EXTRAS.filter(e=>e[0]==='Nueva');
+  const sum=a=>a.reduce((t,e)=>t+e[2]*e[3],0);
+  const fila=e=>`<tr><td>${e[1]}</td><td class="r">${e[2]}</td><td class="r">${fmt(e[3])}</td><td class="r">${fmt(e[2]*e[3])}</td></tr>`;
+  $('tbl-extras').innerHTML=`<table class="md-table"><tr><th>Concepto</th><th class="r">Cant.</th><th class="r">Precio unit.</th><th class="r">Subtotal</th></tr>
+  <tr class="sub"><td colspan="4">Sede 1 · La Casa (CPD, servidores y licencias)</td></tr>${exCasa.map(fila).join('')}
+  <tr class="sub"><td colspan="3">Subtotal Casa</td><td class="r">${fmt(sum(exCasa))}</td></tr>
+  <tr class="sub"><td colspan="4">Sede 2 · Nueva</td></tr>${exNue.map(fila).join('')}
+  <tr class="sub"><td colspan="3">Subtotal Nueva</td><td class="r">${fmt(sum(exNue))}</td></tr></table>`;
+  const costoServ=SERV.reduce((t,s)=>t+s[1]*m.tarifaTI,0);
+  $('tbl-serv').innerHTML=`<table class="md-table"><tr><th>Servicio</th><th class="r">Horas</th><th class="r">USD/h</th><th class="r">Subtotal</th></tr>${SERV.map(s=>`<tr><td>${s[0]}</td><td class="r">${s[1]}</td><td class="r">${m.tarifaTI}</td><td class="r">${fmt(s[1]*m.tarifaTI)}</td></tr>`).join('')}<tr class="sub"><td colspan="3">Subtotal servicios</td><td class="r">${fmt(costoServ)}</td></tr></table>`;
+  // consolidado
+  const rub=[['A · Cableado y activos, Casa MDF',Q[0].costo],['B · Cableado y activos, Casa IDF',Q[1].costo],['C · Cableado y activos, sede nueva',Q[2].costo],
+    ['Equipos, obras y licencias · Casa',sum(exCasa)],['Equipos y obras · Nueva',sum(exNue)],['Servicios profesionales',costoServ]];
+  const costo=rub.reduce((t,r)=>t+r[1],0), mg=costo*m.mg/100, base=costo+mg, iva=base*m.iva/100, total=base+iva;
+  $('tbl-total').innerHTML=`<table class="md-table"><tr><th>Rubro</th><th class="r">Costo</th><th class="r">% del costo</th></tr>${rub.map(r=>`<tr><td>${r[0]}</td><td class="r">${fmt(r[1])}</td><td class="r">${fmt(r[1]/costo*100,1)} %</td></tr>`).join('')}
+  <tr class="sub"><td>Costo total</td><td class="r">${fmt(costo)}</td><td class="r">100 %</td></tr>
+  <tr><td>Margen de utilidad (${m.mg} %)</td><td class="r">${fmt(mg)}</td><td></td></tr>
+  <tr class="sub"><td>Precio sin IVA</td><td class="r">${fmt(base)}</td><td></td></tr>
+  <tr><td>IVA (${m.iva} %)</td><td class="r">${fmt(iva)}</td><td></td></tr>
+  <tr class="tot"><td>PRECIO FINAL (USD)</td><td class="r">${fmt(total)}</td><td></td></tr></table>`;
+  const cablePct=(Q[0].costo+Q[1].costo+Q[2].costo)/costo*100;
+  const puntos=Q.reduce((t,c)=>t+c.pts,0);
+  $('kpis').innerHTML=`<div class="kpi"><div class="kl">Precio final</div><div class="kv c">${usd(total)}</div></div><div class="kpi"><div class="kl">Sin IVA</div><div class="kv">${usd(base)}</div></div><div class="kpi"><div class="kl">Cableado + activos de red</div><div class="kv">${fmt(cablePct,0)} % del costo</div></div><div class="kpi"><div class="kl">Costo por puesto</div><div class="kv">${usd(total/28)}</div></div><div class="kpi"><div class="kl">Puntos de red</div><div class="kv">${puntos}</div></div>`;
+  const rec=RECURRENTE.reduce((t,r)=>t+r[1],0);
+  $('tbl-rec').innerHTML=`<table class="md-table"><tr><th>Concepto</th><th class="r">USD / mes</th></tr>${RECURRENTE.map(r=>`<tr><td>${r[0]}</td><td class="r">${fmt(r[1])}</td></tr>`).join('')}<tr class="tot"><td>Total mensual (referencia, IVA no incluido)</td><td class="r">${fmt(rec)}</td></tr></table><p style="font-size:12px;margin-top:.5rem">Equivale a USD ${fmt(rec*12)} por año. El 36 % corresponde al correo en Google: la única excepción a «sin nube» tiene también un costo recurrente.</p>`;
+}
+['in-tarifa','in-margen','in-iva','in-tarifati'].forEach(i=>$(i).addEventListener('input',calcularTodo));
+calcularTodo();
+
+/* ================= 4. diagrama de Gantt ================= */
+const TAREAS=[
+ ['T1','Relevamiento en sitio y reunión con los socios',1,1,true,'Ingeniero de proyecto','—'],
+ ['T2','Diseño físico y lógico; planos',2,2,true,'Ingeniero de proyecto','T1'],
+ ['T3','Cotización y aprobación del cliente',4,1,true,'Ingeniero + socios','T2'],
+ ['T4','Contratación e instalación de la fibra (operador)',5,4,true,'Operador / TI del cliente','T3'],
+ ['T5','Compra de equipos y materiales',5,3,false,'Compras','T3'],
+ ['T6','Obras del CPD: tablero, tierra, clima, puerta, control de acceso',5,3,false,'Electricista + cerrajería','T3'],
+ ['T7','Canalización y tendido · Casa',6,3,false,'Equipo de cableado','T5 (parcial), T6'],
+ ['T8','Canalización y tendido · sede nueva',7,2,false,'Equipo de cableado','T5'],
+ ['T9','Terminación, racks, fibra y certificación',8,2,true,'Equipo de cableado','T7, T8'],
+ ['T10','Servidores: instalación, clúster y VM',8,2,false,'TI','T5, T6'],
+ ['T11','Firewalls, VLAN, VPN, proxy y DNS',9,2,true,'TI','T4, T9 (parcial)'],
+ ['T12','Dominio, GPO, WSUS, 802.1X, Wazuh; configuración de terminales',10,2,true,'TI','T10, T11'],
+ ['T13','CCTV: cámaras, NVR y visores',9,2,false,'TI + instalador de CCTV','T9'],
+ ['T14','Pruebas de aceptación y ajustes',11,1,true,'Ingeniero + cliente','T12, T13'],
+ ['T15','Capacitación y migración por olas',12,1,true,'TI + cliente','T14'],
+ ['T16','Documentación final y cierre',11,2,false,'Ingeniero de proyecto','T9']];
+(function(){
+  const W=1000,L=330,wk=(W-L-10)/12,rh=27,top=34,H=top+TAREAS.length*rh+12;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Diagrama de Gantt del proyecto">`;
+  for(let i=0;i<12;i++){const x=L+i*wk;s+=`<rect x="${x}" y="${top-4}" width="${wk}" height="${H-top}" fill="${i%2?'rgba(255,255,255,.015)':'transparent'}"/><text x="${x+wk/2}" y="22" text-anchor="middle" font-size="11" fill="#8b9ab5" font-family="JetBrains Mono,monospace">S${i+1}</text>`}
+  TAREAS.forEach((t,i)=>{const y=top+i*rh,x=L+(t[2]-1)*wk,w=t[3]*wk-4,c=t[4]?'#fb7185':'#2dd4bf';
+    s+=`<line x1="8" y1="${y+rh-2}" x2="${W-4}" y2="${y+rh-2}" stroke="rgba(255,255,255,.05)"/><text x="10" y="${y+17}" font-size="11.5" fill="#e8eaf0" font-family="Space Grotesk,sans-serif"><tspan fill="#8b9ab5" font-family="JetBrains Mono,monospace">${t[0]}</tspan> ${t[1].length>46?t[1].slice(0,45)+'…':t[1]}</text><rect x="${x+2}" y="${y+5}" width="${w}" height="${rh-12}" rx="5" fill="${c}" fill-opacity=".28" stroke="${c}"/>`});
+  $('gantt').innerHTML=s+'</svg>';
+  $('tbl-tareas').innerHTML=`<table class="md-table"><tr><th>ID</th><th>Tarea</th><th class="r">Semanas</th><th>Dependencias</th><th>Responsable</th><th>Tipo</th></tr>${TAREAS.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td><td class="r">${t[2]}${t[3]>1?'–'+(t[2]+t[3]-1):''}</td><td>${t[6]}</td><td>${t[5]}</td><td>${t[4]?'<span class="tag a">Crítica</span>':'<span class="tag t">Con holgura</span>'}</td></tr>`).join('')}</table>`;
+})();
+
+/* ================= 5. navegación activa ================= */
+function updateActiveNav(){const secs=document.querySelectorAll('main > .card[id]'),links=document.querySelectorAll('.nav-link');let a=null;secs.forEach(s=>{if(s.getBoundingClientRect().top<=80)a=s.id});links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+a))}
+window.addEventListener('scroll',updateActiveNav,{passive:true});updateActiveNav();
+</script>
+</body>
+</html>
