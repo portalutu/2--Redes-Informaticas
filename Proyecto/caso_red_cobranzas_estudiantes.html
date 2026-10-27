@@ -1,243 +1,1967 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Proyecto integrador — RedCobro del Sur — Consigna</title>
-<meta name="description" content="Caso para diseñar la infraestructura de red de una casa central y diez sucursales de cobranzas.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#091016;color:#e9f2f3;font:15px/1.62 'Space Grotesk',sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#34d39909 1px,transparent 1px),linear-gradient(90deg,#34d39909 1px,transparent 1px);background-size:36px 36px}.mono,code{font-family:'JetBrains Mono',monospace}nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:20px;padding:12px 4vw;background:#091016ee;border-bottom:1px solid #ffffff16;backdrop-filter:blur(14px)}nav b{color:#34d399;white-space:nowrap}.links{display:flex;gap:6px;overflow:auto}.links a,.btn{color:#91a5af;text-decoration:none;white-space:nowrap;padding:6px 10px;border:1px solid transparent;border-radius:8px;font-size:12px}.links a:hover,.btn:hover{color:#fff;border-color:#ffffff22;background:#ffffff09}.hero,main{position:relative;max-width:1100px;margin:auto;padding-left:24px;padding-right:24px}.hero{padding-top:64px;padding-bottom:38px}.tag{display:inline-block;color:#34d399;background:#34d39912;border:1px solid #34d39944;border-radius:999px;padding:4px 10px;font:11px 'JetBrains Mono',monospace}.hero h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.02;margin:18px 0 16px;letter-spacing:-.04em}.hero h1 span{color:#34d399}.hero p{max-width:820px;color:#a9bbc3;font-size:17px}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.btn{display:inline-block;border-color:#ffffff22;background:#111c24}.btn.primary{color:#34d399;border-color:#34d39955}.alert{margin-top:22px;padding:14px 16px;border-left:3px solid #fbbf24;background:#fbbf240d;color:#c7d4d9;border-radius:0 10px 10px 0}main{padding-bottom:80px}.card{margin:0 0 22px;background:#0d171f;border:1px solid #ffffff13;border-radius:16px;overflow:hidden}.card-head{display:flex;align-items:center;gap:12px;padding:15px 18px;background:#111d26;border-bottom:1px solid #ffffff13}.num{font:700 11px 'JetBrains Mono',monospace;color:#34d399;border:1px solid #34d39944;background:#34d39910;border-radius:999px;padding:4px 9px}.card h2{margin:0;font-size:16px}.body{padding:20px}.body>p:first-child{margin-top:0}p,li{color:#a9bbc3}strong,th{color:#fff}.sub{margin:22px 0 7px;font-size:14px;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.tile{padding:14px;background:#111d26;border:1px solid #ffffff12;border-radius:11px}.tile small{display:block;color:#607682;font:10px 'JetBrains Mono',monospace;text-transform:uppercase}.tile b{display:block;margin:4px 0}.tile p{font-size:12px;margin:0}.table{overflow:auto;margin-top:12px}table{width:100%;border-collapse:collapse;min-width:680px;font-size:12.5px}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid #ffffff12}th{background:#111d26;color:#78909b;text-transform:uppercase;font:700 10px 'JetBrains Mono',monospace}td:first-child{color:#fff;font-weight:600}.task{margin-top:14px;padding:14px 16px;background:#60a5fa0d;border-left:3px solid #60a5fa;border-radius:0 10px 10px 0}.task b{color:#60a5fa}.given{margin-top:14px;padding:14px 16px;background:#34d3990b;border-left:3px solid #34d399;border-radius:0 10px 10px 0}.given b{color:#34d399}.danger{border-left-color:#fb7185;background:#fb71850b}.danger b{color:#fb7185}.flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:14px 0}.flow span{padding:6px 9px;border:1px solid #ffffff18;background:#111d26;border-radius:7px;font:11px 'JetBrains Mono',monospace}.flow i{color:#607682}.plan{overflow:auto;margin-top:13px}.plan svg{min-width:780px;width:100%;height:auto;background:#0a1219;border:1px solid #ffffff15;border-radius:12px}.room{fill:#14222c;stroke:#607682;stroke-width:2}.public{fill:#34d39916;stroke:#34d399}.secure{fill:#fb718516;stroke:#fb7185;stroke-width:3}.label{fill:#e9f2f3;font:600 14px 'Space Grotesk',sans-serif}.meta{fill:#8da2ad;font:11px 'JetBrains Mono',monospace}.deadline{color:#fbbf24}.checklist label{display:block;color:#a9bbc3;margin:7px 0}.checklist input{accent-color:#34d399}.rubric td:last-child,.rubric th:last-child{text-align:right}.rubric tr:last-child td{color:#34d399;font-weight:700}.ref a{color:#60a5fa}footer{text-align:center;padding:28px;color:#607682;border-top:1px solid #ffffff12;font:11px 'JetBrains Mono',monospace}@media(max-width:650px){.hero,main{padding-left:14px;padding-right:14px}.hero{padding-top:38px}.body{padding:15px}nav{padding:10px 14px}}
- .fiber{fill:none;stroke:#fbbf24;stroke-width:3}.fiber-label{fill:#fbbf24;font:700 10px 'JetBrains Mono',monospace}.duct{fill:#fbbf2418;stroke:#fbbf24;stroke-width:2}.duct-label{fill:#fbbf24;font:700 9px 'JetBrains Mono',monospace}.front-line{stroke:#60a5fa;stroke-width:3}.front-label{fill:#60a5fa;font:700 9px 'JetBrains Mono',monospace;letter-spacing:.08em}
-</style>
-</head>
-<body>
-<nav><b class="mono">REDCOBRO://PROYECTO</b><div class="links"><a href="#guia">Guía</a><a href="#contexto">Contexto</a><a href="#central">Central</a><a href="#sucursal">Sucursal tipo</a><a href="#requisitos">Requisitos</a><a href="#arquitectura">Diseño</a><a href="#presupuesto">Presupuesto</a><a href="#entrega">Entrega</a><a href="#rubrica">Rúbrica</a><a href="#glosario">Glosario</a></div></nav>
-<header class="hero">
-  <span class="tag">2.º EMT · Sistemas y Redes · Proyecto grupal</span>
-  <h1>RedCobro <span>del Sur</span></h1>
-  <p>Diseño integral de la infraestructura para una red de cobranzas formada por una casa central de tres plantas y diez sucursales idénticas. Cada grupo actuará como una empresa integradora: deberá relevar los datos suministrados, decidir, calcular, cotizar, integrar y defender una solución técnicamente coherente.</p>
-  <div class="actions"><a class="btn primary" href="../Herramientas/generador_informe_red_cobranzas.html">Completar informe uniforme</a><a class="btn" href="#guia">Leer la consigna</a><a class="btn" href="../Herramientas/cotizador_red_cobranzas.html">Abrir cotizador del proyecto</a><a class="btn" href="../Herramientas/dimensionador_servidores_red_cobranzas.html">Dimensionar servidores</a><a class="btn" href="../Herramientas/calculadora_capacidad_red_cobranzas.html">Calcular enlaces ANTEL</a><a class="btn" href="caso_gestoria_triada.html">Consultar caso TRÍADA</a></div>
-  <div class="alert"><strong>Calendario:</strong> planteo el <strong>martes 20/10/2026</strong>; entrega hasta el <strong class="deadline">jueves 05/11/2026</strong>; defensa obligatoria el <strong class="deadline">martes 10/11/2026</strong>.</div>
-  <div class="given"><b>Alcance pedagógico.</b> Este es un caso de estudio simplificado. Se evalúan decisiones coherentes, cálculos básicos y trazabilidad entre requisitos, diseño, presupuesto y pruebas. Un proyecto real exigiría relevamiento en obra, ingeniería de detalle, validación normativa, estudios de cobertura, cálculos eléctricos y ópticos, coordinación con proveedores y documentación ejecutiva firmada por técnicos responsables.</div>
-</header>
-<main>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Proyecto integrador — RedCobro del Sur — Consigna</title>
+    <meta
+      name="description"
+      content="Caso para diseñar la infraestructura de red de una casa central y diez sucursales de cobranzas."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: #091016;
+        color: #e9f2f3;
+        font:
+          15px/1.62 "Space Grotesk",
+          sans-serif;
+      }
+      body:before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(#34d39909 1px, transparent 1px),
+          linear-gradient(90deg, #34d39909 1px, transparent 1px);
+        background-size: 36px 36px;
+      }
+      .mono,
+      code {
+        font-family: "JetBrains Mono", monospace;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 12px 4vw;
+        background: #091016ee;
+        border-bottom: 1px solid #ffffff16;
+        backdrop-filter: blur(14px);
+      }
+      nav b {
+        color: #34d399;
+        white-space: nowrap;
+      }
+      .links {
+        display: flex;
+        gap: 6px;
+        overflow: auto;
+      }
+      .links a,
+      .btn {
+        color: #91a5af;
+        text-decoration: none;
+        white-space: nowrap;
+        padding: 6px 10px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 12px;
+      }
+      .links a:hover,
+      .btn:hover {
+        color: #fff;
+        border-color: #ffffff22;
+        background: #ffffff09;
+      }
+      .hero,
+      main {
+        position: relative;
+        max-width: 1100px;
+        margin: auto;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .hero {
+        padding-top: 64px;
+        padding-bottom: 38px;
+      }
+      .tag {
+        display: inline-block;
+        color: #34d399;
+        background: #34d39912;
+        border: 1px solid #34d39944;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font:
+          11px "JetBrains Mono",
+          monospace;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 6vw, 4.4rem);
+        line-height: 1.02;
+        margin: 18px 0 16px;
+        letter-spacing: -0.04em;
+      }
+      .hero h1 span {
+        color: #34d399;
+      }
+      .hero p {
+        max-width: 820px;
+        color: #a9bbc3;
+        font-size: 17px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .btn {
+        display: inline-block;
+        border-color: #ffffff22;
+        background: #111c24;
+      }
+      .btn.primary {
+        color: #34d399;
+        border-color: #34d39955;
+      }
+      .alert {
+        margin-top: 22px;
+        padding: 14px 16px;
+        border-left: 3px solid #fbbf24;
+        background: #fbbf240d;
+        color: #c7d4d9;
+        border-radius: 0 10px 10px 0;
+      }
+      main {
+        padding-bottom: 80px;
+      }
+      .card {
+        margin: 0 0 22px;
+        background: #0d171f;
+        border: 1px solid #ffffff13;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .card-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px 18px;
+        background: #111d26;
+        border-bottom: 1px solid #ffffff13;
+      }
+      .num {
+        font:
+          700 11px "JetBrains Mono",
+          monospace;
+        color: #34d399;
+        border: 1px solid #34d39944;
+        background: #34d39910;
+        border-radius: 999px;
+        padding: 4px 9px;
+      }
+      .card h2 {
+        margin: 0;
+        font-size: 16px;
+      }
+      .body {
+        padding: 20px;
+      }
+      .body > p:first-child {
+        margin-top: 0;
+      }
+      p,
+      li {
+        color: #a9bbc3;
+      }
+      strong,
+      th {
+        color: #fff;
+      }
+      .sub {
+        margin: 22px 0 7px;
+        font-size: 14px;
+        color: #fff;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+      .tile {
+        padding: 14px;
+        background: #111d26;
+        border: 1px solid #ffffff12;
+        border-radius: 11px;
+      }
+      .tile small {
+        display: block;
+        color: #607682;
+        font:
+          10px "JetBrains Mono",
+          monospace;
+        text-transform: uppercase;
+      }
+      .tile b {
+        display: block;
+        margin: 4px 0;
+      }
+      .tile p {
+        font-size: 12px;
+        margin: 0;
+      }
+      .table {
+        overflow: auto;
+        margin-top: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 680px;
+        font-size: 12.5px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 9px 11px;
+        border-bottom: 1px solid #ffffff12;
+      }
+      th {
+        background: #111d26;
+        color: #78909b;
+        text-transform: uppercase;
+        font:
+          700 10px "JetBrains Mono",
+          monospace;
+      }
+      td:first-child {
+        color: #fff;
+        font-weight: 600;
+      }
+      .task {
+        margin-top: 14px;
+        padding: 14px 16px;
+        background: #60a5fa0d;
+        border-left: 3px solid #60a5fa;
+        border-radius: 0 10px 10px 0;
+      }
+      .task b {
+        color: #60a5fa;
+      }
+      .given {
+        margin-top: 14px;
+        padding: 14px 16px;
+        background: #34d3990b;
+        border-left: 3px solid #34d399;
+        border-radius: 0 10px 10px 0;
+      }
+      .given b {
+        color: #34d399;
+      }
+      .danger {
+        border-left-color: #fb7185;
+        background: #fb71850b;
+      }
+      .danger b {
+        color: #fb7185;
+      }
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 7px;
+        margin: 14px 0;
+      }
+      .flow span {
+        padding: 6px 9px;
+        border: 1px solid #ffffff18;
+        background: #111d26;
+        border-radius: 7px;
+        font:
+          11px "JetBrains Mono",
+          monospace;
+      }
+      .flow i {
+        color: #607682;
+      }
+      .plan {
+        overflow: auto;
+        margin-top: 13px;
+      }
+      .plan svg {
+        min-width: 780px;
+        width: 100%;
+        height: auto;
+        background: #0a1219;
+        border: 1px solid #ffffff15;
+        border-radius: 12px;
+      }
+      .room {
+        fill: #14222c;
+        stroke: #607682;
+        stroke-width: 2;
+      }
+      .public {
+        fill: #34d39916;
+        stroke: #34d399;
+      }
+      .secure {
+        fill: #fb718516;
+        stroke: #fb7185;
+        stroke-width: 3;
+      }
+      .label {
+        fill: #e9f2f3;
+        font:
+          600 14px "Space Grotesk",
+          sans-serif;
+      }
+      .meta {
+        fill: #8da2ad;
+        font:
+          11px "JetBrains Mono",
+          monospace;
+      }
+      .deadline {
+        color: #fbbf24;
+      }
+      .checklist label {
+        display: block;
+        color: #a9bbc3;
+        margin: 7px 0;
+      }
+      .checklist input {
+        accent-color: #34d399;
+      }
+      .rubric td:last-child,
+      .rubric th:last-child {
+        text-align: right;
+      }
+      .rubric tr:last-child td {
+        color: #34d399;
+        font-weight: 700;
+      }
+      .ref a {
+        color: #60a5fa;
+      }
+      footer {
+        text-align: center;
+        padding: 28px;
+        color: #607682;
+        border-top: 1px solid #ffffff12;
+        font:
+          11px "JetBrains Mono",
+          monospace;
+      }
+      @media (max-width: 650px) {
+        .hero,
+        main {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        .hero {
+          padding-top: 38px;
+        }
+        .body {
+          padding: 15px;
+        }
+        nav {
+          padding: 10px 14px;
+        }
+      }
+      .fiber {
+        fill: none;
+        stroke: #fbbf24;
+        stroke-width: 3;
+      }
+      .fiber-label {
+        fill: #fbbf24;
+        font:
+          700 10px "JetBrains Mono",
+          monospace;
+      }
+      .duct {
+        fill: #fbbf2418;
+        stroke: #fbbf24;
+        stroke-width: 2;
+      }
+      .duct-label {
+        fill: #fbbf24;
+        font:
+          700 9px "JetBrains Mono",
+          monospace;
+      }
+      .front-line {
+        stroke: #60a5fa;
+        stroke-width: 3;
+      }
+      .front-label {
+        fill: #60a5fa;
+        font:
+          700 9px "JetBrains Mono",
+          monospace;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <b class="mono">REDCOBRO://PROYECTO</b>
+      <div class="links">
+        <a href="#guia">Guía</a><a href="#contexto">Contexto</a
+        ><a href="#central">Central</a><a href="#sucursal">Sucursal tipo</a
+        ><a href="#requisitos">Requisitos</a><a href="#arquitectura">Diseño</a
+        ><a href="#presupuesto">Presupuesto</a><a href="#entrega">Entrega</a
+        ><a href="#rubrica">Rúbrica</a><a href="#glosario">Glosario</a>
+      </div>
+    </nav>
+    <header class="hero">
+      <span class="tag">2.º EMT · Sistemas y Redes · Proyecto grupal</span>
+      <h1>RedCobro <span>del Sur</span></h1>
+      <p>
+        Diseño integral de la infraestructura para una red de cobranzas formada
+        por una casa central de tres plantas y diez sucursales idénticas. Cada
+        grupo actuará como una empresa integradora: deberá relevar los datos
+        suministrados, decidir, calcular, cotizar, integrar y defender una
+        solución técnicamente coherente.
+      </p>
+      <div class="actions">
+        <a
+          class="btn primary"
+          href="../Herramientas/generador_informe_red_cobranzas.html"
+          >Completar informe uniforme</a
+        ><a class="btn" href="#guia">Leer la consigna</a
+        ><a class="btn" href="../Herramientas/cotizador_red_cobranzas.html"
+          >Abrir cotizador del proyecto</a
+        ><a
+          class="btn"
+          href="../Herramientas/dimensionador_servidores_red_cobranzas.html"
+          >Dimensionar servidores</a
+        ><a
+          class="btn"
+          href="../Herramientas/calculadora_capacidad_red_cobranzas.html"
+          >Calcular enlaces ANTEL</a
+        ><a class="btn" href="caso_gestoria_triada.html"
+          >Consultar caso TRÍADA</a
+        >
+      </div>
+      <div class="alert">
+        <strong>Calendario:</strong> planteo el
+        <strong>martes 20/10/2026</strong>; entrega hasta el
+        <strong class="deadline">jueves 05/11/2026</strong>; defensa obligatoria
+        el <strong class="deadline">martes 10/11/2026</strong>.
+      </div>
+      <div class="given">
+        <b>Alcance pedagógico.</b> Este es un caso de estudio simplificado. Se
+        evalúan decisiones coherentes, cálculos básicmartesos y trazabilidad
+        entre requisitos, diseño, presupuesto y pruebas. Un proyecto real
+        exigiría relevamiento en obra, ingeniería de detalle, validación
+        normativa, estudios de cobertura, cálculos eléctricos y ópticos,
+        coordinación con proveedores y documentación ejecutiva firmada por
+        técnicos responsables.
+      </div>
+    </header>
+    <main>
+      <section class="card" id="guia">
+        <div class="card-head">
+          <span class="num">00</span>
+          <h2>Cómo trabajar con el caso</h2>
+        </div>
+        <div class="body">
+          <p>
+            Los equipos serán de <strong>3 o 4 integrantes</strong>. Todos
+            prepararán <strong>un único informe final</strong> sobre la solución
+            completa: casa central, una sucursal tipo replicable diez veces e
+            integración con la conectividad administrada de ANTEL.
+          </p>
+          <div class="flow">
+            <span>1 Relevar</span><i>→</i><span>2 Definir requisitos</span
+            ><i>→</i><span>3 Diseñar</span><i>→</i><span>4 Calcular</span
+            ><i>→</i><span>5 Cotizar</span><i>→</i><span>6 Integrar</span
+            ><i>→</i><span>7 Defender</span>
+          </div>
+          <div class="given">
+            <b>Autoorganización.</b> Cada grupo decidirá cómo distribuir, rotar
+            y coordinar las tareas. No se asignan roles obligatorios. El equipo
+            es responsable de integrar una sola propuesta coherente y todos sus
+            integrantes deberán comprenderla.
+          </div>
+          <div class="task">
+            <b>Regla de trabajo.</b> Las indicaciones de cada sección son partes
+            del mismo informe, no entregas independientes. Cualquier integrante
+            debe poder explicar la propuesta completa.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="guia"><div class="card-head"><span class="num">00</span><h2>Cómo trabajar con el caso</h2></div><div class="body">
-  <p>Los equipos serán de <strong>3 o 4 integrantes</strong>. Todos prepararán <strong>un único informe final</strong> sobre la solución completa: casa central, una sucursal tipo replicable diez veces e integración con la conectividad administrada de ANTEL.</p>
-  <div class="flow"><span>1 Relevar</span><i>→</i><span>2 Definir requisitos</span><i>→</i><span>3 Diseñar</span><i>→</i><span>4 Calcular</span><i>→</i><span>5 Cotizar</span><i>→</i><span>6 Integrar</span><i>→</i><span>7 Defender</span></div>
-  <div class="given"><b>Autoorganización.</b> Cada grupo decidirá cómo distribuir, rotar y coordinar las tareas. No se asignan roles obligatorios. El equipo es responsable de integrar una sola propuesta coherente y todos sus integrantes deberán comprenderla.</div>
-  <div class="task"><b>Regla de trabajo.</b> Las indicaciones de cada sección son partes del mismo informe, no entregas independientes. Cualquier integrante debe poder explicar la propuesta completa.</div>
-</div></section>
+      <section class="card" id="contexto">
+        <div class="card-head">
+          <span class="num">01</span>
+          <h2>Contexto del cliente y llamado</h2>
+        </div>
+        <div class="body">
+          <p>
+            <strong>RedCobro del Sur S.A.</strong> procesa pagos de facturas,
+            recargas, giros nacionales y cobranzas para terceros. La empresa
+            abrirá simultáneamente una nueva casa central y diez locales.
+            Manejará dinero, datos personales y registros de transacciones; una
+            interrupción prolongada impide cobrar y afecta a todas las sedes.
+          </p>
+          <h3 class="sub">Objeto del llamado</h3>
+          <p>
+            Diseñar y cotizar el cableado estructurado, la red local cableada y
+            los servicios centrales. La propuesta contemplará una casa central y
+            un modelo de sucursal que pueda repetirse diez veces. RedCobro posee
+            una <strong>alianza estratégica con ANTEL</strong>, que proveerá
+            toda la conectividad de las once sedes y la VPN empresarial
+            administrada.
+          </p>
+          <h3 class="sub">Condiciones del cliente</h3>
+          <ul>
+            <li>
+              Las transacciones se procesan en los servidores centrales; ninguna
+              sucursal publicará servidores directamente en Internet.
+            </li>
+            <li>
+              <strong
+                >Por política de seguridad, la empresa no utilizará Wi-Fi ni
+                otras redes inalámbricas.</strong
+              >
+              Todos los equipos autorizados se conectarán mediante cableado
+              estructurado, lo que reduce la exposición de la red fuera de los
+              locales, evita puntos de acceso no controlados y facilita el
+              control físico, la identificación y la desconexión de cada puerto.
+            </li>
+            <li>
+              <strong
+                >No se diseñará ni presupuestará cableado, fibra o radioenlaces
+                entre edificios, ciudades o sucursales.</strong
+              >
+              El cableado solicitado termina dentro de cada sede.
+            </li>
+            <li>
+              ANTEL brindará conectividad empresarial y VPN administrada a la
+              casa central y las diez sucursales, incluyendo equipos de borde,
+              monitoreo y soporte 24/7.
+            </li>
+            <li>
+              Toda comunicación central–sucursal o sucursal–sucursal atravesará
+              la VPN de ANTEL. No se compararán proveedores ni se cotizará este
+              servicio.
+            </li>
+            <li>
+              Una empresa especializada tercerizada diseñará e implementará las
+              configuraciones de seguridad de red, CCTV, seguridad física y
+              terminales.
+            </li>
+            <li>La solución LAN admitirá 25 % de crecimiento a cinco años.</li>
+            <li>
+              La empresa no puede interrumpir la atención más de cuatro horas
+              durante la instalación.
+            </li>
+          </ul>
+          <div class="task">
+            <b>Parte del informe final.</b> Objetivo general, alcance,
+            necesidades relevadas, restricciones técnicas, supuestos y
+            exclusiones.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="contexto"><div class="card-head"><span class="num">01</span><h2>Contexto del cliente y llamado</h2></div><div class="body">
-  <p><strong>RedCobro del Sur S.A.</strong> procesa pagos de facturas, recargas, giros nacionales y cobranzas para terceros. La empresa abrirá simultáneamente una nueva casa central y diez locales. Manejará dinero, datos personales y registros de transacciones; una interrupción prolongada impide cobrar y afecta a todas las sedes.</p>
-  <h3 class="sub">Objeto del llamado</h3>
-  <p>Diseñar y cotizar el cableado estructurado, la red local cableada y los servicios centrales. La propuesta contemplará una casa central y un modelo de sucursal que pueda repetirse diez veces. RedCobro posee una <strong>alianza estratégica con ANTEL</strong>, que proveerá toda la conectividad de las once sedes y la VPN empresarial administrada.</p>
-  <h3 class="sub">Condiciones del cliente</h3>
-  <ul><li>Las transacciones se procesan en los servidores centrales; ninguna sucursal publicará servidores directamente en Internet.</li><li><strong>Por política de seguridad, la empresa no utilizará Wi-Fi ni otras redes inalámbricas.</strong> Todos los equipos autorizados se conectarán mediante cableado estructurado, lo que reduce la exposición de la red fuera de los locales, evita puntos de acceso no controlados y facilita el control físico, la identificación y la desconexión de cada puerto.</li><li><strong>No se diseñará ni presupuestará cableado, fibra o radioenlaces entre edificios, ciudades o sucursales.</strong> El cableado solicitado termina dentro de cada sede.</li><li>ANTEL brindará conectividad empresarial y VPN administrada a la casa central y las diez sucursales, incluyendo equipos de borde, monitoreo y soporte 24/7.</li><li>Toda comunicación central–sucursal o sucursal–sucursal atravesará la VPN de ANTEL. No se compararán proveedores ni se cotizará este servicio.</li><li>Una empresa especializada tercerizada diseñará e implementará las configuraciones de seguridad de red, CCTV, seguridad física y terminales.</li><li>La solución LAN admitirá 25 % de crecimiento a cinco años.</li><li>La empresa no puede interrumpir la atención más de cuatro horas durante la instalación.</li></ul>
-  <div class="task"><b>Parte del informe final.</b> Objetivo general, alcance, necesidades relevadas, restricciones técnicas, supuestos y exclusiones.</div>
-</div></section>
+      <section class="card" id="central">
+        <div class="card-head">
+          <span class="num">02</span>
+          <h2>Relevamiento suministrado · Casa central</h2>
+        </div>
+        <div class="body">
+          <p>
+            Edificio de <strong>tres plantas de 18 × 14 m</strong> en Cordón,
+            Montevideo. En este caso,
+            <strong>P1 corresponde a la planta baja</strong>. Altura libre: 2,8
+            m. Posee un ducto técnico vertical, representado como
+            <strong
+              >DV en la esquina inferior derecha de los planos de las tres
+              plantas</strong
+            >, cielorraso registrable y tablero eléctrico por planta. El CPD
+            estará en la planta 3, en una sala interior sin ventanas ni cañerías
+            de agua. La
+            <strong
+              >fibra óptica del proveedor ingresa por la fachada de planta baja,
+              frente a Recepción</strong
+            >; desde ese punto deberá conducirse hasta el rack de comunicaciones
+            de planta baja y continuar por el backbone del edificio hasta el
+            CPD.
+          </p>
+          <div class="table">
+            <table>
+              <tr>
+                <th>Planta</th>
+                <th>Áreas</th>
+                <th>Puestos</th>
+                <th>Periféricos dados</th>
+                <th>Restricciones</th>
+              </tr>
+              <tr>
+                <td>P1 · Público</td>
+                <td>Recepción, espera, 10 cajas, supervisión y tesorería</td>
+                <td>15</td>
+                <td>3 impresoras de red</td>
+                <td>Alta circulación; separar público de tesorería</td>
+              </tr>
+              <tr>
+                <td>P2 · Administración</td>
+                <td>Contabilidad, Administración, RR. HH. y Cumplimiento</td>
+                <td>22</td>
+                <td>4 impresoras de red</td>
+                <td>RR. HH. y datos contables requieren acceso restringido</td>
+              </tr>
+              <tr>
+                <td>P3 · Dirección y TI</td>
+                <td>Gerencia, sala de reuniones, Soporte IT y CPD</td>
+                <td>8</td>
+                <td>2 impresoras de red</td>
+                <td>CPD y Soporte con acceso físico controlado</td>
+              </tr>
+            </table>
+          </div>
+          <div class="plan">
+            <svg
+              viewBox="0 0 900 330"
+              role="img"
+              aria-label="Esquema funcional de las tres plantas de casa central"
+            >
+              <rect
+                class="room public"
+                x="30"
+                y="35"
+                width="250"
+                height="235"
+                rx="5"
+              />
+              <path class="front-line" d="M30 65V125" />
+              <text
+                class="front-label"
+                x="20"
+                y="95"
+                text-anchor="middle"
+                transform="rotate(-90 20 95)"
+              >
+                FRENTE
+              </text>
+              <text class="label" x="48" y="68">P1 · Atención al público</text>
+              <text class="meta" x="48" y="91">
+                15 puestos · recepción · 10 cajas
+              </text>
+              <rect class="room" x="48" y="115" width="95" height="55" />
+              <text class="meta" x="61" y="144">Recepción</text>
+              <circle class="fiber" cx="30" cy="143" r="7" />
+              <path
+                class="fiber"
+                d="M3 143H23M37 143H48"
+                stroke-dasharray="5 4"
+              />
+              <text class="fiber-label" x="48" y="190">
+                ENTRADA FO · FACHADA FRENTE A RECEPCIÓN
+              </text>
+              <rect class="secure" x="160" y="115" width="95" height="55" />
+              <text class="meta" x="177" y="144">Tesorería</text>
+              <text class="meta" x="48" y="215">Sala de espera + atención</text>
+              <rect
+                class="duct"
+                x="244"
+                y="228"
+                width="24"
+                height="30"
+                rx="3"
+              />
+              <text class="duct-label" x="256" y="247" text-anchor="middle">
+                DV
+              </text>
+              <rect
+                class="room"
+                x="325"
+                y="35"
+                width="250"
+                height="235"
+                rx="5"
+              />
+              <path class="front-line" d="M325 65V125" />
+              <text
+                class="front-label"
+                x="315"
+                y="95"
+                text-anchor="middle"
+                transform="rotate(-90 315 95)"
+              >
+                FRENTE
+              </text>
+              <text class="label" x="343" y="68">P2 · Administración</text>
+              <text class="meta" x="343" y="91">
+                22 puestos · cuatro sectores
+              </text>
+              <rect class="secure" x="343" y="115" width="95" height="55" />
+              <text class="meta" x="361" y="144">RR. HH.</text>
+              <rect class="room" x="455" y="115" width="95" height="55" />
+              <text class="meta" x="467" y="144">Contable</text>
+              <text class="meta" x="343" y="215">
+                Administración + Cumplimiento
+              </text>
+              <rect
+                class="duct"
+                x="539"
+                y="228"
+                width="24"
+                height="30"
+                rx="3"
+              />
+              <text class="duct-label" x="551" y="247" text-anchor="middle">
+                DV
+              </text>
+              <rect
+                class="room"
+                x="620"
+                y="35"
+                width="250"
+                height="235"
+                rx="5"
+              />
+              <path class="front-line" d="M620 65V125" />
+              <text
+                class="front-label"
+                x="610"
+                y="95"
+                text-anchor="middle"
+                transform="rotate(-90 610 95)"
+              >
+                FRENTE
+              </text>
+              <text class="label" x="638" y="68">P3 · Dirección y TI</text>
+              <text class="meta" x="638" y="91">
+                8 puestos · sala de reuniones
+              </text>
+              <rect class="room" x="638" y="115" width="95" height="55" />
+              <text class="meta" x="657" y="144">Soporte</text>
+              <rect class="secure" x="750" y="105" width="95" height="75" />
+              <text class="meta" x="771" y="139">CPD</text>
+              <text class="meta" x="638" y="215">Gerencia + reuniones</text>
+              <rect
+                class="duct"
+                x="834"
+                y="228"
+                width="24"
+                height="30"
+                rx="3"
+              />
+              <text class="duct-label" x="846" y="247" text-anchor="middle">
+                DV
+              </text>
+              <text class="meta" x="450" y="310" text-anchor="middle">
+                DV · ducto técnico vertical · esquina inferior derecha en las
+                tres plantas
+              </text>
+            </svg>
+          </div>
+          <div class="given">
+            <b>Datos mínimos para dimensionar.</b> Se esperan dos tomas por
+            puesto. El grupo determinará racks, MDF/IDF, rutas y longitudes.
+            Debe justificar si instala un distribuidor por planta y el medio
+            utilizado en el backbone vertical. La entrada de fibra de ANTEL es
+            fija y debe figurar como origen del tendido de acometida.
+          </div>
+          <div class="task">
+            <b>Contenido del informe.</b> Tres planos de cableado LAN,
+            inventario de ambientes y puntos y tabla de rutas con sus
+            longitudes. En el plano de planta baja se representará el recorrido
+            entrada de ANTEL → rack de comunicaciones; en el diagrama vertical,
+            la continuidad rack de planta baja → backbone → CPD. Incluir medio,
+            canalización, terminaciones, etiquetas y longitudes estimadas. Los
+            esquemas de esta consigna no sustituyen los planos del grupo.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="central"><div class="card-head"><span class="num">02</span><h2>Relevamiento suministrado · Casa central</h2></div><div class="body">
-  <p>Edificio de <strong>tres plantas de 18 × 14 m</strong> en Cordón, Montevideo. En este caso, <strong>P1 corresponde a la planta baja</strong>. Altura libre: 2,8 m. Posee un ducto técnico vertical, representado como <strong>DV en la esquina inferior derecha de los planos de las tres plantas</strong>, cielorraso registrable y tablero eléctrico por planta. El CPD estará en la planta 3, en una sala interior sin ventanas ni cañerías de agua. La <strong>fibra óptica del proveedor ingresa por la fachada de planta baja, frente a Recepción</strong>; desde ese punto deberá conducirse hasta el rack de comunicaciones de planta baja y continuar por el backbone del edificio hasta el CPD.</p>
-  <div class="table"><table><tr><th>Planta</th><th>Áreas</th><th>Puestos</th><th>Periféricos dados</th><th>Restricciones</th></tr>
-  <tr><td>P1 · Público</td><td>Recepción, espera, 10 cajas, supervisión y tesorería</td><td>15</td><td>3 impresoras de red</td><td>Alta circulación; separar público de tesorería</td></tr>
-  <tr><td>P2 · Administración</td><td>Contabilidad, Administración, RR. HH. y Cumplimiento</td><td>22</td><td>4 impresoras de red</td><td>RR. HH. y datos contables requieren acceso restringido</td></tr>
-  <tr><td>P3 · Dirección y TI</td><td>Gerencia, sala de reuniones, Soporte IT y CPD</td><td>8</td><td>2 impresoras de red</td><td>CPD y Soporte con acceso físico controlado</td></tr>
-  </table></div>
-  <div class="plan"><svg viewBox="0 0 900 330" role="img" aria-label="Esquema funcional de las tres plantas de casa central">
-    <rect class="room public" x="30" y="35" width="250" height="235" rx="5"/><path class="front-line" d="M30 65V125"/><text class="front-label" x="20" y="95" text-anchor="middle" transform="rotate(-90 20 95)">FRENTE</text><text class="label" x="48" y="68">P1 · Atención al público</text><text class="meta" x="48" y="91">15 puestos · recepción · 10 cajas</text><rect class="room" x="48" y="115" width="95" height="55"/><text class="meta" x="61" y="144">Recepción</text><circle class="fiber" cx="30" cy="143" r="7"/><path class="fiber" d="M3 143H23M37 143H48" stroke-dasharray="5 4"/><text class="fiber-label" x="48" y="190">ENTRADA FO · FACHADA FRENTE A RECEPCIÓN</text><rect class="secure" x="160" y="115" width="95" height="55"/><text class="meta" x="177" y="144">Tesorería</text><text class="meta" x="48" y="215">Sala de espera + atención</text><rect class="duct" x="244" y="228" width="24" height="30" rx="3"/><text class="duct-label" x="256" y="247" text-anchor="middle">DV</text>
-    <rect class="room" x="325" y="35" width="250" height="235" rx="5"/><path class="front-line" d="M325 65V125"/><text class="front-label" x="315" y="95" text-anchor="middle" transform="rotate(-90 315 95)">FRENTE</text><text class="label" x="343" y="68">P2 · Administración</text><text class="meta" x="343" y="91">22 puestos · cuatro sectores</text><rect class="secure" x="343" y="115" width="95" height="55"/><text class="meta" x="361" y="144">RR. HH.</text><rect class="room" x="455" y="115" width="95" height="55"/><text class="meta" x="467" y="144">Contable</text><text class="meta" x="343" y="215">Administración + Cumplimiento</text><rect class="duct" x="539" y="228" width="24" height="30" rx="3"/><text class="duct-label" x="551" y="247" text-anchor="middle">DV</text>
-    <rect class="room" x="620" y="35" width="250" height="235" rx="5"/><path class="front-line" d="M620 65V125"/><text class="front-label" x="610" y="95" text-anchor="middle" transform="rotate(-90 610 95)">FRENTE</text><text class="label" x="638" y="68">P3 · Dirección y TI</text><text class="meta" x="638" y="91">8 puestos · sala de reuniones</text><rect class="room" x="638" y="115" width="95" height="55"/><text class="meta" x="657" y="144">Soporte</text><rect class="secure" x="750" y="105" width="95" height="75"/><text class="meta" x="771" y="139">CPD</text><text class="meta" x="638" y="215">Gerencia + reuniones</text><rect class="duct" x="834" y="228" width="24" height="30" rx="3"/><text class="duct-label" x="846" y="247" text-anchor="middle">DV</text>
-    <text class="meta" x="450" y="310" text-anchor="middle">DV · ducto técnico vertical · esquina inferior derecha en las tres plantas</text>
-  </svg></div>
-  <div class="given"><b>Datos mínimos para dimensionar.</b> Se esperan dos tomas por puesto. El grupo determinará racks, MDF/IDF, rutas y longitudes. Debe justificar si instala un distribuidor por planta y el medio utilizado en el backbone vertical. La entrada de fibra de ANTEL es fija y debe figurar como origen del tendido de acometida.</div>
-  <div class="task"><b>Contenido del informe.</b> Tres planos de cableado LAN, inventario de ambientes y puntos y tabla de rutas con sus longitudes. En el plano de planta baja se representará el recorrido entrada de ANTEL → rack de comunicaciones; en el diagrama vertical, la continuidad rack de planta baja → backbone → CPD. Incluir medio, canalización, terminaciones, etiquetas y longitudes estimadas. Los esquemas de esta consigna no sustituyen los planos del grupo.</div>
-</div></section>
+      <section class="card" id="sucursal">
+        <div class="card-head">
+          <span class="num">03</span>
+          <h2>Relevamiento suministrado · Sucursal tipo y ubicaciones</h2>
+        </div>
+        <div class="body">
+          <p>
+            Cada local ocupa una planta de <strong>12 × 10 m</strong>, con
+            cielorraso registrable y un armario técnico cerrable. Las diez
+            sucursales serán idénticas en distribución y equipamiento; se diseña
+            una vez y el presupuesto se multiplica por diez.
+          </p>
+          <div class="plan">
+            <svg
+              viewBox="0 0 900 400"
+              role="img"
+              aria-label="Plano base de una sucursal tipo"
+            >
+              <rect
+                class="room public"
+                x="35"
+                y="40"
+                width="400"
+                height="300"
+              />
+              <path class="front-line" d="M35 120V260" />
+              <text
+                class="front-label"
+                x="20"
+                y="190"
+                text-anchor="middle"
+                transform="rotate(-90 20 190)"
+              >
+                FRENTE · ACCESO PRINCIPAL
+              </text>
+              <text class="label" x="55" y="73">Atención + espera</text>
+              <text class="meta" x="55" y="96">6 cajas · público</text>
+              <rect class="room" x="435" y="40" width="210" height="145" />
+              <text class="label" x="455" y="73">Oficina</text>
+              <text class="meta" x="455" y="96">encargado · 1 puesto</text>
+              <rect class="secure" x="645" y="40" width="220" height="145" />
+              <text class="label" x="665" y="73">Tesorería</text>
+              <text class="meta" x="665" y="96">back office · 1 puesto</text>
+              <rect class="room" x="435" y="185" width="210" height="155" />
+              <text class="label" x="455" y="218">Servicios</text>
+              <text class="meta" x="455" y="241">baño + kitchenette</text>
+              <rect class="secure" x="645" y="185" width="220" height="155" />
+              <text class="label" x="665" y="218">Armario técnico</text>
+              <text class="meta" x="665" y="241">
+                rack mural · UPS · CPE ANTEL
+              </text>
+              <text class="meta" x="665" y="264">sin ventana ni agua</text>
+              <text class="meta" x="35" y="373">
+                El frente de la edificación corresponde al lado izquierdo del
+                plano.
+              </text>
+            </svg>
+          </div>
+          <div class="table">
+            <table>
+              <tr>
+                <th>#</th>
+                <th>Departamento</th>
+                <th>Ciudad / zona</th>
+                <th>Conexión con las demás sedes</th>
+              </tr>
+              <tr>
+                <td>S01</td>
+                <td>Montevideo</td>
+                <td>Centro</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S02</td>
+                <td>Montevideo</td>
+                <td>Unión</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S03</td>
+                <td>Montevideo</td>
+                <td>Paso Molino</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S04</td>
+                <td>Canelones</td>
+                <td>Las Piedras</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S05</td>
+                <td>Canelones</td>
+                <td>Pando</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S06</td>
+                <td>Canelones</td>
+                <td>Ciudad de la Costa</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S07</td>
+                <td>Canelones</td>
+                <td>Canelones</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S08</td>
+                <td>Maldonado</td>
+                <td>Piriápolis</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S09</td>
+                <td>Maldonado</td>
+                <td>Maldonado</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+              <tr>
+                <td>S10</td>
+                <td>Maldonado</td>
+                <td>San Carlos</td>
+                <td>VPN administrada de ANTEL</td>
+              </tr>
+            </table>
+          </div>
+          <div class="given">
+            <b>Dotación por sucursal.</b> 6 cajeros, 1 encargado y 1
+            administrativo de tesorería; 2 impresoras de red; lectores de código
+            y documentos conectados por USB. El grupo dimensionará la LAN
+            cableada y la energía protegida. ANTEL entrega la conectividad WAN y
+            la empresa de seguridad integra sus propios sistemas.
+          </div>
+          <div class="task">
+            <b>Contenido del informe.</b> Plano tipo con puntos LAN numerados,
+            rutas internas y rack; planilla del cableado
+            <strong>interior de cada una de las diez sucursales</strong>;
+            cantidades por local y total general. No incluir tendidos físicos
+            entre sedes ni cableado de los sistemas de seguridad tercerizados.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="sucursal"><div class="card-head"><span class="num">03</span><h2>Relevamiento suministrado · Sucursal tipo y ubicaciones</h2></div><div class="body">
-  <p>Cada local ocupa una planta de <strong>12 × 10 m</strong>, con cielorraso registrable y un armario técnico cerrable. Las diez sucursales serán idénticas en distribución y equipamiento; se diseña una vez y el presupuesto se multiplica por diez.</p>
-  <div class="plan"><svg viewBox="0 0 900 400" role="img" aria-label="Plano base de una sucursal tipo">
-    <rect class="room public" x="35" y="40" width="400" height="300"/><path class="front-line" d="M35 120V260"/><text class="front-label" x="20" y="190" text-anchor="middle" transform="rotate(-90 20 190)">FRENTE · ACCESO PRINCIPAL</text><text class="label" x="55" y="73">Atención + espera</text><text class="meta" x="55" y="96">6 cajas · público</text>
-    <rect class="room" x="435" y="40" width="210" height="145"/><text class="label" x="455" y="73">Oficina</text><text class="meta" x="455" y="96">encargado · 1 puesto</text>
-    <rect class="secure" x="645" y="40" width="220" height="145"/><text class="label" x="665" y="73">Tesorería</text><text class="meta" x="665" y="96">back office · 1 puesto</text>
-    <rect class="room" x="435" y="185" width="210" height="155"/><text class="label" x="455" y="218">Servicios</text><text class="meta" x="455" y="241">baño + kitchenette</text>
-    <rect class="secure" x="645" y="185" width="220" height="155"/><text class="label" x="665" y="218">Armario técnico</text><text class="meta" x="665" y="241">rack mural · UPS · CPE ANTEL</text><text class="meta" x="665" y="264">sin ventana ni agua</text>
-    <text class="meta" x="35" y="373">El frente de la edificación corresponde al lado izquierdo del plano.</text>
-  </svg></div>
-  <div class="table"><table><tr><th>#</th><th>Departamento</th><th>Ciudad / zona</th><th>Conexión con las demás sedes</th></tr>
-  <tr><td>S01</td><td>Montevideo</td><td>Centro</td><td>VPN administrada de ANTEL</td></tr><tr><td>S02</td><td>Montevideo</td><td>Unión</td><td>VPN administrada de ANTEL</td></tr><tr><td>S03</td><td>Montevideo</td><td>Paso Molino</td><td>VPN administrada de ANTEL</td></tr>
-  <tr><td>S04</td><td>Canelones</td><td>Las Piedras</td><td>VPN administrada de ANTEL</td></tr><tr><td>S05</td><td>Canelones</td><td>Pando</td><td>VPN administrada de ANTEL</td></tr><tr><td>S06</td><td>Canelones</td><td>Ciudad de la Costa</td><td>VPN administrada de ANTEL</td></tr><tr><td>S07</td><td>Canelones</td><td>Canelones</td><td>VPN administrada de ANTEL</td></tr>
-  <tr><td>S08</td><td>Maldonado</td><td>Piriápolis</td><td>VPN administrada de ANTEL</td></tr><tr><td>S09</td><td>Maldonado</td><td>Maldonado</td><td>VPN administrada de ANTEL</td></tr><tr><td>S10</td><td>Maldonado</td><td>San Carlos</td><td>VPN administrada de ANTEL</td></tr></table></div>
-  <div class="given"><b>Dotación por sucursal.</b> 6 cajeros, 1 encargado y 1 administrativo de tesorería; 2 impresoras de red; lectores de código y documentos conectados por USB. El grupo dimensionará la LAN cableada y la energía protegida. ANTEL entrega la conectividad WAN y la empresa de seguridad integra sus propios sistemas.</div>
-  <div class="task"><b>Contenido del informe.</b> Plano tipo con puntos LAN numerados, rutas internas y rack; planilla del cableado <strong>interior de cada una de las diez sucursales</strong>; cantidades por local y total general. No incluir tendidos físicos entre sedes ni cableado de los sistemas de seguridad tercerizados.</div>
-</div></section>
+      <section class="card" id="usuarios">
+        <div class="card-head">
+          <span class="num">04</span>
+          <h2>Usuarios, aplicaciones y tráfico</h2>
+        </div>
+        <div class="body">
+          <div class="table">
+            <table>
+              <tr>
+                <th>Perfil / sistema</th>
+                <th>Cantidad</th>
+                <th>Necesidad</th>
+                <th>Sensibilidad</th>
+              </tr>
+              <tr>
+                <td>Cajas de cobranza</td>
+                <td>70</td>
+                <td>
+                  Aplicación transaccional central, impresión y validación
+                  externa
+                </td>
+                <td>Crítica</td>
+              </tr>
+              <tr>
+                <td>Administrativos y tesorería</td>
+                <td>33</td>
+                <td>Conciliación, archivos, reportes y banca</td>
+                <td>Crítica</td>
+              </tr>
+              <tr>
+                <td>Contabilidad, RR. HH. y cumplimiento</td>
+                <td>14</td>
+                <td>ERP, legajos, auditoría y documentación</td>
+                <td>Muy alta</td>
+              </tr>
+              <tr>
+                <td>Gerencia y Soporte IT</td>
+                <td>8</td>
+                <td>Administración, monitoreo y gestión</td>
+                <td>Privilegiada</td>
+              </tr>
+            </table>
+          </div>
+          <p>
+            Los cuatro perfiles de personal totalizan los
+            <strong>125 puestos relevados</strong>: 45 en casa central y 80 en
+            las diez sucursales.
+          </p>
+          <p>
+            El sistema transaccional intercambia aproximadamente 80 kB por
+            operación y cada caja puede registrar 90 operaciones por hora en el
+            pico. Los reportes centrales consumen hasta 40 Mbps en conjunto
+            (agregado que sale de la central); el grupo debe declarar cómo
+            escalona la descarga hacia las sucursales.
+          </p>
+          <div class="actions">
+            <a
+              class="btn primary"
+              href="../Herramientas/calculadora_capacidad_red_cobranzas.html#linkTable"
+              >Calcular ancho de banda por enlace</a
+            >
+          </div>
+          <div class="task">
+            <b>Contenido del informe.</b> Estimación sencilla del tráfico por
+            sucursal y validación de la capacidad requerida sobre los enlaces
+            empresariales administrados por ANTEL.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="usuarios"><div class="card-head"><span class="num">04</span><h2>Usuarios, aplicaciones y tráfico</h2></div><div class="body">
-  <div class="table"><table><tr><th>Perfil / sistema</th><th>Cantidad</th><th>Necesidad</th><th>Sensibilidad</th></tr>
-  <tr><td>Cajas de cobranza</td><td>70</td><td>Aplicación transaccional central, impresión y validación externa</td><td>Crítica</td></tr><tr><td>Administrativos y tesorería</td><td>33</td><td>Conciliación, archivos, reportes y banca</td><td>Crítica</td></tr><tr><td>Contabilidad, RR. HH. y cumplimiento</td><td>14</td><td>ERP, legajos, auditoría y documentación</td><td>Muy alta</td></tr><tr><td>Gerencia y Soporte IT</td><td>8</td><td>Administración, monitoreo y gestión</td><td>Privilegiada</td></tr></table></div>
-  <p>Los cuatro perfiles de personal totalizan los <strong>125 puestos relevados</strong>: 45 en casa central y 80 en las diez sucursales.</p>
-  <p>El sistema transaccional intercambia aproximadamente 80 kB por operación y cada caja puede registrar 90 operaciones por hora en el pico. Los reportes centrales consumen hasta 40 Mbps en conjunto (agregado que sale de la central); el grupo debe declarar cómo escalona la descarga hacia las sucursales.</p>
-  <div class="actions"><a class="btn primary" href="../Herramientas/calculadora_capacidad_red_cobranzas.html#linkTable">Calcular ancho de banda por enlace</a></div>
-  <div class="task"><b>Contenido del informe.</b> Estimación sencilla del tráfico por sucursal y validación de la capacidad requerida sobre los enlaces empresariales administrados por ANTEL.</div>
-</div></section>
+      <section class="card" id="requisitos">
+        <div class="card-head">
+          <span class="num">05</span>
+          <h2>Análisis de requisitos, supuestos y contradicciones</h2>
+        </div>
+        <div class="body">
+          <p>
+            El cliente expresa necesidades, no marcas ni configuraciones. El
+            grupo deberá convertirlas en requisitos claros: cantidad de puestos,
+            capacidad, organización de la LAN, crecimiento y facilidad de
+            mantenimiento.
+          </p>
+          <div class="grid">
+            <div class="tile">
+              <small>Capacidad</small><b>La LAN debe admitir la operación</b>
+              <p>
+                Dimensionar puntos, puertos, cableado estructurado y servicios
+                centrales.
+              </p>
+            </div>
+            <div class="tile">
+              <small>Operación</small><b>Administración central</b>
+              <p>
+                Organizar las redes de las once sedes y su integración con
+                ANTEL.
+              </p>
+            </div>
+            <div class="tile">
+              <small>Servicios</small><b>Infraestructura central</b>
+              <p>
+                Dimensionar las máquinas virtuales Ubuntu y los contenedores
+                necesarios para los servicios internos.
+              </p>
+            </div>
+          </div>
+          <div class="task">
+            <b>Contenido del informe.</b> Tabla necesidad → requisito → solución
+            propuesta, seguida de supuestos, restricciones técnicas y
+            exclusiones.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="requisitos"><div class="card-head"><span class="num">05</span><h2>Análisis de requisitos, supuestos y contradicciones</h2></div><div class="body">
-  <p>El cliente expresa necesidades, no marcas ni configuraciones. El grupo deberá convertirlas en requisitos claros: cantidad de puestos, capacidad, organización de la LAN, crecimiento y facilidad de mantenimiento.</p>
-  <div class="grid"><div class="tile"><small>Capacidad</small><b>La LAN debe admitir la operación</b><p>Dimensionar puntos, puertos, cableado estructurado y servicios centrales.</p></div><div class="tile"><small>Operación</small><b>Administración central</b><p>Organizar las redes de las once sedes y su integración con ANTEL.</p></div><div class="tile"><small>Servicios</small><b>Infraestructura central</b><p>Dimensionar las máquinas virtuales Ubuntu y los contenedores necesarios para los servicios internos.</p></div></div>
-  <div class="task"><b>Contenido del informe.</b> Tabla necesidad → requisito → solución propuesta, seguida de supuestos, restricciones técnicas y exclusiones.</div>
-</div></section>
+      <section class="card" id="arquitectura">
+        <div class="card-head">
+          <span class="num">06</span>
+          <h2>Arquitectura general</h2>
+        </div>
+        <div class="body">
+          <p>
+            Representar las once sedes, ANTEL, Internet, la VPN empresarial
+            administrada, el núcleo central, la distribución cableada por
+            planta, el host de virtualización y las máquinas virtuales.
+          </p>
+          <div class="task">
+            <b>Contenido del informe.</b> Un diagrama general que muestre
+            central, sucursales, ANTEL, VPN, racks, servidores, máquinas
+            virtuales y servicios; agregar una tabla breve con la función de
+            cada equipo.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="arquitectura"><div class="card-head"><span class="num">06</span><h2>Arquitectura general</h2></div><div class="body">
-  <p>Representar las once sedes, ANTEL, Internet, la VPN empresarial administrada, el núcleo central, la distribución cableada por planta, el host de virtualización y las máquinas virtuales.</p>
-  <div class="task"><b>Contenido del informe.</b> Un diagrama general que muestre central, sucursales, ANTEL, VPN, racks, servidores, máquinas virtuales y servicios; agregar una tabla breve con la función de cada equipo.</div>
-</div></section>
+      <section class="card" id="cableado-central">
+        <div class="card-head">
+          <span class="num">07</span>
+          <h2>Cableado de casa central</h2>
+        </div>
+        <div class="body">
+          <p>
+            Diseñar subsistemas de entrada, sala de equipos, backbone y
+            horizontal conforme a buenas prácticas TIA/ISO. La acometida óptica
+            comienza en la fachada de planta baja, frente a Recepción, pasa por
+            el rack de comunicaciones de esa planta y llega al CPD por el
+            backbone vertical. Todas las longitudes se medirán siguiendo
+            recorridos posibles, no en línea recta.
+          </p>
+          <div class="task">
+            <b>Contenido del informe.</b> Recorrido y terminación de la fibra de
+            entrada, continuidad por el backbone hasta el CPD, MDF/IDF, tabla de
+            puntos y distancias, cable y cajas, canalizaciones, paneles,
+            switches, diagrama de rack y criterio de etiquetado.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="cableado-central"><div class="card-head"><span class="num">07</span><h2>Cableado de casa central</h2></div><div class="body">
-  <p>Diseñar subsistemas de entrada, sala de equipos, backbone y horizontal conforme a buenas prácticas TIA/ISO. La acometida óptica comienza en la fachada de planta baja, frente a Recepción, pasa por el rack de comunicaciones de esa planta y llega al CPD por el backbone vertical. Todas las longitudes se medirán siguiendo recorridos posibles, no en línea recta.</p>
-  <div class="task"><b>Contenido del informe.</b> Recorrido y terminación de la fibra de entrada, continuidad por el backbone hasta el CPD, MDF/IDF, tabla de puntos y distancias, cable y cajas, canalizaciones, paneles, switches, diagrama de rack y criterio de etiquetado.</div>
-</div></section>
+      <section class="card" id="cableado-sucursal">
+        <div class="card-head">
+          <span class="num">08</span>
+          <h2>Cableado de la sucursal tipo</h2>
+        </div>
+        <div class="body">
+          <p>
+            El diseño debe ser repetible, sencillo de mantener y suficientemente
+            holgado. Se debe distinguir la cantidad por local de la cantidad
+            total para diez instalaciones. Este apartado comprende únicamente el
+            cableado LAN dentro de cada local:
+            <strong>no existe cableado entre sucursales</strong>.
+          </p>
+          <div class="task">
+            <b>Contenido del informe.</b> Planilla por sucursal con origen,
+            destino, uso, longitud y etiqueta; selección de switch, patch panel
+            y rack; materiales por local y consolidado ×10. Incluir 15 % de
+            holgura y 25 % de crecimiento.
+          </div>
+          <h3 class="sub">Formato mínimo de la planilla</h3>
+          <div class="table">
+            <table>
+              <tr>
+                <th>Sede</th>
+                <th>Ciudad</th>
+                <th>Etiqueta del cable</th>
+                <th>Origen / rack</th>
+                <th>Destino</th>
+                <th>Uso</th>
+                <th>Longitud de ruta</th>
+                <th>Longitud +15 %</th>
+                <th>Puerto de panel</th>
+              </tr>
+              <tr>
+                <td>S01…S10</td>
+                <td>Según listado</td>
+                <td>Ej.: S01-PP01-01</td>
+                <td>Rack técnico</td>
+                <td>Caja 1 · puesto 1</td>
+                <td>Datos</td>
+                <td>A medir</td>
+                <td>A calcular</td>
+                <td>PP01-01</td>
+              </tr>
+            </table>
+          </div>
+          <div class="given">
+            <b>Criterio:</b> la sucursal tipo puede compartir las mismas
+            distancias internas de diseño, pero la planilla debe identificar
+            separadamente S01, S02… S10 y presentar el total de metros y cajas
+            utilizados dentro de cada local. Las distancias geográficas entre
+            ciudades no forman parte del cómputo de cable.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="cableado-sucursal"><div class="card-head"><span class="num">08</span><h2>Cableado de la sucursal tipo</h2></div><div class="body">
-  <p>El diseño debe ser repetible, sencillo de mantener y suficientemente holgado. Se debe distinguir la cantidad por local de la cantidad total para diez instalaciones. Este apartado comprende únicamente el cableado LAN dentro de cada local: <strong>no existe cableado entre sucursales</strong>.</p>
-  <div class="task"><b>Contenido del informe.</b> Planilla por sucursal con origen, destino, uso, longitud y etiqueta; selección de switch, patch panel y rack; materiales por local y consolidado ×10. Incluir 15 % de holgura y 25 % de crecimiento.</div>
-  <h3 class="sub">Formato mínimo de la planilla</h3>
-  <div class="table"><table><tr><th>Sede</th><th>Ciudad</th><th>Etiqueta del cable</th><th>Origen / rack</th><th>Destino</th><th>Uso</th><th>Longitud de ruta</th><th>Longitud +15 %</th><th>Puerto de panel</th></tr><tr><td>S01…S10</td><td>Según listado</td><td>Ej.: S01-PP01-01</td><td>Rack técnico</td><td>Caja 1 · puesto 1</td><td>Datos</td><td>A medir</td><td>A calcular</td><td>PP01-01</td></tr></table></div>
-  <div class="given"><b>Criterio:</b> la sucursal tipo puede compartir las mismas distancias internas de diseño, pero la planilla debe identificar separadamente S01, S02… S10 y presentar el total de metros y cajas utilizados dentro de cada local. Las distancias geográficas entre ciudades no forman parte del cómputo de cable.</div>
-</div></section>
+      <section class="card" id="politica-cableada">
+        <div class="card-head">
+          <span class="num">09</span>
+          <h2>Política de red exclusivamente cableada</h2>
+        </div>
+        <div class="body">
+          <p>
+            RedCobro del Sur prohíbe el uso de Wi-Fi y de otras redes
+            inalámbricas en todas sus sedes. Debido a que se procesan
+            operaciones financieras y datos personales, la empresa prioriza
+            conexiones físicamente controlables: cada dispositivo debe
+            vincularse a una toma y puerto identificados dentro del local. Esta
+            política reduce la exposición de señales fuera del perímetro,
+            dificulta conexiones no autorizadas y permite localizar, auditar y
+            desconectar cada acceso.
+          </p>
+          <div class="given">
+            <b>Dato obligatorio.</b> No se diseñarán redes inalámbricas, no se
+            instalarán puntos de acceso y no se incluirán equipos o servicios
+            Wi-Fi en los planos, cálculos ni presupuesto. El informe debe
+            mencionar esta política dentro de las restricciones técnicas.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="politica-cableada"><div class="card-head"><span class="num">09</span><h2>Política de red exclusivamente cableada</h2></div><div class="body">
-  <p>RedCobro del Sur prohíbe el uso de Wi-Fi y de otras redes inalámbricas en todas sus sedes. Debido a que se procesan operaciones financieras y datos personales, la empresa prioriza conexiones físicamente controlables: cada dispositivo debe vincularse a una toma y puerto identificados dentro del local. Esta política reduce la exposición de señales fuera del perímetro, dificulta conexiones no autorizadas y permite localizar, auditar y desconectar cada acceso.</p>
-  <div class="given"><b>Dato obligatorio.</b> No se diseñarán redes inalámbricas, no se instalarán puntos de acceso y no se incluirán equipos o servicios Wi-Fi en los planos, cálculos ni presupuesto. El informe debe mencionar esta política dentro de las restricciones técnicas.</div>
-</div></section>
+      <section class="card" id="ip">
+        <div class="card-head">
+          <span class="num">10</span>
+          <h2>VLAN y direccionamiento IP</h2>
+        </div>
+        <div class="body">
+          <p>
+            La propuesta reservará un bloque privado corporativo, evitará
+            superposición entre sedes y permitirá resumir rutas. Deberán
+            separarse, como mínimo, transacciones, administración, servidores y
+            gestión. La empresa de seguridad coordinará sus redes específicas
+            con este esquema.
+          </p>
+          <div class="task">
+            <b>Contenido del informe.</b> Tabla de VLAN y subredes de la central
+            y una plantilla de direccionamiento para S01…S10 sin solapamientos,
+            indicando gateway, DHCP y direcciones reservadas, y definiendo qué
+            equipo enruta cada VLAN y qué servidor entrega DHCP y DNS.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="ip"><div class="card-head"><span class="num">10</span><h2>VLAN y direccionamiento IP</h2></div><div class="body">
-  <p>La propuesta reservará un bloque privado corporativo, evitará superposición entre sedes y permitirá resumir rutas. Deberán separarse, como mínimo, transacciones, administración, servidores y gestión. La empresa de seguridad coordinará sus redes específicas con este esquema.</p>
-  <div class="task"><b>Contenido del informe.</b> Tabla de VLAN y subredes de la central y una plantilla de direccionamiento para S01…S10 sin solapamientos, indicando gateway, DHCP y direcciones reservadas, y definiendo qué equipo enruta cada VLAN y qué servidor entrega DHCP y DNS.</div>
-</div></section>
+      <section class="card" id="vpn">
+        <div class="card-head">
+          <span class="num">11</span>
+          <h2>Conectividad empresarial provista por ANTEL</h2>
+        </div>
+        <div class="body">
+          <p>
+            RedCobro mantiene una alianza estratégica con ANTEL. ANTEL proveerá
+            la conectividad de la casa central y las diez sucursales, los
+            equipos de borde, la VPN empresarial administrada, el monitoreo y el
+            soporte 24/7. Toda comunicación entre sedes circulará exclusivamente
+            por esta solución.
+          </p>
+          <div class="given">
+            <b>Dato suministrado.</b> Los estudiantes no deben investigar,
+            comparar, cotizar ni configurar proveedores o protocolos VPN. Solo
+            deberán representar a ANTEL y la VPN administrada en el diagrama
+            general y respetar el punto de entrega del servicio.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="vpn"><div class="card-head"><span class="num">11</span><h2>Conectividad empresarial provista por ANTEL</h2></div><div class="body">
-  <p>RedCobro mantiene una alianza estratégica con ANTEL. ANTEL proveerá la conectividad de la casa central y las diez sucursales, los equipos de borde, la VPN empresarial administrada, el monitoreo y el soporte 24/7. Toda comunicación entre sedes circulará exclusivamente por esta solución.</p>
-  <div class="given"><b>Dato suministrado.</b> Los estudiantes no deben investigar, comparar, cotizar ni configurar proveedores o protocolos VPN. Solo deberán representar a ANTEL y la VPN administrada en el diagrama general y respetar el punto de entrega del servicio.</div>
-</div></section>
+      <section class="card" id="seguridad">
+        <div class="card-head">
+          <span class="num">12</span>
+          <h2>Seguridad tercerizada</h2>
+        </div>
+        <div class="body">
+          <p>
+            Una empresa especializada contratada por RedCobro diseñará,
+            suministrará y configurará la seguridad de red, las reglas de
+            firewall, la protección de terminales, el CCTV, la seguridad física,
+            los permisos y el monitoreo correspondientes.
+          </p>
+          <div class="given">
+            <b>Fuera del alcance del grupo.</b> No se solicita diseñar,
+            configurar, dimensionar ni presupuestar estas soluciones. El
+            proyecto deberá reservar espacio razonable en racks y coordinar el
+            punto de conexión LAN, sin desarrollar detalles técnicos de
+            seguridad.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="seguridad"><div class="card-head"><span class="num">12</span><h2>Seguridad tercerizada</h2></div><div class="body">
-  <p>Una empresa especializada contratada por RedCobro diseñará, suministrará y configurará la seguridad de red, las reglas de firewall, la protección de terminales, el CCTV, la seguridad física, los permisos y el monitoreo correspondientes.</p>
-  <div class="given"><b>Fuera del alcance del grupo.</b> No se solicita diseñar, configurar, dimensionar ni presupuestar estas soluciones. El proyecto deberá reservar espacio razonable en racks y coordinar el punto de conexión LAN, sin desarrollar detalles técnicos de seguridad.</div>
-</div></section>
+      <section class="card" id="servidores">
+        <div class="card-head">
+          <span class="num">13</span>
+          <h2>Servidores, respaldo y CPD</h2>
+        </div>
+        <div class="body">
+          <p>
+            Los servicios internos residirán en máquinas virtuales con
+            <strong>Ubuntu Server LTS</strong> alojadas en el CPD central. Los
+            servicios de DNS/DHCP, archivos, intranet e impresión se desplegarán
+            con Docker y Docker Compose, utilizando imágenes con versión fija,
+            volúmenes persistentes y nombres de host y direcciones IP
+            documentados. El correo Zimbra se instala directamente sobre Ubuntu
+            Server, sin Docker, con una versión de Ubuntu compatible con la
+            versión de Zimbra elegida.
+          </p>
+          <div class="actions">
+            <a
+              class="btn primary"
+              href="../Herramientas/dimensionador_servidores_red_cobranzas.html"
+              >Abrir dimensionador de servidores</a
+            >
+          </div>
+          <div class="table">
+            <table>
+              <tr>
+                <th>VM</th>
+                <th>Servicio</th>
+                <th>Resultado requerido</th>
+              </tr>
+              <tr>
+                <td>VM-DNS</td>
+                <td>DNS y DHCP (contenedor)</td>
+                <td>
+                  Zona interna, registros de las VM, reenviadores y ámbitos DHCP
+                  por VLAN con DHCP relay; fácil de operar mediante interfaz
+                  web.
+                </td>
+              </tr>
+              <tr>
+                <td>VM-ARCHIVOS</td>
+                <td>Samba</td>
+                <td>
+                  Carpetas compartidas entre central y sucursales, con usuarios,
+                  grupos y permisos diferenciados.
+                </td>
+              </tr>
+              <tr>
+                <td>VM-INTRANET</td>
+                <td>Apache2 + MySQL</td>
+                <td>
+                  Aplicación web interna; Apache y MySQL en contenedores
+                  separados, unidos por una red privada de Docker y con base de
+                  datos persistente.
+                </td>
+              </tr>
+              <tr>
+                <td>VM-CORREO</td>
+                <td>Zimbra (sin Docker)</td>
+                <td>
+                  Correo empresarial interno con dominio, cuentas de prueba,
+                  almacenamiento persistente y resolución DNS interna.
+                </td>
+              </tr>
+              <tr>
+                <td>VM-IMPRESION</td>
+                <td>CUPS</td>
+                <td>
+                  Colas de impresión publicadas para los equipos autorizados de
+                  las once sedes.
+                </td>
+              </tr>
+            </table>
+          </div>
+          <h3 class="sub">
+            Proceso de dimensionamiento que deberá realizar y documentar el
+            grupo
+          </h3>
+          <ol>
+            <li>
+              Dimensionar el host físico y asignar a cada VM CPU, RAM, disco,
+              nombre.
+            </li>
+            <li>Determinar los servicios a ser ejecutados en cada host</li>
+            <li>
+              Determinar VLAN, dirección IP fija, gateway y DNS.
+            </li>
+          </ol>
+          <div class="task">
+            <b>Contenido del informe.</b> JSON del dimensionador importado en el
+            formulario; justificación de sus entradas y resultados; tabla de
+            recursos e IP de las VM; diagrama host → VM → contenedores y
+            servicios; imágenes y versiones elegidas; archivos Compose
+            comentados; volúmenes, puertos y dependencias; procedimiento
+            seguido; capturas o registros de funcionamiento; pruebas desde
+            central y sucursal; respaldo 3-2-1; UPS, autonomía y climatización
+            del CPD. No se exige diseñar un clúster avanzado.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="servidores"><div class="card-head"><span class="num">13</span><h2>Servidores, respaldo y CPD</h2></div><div class="body">
-  <p>Los servicios internos residirán en máquinas virtuales con <strong>Ubuntu Server LTS</strong> alojadas en el CPD central. Los servicios de DNS/DHCP, archivos, intranet e impresión se desplegarán con Docker y Docker Compose, utilizando imágenes con versión fija, volúmenes persistentes y nombres de host y direcciones IP documentados. El correo Zimbra se instala directamente sobre Ubuntu Server, sin Docker, con una versión de Ubuntu compatible con la versión de Zimbra elegida.</p>
-  <div class="actions"><a class="btn primary" href="../Herramientas/dimensionador_servidores_red_cobranzas.html">Abrir dimensionador de servidores</a></div>
-  <div class="table"><table><tr><th>VM</th><th>Servicio</th><th>Resultado requerido</th></tr><tr><td>VM-DNS</td><td>DNS y DHCP (contenedor)</td><td>Zona interna, registros de las VM, reenviadores y ámbitos DHCP por VLAN con DHCP relay; fácil de operar mediante interfaz web.</td></tr><tr><td>VM-ARCHIVOS</td><td>Samba</td><td>Carpetas compartidas entre central y sucursales, con usuarios, grupos y permisos diferenciados.</td></tr><tr><td>VM-INTRANET</td><td>Apache2 + MySQL</td><td>Aplicación web interna; Apache y MySQL en contenedores separados, unidos por una red privada de Docker y con base de datos persistente.</td></tr><tr><td>VM-CORREO</td><td>Zimbra (sin Docker)</td><td>Correo empresarial interno con dominio, cuentas de prueba, almacenamiento persistente y resolución DNS interna.</td></tr><tr><td>VM-IMPRESION</td><td>CUPS</td><td>Colas de impresión publicadas para los equipos autorizados de las once sedes.</td></tr></table></div>
-  <h3 class="sub">Proceso de instalación que deberá realizar y documentar el grupo</h3>
-  <ol><li>Dimensionar el host físico y asignar a cada VM CPU, RAM, disco, nombre, VLAN, dirección IP fija, gateway y DNS.</li><li>Crear las cinco VM, instalar Ubuntu Server LTS (versión compatible con Zimbra en VM-CORREO), configurar red y nombre de host y aplicar las actualizaciones del sistema.</li><li>Instalar Docker Engine y el complemento Docker Compose desde una fuente oficial en las VM con contenedores (todas menos VM-CORREO); habilitar el servicio al inicio y comprobar sus versiones.</li><li>Desplegar primero VM-DNS: zona interna, registros de todas las VM y ámbitos DHCP; las demás VM usan este DNS.</li><li>Crear un directorio de proyecto por servicio, archivos <code>compose.yaml</code>, archivo <code>.env</code> para variables y secretos, redes internas y volúmenes persistentes.</li><li>Seleccionar imágenes mantenidas y fijar una versión concreta; no utilizar etiquetas flotantes como <code>latest</code>.</li><li>Desplegar cada solución con <code>docker compose up -d</code> y comprobar el estado con <code>docker compose ps</code> y los registros de los contenedores.</li><li>Configurar Samba: recursos compartidos, usuarios, grupos, permisos y acceso desde una estación de la central y otra sucursal.</li><li>Configurar la intranet: contenido de prueba en Apache, base de datos y usuario de aplicación en MySQL, conexión mediante la red privada de Docker y sin publicar MySQL hacia la LAN.</li><li>Instalar y configurar Zimbra con los paquetes oficiales: nombre FQDN, registros A/MX en VM-DNS, cuentas de prueba, almacenamiento persistente y envío y recepción de mensajes internos.</li><li>Configurar CUPS: impresoras o colas de prueba, permisos y acceso desde equipos autorizados.</li><li>Comprobar reinicio automático y persistencia de datos después de reiniciar las VM.</li><li>Integrar los datos y configuraciones en el esquema de copias 3-2-1 y documentar un procedimiento básico de restauración.</li></ol>
-  <div class="task"><b>Contenido del informe.</b> JSON del dimensionador importado en el formulario; justificación de sus entradas y resultados; tabla de recursos e IP de las VM; diagrama host → VM → contenedores y servicios; imágenes y versiones elegidas; archivos Compose comentados; volúmenes, puertos y dependencias; procedimiento seguido; capturas o registros de funcionamiento; pruebas desde central y sucursal; respaldo 3-2-1; UPS, autonomía y climatización del CPD. No se exige diseñar un clúster avanzado.</div>
-</div></section>
+      <section class="card" id="presupuesto">
+        <div class="card-head">
+          <span class="num">14</span>
+          <h2>Cotización y fuentes comerciales</h2>
+        </div>
+        <div class="body">
+          <p>
+            El presupuesto se expresará en <strong>USD</strong>, con precio sin
+            IVA, IVA 22 % y precio final. También incluirá mano de obra,
+            servicios profesionales, contingencia y exclusiones.
+          </p>
+          <div class="actions">
+            <a
+              class="btn primary"
+              href="../Herramientas/cotizador_red_cobranzas.html"
+              >Usar la planilla interactiva</a
+            >
+          </div>
+          <div class="danger task">
+            <b>Obligatorio.</b> Cada precio de equipo o material debe
+            acompañarse con el enlace directo al aviso de Mercado Libre
+            consultado y fecha de consulta. No sirve enlazar una búsqueda
+            general. Si no existe el producto exacto, documentar el equivalente
+            y la conversión utilizada. Comparar al menos dos proveedores o
+            avisos para los cinco rubros de mayor costo.
+          </div>
+          <div class="task">
+            <b>Contenido del informe.</b> Cantidades de la LAN central +
+            sucursal tipo ×10, marca/modelo, precio unitario, URL, subtotal,
+            mano de obra, utilidad, IVA y exclusiones. No incluir los servicios
+            de ANTEL ni las soluciones de seguridad tercerizadas. Adjuntar el
+            PDF del cotizador y la planilla editable.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="presupuesto"><div class="card-head"><span class="num">14</span><h2>Cotización y fuentes comerciales</h2></div><div class="body">
-  <p>El presupuesto se expresará en <strong>USD</strong>, con precio sin IVA, IVA 22 % y precio final. También incluirá mano de obra, servicios profesionales, contingencia y exclusiones.</p>
-  <div class="actions"><a class="btn primary" href="../Herramientas/cotizador_red_cobranzas.html">Usar la planilla interactiva</a></div>
-  <div class="danger task"><b>Obligatorio.</b> Cada precio de equipo o material debe acompañarse con el enlace directo al aviso de Mercado Libre consultado y fecha de consulta. No sirve enlazar una búsqueda general. Si no existe el producto exacto, documentar el equivalente y la conversión utilizada. Comparar al menos dos proveedores o avisos para los cinco rubros de mayor costo.</div>
-  <div class="task"><b>Contenido del informe.</b> Cantidades de la LAN central + sucursal tipo ×10, marca/modelo, precio unitario, URL, subtotal, mano de obra, utilidad, IVA y exclusiones. No incluir los servicios de ANTEL ni las soluciones de seguridad tercerizadas. Adjuntar el PDF del cotizador y la planilla editable.</div>
-</div></section>
+      <section class="card" id="entrega">
+        <div class="card-head">
+          <span class="num">15</span>
+          <h2>Único entregable final y defensa</h2>
+        </div>
+        <div class="body">
+          <p>
+            El grupo completará el
+            <a
+              href="../Herramientas/generador_informe_red_cobranzas.html"
+              style="color: #34d399"
+              ><strong>formulario uniforme del proyecto</strong></a
+            >
+            y entregará el informe técnico-comercial generado en
+            <strong>PDF junto con su archivo JSON</strong>. Los planos JPG, las
+            planillas y el presupuesto quedarán incorporados en el mismo
+            formato; no se califican como trabajos independientes.
+          </p>
+          <div class="checklist">
+            <label
+              ><input type="checkbox" /> Portada, integrantes, índice y objetivo
+              general del proyecto.</label
+            ><label
+              ><input type="checkbox" /> Descripción de la empresa, necesidades
+              relevadas, alcance, supuestos y restricciones técnicas.</label
+            ><label
+              ><input type="checkbox" /> Relevamiento de las tres plantas y de
+              la sucursal tipo.</label
+            ><label
+              ><input type="checkbox" /> Planilla de cableado interno de casa
+              central y planilla con puntos, etiquetas y recorridos internos
+              para S01–S10.</label
+            ><label
+              ><input type="checkbox" /> Planos JPG de cableado de las tres
+              plantas y de la sucursal tipo.</label
+            ><label
+              ><input type="checkbox" /> Diagrama general con ANTEL, VPN, racks,
+              VLAN, direccionamiento, VM y contenedores.</label
+            ><label
+              ><input type="checkbox" /> Dimensionamiento de hardware importado
+              y justificado.</label
+            ><label
+              ><input type="checkbox" /> Documentación de instalación y
+              evidencias de DNS/DHCP, Samba, Apache2/MySQL, Zimbra y
+              CUPS.</label
+            ><label
+              ><input type="checkbox" /> Archivos <code>compose.yaml</code> y
+              ejemplos de <code>.env</code> sin contraseñas reales.</label
+            ><label
+              ><input type="checkbox" /> Presupuesto LAN y servidores con
+              enlaces directos de Mercado Libre.</label
+            ><label><input type="checkbox" /> Conclusión.</label
+            ><label
+              ><input type="checkbox" /> Entrega: PDF y JSON generados por el
+              formulario, más los archivos editables utilizados.</label
+            >
+          </div>
+          <div class="table">
+            <table>
+              <tr>
+                <th>Instancia</th>
+                <th>Fecha</th>
+                <th>Condición</th>
+              </tr>
+              <tr>
+                <td>Planteo</td>
+                <td>Martes 20/10/2026</td>
+                <td>Formación de equipos y lectura del caso</td>
+              </tr>
+              <tr>
+                <td>Control intermedio</td>
+                <td>Martes 27/10/2026</td>
+                <td>
+                  Objetivo, planos, planillas y diseño preliminar de VM y
+                  servicios
+                </td>
+              </tr>
+              <tr>
+                <td>Entrega</td>
+                <td>Jueves 05/11/2026</td>
+                <td>
+                  Informe uniforme en PDF + archivo JSON + anexos editables
+                </td>
+              </tr>
+              <tr>
+                <td>Defensa</td>
+                <td>Martes 10/11/2026</td>
+                <td>10 minutos por grupo + preguntas individuales</td>
+              </tr>
+            </table>
+          </div>
+          <div class="task">
+            <b>Defensa.</b> Presentar el objetivo, explicar un plano, justificar
+            las cantidades de cable LAN, explicar la arquitectura de VM y
+            contenedores, demostrar uno de los servicios desplegados y defender
+            el presupuesto. Todos los integrantes deberán intervenir.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="entrega"><div class="card-head"><span class="num">15</span><h2>Único entregable final y defensa</h2></div><div class="body">
-  <p>El grupo completará el <a href="../Herramientas/generador_informe_red_cobranzas.html" style="color:#34d399"><strong>formulario uniforme del proyecto</strong></a> y entregará el informe técnico-comercial generado en <strong>PDF junto con su archivo JSON</strong>. Los planos JPG, las planillas y el presupuesto quedarán incorporados en el mismo formato; no se califican como trabajos independientes.</p>
-  <div class="checklist"><label><input type="checkbox"> Portada, integrantes, índice y objetivo general del proyecto.</label><label><input type="checkbox"> Descripción de la empresa, necesidades relevadas, alcance, supuestos y restricciones técnicas.</label><label><input type="checkbox"> Relevamiento de las tres plantas y de la sucursal tipo.</label><label><input type="checkbox"> Planilla de cableado interno de casa central y planilla con puntos, etiquetas y recorridos internos para S01–S10.</label><label><input type="checkbox"> Planos JPG de cableado de las tres plantas y de la sucursal tipo.</label><label><input type="checkbox"> Diagrama general con ANTEL, VPN, racks, VLAN, direccionamiento, VM y contenedores.</label><label><input type="checkbox"> Dimensionamiento de hardware importado y justificado.</label><label><input type="checkbox"> Documentación de instalación y evidencias de DNS/DHCP, Samba, Apache2/MySQL, Zimbra y CUPS.</label><label><input type="checkbox"> Archivos <code>compose.yaml</code> y ejemplos de <code>.env</code> sin contraseñas reales.</label><label><input type="checkbox"> Presupuesto LAN y servidores con enlaces directos de Mercado Libre.</label><label><input type="checkbox"> Conclusión.</label><label><input type="checkbox"> Entrega: PDF y JSON generados por el formulario, más los archivos editables utilizados.</label></div>
-  <div class="table"><table><tr><th>Instancia</th><th>Fecha</th><th>Condición</th></tr><tr><td>Planteo</td><td>Martes 20/10/2026</td><td>Formación de equipos y lectura del caso</td></tr><tr><td>Control intermedio</td><td>Martes 27/10/2026</td><td>Objetivo, planos, planillas y diseño preliminar de VM y servicios</td></tr><tr><td>Entrega</td><td>Jueves 05/11/2026</td><td>Informe uniforme en PDF + archivo JSON + anexos editables</td></tr><tr><td>Defensa</td><td>Martes 10/11/2026</td><td>10 minutos por grupo + preguntas individuales</td></tr></table></div>
-  <div class="task"><b>Defensa.</b> Presentar el objetivo, explicar un plano, justificar las cantidades de cable LAN, explicar la arquitectura de VM y contenedores, demostrar uno de los servicios desplegados y defender el presupuesto. Todos los integrantes deberán intervenir.</div>
-</div></section>
+      <section class="card" id="rubrica">
+        <div class="card-head">
+          <span class="num">16</span>
+          <h2>Rúbrica y referencias mínimas</h2>
+        </div>
+        <div class="body">
+          <div class="table">
+            <table class="rubric">
+              <tr>
+                <th>Criterio</th>
+                <th>Evidencia principal</th>
+                <th>Puntos</th>
+              </tr>
+              <tr>
+                <td>Objetivo, relevamiento y restricciones</td>
+                <td>Problema bien explicado y datos organizados</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Planos y planillas de cableado interno</td>
+                <td>
+                  Puntos, etiquetas, recorridos dentro de cada sede y cantidades
+                  coherentes
+                </td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>Diseño lógico de red</td>
+                <td>Racks, switches, VLAN, IP e integración con ANTEL</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>VM, Docker y servicios</td>
+                <td>
+                  Despliegue documentado y funcionamiento de Samba,
+                  Apache2/MySQL, Zimbra y CUPS
+                </td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>Presupuesto general</td>
+                <td>Fuentes, materiales, mano de obra, IVA y exclusiones</td>
+                <td>15</td>
+              </tr>
+              <tr>
+                <td>Presentación y defensa</td>
+                <td>Informe integrado, claridad y participación</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td></td>
+                <td>100</td>
+              </tr>
+            </table>
+          </div>
+          <p class="ref">
+            Consultar el caso
+            <a href="caso_gestoria_triada.html">TRÍADA</a> como modelo de
+            razonamiento y los materiales de cableado, UPS y cotización del
+            curso. Citar normas y documentación oficial utilizada. No copiar la
+            solución de otro caso: toda decisión debe responder a los datos de
+            RedCobro del Sur.
+          </p>
+          <div class="danger task">
+            <b>Errores importantes.</b> Recorridos internos sin calcular,
+            enlaces de cobre superiores a 90 m sin corrección, planos que no
+            coinciden con la planilla, presupuesto sin fuentes, subredes
+            superpuestas, VM sin dimensionar, contenedores sin persistencia o
+            servicios sin evidencia de funcionamiento.
+          </div>
+        </div>
+      </section>
 
-<section class="card" id="rubrica"><div class="card-head"><span class="num">16</span><h2>Rúbrica y referencias mínimas</h2></div><div class="body">
-  <div class="table"><table class="rubric"><tr><th>Criterio</th><th>Evidencia principal</th><th>Puntos</th></tr><tr><td>Objetivo, relevamiento y restricciones</td><td>Problema bien explicado y datos organizados</td><td>10</td></tr><tr><td>Planos y planillas de cableado interno</td><td>Puntos, etiquetas, recorridos dentro de cada sede y cantidades coherentes</td><td>25</td></tr><tr><td>Diseño lógico de red</td><td>Racks, switches, VLAN, IP e integración con ANTEL</td><td>20</td></tr><tr><td>VM, Docker y servicios</td><td>Despliegue documentado y funcionamiento de Samba, Apache2/MySQL, Zimbra y CUPS</td><td>20</td></tr><tr><td>Presupuesto general</td><td>Fuentes, materiales, mano de obra, IVA y exclusiones</td><td>15</td></tr><tr><td>Presentación y defensa</td><td>Informe integrado, claridad y participación</td><td>10</td></tr><tr><td>Total</td><td></td><td>100</td></tr></table></div>
-  <p class="ref">Consultar el caso <a href="caso_gestoria_triada.html">TRÍADA</a> como modelo de razonamiento y los materiales de cableado, UPS y cotización del curso. Citar normas y documentación oficial utilizada. No copiar la solución de otro caso: toda decisión debe responder a los datos de RedCobro del Sur.</p>
-  <div class="danger task"><b>Errores importantes.</b> Recorridos internos sin calcular, enlaces de cobre superiores a 90 m sin corrección, planos que no coinciden con la planilla, presupuesto sin fuentes, subredes superpuestas, VM sin dimensionar, contenedores sin persistencia o servicios sin evidencia de funcionamiento.</div>
-</div></section>
-
-<section class="card" id="glosario"><div class="card-head"><span class="num">21</span><h2>Glosario de abreviaturas y términos técnicos</h2></div><div class="body">
-  <p>Las siglas se mantienen porque son habituales en documentación técnica. La primera vez que se utilicen en el informe del grupo conviene escribir también su significado.</p>
-  <div class="table"><table><tr><th>Sigla / término</th><th>Significado</th><th>Uso en el caso</th></tr>
-  <tr><td>3-2-1</td><td>Estrategia de respaldo: tres copias, en dos medios, con una fuera del sitio</td><td>Protección de datos del CPD</td></tr>
-  <tr><td>802.1Q</td><td>Estándar IEEE para etiquetado de VLAN</td><td>Transporte de VLAN entre equipos</td></tr>
-  <tr><td>ACL</td><td>Access Control List · lista de control de acceso</td><td>Reglas que permiten o niegan tráfico</td></tr>
-  <tr><td>ANSI</td><td>American National Standards Institute</td><td>Organismo de normalización</td></tr>
-  <tr><td>BTU/h</td><td>British Thermal Units por hora</td><td>Capacidad de climatización</td></tr>
-  <tr><td>Cat 6</td><td>Categoría 6 de cableado balanceado</td><td>Cableado horizontal de cobre</td></tr>
-  <tr><td>CPD</td><td>Centro de Procesamiento de Datos</td><td>Sala de servidores y núcleo de red</td></tr>
-  <tr><td>CC</td><td>Casa Central</td><td>Prefijo utilizado en etiquetas de la sede principal</td></tr>
-  <tr><td>CSV</td><td>Comma-Separated Values</td><td>Formato de exportación de planillas</td></tr>
-  <tr><td>DHCP</td><td>Dynamic Host Configuration Protocol</td><td>Asignación automática de direcciones IP</td></tr>
-  <tr><td>DNS</td><td>Domain Name System</td><td>Resolución de nombres</td></tr>
-  <tr><td>Docker</td><td>Plataforma para ejecutar aplicaciones en contenedores</td><td>Despliegue de los servicios internos</td></tr>
-  <tr><td>Docker Compose</td><td>Herramienta para definir y ejecutar aplicaciones de varios contenedores</td><td>Archivos <code>compose.yaml</code> de cada servicio</td></tr>
-  <tr><td>Contenedor</td><td>Entorno aislado que empaqueta una aplicación y sus dependencias</td><td>DNS/DHCP, Samba, Apache2, MySQL y CUPS (Zimbra se instala sin contenedor)</td></tr>
-  <tr><td>DV</td><td>Ducto vertical</td><td>Canalización del backbone entre plantas</td></tr>
-  <tr><td>EMT</td><td>Educación Media Tecnológica</td><td>Nivel y orientación del curso</td></tr>
-  <tr><td>ERP</td><td>Enterprise Resource Planning</td><td>Sistema administrativo empresarial</td></tr>
-  <tr><td>FO</td><td>Fibra óptica</td><td>Acometida y backbone</td></tr>
-  <tr><td>fps</td><td>Frames per second · cuadros por segundo</td><td>Frecuencia de grabación de video</td></tr>
-  <tr><td>GB / TB</td><td>Gigabyte / terabyte</td><td>Capacidad de almacenamiento</td></tr>
-  <tr><td>IDF</td><td>Intermediate Distribution Frame</td><td>Distribuidor o rack de una planta</td></tr>
-  <tr><td>IEEE</td><td>Institute of Electrical and Electronics Engineers</td><td>Estándares de redes</td></tr>
-  <tr><td>IP</td><td>Internet Protocol</td><td>Direccionamiento de equipos</td></tr>
-  <tr><td>ID</td><td>Identifier · identificador</td><td>Código único de requisitos y pruebas</td></tr>
-  <tr><td>ISO</td><td>International Organization for Standardization</td><td>Normas técnicas internacionales</td></tr>
-  <tr><td>IVA</td><td>Impuesto al Valor Agregado</td><td>Impuesto aplicado al presupuesto</td></tr>
-  <tr><td>JSON</td><td>JavaScript Object Notation</td><td>Formato de intercambio de datos</td></tr>
-  <tr><td>kB / MB</td><td>Kilobyte / megabyte</td><td>Volumen de datos</td></tr>
-  <tr><td>kbit/s / Mbps</td><td>Kilobits o megabits por segundo</td><td>Velocidad y tráfico de red</td></tr>
-  <tr><td>kVA / W</td><td>Kilovoltamperios / vatios</td><td>Potencia aparente y activa</td></tr>
-  <tr><td>LAN</td><td>Local Area Network</td><td>Red local de una sede</td></tr>
-  <tr><td>MDF</td><td>Main Distribution Frame</td><td>Distribuidor principal ubicado en el CPD</td></tr>
-  <tr><td>NAS</td><td>Network Attached Storage</td><td>Almacenamiento de copias en red</td></tr>
-  <tr><td>NTP</td><td>Network Time Protocol</td><td>Sincronización horaria</td></tr>
-  <tr><td>NTU</td><td>Network Termination Unit</td><td>Equipo de terminación del proveedor</td></tr>
-  <tr><td>ODF</td><td>Optical Distribution Frame</td><td>Panel de terminación de fibra</td></tr>
-  <tr><td>OM4 / OS2</td><td>Fibra multimodo OM4 / fibra monomodo OS2</td><td>Backbone LAN / acometida WAN</td></tr>
-  <tr><td>ONT</td><td>Optical Network Terminal</td><td>Terminación óptica activa del proveedor</td></tr>
-  <tr><td>PB / P1–P3</td><td>Planta baja / plantas 1 a 3; en este caso P1 es PB</td><td>Identificación de niveles</td></tr>
-  <tr><td>PC</td><td>Personal Computer · computadora personal</td><td>Terminal de usuario</td></tr>
-  <tr><td>PDF</td><td>Portable Document Format</td><td>Formato del informe final</td></tr>
-  <tr><td>PP</td><td>Patch panel</td><td>Panel de terminación y etiquetado de cobre</td></tr>
-  <tr><td>QoS</td><td>Quality of Service</td><td>Priorización de tráfico</td></tr>
-  <tr><td>RAID 1 / RAID 5</td><td>Esquemas de redundancia de discos por espejo / paridad</td><td>Protección del almacenamiento</td></tr>
-  <tr><td>RAM</td><td>Random Access Memory</td><td>Memoria de los servidores</td></tr>
-  <tr><td>RPO / RTO</td><td>Recovery Point Objective / Recovery Time Objective</td><td>Pérdida de datos y tiempo de recuperación admisibles</td></tr>
-  <tr><td>RR. HH.</td><td>Recursos Humanos</td><td>Área administrativa</td></tr>
-  <tr><td>RCS</td><td>RedCobro del Sur</td><td>Sigla de la empresa del caso</td></tr>
-  <tr><td>RTT</td><td>Round-Trip Time</td><td>Latencia de ida y vuelta</td></tr>
-  <tr><td>SFP+</td><td>Small Form-factor Pluggable Plus</td><td>Transceptor para enlaces de fibra de alta velocidad</td></tr>
-  <tr><td>SLA</td><td>Service Level Agreement</td><td>Compromiso de disponibilidad y soporte</td></tr>
-  <tr><td>S.A.</td><td>Sociedad Anónima</td><td>Forma jurídica indicada para la empresa</td></tr>
-  <tr><td>S01–S10</td><td>Códigos de las sucursales 1 a 10</td><td>Identificación de sedes, cables y planillas</td></tr>
-  <tr><td>TCO</td><td>Total Cost of Ownership</td><td>Costo total durante un período</td></tr>
-  <tr><td>TI / IT</td><td>Tecnologías de la Información / Information Technology</td><td>Área técnica de la empresa</td></tr>
-  <tr><td>TIA</td><td>Telecommunications Industry Association</td><td>Familia de normas de cableado</td></tr>
-  <tr><td>U</td><td>Unidad de rack de 44,45 mm</td><td>Altura de equipos y gabinetes</td></tr>
-  <tr><td>UPS</td><td>Uninterruptible Power Supply</td><td>Alimentación eléctrica ininterrumpida</td></tr>
-  <tr><td>URL</td><td>Uniform Resource Locator</td><td>Dirección de una fuente o producto</td></tr>
-  <tr><td>USB</td><td>Universal Serial Bus</td><td>Conexión de lectores y periféricos</td></tr>
-  <tr><td>USD</td><td>Dólares estadounidenses</td><td>Moneda del presupuesto</td></tr>
-  <tr><td>UTP</td><td>Unshielded Twisted Pair</td><td>Cable de pares trenzados sin blindaje</td></tr>
-  <tr><td>CPE</td><td>Customer Premises Equipment · equipo de borde</td><td>Equipo de ANTEL en cada sede</td></tr>
-  <tr><td>DHCP relay</td><td>Reenvío de solicitudes DHCP a otra red</td><td>Núcleo y CPE hacia VM-DNS</td></tr>
-  <tr><td>Technitium</td><td>Servidor DNS/DHCP con interfaz web</td><td>Ejemplo de servicio de VM-DNS</td></tr>
-  <tr><td>VM</td><td>Virtual Machine · máquina virtual</td><td>Servidor Ubuntu aislado para uno o más servicios o contenedores</td></tr>
-  <tr><td>Samba</td><td>Servicio compatible con SMB para compartir archivos</td><td>Carpetas de central y sucursales</td></tr>
-  <tr><td>Apache2</td><td>Servidor web HTTP</td><td>Publicación de la intranet</td></tr>
-  <tr><td>MySQL</td><td>Sistema gestor de bases de datos relacionales</td><td>Base de datos de la intranet</td></tr>
-  <tr><td>Zimbra</td><td>Plataforma colaborativa y de correo electrónico</td><td>Correo interno, instalado sin Docker en VM-CORREO</td></tr>
-  <tr><td>CUPS</td><td>Common UNIX Printing System</td><td>Administración de colas de impresión</td></tr>
-  <tr><td>VLAN</td><td>Virtual Local Area Network</td><td>Separación lógica de redes</td></tr>
-  <tr><td>VLSM</td><td>Variable Length Subnet Mask</td><td>Subredes de distintos tamaños</td></tr>
-  <tr><td>VPN</td><td>Virtual Private Network</td><td>Comunicación privada entre sedes</td></tr>
-  <tr><td>WAN</td><td>Wide Area Network</td><td>Red que conecta las sedes</td></tr>
-  </table></div>
-</div></section>
-</main>
-<footer>REDCOBRO://CASO_ESTUDIANTES · Documento de trabajo · Octubre–noviembre 2026</footer>
-</body>
+      <section class="card" id="glosario">
+        <div class="card-head">
+          <span class="num">21</span>
+          <h2>Glosario de abreviaturas y términos técnicos</h2>
+        </div>
+        <div class="body">
+          <p>
+            Las siglas se mantienen porque son habituales en documentación
+            técnica. La primera vez que se utilicen en el informe del grupo
+            conviene escribir también su significado.
+          </p>
+          <div class="table">
+            <table>
+              <tr>
+                <th>Sigla / término</th>
+                <th>Significado</th>
+                <th>Uso en el caso</th>
+              </tr>
+              <tr>
+                <td>3-2-1</td>
+                <td>
+                  Estrategia de respaldo: tres copias, en dos medios, con una
+                  fuera del sitio
+                </td>
+                <td>Protección de datos del CPD</td>
+              </tr>
+              <tr>
+                <td>802.1Q</td>
+                <td>Estándar IEEE para etiquetado de VLAN</td>
+                <td>Transporte de VLAN entre equipos</td>
+              </tr>
+              <tr>
+                <td>ACL</td>
+                <td>Access Control List · lista de control de acceso</td>
+                <td>Reglas que permiten o niegan tráfico</td>
+              </tr>
+              <tr>
+                <td>ANSI</td>
+                <td>American National Standards Institute</td>
+                <td>Organismo de normalización</td>
+              </tr>
+              <tr>
+                <td>BTU/h</td>
+                <td>British Thermal Units por hora</td>
+                <td>Capacidad de climatización</td>
+              </tr>
+              <tr>
+                <td>Cat 6</td>
+                <td>Categoría 6 de cableado balanceado</td>
+                <td>Cableado horizontal de cobre</td>
+              </tr>
+              <tr>
+                <td>CPD</td>
+                <td>Centro de Procesamiento de Datos</td>
+                <td>Sala de servidores y núcleo de red</td>
+              </tr>
+              <tr>
+                <td>CC</td>
+                <td>Casa Central</td>
+                <td>Prefijo utilizado en etiquetas de la sede principal</td>
+              </tr>
+              <tr>
+                <td>CSV</td>
+                <td>Comma-Separated Values</td>
+                <td>Formato de exportación de planillas</td>
+              </tr>
+              <tr>
+                <td>DHCP</td>
+                <td>Dynamic Host Configuration Protocol</td>
+                <td>Asignación automática de direcciones IP</td>
+              </tr>
+              <tr>
+                <td>DNS</td>
+                <td>Domain Name System</td>
+                <td>Resolución de nombres</td>
+              </tr>
+              <tr>
+                <td>Docker</td>
+                <td>Plataforma para ejecutar aplicaciones en contenedores</td>
+                <td>Despliegue de los servicios internos</td>
+              </tr>
+              <tr>
+                <td>Docker Compose</td>
+                <td>
+                  Herramienta para definir y ejecutar aplicaciones de varios
+                  contenedores
+                </td>
+                <td>Archivos <code>compose.yaml</code> de cada servicio</td>
+              </tr>
+              <tr>
+                <td>Contenedor</td>
+                <td>
+                  Entorno aislado que empaqueta una aplicación y sus
+                  dependencias
+                </td>
+                <td>
+                  DNS/DHCP, Samba, Apache2, MySQL y CUPS (Zimbra se instala sin
+                  contenedor)
+                </td>
+              </tr>
+              <tr>
+                <td>DV</td>
+                <td>Ducto vertical</td>
+                <td>Canalización del backbone entre plantas</td>
+              </tr>
+              <tr>
+                <td>EMT</td>
+                <td>Educación Media Tecnológica</td>
+                <td>Nivel y orientación del curso</td>
+              </tr>
+              <tr>
+                <td>ERP</td>
+                <td>Enterprise Resource Planning</td>
+                <td>Sistema administrativo empresarial</td>
+              </tr>
+              <tr>
+                <td>FO</td>
+                <td>Fibra óptica</td>
+                <td>Acometida y backbone</td>
+              </tr>
+              <tr>
+                <td>fps</td>
+                <td>Frames per second · cuadros por segundo</td>
+                <td>Frecuencia de grabación de video</td>
+              </tr>
+              <tr>
+                <td>GB / TB</td>
+                <td>Gigabyte / terabyte</td>
+                <td>Capacidad de almacenamiento</td>
+              </tr>
+              <tr>
+                <td>IDF</td>
+                <td>Intermediate Distribution Frame</td>
+                <td>Distribuidor o rack de una planta</td>
+              </tr>
+              <tr>
+                <td>IEEE</td>
+                <td>Institute of Electrical and Electronics Engineers</td>
+                <td>Estándares de redes</td>
+              </tr>
+              <tr>
+                <td>IP</td>
+                <td>Internet Protocol</td>
+                <td>Direccionamiento de equipos</td>
+              </tr>
+              <tr>
+                <td>ID</td>
+                <td>Identifier · identificador</td>
+                <td>Código único de requisitos y pruebas</td>
+              </tr>
+              <tr>
+                <td>ISO</td>
+                <td>International Organization for Standardization</td>
+                <td>Normas técnicas internacionales</td>
+              </tr>
+              <tr>
+                <td>IVA</td>
+                <td>Impuesto al Valor Agregado</td>
+                <td>Impuesto aplicado al presupuesto</td>
+              </tr>
+              <tr>
+                <td>JSON</td>
+                <td>JavaScript Object Notation</td>
+                <td>Formato de intercambio de datos</td>
+              </tr>
+              <tr>
+                <td>kB / MB</td>
+                <td>Kilobyte / megabyte</td>
+                <td>Volumen de datos</td>
+              </tr>
+              <tr>
+                <td>kbit/s / Mbps</td>
+                <td>Kilobits o megabits por segundo</td>
+                <td>Velocidad y tráfico de red</td>
+              </tr>
+              <tr>
+                <td>kVA / W</td>
+                <td>Kilovoltamperios / vatios</td>
+                <td>Potencia aparente y activa</td>
+              </tr>
+              <tr>
+                <td>LAN</td>
+                <td>Local Area Network</td>
+                <td>Red local de una sede</td>
+              </tr>
+              <tr>
+                <td>MDF</td>
+                <td>Main Distribution Frame</td>
+                <td>Distribuidor principal ubicado en el CPD</td>
+              </tr>
+              <tr>
+                <td>NAS</td>
+                <td>Network Attached Storage</td>
+                <td>Almacenamiento de copias en red</td>
+              </tr>
+              <tr>
+                <td>NTP</td>
+                <td>Network Time Protocol</td>
+                <td>Sincronización horaria</td>
+              </tr>
+              <tr>
+                <td>NTU</td>
+                <td>Network Termination Unit</td>
+                <td>Equipo de terminación del proveedor</td>
+              </tr>
+              <tr>
+                <td>ODF</td>
+                <td>Optical Distribution Frame</td>
+                <td>Panel de terminación de fibra</td>
+              </tr>
+              <tr>
+                <td>OM4 / OS2</td>
+                <td>Fibra multimodo OM4 / fibra monomodo OS2</td>
+                <td>Backbone LAN / acometida WAN</td>
+              </tr>
+              <tr>
+                <td>ONT</td>
+                <td>Optical Network Terminal</td>
+                <td>Terminación óptica activa del proveedor</td>
+              </tr>
+              <tr>
+                <td>PB / P1–P3</td>
+                <td>Planta baja / plantas 1 a 3; en este caso P1 es PB</td>
+                <td>Identificación de niveles</td>
+              </tr>
+              <tr>
+                <td>PC</td>
+                <td>Personal Computer · computadora personal</td>
+                <td>Terminal de usuario</td>
+              </tr>
+              <tr>
+                <td>PDF</td>
+                <td>Portable Document Format</td>
+                <td>Formato del informe final</td>
+              </tr>
+              <tr>
+                <td>PP</td>
+                <td>Patch panel</td>
+                <td>Panel de terminación y etiquetado de cobre</td>
+              </tr>
+              <tr>
+                <td>QoS</td>
+                <td>Quality of Service</td>
+                <td>Priorización de tráfico</td>
+              </tr>
+              <tr>
+                <td>RAID 1 / RAID 5</td>
+                <td>Esquemas de redundancia de discos por espejo / paridad</td>
+                <td>Protección del almacenamiento</td>
+              </tr>
+              <tr>
+                <td>RAM</td>
+                <td>Random Access Memory</td>
+                <td>Memoria de los servidores</td>
+              </tr>
+              <tr>
+                <td>RPO / RTO</td>
+                <td>Recovery Point Objective / Recovery Time Objective</td>
+                <td>Pérdida de datos y tiempo de recuperación admisibles</td>
+              </tr>
+              <tr>
+                <td>RR. HH.</td>
+                <td>Recursos Humanos</td>
+                <td>Área administrativa</td>
+              </tr>
+              <tr>
+                <td>RCS</td>
+                <td>RedCobro del Sur</td>
+                <td>Sigla de la empresa del caso</td>
+              </tr>
+              <tr>
+                <td>RTT</td>
+                <td>Round-Trip Time</td>
+                <td>Latencia de ida y vuelta</td>
+              </tr>
+              <tr>
+                <td>SFP+</td>
+                <td>Small Form-factor Pluggable Plus</td>
+                <td>Transceptor para enlaces de fibra de alta velocidad</td>
+              </tr>
+              <tr>
+                <td>SLA</td>
+                <td>Service Level Agreement</td>
+                <td>Compromiso de disponibilidad y soporte</td>
+              </tr>
+              <tr>
+                <td>S.A.</td>
+                <td>Sociedad Anónima</td>
+                <td>Forma jurídica indicada para la empresa</td>
+              </tr>
+              <tr>
+                <td>S01–S10</td>
+                <td>Códigos de las sucursales 1 a 10</td>
+                <td>Identificación de sedes, cables y planillas</td>
+              </tr>
+              <tr>
+                <td>TCO</td>
+                <td>Total Cost of Ownership</td>
+                <td>Costo total durante un período</td>
+              </tr>
+              <tr>
+                <td>TI / IT</td>
+                <td>Tecnologías de la Información / Information Technology</td>
+                <td>Área técnica de la empresa</td>
+              </tr>
+              <tr>
+                <td>TIA</td>
+                <td>Telecommunications Industry Association</td>
+                <td>Familia de normas de cableado</td>
+              </tr>
+              <tr>
+                <td>U</td>
+                <td>Unidad de rack de 44,45 mm</td>
+                <td>Altura de equipos y gabinetes</td>
+              </tr>
+              <tr>
+                <td>UPS</td>
+                <td>Uninterruptible Power Supply</td>
+                <td>Alimentación eléctrica ininterrumpida</td>
+              </tr>
+              <tr>
+                <td>URL</td>
+                <td>Uniform Resource Locator</td>
+                <td>Dirección de una fuente o producto</td>
+              </tr>
+              <tr>
+                <td>USB</td>
+                <td>Universal Serial Bus</td>
+                <td>Conexión de lectores y periféricos</td>
+              </tr>
+              <tr>
+                <td>USD</td>
+                <td>Dólares estadounidenses</td>
+                <td>Moneda del presupuesto</td>
+              </tr>
+              <tr>
+                <td>UTP</td>
+                <td>Unshielded Twisted Pair</td>
+                <td>Cable de pares trenzados sin blindaje</td>
+              </tr>
+              <tr>
+                <td>CPE</td>
+                <td>Customer Premises Equipment · equipo de borde</td>
+                <td>Equipo de ANTEL en cada sede</td>
+              </tr>
+              <tr>
+                <td>DHCP relay</td>
+                <td>Reenvío de solicitudes DHCP a otra red</td>
+                <td>Núcleo y CPE hacia VM-DNS</td>
+              </tr>
+              <tr>
+                <td>Technitium</td>
+                <td>Servidor DNS/DHCP con interfaz web</td>
+                <td>Ejemplo de servicio de VM-DNS</td>
+              </tr>
+              <tr>
+                <td>VM</td>
+                <td>Virtual Machine · máquina virtual</td>
+                <td>
+                  Servidor Ubuntu aislado para uno o más servicios o
+                  contenedores
+                </td>
+              </tr>
+              <tr>
+                <td>Samba</td>
+                <td>Servicio compatible con SMB para compartir archivos</td>
+                <td>Carpetas de central y sucursales</td>
+              </tr>
+              <tr>
+                <td>Apache2</td>
+                <td>Servidor web HTTP</td>
+                <td>Publicación de la intranet</td>
+              </tr>
+              <tr>
+                <td>MySQL</td>
+                <td>Sistema gestor de bases de datos relacionales</td>
+                <td>Base de datos de la intranet</td>
+              </tr>
+              <tr>
+                <td>Zimbra</td>
+                <td>Plataforma colaborativa y de correo electrónico</td>
+                <td>Correo interno, instalado sin Docker en VM-CORREO</td>
+              </tr>
+              <tr>
+                <td>CUPS</td>
+                <td>Common UNIX Printing System</td>
+                <td>Administración de colas de impresión</td>
+              </tr>
+              <tr>
+                <td>VLAN</td>
+                <td>Virtual Local Area Network</td>
+                <td>Separación lógica de redes</td>
+              </tr>
+              <tr>
+                <td>VLSM</td>
+                <td>Variable Length Subnet Mask</td>
+                <td>Subredes de distintos tamaños</td>
+              </tr>
+              <tr>
+                <td>VPN</td>
+                <td>Virtual Private Network</td>
+                <td>Comunicación privada entre sedes</td>
+              </tr>
+              <tr>
+                <td>WAN</td>
+                <td>Wide Area Network</td>
+                <td>Red que conecta las sedes</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      REDCOBRO://CASO_ESTUDIANTES · Documento de trabajo · Octubre–noviembre
+      2026
+    </footer>
+  </body>
 </html>
